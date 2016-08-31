@@ -1,0 +1,156 @@
+﻿<Window x:Class="BassPlayer2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:BassPlayer2.Controls"
+        Style="{StaticResource Window}"
+        x:Name="MainWin"
+        Icon="icon.png"
+        mc:Ignorable="d"
+        Title="BassPlayer2" Height="297" Width="558">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="26"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid
+            x:Name="TitleBar"
+            Grid.Row="0"
+            Grid.ColumnSpan="2"
+            MouseDown="TitleBar_MouseDown"
+            Background="{StaticResource WindowTitleBar}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="32"/>
+                <ColumnDefinition Width="32"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                Margin="5,0"
+                Text="{Binding ElementName=MainWin, Path=Title}"/>
+            <Button
+                Grid.Column="1"
+                x:Name="TitlebarMinimize"
+                Click="TitlebarMinimize_Click"
+                Content="{StaticResource IconMinimize}"/>
+            <Button 
+                Grid.Column="2"
+                x:Name="TitlebarClose"
+                Content="{StaticResource IconClose}"
+                Click="TitlebarClose_Click"/>
+        </Grid>
+        <Border
+            Panel.ZIndex="100"
+            BorderThickness="3"
+            BorderBrush="Yellow"
+            Grid.Row="1"
+            Visibility="Collapsed"
+            Grid.RowSpan="10"
+            x:Name="OverLay"
+            Margin="10"
+            Background="Black">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+                <StackPanel 
+                    Grid.Row="1"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+                    <Button
+                        Content="[ Ok ]"
+                        Width="100"
+                        x:Name="OverLayOk"
+                        Click="OverLayOk_Click"
+                        Foreground="White"
+                        Margin="5,0"/>
+                    <Button 
+                        Content="[ Cancel ]"
+                        Width="100"
+                        x:Name="OverLayClose"
+                        Click="OverLayClose_Click"
+                        Foreground="White"
+                        Margin="5,0"/>
+                </StackPanel>
+                <Grid
+                    Grid.Row="0"
+                    x:Name="OverLayContent"
+                    Background="{StaticResource Button.Pressed.Background}"/>
+            </Grid>
+        </Border>
+        <TabControl
+            TabStripPlacement="Bottom"
+            Grid.Row="1"
+            Grid.RowSpan="2">
+            <TabItem
+                Header="[ Player ]">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="135"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <controls:SongData
+                        Grid.Row="0"/>
+                    <Slider
+                        Grid.Row="1"/>
+                    <TextBlock
+                        Grid.Row="2"
+                        Text="00:00:00 / 00:00:00"/>
+                    <StackPanel
+                        HorizontalAlignment="Center"
+                        Orientation="Horizontal"
+                        Grid.Row="3">
+                        <Button
+                            Content="{StaticResource IconPlayPause}"/>
+                        <Button
+                            Content="{StaticResource IconStop}"
+                            Margin="4,0"/>
+                        <Button
+                            Content="{StaticResource IconSeekBack}"/>
+                        <Button
+                            Content="{StaticResource IconSeekForward}"
+                            Margin="4,0"/>
+                        <Button
+                            Content="{StaticResource IconPrevious}"/>
+                        <Button
+                            Content="{StaticResource IconNext}"
+                            Margin="4,0"/>
+                        <ToggleButton 
+                            Content="{StaticResource IconMute}"/>
+                        <Slider
+                            Minimum="0"
+                            VerticalAlignment="Center"
+                            Maximum="100"
+                            Value="100"
+                            Margin="10,0,0,0"
+                            Grid.Column="1"
+                            Width="120">
+                        </Slider>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem
+                Header="[ Playlist ]">
+                <controls:PlayList/>
+            </TabItem>
+            <TabItem
+                Header="[ About ]">
+                
+            </TabItem>
+        </TabControl>
+        <StackPanel 
+            Orientation="Horizontal"
+            Grid.Row="2"
+            VerticalAlignment="Bottom"
+            HorizontalAlignment="Right">
+            <TextBlock Text="Device:"/>
+            <ComboBox
+                Width="150"
+                Margin="5,0"/>
+        </StackPanel>
+    </Grid>
+</Window>
