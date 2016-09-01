@@ -45,6 +45,7 @@ namespace BassPlayer2.Code
             BassMix.Unload();
             Bass.PluginFree(0);
             Bass.Unload();
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>

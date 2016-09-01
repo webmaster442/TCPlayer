@@ -105,21 +105,28 @@
                         Orientation="Horizontal"
                         Grid.Row="3">
                         <Button
+                            x:Name="BtnPlayPause"
                             Content="{StaticResource IconPlayPause}"/>
                         <Button
+                            x:Name="BtnStop"
                             Content="{StaticResource IconStop}"
                             Margin="4,0"/>
                         <Button
+                            x:Name="BtnSeekBack"
                             Content="{StaticResource IconSeekBack}"/>
                         <Button
+                            x:Name="BtnSeekFwd"
                             Content="{StaticResource IconSeekForward}"
                             Margin="4,0"/>
                         <Button
+                            x:Name="BtnPrevTrack"
                             Content="{StaticResource IconPrevious}"/>
                         <Button
+                            x:Name="BtnNextTrack"
                             Content="{StaticResource IconNext}"
                             Margin="4,0"/>
                         <ToggleButton 
+                            x:Name="BtnMute"
                             Content="{StaticResource IconMute}"/>
                         <Slider
                             Minimum="0"
@@ -147,10 +154,11 @@
             Grid.Row="2"
             VerticalAlignment="Bottom"
             HorizontalAlignment="Right">
-            <TextBlock Text="Device:"/>
-            <ComboBox
-                Width="150"
-                Margin="5,0"/>
+            <Button
+                Foreground="White"
+                Content="[ Change output device... ]"
+                x:Name="BtnChangeDev"
+                Click="BtnChangeDev_Click"/>
         </StackPanel>
     </Grid>
 </Window>
