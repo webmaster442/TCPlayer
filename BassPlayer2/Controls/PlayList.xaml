@@ -20,6 +20,12 @@
                     x:Name="AddDir"
                     Style="{StaticResource SubMenuItem}"/>
                 <MenuItem
+                    Icon="{StaticResource IconFile}"
+                    Header="From files..."
+                    Click="AddFiles_Click"
+                    x:Name="AddFiles"
+                    Style="{StaticResource SubMenuItem}"/>
+                <MenuItem
                     Icon="{StaticResource IconPlaylist}"
                     Header="From Playlist ..."
                     Click="AddPlaylist_Click"

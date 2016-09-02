@@ -1,11 +1,11 @@
 ﻿using BassPlayer2.Code;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System;
-using System.Linq;
 
 namespace BassPlayer2.Controls
 {
@@ -78,7 +78,7 @@ namespace BassPlayer2.Controls
         private void AddDir_Click(object sender, RoutedEventArgs e)
         {
             string[] filters = App.Formats.Split(';');
-            System.Windows.Forms.FolderBrowserDialog fbd = new System.Windows.Forms.FolderBrowserDialog();
+            var fbd = new System.Windows.Forms.FolderBrowserDialog();
             fbd.Description = "Select folder to be added";
             if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -91,6 +91,17 @@ namespace BassPlayer2.Controls
                 _list.AddRange(Files);
             }
 
+        }
+
+        private void AddFiles_Click(object sender, RoutedEventArgs e)
+        {
+            var ofd = new System.Windows.Forms.OpenFileDialog();
+            ofd.Multiselect = true;
+            ofd.Filter = "Audio Files|" + App.Formats;
+            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                _list.AddRange(ofd.FileNames);
+            }
         }
 
         private void AddURL_Click(object sender, RoutedEventArgs e)

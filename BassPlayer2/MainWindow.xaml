@@ -82,6 +82,7 @@
         </Border>
         <TabControl
             TabStripPlacement="Bottom"
+            x:Name="MainView"
             Grid.Row="1"
             Grid.RowSpan="2">
             <TabItem
@@ -97,7 +98,8 @@
                         Grid.Row="0"/>
                     <Slider
                         x:Name="SeekSlider"
-                        ValueChanged="SeekSlider_ValueChanged"
+                        Thumb.DragCompleted="SeekSlider_DragCompleted"
+                        Thumb.DragStarted="SeekSlider_DragStarted"
                         Grid.Row="1"/>
                     <StackPanel
                         Grid.Row="2"

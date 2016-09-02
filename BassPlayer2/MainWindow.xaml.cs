@@ -17,6 +17,7 @@ namespace BassPlayer2
         private float _prevvol;
         private DispatcherTimer _timer;
         private bool _loaded;
+        private bool _isdrag;
 
         public MainWindow()
         {
@@ -111,8 +112,14 @@ namespace BassPlayer2
         private void _timer_Tick(object sender, EventArgs e)
         {
             if (!_loaded) return;
+            if (_isdrag)
+            {
+                TbCurrTime.Text = TimeSpan.FromSeconds(SeekSlider.Value).ToShortTime();
+                return;
+            }
             var pos = TimeSpan.FromSeconds(_player.Position);
             TbCurrTime.Text = pos.ToShortTime();
+            SeekSlider.Value = _player.Position;
         }
 
         private void DoAction(object sender, RoutedEventArgs e)
@@ -172,12 +179,23 @@ namespace BassPlayer2
         {
             if (!_loaded) return;
             StartPlay();
+            Dispatcher.Invoke(() =>
+            {
+                MainView.SelectedIndex = 0;
+            });
         }
 
-        private void SeekSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void SeekSlider_DragCompleted(object sender, RoutedEventArgs e)
         {
             if (!_loaded) return;
             _player.Position = SeekSlider.Value;
+            _isdrag = false;
+        }
+
+        private void SeekSlider_DragStarted(object sender, RoutedEventArgs e)
+        {
+            if (!_loaded) return;
+            _isdrag = true;
         }
     }
 }

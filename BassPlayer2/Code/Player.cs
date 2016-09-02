@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ManagedBass.Wasapi;
-using ManagedBass;
-using ManagedBass.Mix;
+﻿using ManagedBass;
 using ManagedBass.Cd;
+using ManagedBass.Mix;
+using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace BassPlayer2.Code
