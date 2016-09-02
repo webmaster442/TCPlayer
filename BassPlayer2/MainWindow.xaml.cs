@@ -106,6 +106,7 @@ namespace BassPlayer2
             var len = TimeSpan.FromSeconds(_player.Length);
             TbFullTime.Text = len.ToShortTime();
             SeekSlider.Value = 0;
+            SongDat.UpdateMediaInfo(PlayList.SelectedItem);
             SeekSlider.Maximum = _player.Length;
         }
 

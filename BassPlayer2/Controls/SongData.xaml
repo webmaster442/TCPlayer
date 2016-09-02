@@ -27,7 +27,6 @@
             Width="128"
             x:Name="Img"
             Source="{Binding ElementName=SongDat, Path=Cover}"
-            StretchDirection="DownOnly"
             Stretch="Uniform">
             <Image.ToolTip>
                 <ToolTip
@@ -60,7 +59,7 @@
         <TextBlock
             Grid.Column="1"
             Grid.Row="5"
-            Text="Format:"/>
+            Text="Size:"/>
         <TextBlock
             Grid.Row="0"
             Grid.Column="1"

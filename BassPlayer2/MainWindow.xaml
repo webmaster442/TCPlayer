@@ -95,7 +95,8 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <controls:SongData
-                        Grid.Row="0"/>
+                        Grid.Row="0"
+                        x:Name="SongDat"/>
                     <Slider
                         x:Name="SeekSlider"
                         Thumb.DragCompleted="SeekSlider_DragCompleted"
