@@ -3,8 +3,8 @@ using BassPlayer2.Controls;
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace BassPlayer2
 {
@@ -14,11 +14,21 @@ namespace BassPlayer2
     public partial class MainWindow : Window, IDisposable
     {
         private Player _player;
+        private float _prevvol;
+        private DispatcherTimer _timer;
+        private bool _loaded;
 
         public MainWindow()
         {
             InitializeComponent();
             _player = new Player();
+            _player.ChangeDevice(); //init
+            _prevvol = 1.0f;
+            _timer = new DispatcherTimer();
+            _timer.Interval = TimeSpan.FromSeconds(0.5);
+            _timer.IsEnabled = false;
+            _timer.Tick += _timer_Tick;
+            _loaded = true;
         }
 
         private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
@@ -74,6 +84,7 @@ namespace BassPlayer2
 
         private void BtnChangeDev_Click(object sender, RoutedEventArgs e)
         {
+            if (!_loaded) return;
             var selector = new DeviceChange();
             string[] devices = _player.GetDevices();
             selector.DataContext = devices;
@@ -85,25 +96,88 @@ namespace BassPlayer2
             MainWindow.ShowDialog(selector);
         }
 
+        private void StartPlay()
+        {
+            if (!_loaded) return;
+            _player.Load(PlayList.SelectedItem);
+            _player.Play();
+            _timer.IsEnabled = true;
+            var len = TimeSpan.FromSeconds(_player.Length);
+            TbFullTime.Text = len.ToShortTime();
+            SeekSlider.Value = 0;
+            SeekSlider.Maximum = _player.Length;
+        }
+
+        private void _timer_Tick(object sender, EventArgs e)
+        {
+            if (!_loaded) return;
+            var pos = TimeSpan.FromSeconds(_player.Position);
+            TbCurrTime.Text = pos.ToShortTime();
+        }
+
         private void DoAction(object sender, RoutedEventArgs e)
         {
-            var tbtn = sender as ToggleButton;
-            if (tbtn == null)
+            if (!_loaded) return;
+            var btn = sender as Button;
+            if (btn == null) return;
+            switch (btn.Name)
             {
-                var btn = sender as Button;
-                if (btn == null) return;
-                switch (btn.Name)
-                {
+                case "BtnPlayPause":
+                    _player.PlayPause();
+                    break;
+                case "BtnStop":
+                    _player.Stop();
+                    break;
+                case "BtnSeekBack":
+                    SeekSlider.Value -= 5;
+                    break;
+                case "BtnSeekFwd":
+                    SeekSlider.Value += 5;
+                    break;
+                case "BtnNextTrack":
+                    PlayList.NextTrack();
+                    StartPlay();
+                    break;
+                case "BtnPrevTrack":
+                    PlayList.PreviousTrack();
+                    StartPlay();
+                    break;
+            }
+            _timer.IsEnabled = !_player.IsPaused;
+        }
 
-                }
+        private void BtnMute_Click(object sender, RoutedEventArgs e)
+        {
+            if (!_loaded) return;
+            if (BtnMute.IsChecked == true)
+            {
+                _prevvol = (float)VolSlider.Value;
+                VolSlider.Value = 0;
+                VolSlider.IsEnabled = false;
             }
             else
             {
-                switch (tbtn.Name)
-                {
-
-                }
+                VolSlider.Value = _prevvol;
+                VolSlider.IsEnabled = true;
             }
+        }
+
+        private void VolSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!_loaded) return;
+            _player.Volume = (float)VolSlider.Value;
+        }
+
+        private void PlayList_ItemDoubleClcik(object sender, RoutedEventArgs e)
+        {
+            if (!_loaded) return;
+            StartPlay();
+        }
+
+        private void SeekSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (!_loaded) return;
+            _player.Position = SeekSlider.Value;
         }
     }
 }

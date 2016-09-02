@@ -21,6 +21,7 @@ namespace BassPlayer2.Code
         private bool _initialized;
         private int _source, _mixer;
         private float _lastvol;
+        private bool _paused;
 
         public Player()
         {
@@ -79,6 +80,20 @@ namespace BassPlayer2.Code
             }
         }
 
+        public double Position
+        {
+            get
+            {
+                var pos = Bass.ChannelGetPosition(_source);
+                return Bass.ChannelBytes2Seconds(_source, pos);
+            }
+            set
+            {
+                var pos = Bass.ChannelSeconds2Bytes(_source, value);
+                Bass.ChannelSetPosition(_source, pos);
+            }
+        }
+
         /// <summary>
         /// Gets or sets the Channel volume
         /// </summary>
@@ -86,7 +101,7 @@ namespace BassPlayer2.Code
         {
             get
             {
-               
+
                 float temp = 0.0f;
                 Bass.ChannelGetAttribute(_mixer, ChannelAttribute.Volume, out temp);
                 return temp;
@@ -148,7 +163,7 @@ namespace BassPlayer2.Code
                 return;
             }
             Bass.ChannelSetAttribute(_mixer, ChannelAttribute.Volume, _lastvol);
-
+            _paused = false;
         }
 
         /// <summary>
@@ -164,6 +179,7 @@ namespace BassPlayer2.Code
         /// </summary>
         public void Play()
         {
+            _paused = false;
             Bass.ChannelPlay(_mixer, false);
         }
 
@@ -172,7 +188,25 @@ namespace BassPlayer2.Code
         /// </summary>
         public void Pause()
         {
+            _paused = true;
             Bass.ChannelPause(_mixer);
+        }
+
+        /// <summary>
+        /// Play / Pause
+        /// </summary>
+        public void PlayPause()
+        {
+            if (_paused)
+            {
+                Bass.ChannelPlay(_mixer, false);
+                _paused = false;
+            }
+            else
+            {
+                Bass.ChannelPause(_mixer);
+                _paused = true;
+            }
         }
 
         /// <summary>
@@ -181,6 +215,15 @@ namespace BassPlayer2.Code
         public void Stop()
         {
             Bass.ChannelStop(_mixer);
+            _paused = false;
+        }
+
+        /// <summary>
+        /// IsPaused state
+        /// </summary>
+        public bool IsPaused
+        {
+            get { return _paused; }
         }
 
         /// <summary>
@@ -203,8 +246,18 @@ namespace BassPlayer2.Code
         /// Change output device
         /// </summary>
         /// <param name="name">string device</param>
-        public void ChangeDevice(string name)
+        public void ChangeDevice(string name = null)
         {
+            if (name == null)
+            {
+                _initialized = Bass.Init(1, 48000, DeviceInitFlags.Frequency, IntPtr.Zero);
+                if (!_initialized)
+                {
+                    Error("Bass.dll init failed");
+                    return;
+                }
+                Bass.Start();
+            }
             for (int i = 0; i < Bass.DeviceCount; i++)
             {
                 var device = Bass.GetDeviceInfo(i);

@@ -96,44 +96,63 @@
                     <controls:SongData
                         Grid.Row="0"/>
                     <Slider
+                        x:Name="SeekSlider"
+                        ValueChanged="SeekSlider_ValueChanged"
                         Grid.Row="1"/>
-                    <TextBlock
+                    <StackPanel
                         Grid.Row="2"
-                        Text="00:00:00 / 00:00:00"/>
+                        Orientation="Horizontal">
+                        <TextBlock
+                            x:Name="TbFullTime"
+                            Text="00:00:00"/>
+                        <TextBlock Text=" / "/>
+                        <TextBlock
+                            x:Name="TbCurrTime"
+                            Text="00:00:00"/>
+                    </StackPanel>
                     <StackPanel
                         HorizontalAlignment="Center"
                         Orientation="Horizontal"
                         Grid.Row="3">
                         <Button
                             x:Name="BtnPlayPause"
+                            Click="DoAction"
                             Content="{StaticResource IconPlayPause}"/>
                         <Button
                             x:Name="BtnStop"
+                            Click="DoAction"
                             Content="{StaticResource IconStop}"
                             Margin="4,0"/>
                         <Button
                             x:Name="BtnSeekBack"
+                            Click="DoAction"
                             Content="{StaticResource IconSeekBack}"/>
                         <Button
                             x:Name="BtnSeekFwd"
+                            Click="DoAction"
                             Content="{StaticResource IconSeekForward}"
                             Margin="4,0"/>
                         <Button
                             x:Name="BtnPrevTrack"
+                            Click="DoAction"
                             Content="{StaticResource IconPrevious}"/>
                         <Button
                             x:Name="BtnNextTrack"
+                            Click="DoAction"
                             Content="{StaticResource IconNext}"
                             Margin="4,0"/>
                         <ToggleButton 
                             x:Name="BtnMute"
+                            Click="BtnMute_Click"
                             Content="{StaticResource IconMute}"/>
                         <Slider
                             Minimum="0"
                             VerticalAlignment="Center"
-                            Maximum="100"
-                            Value="100"
+                            Maximum="1"
+                            Value="1"
                             Margin="10,0,0,0"
+                            x:Name="VolSlider"
+                            ValueChanged="VolSlider_ValueChanged"
                             Grid.Column="1"
                             Width="120">
                         </Slider>
@@ -142,11 +161,9 @@
             </TabItem>
             <TabItem
                 Header="[ Playlist ]">
-                <controls:PlayList/>
-            </TabItem>
-            <TabItem
-                Header="[ About ]">
-                
+                <controls:PlayList
+                    ItemDoubleClcik="PlayList_ItemDoubleClcik"
+                    x:Name="PlayList"/>
             </TabItem>
         </TabControl>
         <StackPanel 

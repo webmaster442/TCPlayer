@@ -75,6 +75,7 @@
         </Menu>
         <ListBox
             Grid.Row="1"
-            x:Name="PlaylistView"/>
+            x:Name="PlaylistView"
+            MouseDoubleClick="PlaylistView_MouseDoubleClick"/>
     </Grid>
 </UserControl>

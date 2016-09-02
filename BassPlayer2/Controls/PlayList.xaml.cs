@@ -23,6 +23,34 @@ namespace BassPlayer2.Controls
             PlaylistView.ItemsSource = _list;
         }
 
+        public event RoutedEventHandler ItemDoubleClcik;
+
+        public string SelectedItem
+        {
+            get
+            {
+                return _list[PlaylistView.SelectedIndex];
+            }
+        }
+
+        public void NextTrack()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                if (PlaylistView.SelectedIndex + 1 < _list.Count)
+                    PlaylistView.SelectedIndex += 1;
+            });
+        }
+
+        public void PreviousTrack()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                if (PlaylistView.SelectedIndex - 1 > -1)
+                    PlaylistView.SelectedIndex -= 1;
+            });
+        }
+
         private void AddPlaylist_Click(object sender, RoutedEventArgs e)
         {
             var ofd = new System.Windows.Forms.OpenFileDialog();
@@ -136,6 +164,16 @@ namespace BassPlayer2.Controls
                         else contents.WriteLine(entry);
                     }
                 }
+            }
+        }
+
+        private void PlaylistView_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (ItemDoubleClcik != null)
+            {
+                var index = PlaylistView.SelectedIndex;
+                if (index < 0) return;
+                ItemDoubleClcik(sender, null);
             }
         }
     }
