@@ -4,6 +4,8 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Interop;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace BassPlayer2
@@ -13,6 +15,8 @@ namespace BassPlayer2
     /// </summary>
     public partial class MainWindow : Window, IDisposable
     {
+        private IntPtr hwnd;
+        private HwndSource hsource;
         private Player _player;
         private float _prevvol;
         private DispatcherTimer _timer;
@@ -30,6 +34,43 @@ namespace BassPlayer2
             _timer.IsEnabled = false;
             _timer.Tick += _timer_Tick;
             _loaded = true;
+        }
+
+        private void MainWin_SourceInitialized(object sender, EventArgs e)
+        {
+            if ((hwnd = new WindowInteropHelper(this).Handle) == IntPtr.Zero)
+            {
+                throw new InvalidOperationException("Could not get window handle.");
+            }
+
+            hsource = HwndSource.FromHwnd(hwnd);
+            hsource.AddHook(WndProc);
+            TitleBar.Background = new SolidColorBrush(GetWindowColorizationColor(false));
+        }
+
+        private static Color GetWindowColorizationColor(bool opaque)
+        {
+            var par = new DWMCOLORIZATIONPARAMS();
+            Native.DwmGetColorizationParameters(ref par);
+
+            return Color.FromArgb(
+                (byte)(opaque ? 255 : par.ColorizationColor >> 24), 
+                (byte)(par.ColorizationColor >> 16), 
+                (byte)(par.ColorizationColor >> 8), 
+                (byte) par.ColorizationColor);
+        }
+
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            switch (msg)
+            {
+                //WM_DWMCOLORIZATIONCOLORCHANGED
+                case 0x320:
+                    TitleBar.Background = new SolidColorBrush(GetWindowColorizationColor(false));
+                    return IntPtr.Zero;
+                default:
+                    return IntPtr.Zero;
+            }
         }
 
         private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)

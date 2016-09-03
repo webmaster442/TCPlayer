@@ -8,6 +8,7 @@
         x:Name="MainWin"
         Icon="icon.png"
         mc:Ignorable="d"
+        SourceInitialized="MainWin_SourceInitialized"
         Title="BassPlayer2" Height="297" Width="558">
     <Grid>
         <Grid.RowDefinitions>

@@ -68,6 +68,7 @@
     <Compile Include="Code\Extensions.cs" />
     <Compile Include="Code\Helpers.cs" />
     <Compile Include="Code\Interfaces.cs" />
+    <Compile Include="Code\Native.cs" />
     <Compile Include="Code\Player.cs" />
     <Compile Include="Code\PlaylistLoaders.cs" />
     <Compile Include="Controls\AddURLDialog.xaml.cs">
