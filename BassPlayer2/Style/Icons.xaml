@@ -61,12 +61,6 @@
         </Canvas>
     </Viewbox>
 
-    <Viewbox Width="24" Height="24" x:Key="IconFolder2">
-        <Canvas Width="24" Height="24">
-            <Path Data="M20,18H4V8H20M20,6H12L10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6Z" Fill="White" />
-        </Canvas>
-    </Viewbox>
-
     <Viewbox Width="24" Height="24" x:Key="IconPlaylist">
         <Canvas Width="24" Height="24">
             <Path Data="M19,9H2V11H19V9M19,5H2V7H19V5M2,15H15V13H2V15M17,13V19L22,16L17,13Z" Fill="White" />
@@ -121,4 +115,15 @@
         </Canvas>
     </Viewbox>
 
+    <Viewbox Width="24" Height="24" x:Key="IconBack">
+        <Canvas Width="24" Height="24">
+            <Path Data="M2,2H16V16H2V2M22,8V22H8V18H18V8H22M4,4V14H14V4H4Z" Fill="White" />
+        </Canvas>
+    </Viewbox>
+
+    <Viewbox Width="24" Height="24" x:Key="IconFront">
+        <Canvas Width="24" Height="24">
+            <Path Data="M2,2H11V6H9V4H4V9H6V11H2V2M22,13V22H13V18H15V20H20V15H18V13H22M8,8H16V16H8V8Z" Fill="White" />
+        </Canvas>
+    </Viewbox>
 </ResourceDictionary>

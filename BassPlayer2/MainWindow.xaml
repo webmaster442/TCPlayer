@@ -8,6 +8,7 @@
         x:Name="MainWin"
         Icon="icon.png"
         mc:Ignorable="d"
+        Topmost="{Binding ElementName=AllWaysTop, Path=IsChecked}"
         SourceInitialized="MainWin_SourceInitialized"
         Title="BassPlayer2" Height="297" Width="558">
     <Grid>
@@ -26,18 +27,41 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="32"/>
                 <ColumnDefinition Width="32"/>
+                <ColumnDefinition Width="32"/>
             </Grid.ColumnDefinitions>
             <TextBlock
                 Margin="5,0"
                 Text="{Binding ElementName=MainWin, Path=Title}"/>
-            <Button
+            <ToggleButton
                 Grid.Column="1"
+                x:Name="AllWaysTop">
+                <ToggleButton.Resources>
+                    <Style TargetType="ToggleButton">
+                        <Style.Triggers>
+                            <Trigger Property="IsChecked" Value="false">
+                                <Setter Property="Content" Value="{StaticResource IconBack}"/>
+                                <Setter Property="ToolTip" Value="Always top: off"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="true">
+                                <Setter Property="Content" Value="{StaticResource IconFront}"/>
+                                <Setter Property="ToolTip" Value="Always top: on"/>
+                            </Trigger>
+                        </Style.Triggers>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="BorderBrush" Value="{x:Null}"/>
+                    </Style>
+                </ToggleButton.Resources>
+            </ToggleButton>
+            <Button
+                Grid.Column="2"
                 x:Name="TitlebarMinimize"
                 Click="TitlebarMinimize_Click"
+                ToolTip="Minimize to Tray"
                 Content="{StaticResource IconMinimize}"/>
             <Button 
-                Grid.Column="2"
+                Grid.Column="3"
                 x:Name="TitlebarClose"
+                ToolTip="Exit application"
                 Content="{StaticResource IconClose}"
                 Click="TitlebarClose_Click"/>
         </Grid>
@@ -99,11 +123,13 @@
                         Grid.Row="0"
                         x:Name="SongDat"/>
                     <Slider
+                        Margin="10,0"
                         x:Name="SeekSlider"
                         Thumb.DragCompleted="SeekSlider_DragCompleted"
                         Thumb.DragStarted="SeekSlider_DragStarted"
                         Grid.Row="1"/>
                     <StackPanel
+                        Margin="10,0"
                         Grid.Row="2"
                         Orientation="Horizontal">
                         <TextBlock
@@ -119,33 +145,40 @@
                         Orientation="Horizontal"
                         Grid.Row="3">
                         <Button
+                            ToolTip="Play / Pause"
                             x:Name="BtnPlayPause"
                             Click="DoAction"
                             Content="{StaticResource IconPlayPause}"/>
                         <Button
+                            ToolTip="Stop"
                             x:Name="BtnStop"
                             Click="DoAction"
                             Content="{StaticResource IconStop}"
                             Margin="4,0"/>
                         <Button
+                            ToolTip="Seek back"
                             x:Name="BtnSeekBack"
                             Click="DoAction"
                             Content="{StaticResource IconSeekBack}"/>
                         <Button
+                            ToolTip="Seek forward"
                             x:Name="BtnSeekFwd"
                             Click="DoAction"
                             Content="{StaticResource IconSeekForward}"
                             Margin="4,0"/>
                         <Button
+                            ToolTip="Previous track"
                             x:Name="BtnPrevTrack"
                             Click="DoAction"
                             Content="{StaticResource IconPrevious}"/>
                         <Button
+                            ToolTip="Next Track"
                             x:Name="BtnNextTrack"
                             Click="DoAction"
                             Content="{StaticResource IconNext}"
                             Margin="4,0"/>
                         <ToggleButton 
+                            ToolTip="Mute / Unmute"
                             x:Name="BtnMute"
                             Click="BtnMute_Click"
                             Content="{StaticResource IconMute}"/>

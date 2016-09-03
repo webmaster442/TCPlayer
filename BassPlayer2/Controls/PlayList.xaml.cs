@@ -147,7 +147,7 @@ namespace BassPlayer2.Controls
         private void ManageDelete_Click(object sender, RoutedEventArgs e)
         {
             if (PlaylistView.SelectedItems.Count == 0) return;
-            while (PlaylistView.SelectedItems != null)
+            while (PlaylistView.SelectedItems.Count > 0)
             {
                 _list.Remove((string)PlaylistView.SelectedItems[0]);
             }

@@ -219,7 +219,10 @@ namespace BassPlayer2.Code
         /// </summary>
         public bool IsPaused
         {
-            get { return _paused; }
+            get
+            {
+                return _paused || (_mixer == 0);
+            }
         }
 
         /// <summary>

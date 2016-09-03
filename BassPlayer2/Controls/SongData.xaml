@@ -84,6 +84,6 @@
         <TextBlock
             Grid.Column="2"
             Grid.Row="5"
-            Text="{Binding ElementName=SongDat, Path=FormatSize}"/>
+            Text="{Binding ElementName=SongDat, Path=Size}"/>
     </Grid>
 </UserControl>

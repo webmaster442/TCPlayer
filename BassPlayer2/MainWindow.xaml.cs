@@ -162,6 +162,11 @@ namespace BassPlayer2
             var pos = TimeSpan.FromSeconds(_player.Position);
             TbCurrTime.Text = pos.ToShortTime();
             SeekSlider.Value = _player.Position;
+            if (SeekSlider.Value == SeekSlider.Maximum)
+            {
+                PlayList.NextTrack();
+                StartPlay();
+            }
         }
 
         private void DoAction(object sender, RoutedEventArgs e)
@@ -178,10 +183,14 @@ namespace BassPlayer2
                     _player.Stop();
                     break;
                 case "BtnSeekBack":
+                    _isdrag = true;
                     SeekSlider.Value -= 5;
+                    _isdrag = false;
                     break;
                 case "BtnSeekFwd":
+                    _isdrag = true;
                     SeekSlider.Value += 5;
+                    _isdrag = false;
                     break;
                 case "BtnNextTrack":
                     PlayList.NextTrack();
