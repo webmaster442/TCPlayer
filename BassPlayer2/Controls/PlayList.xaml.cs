@@ -29,6 +29,7 @@ namespace BassPlayer2.Controls
         {
             get
             {
+                if (PlaylistView.SelectedIndex == -1) return null;
                 return _list[PlaylistView.SelectedIndex];
             }
         }

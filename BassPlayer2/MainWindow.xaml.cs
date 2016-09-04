@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Shell;
 using System.Windows.Threading;
 
 namespace BassPlayer2
@@ -140,10 +141,12 @@ namespace BassPlayer2
 
         private void StartPlay()
         {
-            if (!_loaded) return;
+            if (!_loaded || PlayList.SelectedItem == null) return;
             _player.Load(PlayList.SelectedItem);
             _player.Play();
             _timer.IsEnabled = true;
+            Taskbar.ProgressState = TaskbarItemProgressState.Normal;
+            Taskbar.ProgressValue = 0;
             var len = TimeSpan.FromSeconds(_player.Length);
             TbFullTime.Text = len.ToShortTime();
             SeekSlider.Value = 0;
@@ -162,7 +165,13 @@ namespace BassPlayer2
             var pos = TimeSpan.FromSeconds(_player.Position);
             TbCurrTime.Text = pos.ToShortTime();
             SeekSlider.Value = _player.Position;
-            if (SeekSlider.Value == SeekSlider.Maximum)
+            Taskbar.ProgressValue = SeekSlider.Value / SeekSlider.Maximum;
+        }
+
+        private void SeekSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (_isdrag) return;
+            if (SeekSlider.Maximum - SeekSlider.Value < 0.5)
             {
                 PlayList.NextTrack();
                 StartPlay();
@@ -183,14 +192,14 @@ namespace BassPlayer2
                     _player.Stop();
                     break;
                 case "BtnSeekBack":
-                    _isdrag = true;
-                    SeekSlider.Value -= 5;
-                    _isdrag = false;
+                    _timer.IsEnabled = false;
+                    _player.Position -= 5;
+                    _timer.IsEnabled = true;
                     break;
                 case "BtnSeekFwd":
-                    _isdrag = true;
-                    SeekSlider.Value += 5;
-                    _isdrag = false;
+                    _timer.IsEnabled = false;
+                    _player.Position += 5;
+                    _timer.IsEnabled = true;
                     break;
                 case "BtnNextTrack":
                     PlayList.NextTrack();
@@ -202,6 +211,8 @@ namespace BassPlayer2
                     break;
             }
             _timer.IsEnabled = !_player.IsPaused;
+            if (_player.IsPaused) Taskbar.ProgressState = TaskbarItemProgressState.Paused;
+            else Taskbar.ProgressState = TaskbarItemProgressState.Normal;
         }
 
         private void BtnMute_Click(object sender, RoutedEventArgs e)

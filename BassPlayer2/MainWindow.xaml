@@ -11,6 +11,10 @@
         Topmost="{Binding ElementName=AllWaysTop, Path=IsChecked}"
         SourceInitialized="MainWin_SourceInitialized"
         Title="BassPlayer2" Height="297" Width="558">
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo ProgressState="None" ProgressValue="0" x:Name="Taskbar">
+        </TaskbarItemInfo>
+    </Window.TaskbarItemInfo>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="26"/>
@@ -127,6 +131,7 @@
                         x:Name="SeekSlider"
                         Thumb.DragCompleted="SeekSlider_DragCompleted"
                         Thumb.DragStarted="SeekSlider_DragStarted"
+                        ValueChanged="SeekSlider_ValueChanged"
                         Grid.Row="1"/>
                     <StackPanel
                         Margin="10,0"
