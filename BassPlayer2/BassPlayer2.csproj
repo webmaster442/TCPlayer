@@ -37,6 +37,9 @@
   <PropertyGroup>
     <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>BassPlayer2.App</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ManagedBass.PInvoke, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ManagedBass.PInvoke.0.4.1\lib\net45\ManagedBass.PInvoke.dll</HintPath>
@@ -61,10 +64,10 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
+    <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </ApplicationDefinition>
+    </Page>
     <Compile Include="Code\Extensions.cs" />
     <Compile Include="Code\Helpers.cs" />
     <Compile Include="Code\Interfaces.cs" />
@@ -466,6 +469,10 @@
     <Content Include="Engine\x86\tags.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Style\taskbar-play-pause.png" />
+    <Resource Include="Style\taskbar-skip-next.png" />
+    <Resource Include="Style\taskbar-skip-previous.png" />
+    <Resource Include="Style\taskbar-volume-off.png" />
     <Resource Include="Style\network.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -52,6 +52,38 @@ namespace BassPlayer2.Controls
             });
         }
 
+        public void DoLoad(IEnumerable<string> items)
+        {
+            if (items == null)
+                items = Environment.GetCommandLineArgs();
+
+            foreach (var item in items)
+            {
+                var ext = Path.GetExtension(item);
+                if (App.Playlists.Contains(ext))
+                {
+                    string[] result = null;
+                    switch (ext)
+                    {
+                        case ".pls":
+                            result = PlaylistLoaders.LoadPls(item);
+                            break;
+                        case ".m3u":
+                            result = PlaylistLoaders.LoadM3u(item);
+                            break;
+                        case ".wpl":
+                            result = PlaylistLoaders.LoadWPL(item);
+                            break;
+                    }
+                    _list.AddRange(result);
+                }
+                else if (App.Formats.Contains(ext))
+                {
+                    _list.Add(item);
+                }
+            }
+        }
+
         private void AddPlaylist_Click(object sender, RoutedEventArgs e)
         {
             var ofd = new System.Windows.Forms.OpenFileDialog();

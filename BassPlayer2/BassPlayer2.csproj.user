@@ -3,4 +3,7 @@
   <PropertyGroup>
     <ProjectView>ShowAllFiles</ProjectView>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <StartArguments>c:\test.mp3</StartArguments>
+  </PropertyGroup>
 </Project>

@@ -1,6 +1,7 @@
 ﻿using BassPlayer2.Code;
 using BassPlayer2.Controls;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -55,10 +56,10 @@ namespace BassPlayer2
             Native.DwmGetColorizationParameters(ref par);
 
             return Color.FromArgb(
-                (byte)(opaque ? 255 : par.ColorizationColor >> 24), 
-                (byte)(par.ColorizationColor >> 16), 
-                (byte)(par.ColorizationColor >> 8), 
-                (byte) par.ColorizationColor);
+                (byte)(opaque ? 255 : par.ColorizationColor >> 24),
+                (byte)(par.ColorizationColor >> 16),
+                (byte)(par.ColorizationColor >> 8),
+                (byte)par.ColorizationColor);
         }
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -123,6 +124,13 @@ namespace BassPlayer2
         public void Dispose()
         {
             Dispose(true);
+        }
+
+        public void DoLoadAndPlay(IEnumerable<string> items)
+        {
+            PlayList.DoLoad(items);
+            PlayList.NextTrack();
+            StartPlay();
         }
 
         private void BtnChangeDev_Click(object sender, RoutedEventArgs e)
@@ -213,6 +221,31 @@ namespace BassPlayer2
             _timer.IsEnabled = !_player.IsPaused;
             if (_player.IsPaused) Taskbar.ProgressState = TaskbarItemProgressState.Paused;
             else Taskbar.ProgressState = TaskbarItemProgressState.Normal;
+        }
+
+        private void ThumbButtonInfo_Click(object sender, EventArgs e)
+        {
+            var btn = sender as ThumbButtonInfo;
+            if (btn == null) return;
+            switch (btn.Description)
+            {
+                case "Play/Pause":
+                    _player.PlayPause();
+                    break;
+                case "Previous track":
+                    PlayList.PreviousTrack();
+                    StartPlay();
+                    break;
+                case "Next track":
+                    PlayList.NextTrack();
+                    StartPlay();
+                    break;
+                case "Mute/UnMute":
+                    var state = (bool)BtnMute.IsChecked;
+                    BtnMute.IsChecked = !state;
+                    BtnMute_Click(null, null);
+                    break;
+            }
         }
 
         private void BtnMute_Click(object sender, RoutedEventArgs e)

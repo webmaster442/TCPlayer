@@ -12,7 +12,28 @@
         SourceInitialized="MainWin_SourceInitialized"
         Title="BassPlayer2" Height="297" Width="558">
     <Window.TaskbarItemInfo>
-        <TaskbarItemInfo ProgressState="None" ProgressValue="0" x:Name="Taskbar">
+        <TaskbarItemInfo
+            ProgressState="None" 
+            ProgressValue="0" 
+            x:Name="Taskbar"
+            ThumbnailClipMargin="0,26,425,140">
+            <TaskbarItemInfo.ThumbButtonInfos>
+                <ThumbButtonInfo
+                    Description="Play/Pause"
+                    Click="ThumbButtonInfo_Click"
+                    ImageSource="Style/taskbar-play-pause.png"/>
+                <ThumbButtonInfo
+                    Description="Previous track"
+                    Click="ThumbButtonInfo_Click"
+                    ImageSource="Style/taskbar-skip-previous.png"/>
+                <ThumbButtonInfo
+                    Description="Next track"
+                    Click="ThumbButtonInfo_Click"
+                    ImageSource="Style/taskbar-skip-next.png"/>
+                <ThumbButtonInfo
+                    Description="Mute/UnMute"
+                    ImageSource="Style/taskbar-volume-off.png"/>
+            </TaskbarItemInfo.ThumbButtonInfos>
         </TaskbarItemInfo>
     </Window.TaskbarItemInfo>
     <Grid>
