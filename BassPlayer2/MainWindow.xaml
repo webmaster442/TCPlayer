@@ -4,12 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:BassPlayer2.Controls"
+        xmlns:props="clr-namespace:BassPlayer2.Properties"
         Style="{StaticResource Window}"
         x:Name="MainWin"
         Icon="icon.png"
         mc:Ignorable="d"
+        Left="{Binding Source={x:Static props:Settings.Default}, Path=Left, Mode=TwoWay}"
+        Top="{Binding Source={x:Static props:Settings.Default}, Path=Top, Mode=TwoWay}"
         Topmost="{Binding ElementName=AllWaysTop, Path=IsChecked}"
         SourceInitialized="MainWin_SourceInitialized"
+        Closing="MainWin_Closing"
         Title="BassPlayer2" Height="297" Width="558">
     <Window.TaskbarItemInfo>
         <TaskbarItemInfo
@@ -59,6 +63,7 @@
                 Text="{Binding ElementName=MainWin, Path=Title}"/>
             <ToggleButton
                 Grid.Column="1"
+                IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=TopMost, Mode=TwoWay}"
                 x:Name="AllWaysTop">
                 <ToggleButton.Resources>
                     <Style TargetType="ToggleButton">

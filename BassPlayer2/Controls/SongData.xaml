@@ -7,6 +7,22 @@
              mc:Ignorable="d"
              x:Name="SongDat"
              d:DesignHeight="110" d:DesignWidth="400">
+    <UserControl.Resources>
+        <Storyboard x:Key="ScrollText">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
+                                           Storyboard.TargetName="textBlock"
+                                           RepeatBehavior="Forever">
+                <EasingDoubleKeyFrame KeyTime="0" Value="-100"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:20" Value="100"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:40" Value="-100"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </UserControl.Resources>
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="FrameworkElement.Loaded" SourceName="textBlock">
+            <BeginStoryboard Storyboard="{StaticResource ScrollText}"/>
+        </EventTrigger>
+    </UserControl.Triggers>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="135"/>
@@ -24,6 +40,7 @@
         <Image
             Grid.Column="0"
             Grid.RowSpan="10"
+            Panel.ZIndex="10"
             Width="128"
             x:Name="Img"
             Source="{Binding ElementName=SongDat, Path=Cover}"
@@ -60,11 +77,25 @@
             Grid.Column="1"
             Grid.Row="5"
             Text="Size:"/>
-        <TextBlock
+        <Canvas
+            x:Name="canvas"
             Grid.Row="0"
             Grid.Column="1"
-            Grid.ColumnSpan="2"
-            Text="{Binding ElementName=SongDat, Path=FileName}"/>
+            Grid.ColumnSpan="2">
+            <TextBlock 
+                x:Name="textBlock"
+                Text="{Binding ElementName=SongDat, Path=FileName}"
+                RenderTransformOrigin="0,0.5">
+                <TextBlock.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </TextBlock.RenderTransform>
+            </TextBlock>
+        </Canvas>
         <TextBlock
             Grid.Column="2"
             Grid.Row="1"

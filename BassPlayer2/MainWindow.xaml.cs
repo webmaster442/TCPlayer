@@ -246,6 +246,9 @@ namespace BassPlayer2
                     BtnMute_Click(null, null);
                     break;
             }
+            _timer.IsEnabled = !_player.IsPaused;
+            if (_player.IsPaused) Taskbar.ProgressState = TaskbarItemProgressState.Paused;
+            else Taskbar.ProgressState = TaskbarItemProgressState.Normal;
         }
 
         private void BtnMute_Click(object sender, RoutedEventArgs e)
@@ -291,6 +294,11 @@ namespace BassPlayer2
         {
             if (!_loaded) return;
             _isdrag = true;
+        }
+
+        private void MainWin_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Properties.Settings.Default.Save();
         }
     }
 }
