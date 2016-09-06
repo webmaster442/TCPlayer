@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace BassPlayer2.Code
+namespace TCPlayer.Code
 {
     internal class Player : IDisposable
     {

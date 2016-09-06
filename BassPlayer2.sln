@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BassPlayer2", "BassPlayer2\BassPlayer2.csproj", "{F7191F4E-6E3B-4775-94E3-199271C19C04}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCPlayer", "BassPlayer2\TCPlayer.csproj", "{F7191F4E-6E3B-4775-94E3-199271C19C04}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

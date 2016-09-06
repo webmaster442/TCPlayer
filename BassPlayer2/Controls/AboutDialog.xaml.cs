@@ -1,8 +1,8 @@
-﻿using BassPlayer2.Code;
+﻿using TCPlayer.Code;
 using System;
 using System.Windows.Controls;
 
-namespace BassPlayer2.Controls
+namespace TCPlayer.Controls
 {
     /// <summary>
     /// Interaction logic for AboutDialog.xaml

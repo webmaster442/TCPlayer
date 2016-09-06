@@ -3,7 +3,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Threading;
 
-namespace BassPlayer2.Code
+namespace TCPlayer.Code
 {
     internal static class Helpers
     {

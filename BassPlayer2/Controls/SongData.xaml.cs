@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace BassPlayer2.Controls
+namespace TCPlayer.Controls
 {
     /// <summary>
     /// Interaction logic for SongData.xaml

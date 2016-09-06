@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace BassPlayer2
+namespace TCPlayer
 {
     /// <summary>
     /// Interaction logic for App.xaml

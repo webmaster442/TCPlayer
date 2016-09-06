@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace BassPlayer2.Code
+namespace TCPlayer.Code
 {
     public interface IDialog
     {

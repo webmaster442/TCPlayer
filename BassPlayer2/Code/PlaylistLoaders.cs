@@ -4,7 +4,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
-namespace BassPlayer2.Code
+namespace TCPlayer.Code
 {
     internal static class PlaylistLoaders
     {

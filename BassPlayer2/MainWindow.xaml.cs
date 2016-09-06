@@ -1,5 +1,5 @@
-﻿using BassPlayer2.Code;
-using BassPlayer2.Controls;
+﻿using TCPlayer.Code;
+using TCPlayer.Controls;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -10,7 +10,7 @@ using System.Windows.Media;
 using System.Windows.Shell;
 using System.Windows.Threading;
 
-namespace BassPlayer2
+namespace TCPlayer
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

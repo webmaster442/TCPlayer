@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace BassPlayer2.Code
+namespace TCPlayer.Code
 {
     internal static class Extensions
     {

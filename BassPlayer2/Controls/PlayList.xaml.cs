@@ -1,4 +1,4 @@
-﻿using BassPlayer2.Code;
+﻿using TCPlayer.Code;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace BassPlayer2.Controls
+namespace TCPlayer.Controls
 {
     /// <summary>
     /// Interaction logic for PlayList.xaml

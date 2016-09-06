@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace BassPlayer2.Style
+namespace TCPlayer.Style
 {
     /// <summary>
     /// Converts a full path name to a file name. Internally calls System.IO.Path.GetFileName
