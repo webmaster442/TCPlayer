@@ -43,7 +43,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ManagedBass.PInvoke, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ManagedBass.PInvoke.0.4.1\lib\net45\ManagedBass.PInvoke.dll</HintPath>
+      <HintPath>..\packages\ManagedBass.PInvoke.0.4.3\lib\net45\ManagedBass.PInvoke.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationFramework.Aero2" />
