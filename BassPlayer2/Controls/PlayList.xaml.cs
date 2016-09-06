@@ -90,7 +90,7 @@ namespace BassPlayer2.Controls
             ofd.Filter = "Playlists | " + App.Playlists;
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                string ext = Path.GetFileName(ofd.FileName);
+                string ext = Path.GetExtension(ofd.FileName);
                 string[] result = null;
                 switch (ext)
                 {

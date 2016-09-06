@@ -91,6 +91,12 @@ namespace BassPlayer2
             WindowState = WindowState.Minimized;
         }
 
+        private void BtnAbout_Click(object sender, RoutedEventArgs e)
+        {
+            var about = new AboutDialog();
+            ShowDialog(about);
+        }
+
         public static void ShowDialog(UserControl dialog)
         {
             var main = Application.Current.MainWindow as MainWindow;
@@ -107,7 +113,8 @@ namespace BassPlayer2
         private void OverLayOk_Click(object sender, RoutedEventArgs e)
         {
             OverLay.Visibility = Visibility.Collapsed;
-            (OverLayContent.Children[0] as IDialog).OkClicked();
+            var dialog = (OverLayContent.Children[0] as IDialog);
+            dialog.OkClicked?.Invoke();
             OverLayContent.Children.Clear();
         }
 
@@ -147,19 +154,48 @@ namespace BassPlayer2
             MainWindow.ShowDialog(selector);
         }
 
-        private void StartPlay()
+        private void Reset()
         {
-            if (!_loaded || PlayList.SelectedItem == null) return;
-            _player.Load(PlayList.SelectedItem);
-            _player.Play();
-            _timer.IsEnabled = true;
+            _timer.IsEnabled = false;
+            SeekSlider.Value = 0;
             Taskbar.ProgressState = TaskbarItemProgressState.Normal;
             Taskbar.ProgressValue = 0;
-            var len = TimeSpan.FromSeconds(_player.Length);
-            TbFullTime.Text = len.ToShortTime();
-            SeekSlider.Value = 0;
-            SongDat.UpdateMediaInfo(PlayList.SelectedItem);
-            SeekSlider.Maximum = _player.Length;
+            TbCurrTime.Text = TimeSpan.FromSeconds(0).ToShortTime();
+            TbFullTime.Text = TimeSpan.FromSeconds(0).ToShortTime();
+        }
+
+
+        private void StartPlay()
+        {
+            try
+            {
+                if (!_loaded || PlayList.SelectedItem == null) return;
+                Reset();
+                SongDat.Reset();
+                _player.Load(PlayList.SelectedItem);
+
+                if (_player.IsStream)
+                {
+                    Taskbar.ProgressState = TaskbarItemProgressState.Indeterminate;
+                }
+                else
+                {
+                    var len = TimeSpan.FromSeconds(_player.Length);
+                    TbFullTime.Text = len.ToShortTime();
+                    SeekSlider.Maximum = _player.Length;
+                }
+                _player.Play();
+                _timer.IsEnabled = true;
+                SongDat.UpdateMediaInfo(PlayList.SelectedItem);
+
+            }
+            catch (Exception ex)
+            {
+                _timer.IsEnabled = false;
+                Reset();
+                SongDat.Reset();
+                Helpers.ErrorDialog(ex);
+            }
         }
 
         private void _timer_Tick(object sender, EventArgs e)
@@ -172,8 +208,16 @@ namespace BassPlayer2
             }
             var pos = TimeSpan.FromSeconds(_player.Position);
             TbCurrTime.Text = pos.ToShortTime();
-            SeekSlider.Value = _player.Position;
-            Taskbar.ProgressValue = SeekSlider.Value / SeekSlider.Maximum;
+            if (_player.IsStream)
+            {
+                SeekSlider.Value = 0;
+            }
+            else
+            {
+                SeekSlider.Value = _player.Position;
+                Taskbar.ProgressValue = SeekSlider.Value / SeekSlider.Maximum;
+            }
+
         }
 
         private void SeekSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -220,7 +264,8 @@ namespace BassPlayer2
             }
             _timer.IsEnabled = !_player.IsPaused;
             if (_player.IsPaused) Taskbar.ProgressState = TaskbarItemProgressState.Paused;
-            else Taskbar.ProgressState = TaskbarItemProgressState.Normal;
+            else if (!_player.IsStream) Taskbar.ProgressState = TaskbarItemProgressState.Normal;
+            else Taskbar.ProgressState = TaskbarItemProgressState.Indeterminate;
         }
 
         private void ThumbButtonInfo_Click(object sender, EventArgs e)

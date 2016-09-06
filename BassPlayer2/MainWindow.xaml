@@ -36,6 +36,7 @@
                     ImageSource="Style/taskbar-skip-next.png"/>
                 <ThumbButtonInfo
                     Description="Mute/UnMute"
+                    Click="ThumbButtonInfo_Click"
                     ImageSource="Style/taskbar-volume-off.png"/>
             </TaskbarItemInfo.ThumbButtonInfos>
         </TaskbarItemInfo>
@@ -57,12 +58,19 @@
                 <ColumnDefinition Width="32"/>
                 <ColumnDefinition Width="32"/>
                 <ColumnDefinition Width="32"/>
+                <ColumnDefinition Width="32"/>
             </Grid.ColumnDefinitions>
             <TextBlock
                 Margin="5,0"
                 Text="{Binding ElementName=MainWin, Path=Title}"/>
-            <ToggleButton
+            <Button
+                Content="{StaticResource IconInformation}"
                 Grid.Column="1"
+                ToolTip="About ..."
+                x:Name="BtnAbout"
+                Click="BtnAbout_Click"/>
+            <ToggleButton
+                Grid.Column="2"
                 IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=TopMost, Mode=TwoWay}"
                 x:Name="AllWaysTop">
                 <ToggleButton.Resources>
@@ -83,13 +91,13 @@
                 </ToggleButton.Resources>
             </ToggleButton>
             <Button
-                Grid.Column="2"
+                Grid.Column="3"
                 x:Name="TitlebarMinimize"
                 Click="TitlebarMinimize_Click"
                 ToolTip="Minimize to Tray"
                 Content="{StaticResource IconMinimize}"/>
             <Button 
-                Grid.Column="3"
+                Grid.Column="4"
                 x:Name="TitlebarClose"
                 ToolTip="Exit application"
                 Content="{StaticResource IconClose}"

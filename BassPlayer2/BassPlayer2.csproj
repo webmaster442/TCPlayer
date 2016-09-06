@@ -74,6 +74,9 @@
     <Compile Include="Code\Native.cs" />
     <Compile Include="Code\Player.cs" />
     <Compile Include="Code\PlaylistLoaders.cs" />
+    <Compile Include="Controls\AboutDialog.xaml.cs">
+      <DependentUpon>AboutDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\AddURLDialog.xaml.cs">
       <DependentUpon>AddURLDialog.xaml</DependentUpon>
     </Compile>
@@ -318,6 +321,10 @@
     <Compile Include="Lib\TagLib\Xmp\XmpNodeVisitor.cs" />
     <Compile Include="Lib\TagLib\Xmp\XmpTag.cs" />
     <Compile Include="Style\FileNameConverter.cs" />
+    <Page Include="Controls\AboutDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\AddURLDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

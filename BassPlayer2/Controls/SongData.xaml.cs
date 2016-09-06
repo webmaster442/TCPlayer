@@ -113,11 +113,11 @@ namespace BassPlayer2.Controls
             {
                 FileName = file;
                 Cover = new BitmapImage(new Uri("/BassPlayer2;component/Style/network.png", UriKind.Relative));
-                Year = "";
+                Year = DateTime.Now.Year.ToString();
                 Album = "";
                 Title = "Stream";
-                Artist = file;
-                Size = "0";
+                Artist = Path.GetFileName(file);
+                Size = "Infinite";
                 return;
             }
             FileName = Path.GetFileName(file);
@@ -147,12 +147,17 @@ namespace BassPlayer2.Controls
             }
             catch (Exception)
             {
-                Cover = new BitmapImage(new Uri("/BassPlayer2;component/Style/unknown.png", UriKind.Relative));
-                Year = "";
-                Album = "";
-                Title = "";
-                Artist = "";
+                Reset();
             }
+        }
+
+        public void Reset()
+        {
+            Cover = new BitmapImage(new Uri("/BassPlayer2;component/Style/unknown.png", UriKind.Relative));
+            Year = "";
+            Album = "";
+            Title = "";
+            Artist = "";
         }
     }
 }

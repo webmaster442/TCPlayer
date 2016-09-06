@@ -18,6 +18,7 @@ namespace BassPlayer2.Code
         private int _source, _mixer;
         private float _lastvol;
         private bool _paused;
+        private bool _isstream;
 
         public Player()
         {
@@ -43,6 +44,11 @@ namespace BassPlayer2.Code
             Bass.PluginFree(0);
             Bass.Unload();
             GC.SuppressFinalize(this);
+        }
+
+        public bool IsStream
+        {
+            get { return _isstream; }
         }
 
         /// <summary>
@@ -115,6 +121,7 @@ namespace BassPlayer2.Code
         /// <param name="file">File to load</param>
         public void Load(string file)
         {
+            _isstream = false;
             if (_source != 0)
             {
                 Bass.StreamFree(_source);
@@ -131,6 +138,7 @@ namespace BassPlayer2.Code
             if (file.StartsWith("http://") || file.StartsWith("https://"))
             {
                 _source = Bass.CreateStream(file, 0, sourceflags, null);
+                _isstream = true;
             }
             else if (file.StartsWith("cd://"))
             {
@@ -144,6 +152,7 @@ namespace BassPlayer2.Code
             if (_source == 0)
             {
                 Error("Load failed");
+                _isstream = false;
                 return;
             }
             var ch = Bass.ChannelGetInfo(_source);
