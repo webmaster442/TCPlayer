@@ -18,7 +18,7 @@ namespace TCPlayer.Controls
         }
 
         public static DependencyProperty CoverProperty =
-            DependencyProperty.Register("Cover", typeof(ImageSource), typeof(SongData), new PropertyMetadata(new BitmapImage(new Uri("pack://application:,,,/BassPlayer2;component/Style/unknown.png"))));
+            DependencyProperty.Register("Cover", typeof(ImageSource), typeof(SongData), new PropertyMetadata(new BitmapImage(new Uri("pack://application:,,,/TCPlayer;component/Style/unknown.png"))));
 
         public static DependencyProperty FileNameProperty =
             DependencyProperty.Register("FileName", typeof(string), typeof(SongData));
@@ -112,7 +112,7 @@ namespace TCPlayer.Controls
             if (file.StartsWith("http://") || file.StartsWith("https://"))
             {
                 FileName = file;
-                Cover = new BitmapImage(new Uri("/BassPlayer2;component/Style/network.png", UriKind.Relative));
+                Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/network.png", UriKind.Relative));
                 Year = DateTime.Now.Year.ToString();
                 Album = "";
                 Title = "Stream";
@@ -153,7 +153,7 @@ namespace TCPlayer.Controls
 
         public void Reset()
         {
-            Cover = new BitmapImage(new Uri("/BassPlayer2;component/Style/unknown.png", UriKind.Relative));
+            Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/unknown.png", UriKind.Relative));
             Year = "";
             Album = "";
             Title = "";

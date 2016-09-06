@@ -1,20 +1,20 @@
-﻿using Microsoft.Shell;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using TCPlayer.Code;
 
 namespace TCPlayer
 {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application, ISingleInstanceApp
+    public partial class App : Application
     {
-        private const string Unique = "BassPlayer2";
+        private const string AppName = "TCPlayer";
 
         public const string Formats = "*.mp3;*.mp4;*.m4a;*.m4b;*.aac;*.flac;*.ac3;*.wv;*.wav;*.wma;*.ogg";
 
@@ -23,21 +23,27 @@ namespace TCPlayer
         [STAThread]
         public static void Main()
         {
-            if (SingleInstance<App>.InitializeAsFirstInstance(Unique))
+            var si = new SingleInstanceApp(AppName);
+            si.ReceiveString += Si_ReceiveString;
+            if (si.IsFirstInstance)
             {
                 var application = new App();
                 application.InitializeComponent();
                 application.ShutdownMode = ShutdownMode.OnMainWindowClose;
                 application.Run();
-                SingleInstance<App>.Cleanup();
+                si.Close();
             }
+            else si.SubmitParameters();
         }
 
-        public bool SignalExternalCommandLineArgs(IList<string> args)
+        private static void Si_ReceiveString(string obj)
         {
-            var main = Current.MainWindow as MainWindow;
-            main.DoLoadAndPlay(args);
-            return true;
+            var files = obj.Split(' ');
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                var mw = App.Current.MainWindow as MainWindow;
+                mw.DoLoadAndPlay(files);
+            });
         }
     }
 }

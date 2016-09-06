@@ -71,6 +71,7 @@
     <Compile Include="Code\Extensions.cs" />
     <Compile Include="Code\Helpers.cs" />
     <Compile Include="Code\Interfaces.cs" />
+    <Compile Include="Code\SingleInstance.cs" />
     <Compile Include="Code\Native.cs" />
     <Compile Include="Code\Player.cs" />
     <Compile Include="Code\PlaylistLoaders.cs" />
@@ -83,7 +84,6 @@
     <Compile Include="Controls\DeviceChange.xaml.cs">
       <DependentUpon>DeviceChange.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Lib\SingleInstance.cs" />
     <Compile Include="Lib\TagLib\Aac\AudioHeader.cs" />
     <Compile Include="Lib\TagLib\Aac\BitStream.cs" />
     <Compile Include="Lib\TagLib\Aac\File.cs" />
