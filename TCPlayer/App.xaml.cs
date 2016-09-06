@@ -38,7 +38,7 @@ namespace TCPlayer
 
         private static void Si_ReceiveString(string obj)
         {
-            var files = obj.Split(' ');
+            var files = obj.Split('\n');
             App.Current.Dispatcher.Invoke(() =>
             {
                 var mw = App.Current.MainWindow as MainWindow;

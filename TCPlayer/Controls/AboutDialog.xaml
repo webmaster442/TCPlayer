@@ -35,7 +35,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <TextBlock
-                    Text="Bass Player2"
+                    Text="TC Player"
                     Grid.Column="1"
                     Style="{StaticResource Title}"/>
                 <Border

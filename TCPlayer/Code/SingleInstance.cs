@@ -67,7 +67,7 @@ namespace TCPlayer.Code
             StringBuilder sb = new StringBuilder();
             for (int i=1; i<pars.Length; i++)
             {
-                sb.AppendFormat("{0} ", pars[i]);
+                sb.AppendFormat("{0}\n", pars[i]);
             }
             Write(sb.ToString());
         }

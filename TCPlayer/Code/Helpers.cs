@@ -18,16 +18,5 @@ namespace TCPlayer.Code
                 else MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             });
         }
-
-        public static string Arguments(string[] args)
-        {
-            StringBuilder sb = new StringBuilder();
-            foreach (var arg in args)
-            {
-                sb.AppendFormat("\"{0}\" ", arg);
-            }
-            return sb.ToString();
-        }
-
     }
 }

@@ -9,7 +9,7 @@ namespace TCPlayer.Code
 {
     internal class Player : IDisposable
     {
-        private bool Is64Bit
+        public bool Is64Bit
         {
             get { return IntPtr.Size == 8; }
         }
@@ -169,6 +169,12 @@ namespace TCPlayer.Code
             }
             Bass.ChannelSetAttribute(_mixer, ChannelAttribute.Volume, _lastvol);
             _paused = false;
+        }
+
+        public void VolumeValues(out int left, out int right)
+        {
+            left = Bass.ChannelGetLevelLeft(_mixer);
+            right = Bass.ChannelGetLevelRight(_mixer);
         }
 
         /// <summary>

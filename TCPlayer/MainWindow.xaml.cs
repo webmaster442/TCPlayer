@@ -32,10 +32,13 @@ namespace TCPlayer
             _player.ChangeDevice(); //init
             _prevvol = 1.0f;
             _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromSeconds(0.5);
+            _timer.Interval = TimeSpan.FromMilliseconds(40);
             _timer.IsEnabled = false;
             _timer.Tick += _timer_Tick;
             _loaded = true;
+
+            if (_player.Is64Bit) Title += " (x64)";
+            else Title += " (x86)";
         }
 
         private void MainWin_SourceInitialized(object sender, EventArgs e)
@@ -146,11 +149,11 @@ namespace TCPlayer
             var selector = new DeviceChange();
             string[] devices = _player.GetDevices();
             selector.DataContext = devices;
-            selector.OkClicked= new Action(() =>
-            {
-                var name = devices[selector.DeviceIndex];
-                _player.ChangeDevice(name);
-            });
+            selector.OkClicked = new Action(() =>
+             {
+                 var name = devices[selector.DeviceIndex];
+                 _player.ChangeDevice(name);
+             });
             MainWindow.ShowDialog(selector);
         }
 
@@ -201,23 +204,37 @@ namespace TCPlayer
         private void _timer_Tick(object sender, EventArgs e)
         {
             if (!_loaded) return;
-            if (_isdrag)
+
+            if ((IsActive || Topmost) && (MainView.SelectedIndex == 0))
             {
-                TbCurrTime.Text = TimeSpan.FromSeconds(SeekSlider.Value).ToShortTime();
-                return;
-            }
-            var pos = TimeSpan.FromSeconds(_player.Position);
-            TbCurrTime.Text = pos.ToShortTime();
-            if (_player.IsStream)
-            {
-                SeekSlider.Value = 0;
+                if (_isdrag)
+                {
+                    TbCurrTime.Text = TimeSpan.FromSeconds(SeekSlider.Value).ToShortTime();
+                    return;
+                }
+                var pos = TimeSpan.FromSeconds(_player.Position);
+                TbCurrTime.Text = pos.ToShortTime();
+                if (_player.IsStream)
+                {
+                    SeekSlider.Value = 0;
+                }
+                else
+                {
+                    SeekSlider.Value = _player.Position;
+                    Taskbar.ProgressValue = SeekSlider.Value / SeekSlider.Maximum;
+                }
+                int l, r;
+                _player.VolumeValues(out l, out r);
+                if (l < 0) l *= -1;
+                if (r < 0) r *= -1;
+                VuR.Value = l;
+                VuL.Value = r;
             }
             else
             {
                 SeekSlider.Value = _player.Position;
                 Taskbar.ProgressValue = SeekSlider.Value / SeekSlider.Maximum;
             }
-
         }
 
         private void SeekSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

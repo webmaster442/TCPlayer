@@ -14,7 +14,7 @@
         Topmost="{Binding ElementName=AllWaysTop, Path=IsChecked}"
         SourceInitialized="MainWin_SourceInitialized"
         Closing="MainWin_Closing"
-        Title="BassPlayer2" Height="297" Width="558">
+        Title="TC Player" Height="297" Width="558">
     <Window.TaskbarItemInfo>
         <TaskbarItemInfo
             ProgressState="None" 
@@ -178,6 +178,21 @@
                         <TextBlock
                             x:Name="TbCurrTime"
                             Text="00:00:00"/>
+                        <StackPanel
+                            Margin="170,0,0,0"
+                            VerticalAlignment="Center">
+                            <ProgressBar
+                                Width="200"
+                                Maximum="32768"
+                                Height="8" 
+                                x:Name="VuR"
+                                Margin="0,0,0,2"/>
+                            <ProgressBar
+                                Width="200"
+                                Maximum="32768"
+                                x:Name="VuL"
+                                Height="8"/>
+                        </StackPanel>
                     </StackPanel>
                     <StackPanel
                         HorizontalAlignment="Center"
