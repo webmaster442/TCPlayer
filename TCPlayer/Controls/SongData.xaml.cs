@@ -1,9 +1,11 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Collections.Generic;
 
 namespace TCPlayer.Controls
 {
@@ -107,7 +109,7 @@ namespace TCPlayer.Controls
             return string.Format("{0:0.000} {1}", val, unit);
         }
 
-        public void UpdateMediaInfo(string file)
+        public async void UpdateMediaInfo(string file)
         {
             if (file.StartsWith("http://") || file.StartsWith("https://"))
             {
@@ -118,6 +120,17 @@ namespace TCPlayer.Controls
                 Title = "Stream";
                 Artist = Path.GetFileName(file);
                 Size = "Infinite";
+                return;
+            }
+            else if (file.StartsWith("cd://"))
+            {
+                string[] info = file.Replace("cd://", "").Split('/');
+                var drive = Convert.ToInt32(info[0]);
+                var track = Convert.ToInt32(info[1]);
+
+                var size = ManagedBass.Cd.BassCd.GetTrackLength(drive, track);
+                Size = GetFileSize(size);
+                UpdateCDFlags(track + 1);
                 return;
             }
             FileName = Path.GetFileName(file);
@@ -139,15 +152,34 @@ namespace TCPlayer.Controls
                     ret.EndInit();
                     ms.Close();
                     Cover = ret;
-                    Year = tags.Tag.Year.ToString();
-                    Artist = tags.Tag.Performers[0];
-                    Album = tags.Tag.Album;
-                    Title = tags.Tag.Title;
                 }
+                Year = tags.Tag.Year.ToString();
+                Artist = tags.Tag.Performers[0];
+                Album = tags.Tag.Album;
+                Title = tags.Tag.Title;
             }
             catch (Exception)
             {
                 Reset();
+            }
+        }
+
+        private void UpdateCDFlags(int track)
+        {
+            FileName = string.Format("CD Track #{0}", track);
+            Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/disk.png", UriKind.Relative));
+            Year = "unknown";
+            if (App._cddata.Count > 0)
+            {
+                Artist = App._cddata[string.Format("PERFORMER{0}", track)];
+                Title = App._cddata[string.Format("TITLE{0}", track)];
+                Album = App._cddata["TITLE0"];
+            }
+            else
+            {
+                Artist = "Track";
+                Title = string.Format("#{0}", track);
+                Album = "Audio CD";
             }
         }
 

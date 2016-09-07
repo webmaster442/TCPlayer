@@ -22,6 +22,10 @@ namespace TCPlayer.Style
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string fullpath = value.ToString();
+
+            if (fullpath.StartsWith("http:") || fullpath.StartsWith("cd:"))
+                return fullpath;
+
             var fname = System.IO.Path.GetFileName(fullpath);
             if (fname == "..") return "<- Back";
             return fname;

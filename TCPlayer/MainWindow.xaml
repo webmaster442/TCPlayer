@@ -13,6 +13,8 @@
         Top="{Binding Source={x:Static props:Settings.Default}, Path=Top, Mode=TwoWay}"
         Topmost="{Binding ElementName=AllWaysTop, Path=IsChecked}"
         SourceInitialized="MainWin_SourceInitialized"
+        AllowDrop="True"
+        Drop="MainWin_Drop"
         Closing="MainWin_Closing"
         Title="TC Player" Height="297" Width="558">
     <Window.TaskbarItemInfo>

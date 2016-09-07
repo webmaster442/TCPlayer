@@ -15,10 +15,11 @@ namespace TCPlayer
     public partial class App : Application
     {
         private const string AppName = "TCPlayer";
+        internal const string Formats = "*.mp3;*.mp4;*.m4a;*.m4b;*.aac;*.flac;*.ac3;*.wv;*.wav;*.wma;*.ogg";
+        internal const string Playlists = "*.pls;*.m3u;*.wpl";
 
-        public const string Formats = "*.mp3;*.mp4;*.m4a;*.m4b;*.aac;*.flac;*.ac3;*.wv;*.wav;*.wma;*.ogg";
-
-        public const string Playlists = "*.pls;*.m3u;*.wpl";
+        internal static Dictionary<string, string> _cddata;
+        internal static string _discid;
 
         [STAThread]
         public static void Main()
@@ -28,6 +29,8 @@ namespace TCPlayer
             if (si.IsFirstInstance)
             {
                 var application = new App();
+                _cddata = new Dictionary<string, string>();
+                _discid = "";
                 application.InitializeComponent();
                 application.ShutdownMode = ShutdownMode.OnMainWindowClose;
                 application.Run();

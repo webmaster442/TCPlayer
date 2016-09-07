@@ -138,9 +138,14 @@ namespace TCPlayer
 
         public void DoLoadAndPlay(IEnumerable<string> items)
         {
+            var needplay = false;
+            if (PlayList.Count < 1) needplay = true; 
             PlayList.DoLoad(items);
-            PlayList.NextTrack();
-            StartPlay();
+            if (needplay)
+            {
+                PlayList.NextTrack();
+                StartPlay();
+            }
         }
 
         private void BtnChangeDev_Click(object sender, RoutedEventArgs e)
@@ -242,8 +247,16 @@ namespace TCPlayer
             if (_isdrag) return;
             if (SeekSlider.Maximum - SeekSlider.Value < 0.5)
             {
-                PlayList.NextTrack();
-                StartPlay();
+                if (PlayList.CanDoNextTrack())
+                {
+                    PlayList.NextTrack();
+                    StartPlay();
+                }
+                else
+                {
+                    _player.Stop();
+                    Reset();
+                }
             }
         }
 
@@ -361,6 +374,16 @@ namespace TCPlayer
         private void MainWin_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Properties.Settings.Default.Save();
+        }
+
+        private void MainWin_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                // Note that you can have more than one file.
+                var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                DoLoadAndPlay(files);
+            }
         }
     }
 }

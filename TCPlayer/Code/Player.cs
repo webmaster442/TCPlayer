@@ -318,7 +318,20 @@ namespace TCPlayer.Code
 
             if (BassCd.IsReady(driveindex))
             {
-                for (int i = 0; i < BassCd.GetTracks(driveindex); i++)
+                var numtracks = BassCd.GetTracks(driveindex);
+                var discid = BassCd.GetID(0, CDID.CDDB);
+                if (App._discid != discid)
+                {
+                    var datas = BassCd.GetIDText(driveindex);
+                    App._discid = discid;
+                    App._cddata.Clear();
+                    foreach (var data in datas)
+                    {
+                        var item = data.Split('=');
+                        App._cddata.Add(item[0], item[1]);
+                    }
+                }
+                for (int i = 0; i < numtracks; i++)
                 {
                     var entry = string.Format("cd://{0}/{1}", driveindex, i);
                     list.Add(entry);

@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Threading.Tasks;
 
 namespace TCPlayer.Controls
 {
@@ -34,13 +35,15 @@ namespace TCPlayer.Controls
             }
         }
 
+        public bool CanDoNextTrack()
+        {
+            return (PlaylistView.SelectedIndex + 1) < (_list.Count - 1);
+        }
+
         public void NextTrack()
         {
-            Dispatcher.Invoke(() =>
-            {
-                if (PlaylistView.SelectedIndex + 1 < _list.Count)
-                    PlaylistView.SelectedIndex += 1;
-            });
+            if (PlaylistView.SelectedIndex + 1 < _list.Count)
+                PlaylistView.SelectedIndex += 1;
         }
 
         public void PreviousTrack()
@@ -50,6 +53,11 @@ namespace TCPlayer.Controls
                 if (PlaylistView.SelectedIndex - 1 > -1)
                     PlaylistView.SelectedIndex -= 1;
             });
+        }
+
+        public int Count
+        {
+            get { return _list.Count; }
         }
 
         public void DoLoad(IEnumerable<string> items)
@@ -219,6 +227,41 @@ namespace TCPlayer.Controls
                 if (index < 0) return;
                 ItemDoubleClcik(sender, null);
             }
+        }
+
+        private void DiscMenu_SubmenuOpened(object sender, RoutedEventArgs e)
+        {
+            DiscMenu.Items.Clear();
+            var cds = from cd in DriveInfo.GetDrives()
+                      where cd.DriveType == DriveType.CDRom &&
+                      cd.DriveFormat == "CDFS" &&
+                      cd.IsReady select cd.Name;
+
+            foreach (var cd in cds)
+            {
+                MenuItem drive = new MenuItem();
+                drive.Header = cd;
+                drive.Style = FindResource("SubMenuItem") as System.Windows.Style;
+                drive.Click += drive_Click;
+                DiscMenu.Items.Add(drive);
+            }
+            if (cds.Count() < 1)
+            {
+                MenuItem drive = new MenuItem();
+                drive.Style = FindResource("SubMenuItem") as System.Windows.Style;
+                drive.Header = "No Discs found";
+                DiscMenu.Items.Add(drive);
+            }
+        }
+
+        private async void drive_Click(object sender, RoutedEventArgs e)
+        {
+            var drive = ((MenuItem)sender).Header.ToString();
+            var result = await Task.Run(() =>
+            {
+                return Player.GetCdInfo(drive);
+            });
+            _list.AddRange(result);
         }
     }
 }
