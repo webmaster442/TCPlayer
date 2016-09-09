@@ -2,6 +2,9 @@
 
 Total Commander Audio Player plugin & standalone player written in C#, based on bass.dll components.
 
+![alt text](readme/shot01.png"TC Player")
+![alt text](readme/shot01.png"TC Player")
+
 The software uses the following components made by others:
 
 * [ManagedBass.PInvoke](https://github.com/ManagedBass/ManagedBass.PInvoke)
