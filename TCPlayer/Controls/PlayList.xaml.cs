@@ -85,7 +85,7 @@ namespace TCPlayer.Controls
 
             foreach (var item in items)
             {
-                var ext = Path.GetExtension(item);
+                var ext = Path.GetExtension(item).ToLower();
                 if (App.Playlists.Contains(ext))
                 {
                     string[] result = null;

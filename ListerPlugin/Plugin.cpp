@@ -65,7 +65,7 @@ void CALLBACK timer_code(HWND hwnd, UINT uMsg, UINT timerId, DWORD dwTime)
 	DestroyWindow(timer);
 }
 
-HWND __stdcall ListLoad(HWND ParentWin, char* FileToLoad, int ShowFlags)
+HWND __stdcall ListLoadW(HWND ParentWin, WCHAR* FileToLoad, int ShowFlags)
 {
 	wchar_t file[MAX_PATH];
 	wchar_t safefile[MAX_PATH];
@@ -75,8 +75,8 @@ HWND __stdcall ListLoad(HWND ParentWin, char* FileToLoad, int ShowFlags)
 
 	PathRemoveFileSpec(dllpath);
 
-	mbstowcs(file, FileToLoad, MAX_PATH);
-	swprintf(safefile, L"\"%s\"", file);
+	swprintf(safefile, L"\"%s\"", FileToLoad);
+	MessageBox(ParentWin, safefile, L"SafeFile", 0);
 
 	SHELLEXECUTEINFO ShExecInfo = { 0 };
 	ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);

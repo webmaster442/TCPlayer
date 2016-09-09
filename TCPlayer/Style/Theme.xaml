@@ -373,7 +373,10 @@
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <TextBlock Foreground="White" Text="{Binding Converter={StaticResource FilenameConv}}"/>
+                    <TextBlock
+                        Foreground="White" 
+                        Text="{Binding Converter={StaticResource FilenameConv}}"
+                        ToolTip="{Binding}"/>
                 </DataTemplate>
             </Setter.Value>
         </Setter>

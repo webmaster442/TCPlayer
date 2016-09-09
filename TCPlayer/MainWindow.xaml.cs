@@ -57,6 +57,11 @@ namespace TCPlayer
 
             if (_player.Is64Bit) Title += " (x64)";
             else Title += " (x86)";
+
+            var src = Environment.GetCommandLineArgs();
+            string[] pars = new string[src.Length - 1];
+            Array.Copy(src, 1, pars, 0, src.Length -1);
+            DoLoadAndPlay(pars);
         }
 
         private void MainWin_SourceInitialized(object sender, EventArgs e)
@@ -164,6 +169,11 @@ namespace TCPlayer
                 PlayList.NextTrack();
                 StartPlay();
             }
+            else
+            {
+                Dispatcher.Invoke(() => { MainView.SelectedIndex = 1; });
+            }
+            if (Topmost) Activate();
         }
 
         private void BtnChangeDev_Click(object sender, RoutedEventArgs e)

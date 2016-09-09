@@ -7,12 +7,12 @@ using System.Windows;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("BassPlayer2")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("TCPlayer")]
+[assembly: AssemblyDescription("Total Commander Audio Player plugin & standalone player written in C#, based on bass.dll components")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("BassPlayer2")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyCompany("Webmaster442")]
+[assembly: AssemblyProduct("TCPlayer")]
+[assembly: AssemblyCopyright("Copyright © Webmaster442 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

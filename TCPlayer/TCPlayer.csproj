@@ -477,6 +477,9 @@
     <Content Include="Engine\x86\tags.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="pluginst.inf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Style\disk.png" />
     <Resource Include="Style\taskbar-play-pause.png" />
     <Resource Include="Style\taskbar-skip-next.png" />
