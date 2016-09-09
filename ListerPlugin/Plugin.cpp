@@ -76,7 +76,7 @@ HWND __stdcall ListLoadW(HWND ParentWin, WCHAR* FileToLoad, int ShowFlags)
 	PathRemoveFileSpec(dllpath);
 
 	swprintf(safefile, L"\"%s\"", FileToLoad);
-	MessageBox(ParentWin, safefile, L"SafeFile", 0);
+	//MessageBox(ParentWin, safefile, L"SafeFile", 0);
 
 	SHELLEXECUTEINFO ShExecInfo = { 0 };
 	ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);

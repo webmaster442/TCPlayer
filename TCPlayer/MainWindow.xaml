@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:TCPlayer.Controls"
         xmlns:props="clr-namespace:TCPlayer.Properties"
+        PreviewKeyDown="MainWin_PreviewKeyDown"
         Style="{StaticResource Window}"
         x:Name="MainWin"
         Icon="icon.png"

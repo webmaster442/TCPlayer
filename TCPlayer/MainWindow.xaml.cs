@@ -173,7 +173,11 @@ namespace TCPlayer
             {
                 Dispatcher.Invoke(() => { MainView.SelectedIndex = 1; });
             }
-            if (Topmost) Activate();
+            if (WindowState == WindowState.Minimized) WindowState = WindowState.Normal;
+            Dispatcher.BeginInvoke(new Action(delegate 
+            {
+                this.Activate();
+            }), DispatcherPriority.ContextIdle, null);
         }
 
         private void BtnChangeDev_Click(object sender, RoutedEventArgs e)
@@ -411,6 +415,15 @@ namespace TCPlayer
                 // Note that you can have more than one file.
                 var files = (string[])e.Data.GetData(DataFormats.FileDrop);
                 DoLoadAndPlay(files);
+            }
+        }
+
+        private void MainWin_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                var q = MessageBox.Show("Exit program?", "Exit confirmation", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
+                if (q == MessageBoxResult.Yes) Close();
             }
         }
     }
