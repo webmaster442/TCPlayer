@@ -173,11 +173,18 @@ namespace TCPlayer
             {
                 Dispatcher.Invoke(() => { MainView.SelectedIndex = 1; });
             }
-            if (WindowState == WindowState.Minimized) WindowState = WindowState.Normal;
-            Dispatcher.BeginInvoke(new Action(delegate 
+            DoBringIntoView();
+        }
+
+        private void DoBringIntoView()
+        {
+            if (!Topmost)
             {
+                WindowState = WindowState.Normal;
+                Topmost = true;
+                Topmost = false;
                 this.Activate();
-            }), DispatcherPriority.ContextIdle, null);
+            }
         }
 
         private void BtnChangeDev_Click(object sender, RoutedEventArgs e)

@@ -67,7 +67,6 @@ void CALLBACK timer_code(HWND hwnd, UINT uMsg, UINT timerId, DWORD dwTime)
 
 HWND __stdcall ListLoadW(HWND ParentWin, WCHAR* FileToLoad, int ShowFlags)
 {
-	wchar_t file[MAX_PATH];
 	wchar_t safefile[MAX_PATH];
 	wchar_t dllpath[MAX_PATH];
 

@@ -55,7 +55,7 @@ namespace TCPlayer.Controls
 
         public bool CanDoNextTrack()
         {
-            return (PlaylistView.SelectedIndex + 1) < (_list.Count - 1);
+            return (PlaylistView.SelectedIndex + 1) <= (_list.Count - 1);
         }
 
         public void NextTrack()
