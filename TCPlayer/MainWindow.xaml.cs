@@ -219,7 +219,8 @@ namespace TCPlayer
                 if (!_loaded || PlayList.SelectedItem == null) return;
                 Reset();
                 SongDat.Reset();
-                _player.Load(PlayList.SelectedItem);
+                var file = PlayList.SelectedItem;
+                _player.Load(file);
 
                 if (_player.IsStream)
                 {
@@ -233,7 +234,8 @@ namespace TCPlayer
                 }
                 _player.Play();
                 _timer.IsEnabled = true;
-                SongDat.UpdateMediaInfo(PlayList.SelectedItem);
+                if (Helpers.IsTracker(file)) SongDat.UpdateMediaInfo(file, _player.SourceHandle);
+                else SongDat.UpdateMediaInfo(file);
 
             }
             catch (Exception ex)

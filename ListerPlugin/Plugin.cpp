@@ -26,7 +26,7 @@ HMODULE FLibHandle = 0;
 HWND timer = 0;
 EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 
-#define EXTENSIONS "MULTIMEDIA & (EXT=\"MP3\" | EXT=\"MP4\" | EXT=\"M4A\" | EXT=\"M4B\" | EXT=\"AAC\" | EXT=\"FLAC\" | EXT=\"AC3\" | EXT=\"WV\" | EXT=\"WAV\" | EXT=\"WMA\" | EXT=\"OGG\" | EXT=\"M3U\" | EXT=\"PLS\" | EXT=\"WPL\")"
+#define EXTENSIONS "MULTIMEDIA & (EXT=\"MP3\" | EXT=\"MP1\" | EXT=\"MP2\" | EXT=\"M4A\" | EXT=\"M4B\" | EXT=\"AAC\" | EXT=\"FLAC\" | EXT=\"AC3\" | EXT=\"WV\" | EXT=\"WAV\" | EXT=\"AIFF\" | EXT=\"AIF\" | EXT=\"WMA\" | EXT=\"MIDI\" | EXT=\"MID\" | EXT=\"RMI\" | EXT=\"KAR\" | EXT=\"OGG\" | EXT=\"MOD\" | EXT=\"XM\" | EXT=\"IT\" | EXT=\"S3M\" | EXT=\"MTM\" | EXT=\"UMX\" | EXT=\"MO3\" | EXT=\"M3U\" | EXT=\"PLS\" | EXT=\"WPL\")"
 #define PROGRAMNAME L"TCPlayer.exe"
 
 BOOL APIENTRY DllMain(HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved)

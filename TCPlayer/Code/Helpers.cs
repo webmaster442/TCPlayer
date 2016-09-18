@@ -35,5 +35,38 @@ namespace TCPlayer.Code
                 else MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             });
         }
+
+        public static bool IsMidi(string file)
+        {
+            var ext = System.IO.Path.GetExtension(file);
+            switch (ext)
+            {
+                case ".midi":
+                case ".mid":
+                case ".rmi":
+                case ".kar":
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        public static bool IsTracker(string file)
+        {
+            var ext = System.IO.Path.GetExtension(file);
+            switch (ext)
+            {
+                case ".xm":
+                case ".it":
+                case ".s3m":
+                case ".mod":
+                case ".mtm":
+                case ".umx":
+                case ".mo3":
+                    return true;
+                default:
+                    return false;
+            }
+        }
     }
 }

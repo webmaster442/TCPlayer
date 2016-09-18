@@ -22,6 +22,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using TCPlayer.Code;
+using ManagedBass;
+using System.Runtime.InteropServices;
 
 namespace TCPlayer.Controls
 {
@@ -125,7 +128,19 @@ namespace TCPlayer.Controls
             return string.Format("{0:0.000} {1}", val, unit);
         }
 
-        public async void UpdateMediaInfo(string file)
+        public void UpdateMediaInfo(string file, int handle)
+        {
+            var fi = new FileInfo(file);
+            FileName = fi.Name;
+            Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/music.png", UriKind.Relative));
+            Size = GetFileSize(fi.Length);
+            Artist = Marshal.PtrToStringAuto(Bass.ChannelGetTags(handle, TagType.MusicAuth));
+            Title = Marshal.PtrToStringAuto(Bass.ChannelGetTags(handle, TagType.MusicName));
+            Album = "";
+            Year = "unknown";
+        }
+
+        public void UpdateMediaInfo(string file)
         {
             if (file.StartsWith("http://") || file.StartsWith("https://"))
             {
@@ -149,11 +164,21 @@ namespace TCPlayer.Controls
                 UpdateCDFlags(track + 1);
                 return;
             }
-            FileName = Path.GetFileName(file);
             try
             {
                 var fi = new FileInfo(file);
+                FileName = fi.Name;
                 Size = GetFileSize(fi.Length);
+
+                if (Helpers.IsMidi(file))
+                {
+                    Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/midi.png", UriKind.Relative));
+                    Album = "";
+                    Title = fi.Name;
+                    Year = "Unknown";
+                    Artist = "";
+                    return;
+                }
 
                 TagLib.File tags = TagLib.File.Create(file);
                 if (tags.Tag.Pictures.Length > 0)

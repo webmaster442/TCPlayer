@@ -19,6 +19,7 @@
 using ManagedBass;
 using ManagedBass.Cd;
 using ManagedBass.Mix;
+using ManagedBass.Midi;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -52,6 +53,8 @@ namespace TCPlayer.Code
             Bass.PluginLoad(enginedir + "\\bassflac.dll");
             Bass.PluginLoad(enginedir + "\\basswma.dll");
             Bass.PluginLoad(enginedir + "\\basswv.dll");
+            Bass.PluginLoad(enginedir + "\\bassmidi.dll");
+            BassMidi.DefaultFont = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Engine\Ct8mgm.sf2");
         }
 
         protected virtual void Dispose(bool disposing)
@@ -163,6 +166,10 @@ namespace TCPlayer.Code
                 string[] info = file.Replace("cd://", "").Split('/');
                 _source = BassCd.CreateStream(Convert.ToInt32(info[0]), Convert.ToInt32(info[1]), sourceflags);
             }
+            else if (Helpers.IsTracker(file))
+            {
+                _source = Bass.MusicLoad(file, 0, 0, sourceflags);
+            }
             else
             {
                 _source = Bass.CreateStream(file, 0, 0, sourceflags);
@@ -193,6 +200,14 @@ namespace TCPlayer.Code
         {
             left = Bass.ChannelGetLevelLeft(_mixer);
             right = Bass.ChannelGetLevelRight(_mixer);
+        }
+
+        /// <summary>
+        /// Player source handle
+        /// </summary>
+        public int SourceHandle
+        {
+            get { return _source; }
         }
 
         /// <summary>

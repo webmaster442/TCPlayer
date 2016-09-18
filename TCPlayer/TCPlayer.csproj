@@ -387,6 +387,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Engine\Ct8mgm.sf2">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Lib\TagLib\TagLib.sources" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -418,6 +421,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Engine\x64\bassflac.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Engine\x64\bassmidi.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Engine\x64\bassmix.dll">
@@ -453,6 +459,9 @@
     <Content Include="Engine\x86\bassflac.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Engine\x86\bassmidi.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Engine\x86\bassmix.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -480,6 +489,8 @@
     <Content Include="pluginst.inf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Style\midi.png" />
+    <Resource Include="Style\music.png" />
     <Resource Include="Style\disk.png" />
     <Resource Include="Style\taskbar-play-pause.png" />
     <Resource Include="Style\taskbar-skip-next.png" />
