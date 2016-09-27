@@ -16,6 +16,7 @@ Code compiles with Visual Studio Community
 ##Features
 
 * Supports various audio formats: MP3, MP4, AAC, OGG, WAV, FLAC, WavPack, Apple Lossless (ALAC), WMA, AC3, CDDA
+* Support MIDI & tracker files playback: midi, mid, rmi, kar, xm, it, s3m, mod, mtm, umx, .mo3
 * Supports various playlist formats: PLS, M3U, WPL
 * 64 bit & 32 bit support
 * Supports Windows 7 & 8 Shell features: Taskbar progress & Taskbar preview buttons
