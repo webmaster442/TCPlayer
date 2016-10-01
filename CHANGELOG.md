@@ -1,6 +1,12 @@
+#1.03
+
+ * Fixed Total commander plugin loading in TC 9 beta & x86 versions
+ * Fixed .NET Framework targeting (4.5.2 -> 4.5.0)
+
 #1.02
-  * MP4 handler removed from plugin, because usually it's a video
-  * Added MIDI & Tracker formats playback
+
+ * MP4 handler removed from plugin, because usually it's a video
+ * Added MIDI & Tracker formats playback
 
 # 1.01 - 2016.09.10
  
