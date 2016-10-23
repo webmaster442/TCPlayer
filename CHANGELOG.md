@@ -1,3 +1,11 @@
+#1.05
+ * Added suport for: APE, MPC, MP+, MPP, OFR, OFS, SPX, TTA, DSF, OPUS
+ * Updated Bass.dll components
+ * Saves volume on exit ()
+
+#1.04
+ * Fixed Total commander plugin loading issue specific to x86 versions
+
 #1.03
 
  * Fixed Total commander plugin loading in TC 9 beta & x86 versions

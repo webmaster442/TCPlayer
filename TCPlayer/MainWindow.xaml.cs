@@ -62,6 +62,9 @@ namespace TCPlayer
             string[] pars = new string[src.Length - 1];
             Array.Copy(src, 1, pars, 0, src.Length -1);
             DoLoadAndPlay(pars);
+
+            var vol = Properties.Settings.Default.LastVolume;
+            if (vol != -1) VolSlider.Value = vol;
         }
 
         private void MainWin_SourceInitialized(object sender, EventArgs e)
@@ -414,6 +417,7 @@ namespace TCPlayer
 
         private void MainWin_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            Properties.Settings.Default.LastVolume = (float)VolSlider.Value;
             Properties.Settings.Default.Save();
         }
 
