@@ -49,8 +49,15 @@ namespace TCPlayer.Code
             BassCd.Load(enginedir);
             Bass.PluginLoad(enginedir + "\\bass_aac.dll");
             Bass.PluginLoad(enginedir + "\\bass_ac3.dll");
-            Bass.PluginLoad(enginedir + "\\bass_alac.dll");
+            Bass.PluginLoad(enginedir + "\\bass_ape.dll");
+            Bass.PluginLoad(enginedir + "\\bass_mpc.dll");
+            Bass.PluginLoad(enginedir + "\\bass_ofr.dll");
+            Bass.PluginLoad(enginedir + "\\bass_spx.dll");
+            Bass.PluginLoad(enginedir + "\\bass_tta.dll");
+            Bass.PluginLoad(enginedir + "\\bassalac.dll");
+            Bass.PluginLoad(enginedir + "\\bassdsd.dll");
             Bass.PluginLoad(enginedir + "\\bassflac.dll");
+            Bass.PluginLoad(enginedir + "\\bassopus.dll");
             Bass.PluginLoad(enginedir + "\\basswma.dll");
             Bass.PluginLoad(enginedir + "\\basswv.dll");
             Bass.PluginLoad(enginedir + "\\bassmidi.dll");
