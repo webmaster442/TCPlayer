@@ -86,6 +86,9 @@
     <Compile Include="Controls\DeviceChange.xaml.cs">
       <DependentUpon>DeviceChange.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Lib\TagLib\Aac\AudioHeader.cs" />
     <Compile Include="Lib\TagLib\Aac\BitStream.cs" />
     <Compile Include="Lib\TagLib\Aac\File.cs" />
@@ -336,6 +339,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\PlayList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

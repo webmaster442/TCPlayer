@@ -84,9 +84,9 @@ namespace TCPlayer
             Color c = GetWindowColorizationColor(false);
             TitleBar.Background = new SolidColorBrush(c);
 
-            var r = (byte)(c.R * 0.10);
-            var g = (byte)(c.G * 0.10);
-            var b = (byte)(c.B * 0.10);
+            var r = (byte)(c.R * 0.13);
+            var g = (byte)(c.G * 0.13);
+            var b = (byte)(c.B * 0.13);
             Background = new SolidColorBrush(Color.FromArgb(0xE5,r, g, b));
         }
 

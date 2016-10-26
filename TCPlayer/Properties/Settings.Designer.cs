@@ -61,13 +61,61 @@ namespace TCPlayer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("-1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
         public float LastVolume {
             get {
                 return ((float)(this["LastVolume"]));
             }
             set {
                 this["LastVolume"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ConfirmExit {
+            get {
+                return ((bool)(this["ConfirmExit"]));
+            }
+            set {
+                this["ConfirmExit"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SaveDevice {
+            get {
+                return ((bool)(this["SaveDevice"]));
+            }
+            set {
+                this["SaveDevice"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DeviceID {
+            get {
+                return ((int)(this["DeviceID"]));
+            }
+            set {
+                this["DeviceID"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SaveVolume {
+            get {
+                return ((bool)(this["SaveVolume"]));
+            }
+            set {
+                this["SaveVolume"] = value;
             }
         }
     }

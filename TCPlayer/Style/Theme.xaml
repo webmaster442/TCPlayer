@@ -382,4 +382,20 @@
         </Setter>
     </Style>
 
+    <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+        <Setter Property="Stylus.IsFlicksEnabled" Value="True" />
+        <Setter Property="Background" Value="Black"/>
+        <Setter Property="BorderBrush" Value="Yellow"/>
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="Height" Value="14" />
+                <Setter Property="MinHeight" Value="14" />
+            </Trigger>
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="Width" Value="14" />
+                <Setter Property="MinWidth" Value="14" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
 </ResourceDictionary>

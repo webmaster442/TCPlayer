@@ -12,7 +12,9 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <TextBlock 
-            Text="Please select output device:"/>
+            Text="Please select output device:"
+            Margin="5,0"
+            FontWeight="Bold"/>
         <ListBox 
             x:Name="LbDevices"
             Grid.Row="1"

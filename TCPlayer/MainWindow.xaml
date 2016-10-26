@@ -143,7 +143,8 @@
                 <Grid
                     Grid.Row="0"
                     x:Name="OverLayContent"
-                    Background="{StaticResource Button.Pressed.Background}"/>
+                    Background="{StaticResource Button.Pressed.Background}"
+                    Margin="5"/>
             </Grid>
         </Border>
         <TabControl
