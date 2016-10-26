@@ -63,8 +63,11 @@ namespace TCPlayer
             Array.Copy(src, 1, pars, 0, src.Length -1);
             DoLoadAndPlay(pars);
 
-            var vol = Properties.Settings.Default.LastVolume;
-            if (vol != -1) VolSlider.Value = vol;
+            if (Properties.Settings.Default.SaveVolume)
+            {
+                var vol = Properties.Settings.Default.LastVolume;
+                if (vol != -1) VolSlider.Value = vol;
+            }
         }
 
         private void MainWin_SourceInitialized(object sender, EventArgs e)
@@ -137,6 +140,12 @@ namespace TCPlayer
             ShowDialog(about);
         }
 
+        private void BtnSettings_Click(object sender, RoutedEventArgs e)
+        {
+            var settings = new Settings();
+            ShowDialog(settings);
+        }
+
         public static void ShowDialog(UserControl dialog)
         {
             var main = Application.Current.MainWindow as MainWindow;
@@ -154,7 +163,7 @@ namespace TCPlayer
         {
             OverLay.Visibility = Visibility.Collapsed;
             var dialog = (OverLayContent.Children[0] as IDialog);
-            dialog.OkClicked?.Invoke();
+            if (dialog != null) dialog.OkClicked.Invoke();
             OverLayContent.Children.Clear();
         }
 
@@ -429,6 +438,7 @@ namespace TCPlayer
         private void MainWin_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Properties.Settings.Default.LastVolume = (float)VolSlider.Value;
+            Properties.Settings.Default.DeviceID = _player.CurrentDeviceID;
             Properties.Settings.Default.Save();
         }
 
@@ -446,8 +456,12 @@ namespace TCPlayer
         {
             if (e.Key == Key.Escape)
             {
-                var q = MessageBox.Show("Exit program?", "Exit confirmation", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
-                if (q == MessageBoxResult.Yes) Close();
+                if (Properties.Settings.Default.ConfirmExit)
+                {
+                    var q = MessageBox.Show("Exit program?", "Exit confirmation", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
+                    if (q == MessageBoxResult.Yes) Close();
+                }
+                else Close();
             }
         }
     }

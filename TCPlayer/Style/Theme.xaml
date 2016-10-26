@@ -51,6 +51,10 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
 
+    <Style TargetType="CheckBox">
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+
     <Style TargetType="TabControl">
         <Setter Property="Background" Value="Transparent"/>
     </Style>

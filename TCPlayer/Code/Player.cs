@@ -62,13 +62,6 @@ namespace TCPlayer.Code
             Bass.PluginLoad(enginedir + "\\basswv.dll");
             Bass.PluginLoad(enginedir + "\\bassmidi.dll");
             BassMidi.DefaultFont = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Engine\Ct8mgm.sf2");
-
-            var vol = Properties.Settings.Default.LastVolume;
-            if (vol > -1)
-            {
-                Volume = vol;
-                _lastvol = vol;
-            }
         }
 
         protected virtual void Dispose(bool disposing)
@@ -302,6 +295,14 @@ namespace TCPlayer.Code
             return _devices.ToArray();
         }
 
+        /// <summary>
+        /// Currently used device index. Used for setting saving
+        /// </summary>
+        public int CurrentDeviceID
+        {
+            get;
+            private set;
+        }
 
         /// <summary>
         /// Change output device
@@ -311,7 +312,11 @@ namespace TCPlayer.Code
         {
             if (name == null)
             {
-                _initialized = Bass.Init(1, 48000, DeviceInitFlags.Frequency, IntPtr.Zero);
+                CurrentDeviceID = -1;
+                if (Properties.Settings.Default.SaveDevice)
+                    CurrentDeviceID = Properties.Settings.Default.DeviceID;
+
+                _initialized = Bass.Init(CurrentDeviceID, 48000, DeviceInitFlags.Frequency, IntPtr.Zero);
                 if (!_initialized)
                 {
                     Error("Bass.dll init failed");
@@ -331,6 +336,7 @@ namespace TCPlayer.Code
                     }
                     
                     _initialized = Bass.Init(i, 48000, DeviceInitFlags.Frequency, IntPtr.Zero);
+                    CurrentDeviceID = i;
                     if (!_initialized)
                     {
                         Error("Bass.dll init failed");
@@ -366,7 +372,7 @@ namespace TCPlayer.Code
             if (BassCd.IsReady(driveindex))
             {
                 var numtracks = BassCd.GetTracks(driveindex);
-                var discid = BassCd.GetID(0, CDID.CDDB);
+                var discid = BassCd.GetID(0, CDID.CDDB); //cddb connect
                 if (App._discid != discid)
                 {
                     var datas = BassCd.GetIDText(driveindex);

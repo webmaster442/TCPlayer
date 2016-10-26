@@ -62,18 +62,25 @@
                 <ColumnDefinition Width="32"/>
                 <ColumnDefinition Width="32"/>
                 <ColumnDefinition Width="32"/>
+                <ColumnDefinition Width="32"/>
             </Grid.ColumnDefinitions>
             <TextBlock
                 Margin="5,0"
                 Text="{Binding ElementName=MainWin, Path=Title}"/>
             <Button
-                Content="{StaticResource IconInformation}"
+                Content="{StaticResource IconSettings}"
                 Grid.Column="1"
+                ToolTip="Settings ..."
+                x:Name="BtnSettings"
+                Click="BtnSettings_Click"/>
+            <Button
+                Content="{StaticResource IconInformation}"
+                Grid.Column="2"
                 ToolTip="About ..."
                 x:Name="BtnAbout"
                 Click="BtnAbout_Click"/>
             <ToggleButton
-                Grid.Column="2"
+                Grid.Column="3"
                 IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=TopMost, Mode=TwoWay}"
                 x:Name="AllWaysTop">
                 <ToggleButton.Resources>
@@ -94,13 +101,13 @@
                 </ToggleButton.Resources>
             </ToggleButton>
             <Button
-                Grid.Column="3"
+                Grid.Column="4"
                 x:Name="TitlebarMinimize"
                 Click="TitlebarMinimize_Click"
                 ToolTip="Minimize to Tray"
                 Content="{StaticResource IconMinimize}"/>
             <Button 
-                Grid.Column="4"
+                Grid.Column="5"
                 x:Name="TitlebarClose"
                 ToolTip="Exit application"
                 Content="{StaticResource IconClose}"

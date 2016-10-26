@@ -73,6 +73,7 @@
     <Compile Include="Code\Extensions.cs" />
     <Compile Include="Code\Helpers.cs" />
     <Compile Include="Code\Interfaces.cs" />
+    <Compile Include="Code\KeyboardHook.cs" />
     <Compile Include="Code\SingleInstance.cs" />
     <Compile Include="Code\Native.cs" />
     <Compile Include="Code\Player.cs" />
