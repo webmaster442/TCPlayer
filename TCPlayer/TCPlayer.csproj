@@ -50,6 +50,7 @@
     <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -74,6 +75,7 @@
     <Compile Include="Code\Helpers.cs" />
     <Compile Include="Code\Interfaces.cs" />
     <Compile Include="Code\KeyboardHook.cs" />
+    <Compile Include="Code\NotificationIcon.cs" />
     <Compile Include="Code\SingleInstance.cs" />
     <Compile Include="Code\Native.cs" />
     <Compile Include="Code\Player.cs" />

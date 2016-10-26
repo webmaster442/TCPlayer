@@ -16,6 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+using System;
 using System.Runtime.InteropServices;
 
 namespace TCPlayer.Code
@@ -24,7 +25,16 @@ namespace TCPlayer.Code
     {
         [DllImport("dwmapi.dll", EntryPoint = "#127")]
         internal static extern void DwmGetColorizationParameters(ref DWMCOLORIZATIONPARAMS pars);
+
+        // Registers a hot key with Windows.
+        [DllImport("user32.dll")]
+        public static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
+
+        // Unregisters the hot key with Windows.
+        [DllImport("user32.dll")]
+        public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
     }
+
 
     public struct DWMCOLORIZATIONPARAMS
     {

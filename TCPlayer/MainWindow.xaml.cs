@@ -43,6 +43,7 @@ namespace TCPlayer
         private bool _loaded;
         private bool _isdrag;
         private KeyboardHook _keyboardhook;
+        private NotificationIcon _notify;
 
         public MainWindow()
         {
@@ -72,6 +73,9 @@ namespace TCPlayer
 
             if (Properties.Settings.Default.RegisterMultimediaKeys)
                 RegisterMultimedaKeys();
+
+            if (Properties.Settings.Default.TrackChangeNotification)
+                _notify = new NotificationIcon();
         }
 
         private void MainWin_SourceInitialized(object sender, EventArgs e)
@@ -182,6 +186,11 @@ namespace TCPlayer
             {
                 _keyboardhook.Dispose();
                 _keyboardhook = null;
+            }
+            if (_notify != null)
+            {
+                _notify.Dispose();
+                _notify = null;
             }
             GC.SuppressFinalize(this);
         }

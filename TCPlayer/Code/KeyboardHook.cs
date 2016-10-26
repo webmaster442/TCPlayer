@@ -24,13 +24,6 @@ namespace TCPlayer.Code
 {
     public sealed class KeyboardHook : IDisposable
     {
-        // Registers a hot key with Windows.
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1060:MovePInvokesToNativeMethodsClass"), DllImport("user32.dll")]
-        private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
-        // Unregisters the hot key with Windows.
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1060:MovePInvokesToNativeMethodsClass"), DllImport("user32.dll")]
-        private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
-
         /// <summary>
         /// Represents the window that is used internally to get the messages.
         /// </summary>
@@ -38,7 +31,6 @@ namespace TCPlayer.Code
         {
             private static int WM_HOTKEY = 0x0312;
 
-            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
             public Window()
             {
                 // create the handle for the window.
@@ -101,7 +93,7 @@ namespace TCPlayer.Code
             _currentId = _currentId + 1;
 
             // register the hot key.
-            if (!RegisterHotKey(_window.Handle, _currentId, (uint)modifier, (uint)key))
+            if (!Native.RegisterHotKey(_window.Handle, _currentId, (uint)modifier, (uint)key))
                 throw new InvalidOperationException("Couldn’t register the hot key.");
         }
 
@@ -117,7 +109,7 @@ namespace TCPlayer.Code
             // unregister all the registered hot keys.
             for (int i = _currentId; i > 0; i--)
             {
-                UnregisterHotKey(_window.Handle, i);
+                Native.UnregisterHotKey(_window.Handle, i);
             }
 
             // dispose the inner native window.
