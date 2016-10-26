@@ -118,5 +118,29 @@ namespace TCPlayer.Properties {
                 this["SaveVolume"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool RegisterMultimediaKeys {
+            get {
+                return ((bool)(this["RegisterMultimediaKeys"]));
+            }
+            set {
+                this["RegisterMultimediaKeys"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool TrackChangeNotification {
+            get {
+                return ((bool)(this["TrackChangeNotification"]));
+            }
+            set {
+                this["TrackChangeNotification"] = value;
+            }
+        }
     }
 }

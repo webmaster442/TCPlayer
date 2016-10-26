@@ -42,6 +42,7 @@ namespace TCPlayer
         private DispatcherTimer _timer;
         private bool _loaded;
         private bool _isdrag;
+        private KeyboardHook _keyboardhook;
 
         public MainWindow()
         {
@@ -60,7 +61,7 @@ namespace TCPlayer
 
             var src = Environment.GetCommandLineArgs();
             string[] pars = new string[src.Length - 1];
-            Array.Copy(src, 1, pars, 0, src.Length -1);
+            Array.Copy(src, 1, pars, 0, src.Length - 1);
             DoLoadAndPlay(pars);
 
             if (Properties.Settings.Default.SaveVolume)
@@ -68,6 +69,9 @@ namespace TCPlayer
                 var vol = Properties.Settings.Default.LastVolume;
                 if (vol != -1) VolSlider.Value = vol;
             }
+
+            if (Properties.Settings.Default.RegisterMultimediaKeys)
+                RegisterMultimedaKeys();
         }
 
         private void MainWin_SourceInitialized(object sender, EventArgs e)
@@ -90,7 +94,7 @@ namespace TCPlayer
             var r = (byte)(c.R * 0.13);
             var g = (byte)(c.G * 0.13);
             var b = (byte)(c.B * 0.13);
-            Background = new SolidColorBrush(Color.FromArgb(0xE5,r, g, b));
+            Background = new SolidColorBrush(Color.FromArgb(0xE5, r, g, b));
         }
 
         private static Color GetWindowColorizationColor(bool opaque)
@@ -173,8 +177,13 @@ namespace TCPlayer
             {
                 _player.Dispose();
                 _player = null;
-                GC.SuppressFinalize(this);
             }
+            if (_keyboardhook != null)
+            {
+                _keyboardhook.Dispose();
+                _keyboardhook = null;
+            }
+            GC.SuppressFinalize(this);
         }
 
         public void Dispose()
@@ -185,7 +194,7 @@ namespace TCPlayer
         public void DoLoadAndPlay(IEnumerable<string> items)
         {
             var needplay = false;
-            if (PlayList.Count < 1) needplay = true; 
+            if (PlayList.Count < 1) needplay = true;
             PlayList.DoLoad(items);
             if (needplay)
             {
@@ -360,6 +369,44 @@ namespace TCPlayer
             if (_player.IsPaused) Taskbar.ProgressState = TaskbarItemProgressState.Paused;
             else if (!_player.IsStream) Taskbar.ProgressState = TaskbarItemProgressState.Normal;
             else Taskbar.ProgressState = TaskbarItemProgressState.Indeterminate;
+        }
+
+        private void RegisterMultimedaKeys()
+        {
+            _keyboardhook = new KeyboardHook();
+            _keyboardhook.KeyPressed += _keyboardhook_KeyPressed;
+            try
+            {
+                _keyboardhook.RegisterHotKey(Code.ModifierKeys.None, System.Windows.Forms.Keys.MediaPlayPause);
+                _keyboardhook.RegisterHotKey(Code.ModifierKeys.None, System.Windows.Forms.Keys.MediaStop);
+                _keyboardhook.RegisterHotKey(Code.ModifierKeys.None, System.Windows.Forms.Keys.MediaNextTrack);
+                _keyboardhook.RegisterHotKey(Code.ModifierKeys.None, System.Windows.Forms.Keys.MediaPreviousTrack);
+            }
+            catch (Exception ex)
+            {
+                Helpers.ErrorDialog(ex, "Media keys are in use by another application.\r\nTo Use media key functions please close other apps that may use the keys, then restart the player");
+            }
+        }
+
+        private void _keyboardhook_KeyPressed(object sender, KeyPressedEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case System.Windows.Forms.Keys.MediaPlayPause:
+                    _player.PlayPause();
+                    break;
+                case System.Windows.Forms.Keys.MediaPreviousTrack:
+                    PlayList.PreviousTrack();
+                    StartPlay();
+                    break;
+                case System.Windows.Forms.Keys.MediaNextTrack:
+                    PlayList.NextTrack();
+                    StartPlay();
+                    break;
+                case System.Windows.Forms.Keys.MediaStop:
+                    _player.Stop();
+                    break;
+            }
         }
 
         private void ThumbButtonInfo_Click(object sender, EventArgs e)

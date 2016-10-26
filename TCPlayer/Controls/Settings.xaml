@@ -27,6 +27,14 @@
                     Content="Save output device on exit"/>
                 <CheckBox
                     Margin="2"
+                    IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=RegisterMultimediaKeys, Mode=TwoWay}"
+                    Content="Try to register Multimedia keys for control"/>
+                <CheckBox
+                    Margin="2"
+                    IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=TrackChangeNotification, Mode=TwoWay}"
+                    Content="Send notifications on track change"/>
+                <CheckBox
+                    Margin="2"
                     IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=ConfirmExit, Mode=TwoWay}"
                     Content="Confirm exit with ESC button"/>
             </StackPanel>
