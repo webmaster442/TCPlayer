@@ -1,0 +1,195 @@
+<html><head>
+    <title>TC Player</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="ekko-lightbox.min.js"></script>
+    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link href="ekko-lightbox.min.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript">
+      $(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) 
+                    	{
+                    		event.preventDefault();
+                    		$(this).ekkoLightbox();
+                    	});
+		   $(document).ready(function(){
+    $(".scroll").click(function(event){
+        //prevent the default action for the click event
+        event.preventDefault();
+
+        //get the full url - like mysitecom/index.htm#home
+        var full_url = this.href;
+
+        //split the url by # and get the anchor target name - home in mysitecom/index.htm#home
+        var parts = full_url.split("#");
+        var trgt = parts[1];
+
+        //get the top offset of the target anchor
+        var target_offset = $("#"+trgt).offset();
+        var target_top = target_offset.top;
+
+        //goto that anchor by setting the body scroll top to anchor top
+        $('html, body').animate({scrollTop:target_top}, 1500, 'easeInSine');
+    });
+});
+    </script>
+  </head><body class="tcplayer-body">
+    <div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#"><span>TC Player</span></a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-ex-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="#Home" class="scrooll">Home</a>
+            </li>
+            <li>
+              <a href="#Screenshots" class="scrooll">Screenshots</a>
+            </li>
+            <li>
+              <a href="#SystemRequirements" class="scrooll">System requirements</a>
+            </li>
+            <li>
+              <a href="#Download" class="scrooll">Download</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1 id="Home">Welcome to the Official Website of TC Player</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3 text-justify">
+            <img src="icon.svg" class="img-responsive">
+          </div>
+          <div class="col-md-9">
+            <p>TC Player is an audio player &nbsp;&amp; a Total Commander lister plugin.&nbsp;</p>
+            <h4>Key features Include:</h4>
+            <ul>
+              <li>Support for &nbsp;x86 and x64 &nbsp;Operating Systems</li>
+              <li>Based on Bass.dll components &amp; Written in C# and C++</li>
+              <li>Supports a large number of formats:
+                <br>MP3, MP4, AAC, OGG, WAV, FLAC, WavPack, Apple Lossless (ALAC), WMA, AC3,
+                CDDA, APE, MPC, MP+, MPP, OFR, OFS, SPX, TTA, DSF, OPUS</li>
+              <li>Supports MIDI &amp; tracker files playback:
+                <br>MIDI, MID, RMI, KAR, XM, IT, S3M, MOD, MTM, UMX, MO3</li>
+              <li>Supports various playlist formats: PLS, M3U, WPL</li>
+              <li>It's Free &amp; Open source</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12"></div>
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1 id="Screenshots">Screenshots</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <a href="screen01.jpg" data-toggle="lightbox">
+            <img src="screen01.jpg" class="img-responsive">
+		  </a>
+            <p>Main Window</p>
+          </div>
+          <div class="col-md-4">
+            <a href="screen02.jpg" data-toggle="lightbox">
+            <img src="screen02.jpg" class="img-responsive">
+			</a>
+            <p>Playlist</p>
+          </div>
+          <div class="col-md-4">
+            <a href="screen03.jpg" data-toggle="lightbox">
+            <img src="screen03.jpg" class="img-responsive">
+			</a>
+            <p>Output device selection</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1 id="SystemRequirements">System requirements</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <ul>
+              <li>Windows 7/8/8.1/10 Operating system</li>
+              <li>Total commander for the plugin install. (Tested with 8.51 &amp; 9.0 beta)</li>
+              <li>.NET Framework 4.5
+                <br>Note: .Net 4.5 is allready installed on Windows 8/8.1 &amp; 10. No additional
+                install is required</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1 id="Download">Download</h1>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <p class="text-left">The Program can be downloaded from the projects Github page or from totalcmd.net.
+              Issue reporting &amp; feature requests are also welcomed. To report an
+              issue or if you would like to request a feaure please visit the projects
+              issue tracker.
+              <br>
+              <br>
+              <br>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <a href="#"><i class="fa fa-5x fa-fw fa-github"></i>  Download from Github</a>
+          </div>
+          <div class="col-md-6">
+            <a href="#"><i class="fa fa-5x fa-external-link fa-fw"></i> Download from Totalcmd.net</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+
+</body></html>
