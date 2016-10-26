@@ -250,10 +250,13 @@ namespace TCPlayer.Controls
         private void DiscMenu_SubmenuOpened(object sender, RoutedEventArgs e)
         {
             DiscMenu.Items.Clear();
-            var cds = from cd in DriveInfo.GetDrives()
-                      where cd.DriveType == DriveType.CDRom &&
-                      cd.DriveFormat == "CDFS" &&
-                      cd.IsReady select cd.Name;
+            var q = from cd in DriveInfo.GetDrives()
+                      where cd.DriveType == DriveType.CDRom 
+                      && cd.IsReady select cd;
+
+            var cds = from cd in q
+                      where cd.DriveFormat == "CDFS"
+                      select cd.Name;
 
             foreach (var cd in cds)
             {

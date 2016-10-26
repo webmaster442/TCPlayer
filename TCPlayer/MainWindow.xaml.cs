@@ -76,7 +76,18 @@ namespace TCPlayer
 
             hsource = HwndSource.FromHwnd(hwnd);
             hsource.AddHook(WndProc);
-            TitleBar.Background = new SolidColorBrush(GetWindowColorizationColor(false));
+            SetColor();
+        }
+
+        private void SetColor()
+        {
+            Color c = GetWindowColorizationColor(false);
+            TitleBar.Background = new SolidColorBrush(c);
+
+            var r = (byte)(c.R * 0.10);
+            var g = (byte)(c.G * 0.10);
+            var b = (byte)(c.B * 0.10);
+            Background = new SolidColorBrush(Color.FromArgb(0xE5,r, g, b));
         }
 
         private static Color GetWindowColorizationColor(bool opaque)
@@ -97,7 +108,7 @@ namespace TCPlayer
             {
                 //WM_DWMCOLORIZATIONCOLORCHANGED
                 case 0x320:
-                    TitleBar.Background = new SolidColorBrush(GetWindowColorizationColor(false));
+                    SetColor();
                     return IntPtr.Zero;
                 default:
                     return IntPtr.Zero;

@@ -74,10 +74,13 @@ WCHAR* awlcopy(WCHAR* outname, char* inname, int maxlen)
 		return NULL;
 }
 
-void CALLBACK timer_code(HWND hwnd, UINT uMsg, UINT timerId, DWORD dwTime)
+HWND CallKiller(HWND aListerWindow)
 {
-	KillTimer(timer, 0);
-	DestroyWindow(timer);
+	return CreateWindowEx(WS_EX_CONTROLPARENT, 
+						  L"TCPlayer_LISTERWIN",
+						  L"TCPlayer_LISTERWIN",
+						  WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS,
+						  0, 0, 10, 10, aListerWindow, 0, hinst, NULL);
 }
 
 HWND __stdcall ListLoad(HWND ParentWin, char* FileToLoad, int ShowFlags)
@@ -96,7 +99,6 @@ HWND __stdcall ListLoadW(HWND ParentWin, WCHAR* FileToLoad, int ShowFlags)
 	PathRemoveFileSpec(dllpath);
 
 	swprintf(safefile, L"\"%s\"", FileToLoad);
-	//MessageBox(ParentWin, safefile, L"SafeFile", 0);
 
 	SHELLEXECUTEINFO ShExecInfo = { 0 };
 	ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
@@ -110,9 +112,9 @@ HWND __stdcall ListLoadW(HWND ParentWin, WCHAR* FileToLoad, int ShowFlags)
 	ShExecInfo.hInstApp = NULL;
 	ShellExecuteEx(&ShExecInfo);
 	Sleep(25);
-	timer = ParentWin;
-	SetTimer(timer, 0, 250, (TIMERPROC)&timer_code);
-	return NULL;
+
+	SetWindowPos(ParentWin, 0, -100, -100, 0, 0, SWP_HIDEWINDOW);
+	return CallKiller(ParentWin);
 }
 
 void __stdcall ListGetDetectString(char* DetectString, int maxlen)
