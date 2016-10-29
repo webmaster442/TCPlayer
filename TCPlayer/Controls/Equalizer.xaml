@@ -32,51 +32,81 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Slider
+            Minimum="-15"
+            Maximum="15"
+            Value="0"
             x:Name="Freq32"
             Grid.Column="0"
             Orientation="Vertical"
             ValueChanged="FreqChanged"/>
         <Slider
+            Minimum="-15"
+            Maximum="15"
+            Value="0"
             x:Name="Freq64"
             Grid.Column="1"
             Orientation="Vertical"
             ValueChanged="FreqChanged"/>
         <Slider
+            Minimum="-15"
+            Maximum="15"
+            Value="0"
             x:Name="Freq125"
             Grid.Column="2"
             Orientation="Vertical"
             ValueChanged="FreqChanged"/>
         <Slider
+            Minimum="-15"
+            Maximum="15"
+            Value="0"
             x:Name="Freq250"
             Grid.Column="3"
             Orientation="Vertical"
             ValueChanged="FreqChanged"/>
         <Slider
+            Minimum="-15"
+            Maximum="15"
+            Value="0"
             x:Name="Freq500"
             Grid.Column="4"
             Orientation="Vertical"
             ValueChanged="FreqChanged"/>
         <Slider
+            Minimum="-15"
+            Maximum="15"
+            Value="0"
             x:Name="Freq1k"
             Grid.Column="5"
             Orientation="Vertical"
             ValueChanged="FreqChanged"/>
         <Slider
+            Minimum="-15"
+            Maximum="15"
+            Value="0"
             x:Name="Freq2k"
             Grid.Column="6"
             Orientation="Vertical"
             ValueChanged="FreqChanged"/>
         <Slider
+            Minimum="-15"
+            Maximum="15"
+            Value="0"
             x:Name="Freq4k"
             Grid.Column="7"
             Orientation="Vertical"
             ValueChanged="FreqChanged"/>
         <Slider
+            Minimum="-15"
+            Maximum="15"
+            Value="0"
             x:Name="Freq8k"
             Grid.Column="8"
             Orientation="Vertical"
             ValueChanged="FreqChanged"/>
         <Slider
+            Minimum="-15"
+            Maximum="15"
+            Value="0"
             x:Name="Freq16k"
             Grid.Column="9"
             Orientation="Vertical"
