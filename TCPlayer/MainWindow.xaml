@@ -267,6 +267,10 @@
                     ItemDoubleClcik="PlayList_ItemDoubleClcik"
                     x:Name="PlayList"/>
             </TabItem>
+            <TabItem
+                Header="[ EQ ]">
+                <controls:Equalizer/>
+            </TabItem>
         </TabControl>
         <StackPanel 
             Orientation="Horizontal"
