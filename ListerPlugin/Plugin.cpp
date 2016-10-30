@@ -74,13 +74,22 @@ WCHAR* awlcopy(WCHAR* outname, char* inname, int maxlen)
 		return NULL;
 }
 
+void CALLBACK timer_code(HWND hwnd, UINT uMsg, UINT timerId, DWORD dwTime)
+{
+	KillTimer(timer, 0);
+	DestroyWindow(timer);
+}
+
 HWND CallKiller(HWND aListerWindow)
 {
-	return CreateWindowEx(WS_EX_CONTROLPARENT, 
-						  L"TCPlayer_LISTERWIN",
-						  L"TCPlayer_LISTERWIN",
-						  WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS,
-						  0, 0, 10, 10, aListerWindow, 0, hinst, NULL);
+	HWND handle =  CreateWindowEx(WS_EX_CONTROLPARENT,
+								  L"TCPlayer_LISTERWIN",
+								  L"TCPlayer_LISTERWIN",
+								  WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS,
+								  0, 0, 10, 10, aListerWindow, 0, hinst, NULL);
+	timer = handle;
+	SetTimer(timer, 0, 1100, (TIMERPROC)&timer_code);
+	return handle;
 }
 
 HWND __stdcall ListLoad(HWND ParentWin, char* FileToLoad, int ShowFlags)
