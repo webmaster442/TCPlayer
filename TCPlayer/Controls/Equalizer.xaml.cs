@@ -8,8 +8,6 @@ namespace TCPlayer.Controls
     /// </summary>
     public partial class Equalizer : UserControl
     {
-        private float[] _levels;
-
         public delegate void EqualizerBandChange(int band, float value);
 
         public event EqualizerBandChange EqBandChanged;
@@ -61,6 +59,10 @@ namespace TCPlayer.Controls
             {
                 EqBandChanged(index, (float)e.NewValue);
             }
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
         }
     }
 }

@@ -69,12 +69,13 @@ namespace TCPlayer.Code
             Bass.PluginLoad(enginedir + "\\basswv.dll");
             Bass.PluginLoad(enginedir + "\\bassmidi.dll");
             BassMidi.DefaultFont = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Engine\Ct8mgm.sf2");
-            _eqvalues = new float[10];
+            _eqvalues = Helpers.LoadEqPresets();
         }
 
         protected virtual void Dispose(bool disposing)
         {
             if (_initialized) Bass.Free();
+            BassFx.Unload();
             BassCd.Unload();
             BassMix.Unload();
             Bass.PluginFree(0);

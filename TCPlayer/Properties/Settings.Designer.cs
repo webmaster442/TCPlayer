@@ -142,5 +142,17 @@ namespace TCPlayer.Properties {
                 this["TrackChangeNotification"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string EqualizerPreset {
+            get {
+                return ((string)(this["EqualizerPreset"]));
+            }
+            set {
+                this["EqualizerPreset"] = value;
+            }
+        }
     }
 }
