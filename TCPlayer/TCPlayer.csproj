@@ -162,6 +162,7 @@
     <Compile Include="Lib\TagLib\Id3v2\Frames\UniqueFileIdentifierFrame.cs" />
     <Compile Include="Lib\TagLib\Id3v2\Frames\UnknownFrame.cs" />
     <Compile Include="Lib\TagLib\Id3v2\Frames\UnsynchronisedLyricsFrame.cs" />
+    <Compile Include="Lib\TagLib\Id3v2\Frames\UrlLinkFrame.cs" />
     <Compile Include="Lib\TagLib\Id3v2\FrameTypes.cs" />
     <Compile Include="Lib\TagLib\Id3v2\Header.cs" />
     <Compile Include="Lib\TagLib\Id3v2\SynchData.cs" />
@@ -408,6 +409,7 @@
     <None Include="Engine\Ct8mgm.sf2">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Engine\Engine.sha512" />
     <None Include="Lib\TagLib\TagLib.sources" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -471,6 +473,9 @@
     <Content Include="Engine\x64\bass_ape.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Engine\x64\bass_fx.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Engine\x64\bass_mpc.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -526,6 +531,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Engine\x86\bass_ape.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Engine\x86\bass_fx.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Engine\x86\bass_mpc.dll">
