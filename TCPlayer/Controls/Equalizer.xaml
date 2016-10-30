@@ -18,7 +18,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="22"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -37,6 +37,7 @@
             Maximum="15"
             Value="0"
             x:Name="Freq32"
+            ToolTip="{Binding ElementName=Freq32, Path=Value}"
             Grid.Column="0"
             Orientation="Vertical"
             ValueChanged="FreqChanged"/>
@@ -45,6 +46,7 @@
             Maximum="15"
             Value="0"
             x:Name="Freq64"
+            ToolTip="{Binding ElementName=Freq64, Path=Value}"
             Grid.Column="1"
             Orientation="Vertical"
             ValueChanged="FreqChanged"/>
@@ -53,6 +55,7 @@
             Maximum="15"
             Value="0"
             x:Name="Freq125"
+            ToolTip="{Binding ElementName=Freq125, Path=Value}"
             Grid.Column="2"
             Orientation="Vertical"
             ValueChanged="FreqChanged"/>
@@ -61,6 +64,7 @@
             Maximum="15"
             Value="0"
             x:Name="Freq250"
+            ToolTip="{Binding ElementName=Freq250, Path=Value}"
             Grid.Column="3"
             Orientation="Vertical"
             ValueChanged="FreqChanged"/>
@@ -69,6 +73,7 @@
             Maximum="15"
             Value="0"
             x:Name="Freq500"
+            ToolTip="{Binding ElementName=Freq500, Path=Value}"
             Grid.Column="4"
             Orientation="Vertical"
             ValueChanged="FreqChanged"/>
@@ -77,6 +82,7 @@
             Maximum="15"
             Value="0"
             x:Name="Freq1k"
+            ToolTip="{Binding ElementName=Freq1k, Path=Value}"
             Grid.Column="5"
             Orientation="Vertical"
             ValueChanged="FreqChanged"/>
@@ -85,6 +91,7 @@
             Maximum="15"
             Value="0"
             x:Name="Freq2k"
+            ToolTip="{Binding ElementName=Freq2k, Path=Value}"
             Grid.Column="6"
             Orientation="Vertical"
             ValueChanged="FreqChanged"/>
@@ -93,6 +100,7 @@
             Maximum="15"
             Value="0"
             x:Name="Freq4k"
+            ToolTip="{Binding ElementName=Freq4k, Path=Value}"
             Grid.Column="7"
             Orientation="Vertical"
             ValueChanged="FreqChanged"/>
@@ -101,6 +109,7 @@
             Maximum="15"
             Value="0"
             x:Name="Freq8k"
+            ToolTip="{Binding ElementName=Freq8k, Path=Value}"
             Grid.Column="8"
             Orientation="Vertical"
             ValueChanged="FreqChanged"/>
@@ -109,6 +118,7 @@
             Maximum="15"
             Value="0"
             x:Name="Freq16k"
+            ToolTip="{Binding ElementName=Freq16k, Path=Value}"
             Grid.Column="9"
             Orientation="Vertical"
             ValueChanged="FreqChanged"/>
