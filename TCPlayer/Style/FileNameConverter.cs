@@ -8,7 +8,7 @@ namespace TCPlayer.Style
     /// Converts a full path name to a file name. Internally calls System.IO.Path.GetFileName
     /// </summary>
     /// <seealso cref="System.IO.Path.GetFileName"/>
-    [ValueConversion(typeof(long), typeof(string))]
+    [ValueConversion(typeof(string), typeof(string))]
     public class FileNameConverter : IValueConverter
     {
         /// <summary>
@@ -23,12 +23,28 @@ namespace TCPlayer.Style
         {
             string fullpath = value.ToString();
 
-            if (fullpath.StartsWith("http:") || fullpath.StartsWith("cd:"))
+            if (fullpath.StartsWith("http") || fullpath.StartsWith("cd:"))
+            {
                 return fullpath;
+            }
+            else
+            {
+                try
+                {
+                    TagLib.File tags = TagLib.File.Create(fullpath);
+                    var artist = tags.Tag.Performers[0];
+                    var title = tags.Tag.Title;
+                    if (string.IsNullOrEmpty(artist)) artist = "Unknown artist";
+                    if (string.IsNullOrEmpty(title)) title = "Unknown song";
+                    return string.Format("{0} - {1}", artist, title);
 
-            var fname = System.IO.Path.GetFileName(fullpath);
-            if (fname == "..") return "<- Back";
-            return fname;
+                }
+                catch (Exception)
+                {
+                    var fname = System.IO.Path.GetFileName(fullpath);
+                    return fname;
+                }
+            }
         }
 
         /// <summary>

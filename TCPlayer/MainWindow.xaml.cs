@@ -43,7 +43,6 @@ namespace TCPlayer
         private bool _loaded;
         private bool _isdrag;
         private KeyboardHook _keyboardhook;
-        private NotificationIcon _notify;
 
         public MainWindow()
         {
@@ -75,7 +74,7 @@ namespace TCPlayer
                 RegisterMultimedaKeys();
 
             if (Properties.Settings.Default.TrackChangeNotification)
-                _notify = new NotificationIcon();
+                App._notify = new NotificationIcon();
         }
 
         private void MainWin_SourceInitialized(object sender, EventArgs e)
@@ -187,10 +186,10 @@ namespace TCPlayer
                 _keyboardhook.Dispose();
                 _keyboardhook = null;
             }
-            if (_notify != null)
+            if (App._notify != null)
             {
-                _notify.Dispose();
-                _notify = null;
+                App._notify.Dispose();
+                App._notify = null;
             }
             GC.SuppressFinalize(this);
         }
@@ -496,6 +495,7 @@ namespace TCPlayer
             Properties.Settings.Default.LastVolume = (float)VolSlider.Value;
             Properties.Settings.Default.DeviceID = _player.CurrentDeviceID;
             Properties.Settings.Default.Save();
+            if (App._notify != null) App._notify.RemoveIcon();
         }
 
         private void MainWin_Drop(object sender, DragEventArgs e)

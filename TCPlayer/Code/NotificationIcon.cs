@@ -32,12 +32,27 @@ namespace TCPlayer.Code
             Dispose(true);
         }
 
-        public void ShowTrackChange(string artist, string title)
+        public void ShowNotification(string filename, string artist = null, string title = null)
         {
-            var text = string.Format("Artist: {0}\r\nTitle: {1}", artist, title);
-            _icon.BalloonTipText = text;
             _icon.BalloonTipTitle = "Now playing";
+            string text = null;
+            if (string.IsNullOrEmpty(artist) && string.IsNullOrEmpty(title))
+            {
+                text = filename;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(artist)) artist = "Unknown";
+                if (string.IsNullOrEmpty(title)) title = "Unknown song";
+                text = string.Format("{0}\r\nArtist: {1}\r\nTitle: {2}", filename, artist, title);
+            }
+            _icon.BalloonTipText = text;
             _icon.ShowBalloonTip(500);
+        }
+
+        public void RemoveIcon()
+        {
+            _icon.Visible = false;
         }
     }
 }

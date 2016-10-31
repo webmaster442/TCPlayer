@@ -34,6 +34,7 @@ namespace TCPlayer
 
         internal static Dictionary<string, string> _cddata;
         internal static string _discid;
+        internal static NotificationIcon _notify;
 
         [STAThread]
         public static void Main()

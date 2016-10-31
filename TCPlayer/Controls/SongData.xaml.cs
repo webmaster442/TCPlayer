@@ -142,6 +142,7 @@ namespace TCPlayer.Controls
 
         public void UpdateMediaInfo(string file)
         {
+            var notify = Properties.Settings.Default.TrackChangeNotification;
             if (file.StartsWith("http://") || file.StartsWith("https://"))
             {
                 FileName = file;
@@ -151,6 +152,7 @@ namespace TCPlayer.Controls
                 Title = "Stream";
                 Artist = Path.GetFileName(file);
                 Size = "Infinite";
+                if (notify) App._notify.ShowNotification(file);
                 return;
             }
             else if (file.StartsWith("cd://"))
@@ -161,7 +163,7 @@ namespace TCPlayer.Controls
 
                 var size = ManagedBass.Cd.BassCd.GetTrackLength(drive, track);
                 Size = GetFileSize(size);
-                UpdateCDFlags(track + 1);
+                UpdateCDFlags(track + 1, notify);
                 return;
             }
             try
@@ -177,6 +179,7 @@ namespace TCPlayer.Controls
                     Title = fi.Name;
                     Year = "Unknown";
                     Artist = "";
+                    if (notify) App._notify.ShowNotification(FileName);
                     return;
                 }
 
@@ -198,6 +201,7 @@ namespace TCPlayer.Controls
                 Artist = tags.Tag.Performers[0];
                 Album = tags.Tag.Album;
                 Title = tags.Tag.Title;
+                if (notify) App._notify.ShowNotification(FileName, Artist, Title);
             }
             catch (Exception)
             {
@@ -205,7 +209,7 @@ namespace TCPlayer.Controls
             }
         }
 
-        private void UpdateCDFlags(int track)
+        private void UpdateCDFlags(int track, bool notify)
         {
             FileName = string.Format("CD Track #{0}", track);
             Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/disk.png", UriKind.Relative));
@@ -222,6 +226,8 @@ namespace TCPlayer.Controls
                 Title = string.Format("#{0}", track);
                 Album = "Audio CD";
             }
+            if (notify)
+                App._notify.ShowNotification("CD Track" + track, Artist, Title);
         }
 
         public void Reset()
