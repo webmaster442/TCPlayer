@@ -89,9 +89,6 @@
     <Compile Include="Controls\DeviceChange.xaml.cs">
       <DependentUpon>DeviceChange.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Equalizer.xaml.cs">
-      <DependentUpon>Equalizer.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
@@ -342,10 +339,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\DeviceChange.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\Equalizer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

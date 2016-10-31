@@ -18,12 +18,13 @@
  */
 using ManagedBass;
 using ManagedBass.Cd;
-using ManagedBass.Mix;
+using ManagedBass.DirectX8;
+using ManagedBass.Fx;
 using ManagedBass.Midi;
+using ManagedBass.Mix;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using ManagedBass.Fx;
 using System.Runtime.InteropServices;
 
 namespace TCPlayer.Code
@@ -40,10 +41,6 @@ namespace TCPlayer.Code
         private float _lastvol;
         private bool _paused;
         private bool _isstream;
-        private PeakEQParameters _parameters;
-        private GCHandle _gch;
-        private int _eqhandle;
-        private float[] _eqvalues;
 
         public Player()
         {
@@ -69,18 +66,24 @@ namespace TCPlayer.Code
             Bass.PluginLoad(enginedir + "\\basswv.dll");
             Bass.PluginLoad(enginedir + "\\bassmidi.dll");
             BassMidi.DefaultFont = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Engine\Ct8mgm.sf2");
-            _eqvalues = Helpers.LoadEqPresets();
         }
 
         protected virtual void Dispose(bool disposing)
         {
+            if (_source != 0)
+            {
+                if (_mixer != 0)
+                {
+                    Stop();
+                }
+                _mixer = 0;
+                _source = 0;
+            }
             if (_initialized) Bass.Free();
-            BassFx.Unload();
             BassCd.Unload();
             BassMix.Unload();
             Bass.PluginFree(0);
             Bass.Unload();
-            _gch.Free();
             GC.SuppressFinalize(this);
         }
 
@@ -160,11 +163,6 @@ namespace TCPlayer.Code
         public void Load(string file)
         {
             _isstream = false;
-            if (_eqhandle != 0)
-            {
-                Bass.ChannelRemoveFX(_mixer, _eqhandle);
-                _eqhandle = 0;
-            }
             if (_source != 0)
             {
                 Bass.StreamFree(_source);
@@ -214,7 +212,6 @@ namespace TCPlayer.Code
                 Error("Mixer chanel adding failed");
                 return;
             }
-            InitEQ();
             Bass.ChannelSetAttribute(_mixer, ChannelAttribute.Volume, _lastvol);
             _paused = false;
         }
@@ -361,39 +358,6 @@ namespace TCPlayer.Code
                     Bass.Start();
                 }
             }
-        }
-
-        private void InitEQ()
-        {
-            _eqhandle = Bass.ChannelSetFX(_mixer, EffectType.PeakEQ, 0);
-            _parameters = new PeakEQParameters
-            {
-                lBand = -1,
-                fBandwidth = 2.5f,
-                fQ = 0
-            };
-            _gch = GCHandle.Alloc(_parameters, GCHandleType.Pinned);
-            var center = 16.0f;
-            for (int i = 0; i < 10; i++)
-            {
-                ++_parameters.lBand;
-                _parameters.fCenter = center;
-                _parameters.fGain = _eqvalues[i];
-                Bass.FXSetParameters(_mixer, _gch.AddrOfPinnedObject());
-                center *= 2;
-                if (center == 128) center = 125;
-            }
-        }
-
-        public void SetEQBand(int band, float value)
-        {
-            _eqvalues[band] = value;
-            var cur = _parameters.lBand;
-            _parameters.lBand = band;
-            Bass.FXGetParameters(_eqhandle, _gch.AddrOfPinnedObject());
-            _parameters.fGain = value;
-            Bass.FXSetParameters(_eqhandle, _gch.AddrOfPinnedObject());
-            _parameters.lBand = cur;
         }
 
         /// <summary>

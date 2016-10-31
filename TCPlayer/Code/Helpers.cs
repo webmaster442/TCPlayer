@@ -84,58 +84,5 @@ namespace TCPlayer.Code
                     return false;
             }
         }
-
-        /// <summary>
-        /// Serializes an eq preset to a setting
-        /// </summary>
-        /// <param name="presets">eq parameters</param>
-        public static void SaveEqPresets(float[] presets)
-        {
-            var sb = new StringBuilder();
-            for (int i=0; i<presets.Length; i++)
-            {
-                var isend = i == (presets.Length - 1);
-                sb.Append(presets[i]);
-                if (!isend) sb.Append(";");
-            }
-            Properties.Settings.Default.EqualizerPreset = sb.ToString();
-        }
-
-        /// <summary>
-        /// Deserializes an eq setting from app settings
-        /// </summary>
-        /// <returns>an eq preset</returns>
-        public static float[] LoadEqPresets()
-        {
-            float[] ret = new float[10];
-            if (string.IsNullOrEmpty(Properties.Settings.Default.EqualizerPreset))
-            {
-                return ret;
-            }
-            else
-            {
-                try
-                {
-                    var parts = Properties.Settings.Default.EqualizerPreset.Split(';');
-                    if (parts.Length != 10) throw new Exception("Partially saved preset");
-
-                    var temp = 0.0f;
-                    for (int i=0; i<10; i++)
-                    {
-                        var succes = float.TryParse(parts[i], out temp);
-                        if (succes) ret[i] = temp;
-                        else ret[i] = 0;
-                    }
-
-                    return ret;
-                }
-                catch (Exception ex)
-                {
-                    Helpers.ErrorDialog(ex, "Equalizer preset load failed");
-                    for (int i = 0; i < 10; i++) ret[i] = 0;
-                    return ret;
-                }
-            }
-        }
     }
 }
