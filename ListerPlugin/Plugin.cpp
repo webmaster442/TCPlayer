@@ -52,6 +52,9 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReserv
 	return TRUE;
 }
 
+/*=============================================================================
+Private internal functions
+=============================================================================*/
 char* strlcpy(char* p, char*p2, int maxlen)
 {
 	if ((int)strlen(p2) >= maxlen)
@@ -92,19 +95,21 @@ HWND CallKiller(HWND aListerWindow)
 	return handle;
 }
 
+/*=============================================================================
+Lister stuff
+=============================================================================*/
 HWND __stdcall ListLoad(HWND ParentWin, char* FileToLoad, int ShowFlags)
 {
-	WCHAR FileToLoadW[1024];
+	WCHAR FileToLoadW[MAX_PATH];
 	return ListLoadW(ParentWin, awlcopy(FileToLoadW, FileToLoad, countof(FileToLoadW) - 1), ShowFlags);
 }
 
 HWND __stdcall ListLoadW(HWND ParentWin, WCHAR* FileToLoad, int ShowFlags)
 {
-	wchar_t safefile[MAX_PATH];
-	wchar_t dllpath[MAX_PATH];
+	WCHAR safefile[MAX_PATH];
+	WCHAR dllpath[MAX_PATH];
 
-	GetModuleFileName((HINSTANCE)&__ImageBase, dllpath, _MAX_PATH);
-
+	GetModuleFileName((HINSTANCE)&__ImageBase, dllpath, MAX_PATH);
 	PathRemoveFileSpec(dllpath);
 
 	swprintf(safefile, L"\"%s\"", FileToLoad);
