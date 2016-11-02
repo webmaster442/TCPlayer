@@ -12,7 +12,7 @@
         mc:Ignorable="d"
         Left="{Binding Source={x:Static props:Settings.Default}, Path=Left, Mode=TwoWay}"
         Top="{Binding Source={x:Static props:Settings.Default}, Path=Top, Mode=TwoWay}"
-        Topmost="{Binding ElementName=AllWaysTop, Path=IsChecked}"
+        Topmost="{Binding Source={x:Static props:Settings.Default}, Path=TopMost, Mode=TwoWay}"
         SourceInitialized="MainWin_SourceInitialized"
         AllowDrop="True"
         Drop="MainWin_Drop"

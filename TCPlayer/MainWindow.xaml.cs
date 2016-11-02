@@ -170,7 +170,7 @@ namespace TCPlayer
         {
             OverLay.Visibility = Visibility.Collapsed;
             var dialog = (OverLayContent.Children[0] as IDialog);
-            if (dialog != null) dialog.OkClicked.Invoke();
+            dialog?.OkClicked?.Invoke();
             OverLayContent.Children.Clear();
         }
 
