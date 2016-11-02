@@ -1,6 +1,0 @@
-[plugininstall]
-description=Total Commander Audio Player plugin & standalone player written in C#, based on bass.dll components. (x86 & x64)
-type=wlx
-file=TCPlayerLister.wlx
-defaultdir=Plugins\Lister\TCPlayerLister
-readme=Readme.md

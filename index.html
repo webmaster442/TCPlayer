@@ -1,0 +1,248 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="TC Player official website">
+    <meta name="author" content="webmaster442">
+    <title>TC Player - A minimalistic audio player &amp; Total commander plugin</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!-- Lightbox CSS -->
+    <link href="css/lightbox.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/scrolling-nav.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<!-- The #page-top ID is part of the scrolling feature - the data-spy and data-target are part of the built-in Bootstrap scrollspy function -->
+<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top"><span class="glyphicon glyphicon-expand"></span> TC Player</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a class="page-scroll" href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#introduction"><span class="glyphicon glyphicon-info-sign"></span> Introduction</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#sreenshots"><span class="glyphicon glyphicon-picture"></span> Sreenshots</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#install"><span class="glyphicon glyphicon-question-sign"></span> Instalation</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#download"><span class="glyphicon glyphicon-download"></span> Download</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <section id="intro" class="section bg1">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="icon.svg" class="img-responsive" />
+                </div>
+                <div class="col-md-8">
+                    <h1 class="text-intro">Welcome to the Official Website of TC Player</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <hr />
+                    <p class="text-big text-left">
+                        TC Player is a minimalistic, yet powerfull audio player written in C#.
+                        It comes with a a Total Commander lister &amp; Packer plugin,
+                        that make it a usefull companion app for <a href="https://www.ghisler.com/" target="_blank">Total Commander</a>
+                    </p>
+                    <p>some story here</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="introduction" class="section bg2">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1><span class="glyphicon glyphicon-info-sign"></span> Introduction</h1>
+                    <hr />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="shots/shot01.jpg" class="img-responsive">
+                </div>
+                <div class="col-md-6">
+                    <h3 class="text-left">Important features of TC Player</h3>
+                    <ul class="text-left">
+                        <li>Support for 32 bit and 64 bit Windows Operating Systems</li>
+                        <li>Based on Bass.dll components</li>
+                        <li>
+                            Supports a large number of formats:
+                            <br />MP3, MP4, AAC, OGG, WAV, FLAC, WavPack, Apple Lossless (ALAC), WMA, AC3, CDDA, APE, MPC, MP+, MPP, OFR, OFS, SPX, TTA, DSF, OPUS
+                        </li>
+                        <li>
+                            Supports MIDI &amp; tracker files playback:
+                            <br />MIDI, MID, RMI, KAR, XM, IT, S3M, MOD, MTM, UMX, MO3
+                        </li>
+                        <li>Supports various playlist formats: PLS, M3U, WPL</li>
+                        <li>Can change output device on the fly</li>
+                        <li>Small, only 10Mb</li>
+                        <li>Supports Windows 7/8/10 Taskbar features</li>
+                        <li>It's Free &amp; Open source</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-left">
+                    <hr />
+                    <h3>License</h3>
+                    <p>
+                        The Player code is licensed under the terms of the <a href="https://www.gnu.org/licenses/gpl.html" target="_blank">GNU GENERAL PUBLIC LICENSE v3.</a><br />
+                        However the Bass components are not open source. They can be used for free in any noncommercial product.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-left">
+                    <hr />
+                    <h3>TC Player uses the following open source libaries &amp; projects</h3>
+                    <p>
+                        <a href="https://github.com/mono/taglib-sharp" target="_blank">Taglib#</a>,
+                        <a href="https://github.com/ManagedBass/ManagedBass.PInvoke" target="_blank">ManagedBass.Pinvoke</a>,
+                        <a href="https://materialdesignicons.com/" target="_blank">Material design Icons</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="sreenshots" class="section bg1">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1><span class="glyphicon glyphicon-picture"></span> Screenshots</h1>
+                    <hr />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <a class="example-image-link" href="shots/shot01.jpg" data-lightbox="example-set" data-title="Main window">
+                        <img class="img-responsive" src="shots/shot01.jpg" alt="" width="558" height="297" />
+                    </a>
+                    <p class="text-left">Main window</p>
+                </div>
+                <div class="col-md-6">
+                    <a class="example-image-link" href="shots/shot02.jpg" data-lightbox="example-set" data-title="Playlist view">
+                        <img class="img-responsive" src="shots/shot02.jpg" alt="" width="558" height="297" />
+                    </a>
+                    <p class="text-left">Playlist view</p>
+                </div>
+            </div>
+            <div class="row">
+                <hr />
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <a class="example-image-link" href="shots/shot03.jpg" data-lightbox="example-set" data-title="Settings window">
+                        <img class="img-responsive" src="shots/shot03.jpg" alt="" width="558" height="297" />
+                    </a>
+                    <p class="text-left">Settings window</p>
+                </div>
+                <div class="col-md-6">
+                    <a class="example-image-link" href="shots/shot04.jpg" data-lightbox="example-set" data-title="Audio device changer">
+                        <img class="img-responsive" src="shots/shot04.jpg" alt="" width="558" height="297" />
+                    </a>
+                    <p class="text-left">Audio device changer</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="install" class="section bg2">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1><span class="glyphicon glyphicon-question-sign"></span> Installation Instructions</h1>
+                    <hr />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <ol class="text-left text-big">
+                        <li>Install .Microsoft .NET 4.5 (If you are using Windows 8/8.1 or 10, then you don't need to install it, because it's part of the Windows installation)</li>
+                        <li>Intall Total Commander (plugin is tested with 8.51)</li>
+                        <li>Open the downloaded RAR archive in Total commander by double clicking on the file</li>
+                        <li>Plugin Auto installer will ask you wheather you want to install the plugin or not. Click yes.</li>
+                        <li>Lister plugin is now installed. However the packer plugin can't be installed automatically by Total commander.</li>
+                        <li>The packer plugin allows you to send multiple selected files to the player's playlist. Installing it is enterly optional.</li>
+                        <li>To install it open Total Commander options panel, then click on Plugins page. On the plugins page click configure in the Packer plugins (.WCX) section </li>
+                        <li>A dialog will open. In the dialog to the All files with extension textbox inpt the following: .tcplayer; After this click on the New type... button and locate the TCPlayerPacker.wcx file</li>
+                        <li>You now succesfully installed the app.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="download" class="section bg1">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1><span class="glyphicon glyphicon-download"></span> Download</h1>
+                    <hr />
+                </div>
+                <div class="col-lg-12 text-left">
+                    <p class="text-big">
+                        The program can be downloaded from the project's github page or from Totalcmd.net plugin repository.
+                        The recomended download location is the github page.
+                    </p><hr />
+                    <a class="btn btn-primary btn-lg" href="#">Download from github</a>
+                    <a class="btn btn-info btn-lg" href="#">Download from Totalcmd.net</a>
+                    <hr />
+                    <p class="text-big">
+                        If you run into a bug or would like to see a certain feature in the app,
+                        then feel free to open an issue in the project Issue tracker
+                    </p>
+                    <hr />
+                    <a class="btn btn-success btn-lg" href="#">Report an issue or request a feeature</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- Lightbox JavaScript -->
+    <script src="js/lightbox-plus-jquery.min.js"></script>
+    <!-- Scrolling Nav JavaScript -->
+    <script src="js/jquery.easing.min.js"></script>
+    <script src="js/scrolling-nav.js"></script>
+</body>
+</html>
