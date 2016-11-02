@@ -28,7 +28,6 @@ using namespace std;
 
 HINSTANCE hinst;
 HMODULE FLibHandle = 0;
-
 tChangeVolProc PackerChangeVolProc;
 tProcessDataProc PackerProcessDataProc;
 
@@ -41,6 +40,8 @@ EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 
 #define PROGRAMNAME L"TCPlayer.exe"
 
+
+WCHAR *callbuffer = NULL;
 
 BOOL APIENTRY DllMain(HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved)
 {
@@ -168,18 +169,24 @@ int __stdcall PackFilesW(WCHAR *PackedFile, WCHAR *SubPath, WCHAR *SrcPath, WCHA
 		ShExecInfo.hInstApp = NULL;
 		ShellExecuteEx(&ShExecInfo);
 		Sleep(25);
-
+		delete[] callbuffer;
+		callbuffer = NULL;
 		return 0;
 	}
-	else return E_ECREATE;
+	else
+	{
+		delete[] callbuffer;
+		callbuffer = NULL;
+		return E_ECREATE;
+	}
 }
 
 int __stdcall PackFiles(char *PackedFile, char *SubPath, char *SrcPath, char *AddList, int Flags)
 {
-	WCHAR buffer[1024 * 8];
-	return PackFilesW(awlcopy(buffer, PackedFile, countof(buffer) - 1),
-		awlcopy(buffer, SubPath, countof(buffer) - 1),
-		awlcopy(buffer, SrcPath, countof(buffer) - 1),
-		awlcopy(buffer, AddList, countof(buffer) - 1),
+	callbuffer = new WCHAR[countof(AddList)];
+	return PackFilesW(awlcopy(callbuffer, PackedFile, countof(callbuffer) - 1),
+		awlcopy(callbuffer, SubPath, countof(callbuffer) - 1),
+		awlcopy(callbuffer, SrcPath, countof(callbuffer) - 1),
+		awlcopy(callbuffer, AddList, countof(callbuffer) - 1),
 		Flags);
 }
