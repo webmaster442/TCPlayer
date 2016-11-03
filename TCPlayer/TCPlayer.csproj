@@ -399,10 +399,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Engine\Ct8mgm.sf2">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Engine\Engine.sha512" />
     <None Include="Lib\TagLib\TagLib.sources" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
