@@ -4,8 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="TC Player official website">
-    <meta name="author" content="webmaster442">
+    <meta name="description" content="TC Player official website. A Minimalistic, yet powerfull audio player, Total commander plugin">
+    <meta name="keywords" content="total,commander,total commander,tc,player,audio,player,application,plugin,packer,lister,c#,c++,open,source,project,github,webmaster442,ruzsinszki,gábor"/>
+    <meta name="author" content="webmaster442, Ruzsinszki Gábor">
     <title>TC Player - A minimalistic audio player &amp; Total commander plugin</title>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -45,10 +46,10 @@
                         <a class="page-scroll" href="#introduction"><span class="glyphicon glyphicon-info-sign"></span> Introduction</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#sreenshots"><span class="glyphicon glyphicon-picture"></span> Sreenshots</a>
+                        <a class="page-scroll" href="#screenshots"><span class="glyphicon glyphicon-picture"></span> Screenshots</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#install"><span class="glyphicon glyphicon-question-sign"></span> Instalation</a>
+                        <a class="page-scroll" href="#install"><span class="glyphicon glyphicon-question-sign"></span> Installation</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="#download"><span class="glyphicon glyphicon-download"></span> Download</a>
@@ -74,11 +75,15 @@
                 <div class="col-lg-12">
                     <hr />
                     <p class="text-big text-left">
-                        TC Player is a minimalistic, yet powerfull audio player written in C#.
+                        TC Player is a minimalistic, yet powerful audio player written in C#.
                         It comes with a a Total Commander lister &amp; Packer plugin,
-                        that make it a usefull companion app for <a href="https://www.ghisler.com/" target="_blank">Total Commander</a>
+                        that make it a useful companion application for <a href="https://www.ghisler.com/" target="_blank">Total Commander</a>
                     </p>
-                    <p>some story here</p>
+                    <p class="text-big text-left">
+                        The main idea behind the creation of TC player was that I needed a simple, minimalistic audio player without fancy features,
+                        like Winamp back in the days. So I created this program. The audio decoding is done by the great Bass.dll &amp; it's components.
+                        Hope you like it &amp; find it useful. - Ruzsinszki Gábor, aka. Webmaster442
+                    </p>
                 </div>
             </div>
         </div>
@@ -130,7 +135,7 @@
             <div class="row">
                 <div class="col-lg-12 text-left">
                     <hr />
-                    <h3>TC Player uses the following open source libaries &amp; projects</h3>
+                    <h3>TC Player uses the following open source libraries &amp; projects</h3>
                     <p>
                         <a href="https://github.com/mono/taglib-sharp" target="_blank">Taglib#</a>,
                         <a href="https://github.com/ManagedBass/ManagedBass.PInvoke" target="_blank">ManagedBass.Pinvoke</a>,
@@ -141,7 +146,7 @@
         </div>
     </section>
 
-    <section id="sreenshots" class="section bg1">
+    <section id="screenshots" class="section bg1">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -195,14 +200,14 @@
                 <div class="col-lg-12">
                     <ol class="text-left text-big">
                         <li>Install .Microsoft .NET 4.5 (If you are using Windows 8/8.1 or 10, then you don't need to install it, because it's part of the Windows installation)</li>
-                        <li>Intall Total Commander (plugin is tested with 8.51)</li>
+                        <li>Install Total Commander (plugin is tested with 8.51)</li>
                         <li>Open the downloaded RAR archive in Total commander by double clicking on the file</li>
-                        <li>Plugin Auto installer will ask you wheather you want to install the plugin or not. Click yes.</li>
+                        <li>Plugin Auto installer will ask you whether you want to install the plugin or not. Click yes.</li>
                         <li>Lister plugin is now installed. However the packer plugin can't be installed automatically by Total commander.</li>
-                        <li>The packer plugin allows you to send multiple selected files to the player's playlist. Installing it is enterly optional.</li>
+                        <li>The packer plugin allows you to send multiple selected files to the player's playlist. Installing it is entirely optional.</li>
                         <li>To install it open Total Commander options panel, then click on Plugins page. On the plugins page click configure in the Packer plugins (.WCX) section </li>
-                        <li>A dialog will open. In the dialog to the All files with extension textbox inpt the following: .tcplayer; After this click on the New type... button and locate the TCPlayerPacker.wcx file</li>
-                        <li>You now succesfully installed the app.</li>
+                        <li>A dialog will open. In the dialog to the All files with extension text box input the following: .tcplayer; After this click on the New type... button and locate the TCPlayerPacker.wcx file</li>
+                        <li>You now successfully installed the application.</li>
                     </ol>
                 </div>
             </div>
@@ -219,17 +224,27 @@
                 <div class="col-lg-12 text-left">
                     <p class="text-big">
                         The program can be downloaded from the project's github page or from Totalcmd.net plugin repository.
-                        The recomended download location is the github page.
+                        The recommended download location is the github page.
                     </p><hr />
-                    <a class="btn btn-primary btn-lg" href="#">Download from github</a>
-                    <a class="btn btn-info btn-lg" href="#">Download from Totalcmd.net</a>
+                    <a class="btn btn-primary btn-lg" href="https://github.com/webmaster442/TCPlayer/releases" target="_blank">Download from github</a>
+                    <a class="btn btn-info btn-lg" href="http://totalcmd.net/" target="_blank">Download from Totalcmd.net</a>
+                    <a class="btn btn-warning btn-lg" href="https://github.com/webmaster442/TCPlayer/blob/master/CHANGELOG.md" target="_blank">Changelog</a>
                     <hr />
                     <p class="text-big">
-                        If you run into a bug or would like to see a certain feature in the app,
+                        If you run into a bug or would like to see a certain feature in the application,
                         then feel free to open an issue in the project Issue tracker
                     </p>
                     <hr />
-                    <a class="btn btn-success btn-lg" href="#">Report an issue or request a feeature</a>
+                    <a class="btn btn-success btn-lg" href="https://github.com/webmaster442/TCPlayer/issues" target="_blank">Report an issue or request a feature</a>
+                    <p class="text-big">If you find the program useful, then you could buy me a beer. That makes me happy &amp; supports the development :)</p>
+                    <hr />
+                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                        <input type="hidden" name="cmd" value="_s-xclick">
+                        <input type="hidden" name="hosted_button_id" value="GTSV3E23982GQ">
+                        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                        <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                    </form>
+
                 </div>
 
             </div>
