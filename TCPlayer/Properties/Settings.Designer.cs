@@ -142,5 +142,17 @@ namespace TCPlayer.Properties {
                 this["TrackChangeNotification"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Browse ...")]
+        public string SoundfontPath {
+            get {
+                return ((string)(this["SoundfontPath"]));
+            }
+            set {
+                this["SoundfontPath"] = value;
+            }
+        }
     }
 }

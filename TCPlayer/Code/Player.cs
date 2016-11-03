@@ -65,7 +65,6 @@ namespace TCPlayer.Code
             Bass.PluginLoad(enginedir + "\\basswma.dll");
             Bass.PluginLoad(enginedir + "\\basswv.dll");
             Bass.PluginLoad(enginedir + "\\bassmidi.dll");
-            BassMidi.DefaultFont = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Engine\Ct8mgm.sf2");
         }
 
         protected virtual void Dispose(bool disposing)
@@ -163,6 +162,15 @@ namespace TCPlayer.Code
         public void Load(string file)
         {
             _isstream = false;
+            if (Helpers.IsMidi(file))
+            {
+                if (!File.Exists(Properties.Settings.Default.SoundfontPath))
+                {
+                    Error("Sound font is missing, or not set. MIDI playback is not possible.");
+                    return;
+                }
+                BassMidi.DefaultFont = Properties.Settings.Default.SoundfontPath;
+            }
             if (_source != 0)
             {
                 Bass.StreamFree(_source);

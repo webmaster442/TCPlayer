@@ -37,6 +37,13 @@
                     Margin="2"
                     IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=ConfirmExit, Mode=TwoWay}"
                     Content="Confirm exit with ESC button"/>
+                <TextBlock
+                    Margin="2"
+                    Text="SoundFont path:"/>
+                <Button
+                    x:Name="BtnSoundFont"
+                    Click="BtnSoundFont_Click"
+                    Content="{Binding Source={x:Static props:Settings.Default}, Path=SoundfontPath, Mode=TwoWay}"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

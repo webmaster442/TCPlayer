@@ -29,5 +29,17 @@ namespace TCPlayer.Controls
         {
             InitializeComponent();
         }
+
+        private void BtnSoundFont_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var dialog = new System.Windows.Forms.OpenFileDialog();
+            dialog.Filter = "Sound Fonts|*.sf2;*.sfz";
+            dialog.Multiselect = false;
+            dialog.Title = "Select soundfont";
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Properties.Settings.Default.SoundfontPath = dialog.FileName;
+            }
+        }
     }
 }
