@@ -156,6 +156,7 @@ namespace TCPlayer
         public static void ShowDialog(UserControl dialog)
         {
             var main = Application.Current.MainWindow as MainWindow;
+            main.OverLayContent.Children.Clear();
             main.OverLayContent.Children.Add(dialog);
             main.OverLay.Visibility = Visibility.Visible;
         }

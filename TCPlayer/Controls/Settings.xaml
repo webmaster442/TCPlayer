@@ -42,6 +42,11 @@
                     Text="SoundFont path:"/>
                 <Button
                     x:Name="BtnSoundFont"
+                    Foreground="White"
+                    MaxWidth="200"
+                    MinWidth="80"
+                    Margin="5,2"
+                    HorizontalAlignment="Left"
                     Click="BtnSoundFont_Click"
                     Content="{Binding Source={x:Static props:Settings.Default}, Path=SoundfontPath, Mode=TwoWay}"/>
             </StackPanel>

@@ -31,15 +31,27 @@
         <StackPanel>
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="128"/>
+                    <ColumnDefinition Width="110"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
                 <TextBlock
                     Text="TC Player"
                     Grid.Column="1"
+                    Grid.Row="0"
                     Style="{StaticResource Title}"/>
                 <Border
+                    Grid.Row="0"
                     Child="{StaticResource IconMain}"/>
+                <Button
+                    Grid.Row="1"
+                    Content="Visit Website"
+                    x:Name="BtnWebsite"
+                    Foreground="White"
+                    Click="BtnWebsite_Click"/>
             </Grid>
             <TextBlock Text="A Player based on Bass.dll components. Player development by: Ruzsinszki Gábor, aka. Webmaster442"/>
             <TextBlock Text="This program is free software, distributed under the terms of GPL."/>

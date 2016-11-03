@@ -19,6 +19,7 @@
 using TCPlayer.Code;
 using System;
 using System.Windows.Controls;
+using System.Diagnostics;
 
 namespace TCPlayer.Controls
 {
@@ -36,6 +37,11 @@ namespace TCPlayer.Controls
         {
             get;
             set;
+        }
+
+        private void BtnWebsite_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Process.Start("https://webmaster442.github.io/TCPlayer/");
         }
     }
 }
