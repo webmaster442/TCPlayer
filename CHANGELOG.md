@@ -1,6 +1,7 @@
-#1.06
+#1.06 - 2016.11.04
 
  * Added options dialog, with various settings
+ * Improved Lister plugin code
  * Default soundfont is removed, can be configured via the settings
  * Support for multimedia keys on keyboards (can be disabled)
  * Support for track change notifications (can be disabled)

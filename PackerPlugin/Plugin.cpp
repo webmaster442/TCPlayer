@@ -27,21 +27,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using namespace std;
 
 HINSTANCE hinst;
-HMODULE FLibHandle = 0;
 tChangeVolProc PackerChangeVolProc;
 tProcessDataProc PackerProcessDataProc;
 
 EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 
-
-#ifndef countof
-#define countof(str) (sizeof(str)/sizeof(str[0]))
-#endif // countof
-
 #define PROGRAMNAME L"TCPlayer.exe"
-
-
-WCHAR *callbuffer = NULL;
 
 BOOL APIENTRY DllMain(HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved)
 {
@@ -51,8 +42,6 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReserv
 		hinst = (HINSTANCE)hModule;
 		break;
 	case DLL_PROCESS_DETACH:
-		if (FLibHandle) FreeLibrary(FLibHandle);
-		FLibHandle = NULL;
 		break;
 	case DLL_THREAD_ATTACH:
 		break;
@@ -65,15 +54,12 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReserv
 /*=============================================================================
 Private internal functions
 =============================================================================*/
-WCHAR* awlcopy(WCHAR* outname, char* inname, int maxlen)
+static WCHAR* charToWChar(const char* text)
 {
-	if (inname) {
-		MultiByteToWideChar(CP_ACP, 0, inname, -1, outname, maxlen);
-		outname[maxlen] = 0;
-		return outname;
-	}
-	else
-		return NULL;
+	const size_t size = strlen(text) + 1;
+	wchar_t* wText = new wchar_t[size];
+	mbstowcs(wText, text, size);
+	return wText;
 }
 
 /*=============================================================================
@@ -169,24 +155,19 @@ int __stdcall PackFilesW(WCHAR *PackedFile, WCHAR *SubPath, WCHAR *SrcPath, WCHA
 		ShExecInfo.hInstApp = NULL;
 		ShellExecuteEx(&ShExecInfo);
 		Sleep(25);
-		delete[] callbuffer;
-		callbuffer = NULL;
 		return 0;
 	}
 	else
 	{
-		delete[] callbuffer;
-		callbuffer = NULL;
 		return E_ECREATE;
 	}
 }
 
 int __stdcall PackFiles(char *PackedFile, char *SubPath, char *SrcPath, char *AddList, int Flags)
 {
-	callbuffer = new WCHAR[countof(AddList)];
-	return PackFilesW(awlcopy(callbuffer, PackedFile, countof(callbuffer) - 1),
-		awlcopy(callbuffer, SubPath, countof(callbuffer) - 1),
-		awlcopy(callbuffer, SrcPath, countof(callbuffer) - 1),
-		awlcopy(callbuffer, AddList, countof(callbuffer) - 1),
-		Flags);
+	return PackFilesW(charToWChar(PackedFile),
+					  charToWChar(SubPath),
+					  charToWChar(SrcPath),
+					  charToWChar(AddList),
+					  Flags);
 }

@@ -41,6 +41,7 @@ namespace TCPlayer.Code
             _UID = GetUnique(AppName);
             _mutex = new Mutex(true, _UID, out _isfirst);
             _server = new Thread(ServerThread);
+            _isRunning = true;
             _server.Start();
         }
 
@@ -102,11 +103,10 @@ namespace TCPlayer.Code
 
         private void ServerThread()
         {
-            _isRunning = true;
             while (true)
             {
                 string text;
-                using (var server = new NamedPipeServerStream(_UID as string))
+                using (var server = new NamedPipeServerStream(_UID))
                 {
                     server.WaitForConnection();
 

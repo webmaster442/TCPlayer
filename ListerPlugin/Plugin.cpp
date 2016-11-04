@@ -22,7 +22,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "listplug.h"
 
 HINSTANCE hinst;
-HMODULE FLibHandle = 0;
 HWND timer = 0;
 EXTERN_C IMAGE_DOS_HEADER __ImageBase;
 
@@ -41,8 +40,6 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReserv
 		hinst = (HINSTANCE)hModule;
 		break;
 	case DLL_PROCESS_DETACH:
-		if (FLibHandle) FreeLibrary(FLibHandle);
-		FLibHandle = NULL;
 		break;
 	case DLL_THREAD_ATTACH:
 		break;
@@ -90,8 +87,8 @@ HWND CallKiller(HWND aListerWindow)
 								  L"TCPlayer_LISTERWIN",
 								  WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS,
 								  0, 0, 10, 10, aListerWindow, 0, hinst, NULL);
-	timer = handle;
-	SetTimer(timer, 0, 1100, (TIMERPROC)&timer_code);
+	timer = aListerWindow;
+	SetTimer(timer, 0, 250, (TIMERPROC)&timer_code);
 	return handle;
 }
 
