@@ -1,3 +1,7 @@
+#1.07 - 2016.11.05
+ * Fixed broken bassmidi.dll
+ * Removed OFR support, because the current version of the bass plugin is broken, will reenable it when it's fixed
+ 
 #1.06 - 2016.11.04
 
  * Added options dialog, with various settings

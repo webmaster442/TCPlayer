@@ -18,14 +18,12 @@
  */
 using ManagedBass;
 using ManagedBass.Cd;
-using ManagedBass.DirectX8;
 using ManagedBass.Fx;
 using ManagedBass.Midi;
 using ManagedBass.Mix;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices;
 
 namespace TCPlayer.Code
 {
@@ -55,7 +53,6 @@ namespace TCPlayer.Code
             Bass.PluginLoad(enginedir + "\\bass_ac3.dll");
             Bass.PluginLoad(enginedir + "\\bass_ape.dll");
             Bass.PluginLoad(enginedir + "\\bass_mpc.dll");
-            Bass.PluginLoad(enginedir + "\\bass_ofr.dll");
             Bass.PluginLoad(enginedir + "\\bass_spx.dll");
             Bass.PluginLoad(enginedir + "\\bass_tta.dll");
             Bass.PluginLoad(enginedir + "\\bassalac.dll");
