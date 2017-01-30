@@ -16,15 +16,17 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+using ManagedBass;
 using System;
 using System.IO;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using TCPlayer.Code;
-using ManagedBass;
-using System.Runtime.InteropServices;
 
 namespace TCPlayer.Controls
 {
@@ -33,9 +35,15 @@ namespace TCPlayer.Controls
     /// </summary>
     public partial class SongData : UserControl
     {
+        private DispatcherTimer _timer;
+
         public SongData()
         {
             InitializeComponent();
+            _timer = new DispatcherTimer();
+            _timer.Tick += _timer_Tick;
+            _timer.IsEnabled = true;
+            _timer.Interval = TimeSpan.FromMilliseconds(20);
         }
 
         public static DependencyProperty CoverProperty =
@@ -43,21 +51,6 @@ namespace TCPlayer.Controls
 
         public static DependencyProperty FileNameProperty =
             DependencyProperty.Register("FileName", typeof(string), typeof(SongData));
-
-        public static DependencyProperty ArtistProperty =
-            DependencyProperty.Register("Artist", typeof(string), typeof(SongData));
-
-        public static DependencyProperty TitleProperty =
-            DependencyProperty.Register("Title", typeof(string), typeof(SongData));
-
-        public static DependencyProperty AlbumProperty =
-            DependencyProperty.Register("Album", typeof(string), typeof(SongData));
-
-        public static DependencyProperty YearProperty =
-            DependencyProperty.Register("Year", typeof(string), typeof(SongData));
-
-        public static DependencyProperty SizeProperty =
-            DependencyProperty.Register("Size", typeof(string), typeof(SongData));
 
         public ImageSource Cover
         {
@@ -69,36 +62,6 @@ namespace TCPlayer.Controls
         {
             get { return (string)GetValue(FileNameProperty); }
             set { SetValue(FileNameProperty, value); }
-        }
-
-        public string Artist
-        {
-            get { return (string)GetValue(ArtistProperty); }
-            set { SetValue(ArtistProperty, value); }
-        }
-
-        public string Title
-        {
-            get { return (string)GetValue(TitleProperty); }
-            set { SetValue(TitleProperty, value); }
-        }
-
-        public string Album
-        {
-            get { return (string)GetValue(AlbumProperty); }
-            set { SetValue(AlbumProperty, value); }
-        }
-
-        public string Year
-        {
-            get { return (string)GetValue(YearProperty); }
-            set { SetValue(YearProperty, value); }
-        }
-
-        public string Size
-        {
-            get { return (string)GetValue(SizeProperty); }
-            set { SetValue(SizeProperty, value); }
         }
 
         private string GetFileSize(long value)
@@ -128,16 +91,40 @@ namespace TCPlayer.Controls
             return string.Format("{0:0.000} {1}", val, unit);
         }
 
+        public int Handle { get; set; }
+
+        private void _timer_Tick(object sender, EventArgs e)
+        {
+            if (Handle == 0) return;
+            int length = (int)Bass.ChannelSeconds2Bytes(Handle, 0.01);
+            short[] data = new short[length / 2];
+            length = Bass.ChannelGetData(Handle, data, length);
+            double xscale = Visual.ActualWidth / data.Length;
+            double center = Visual.ActualHeight / 2;
+            double yscale = (Visual.ActualHeight) / (short.MaxValue * 2);
+            Visual.Points.Clear();
+            for (int i = 1; i < data.Length; i += 2)
+                Visual.Points.Add(new Point(i * xscale, (data[i] * yscale) + center));
+        }
+
+        private void SetInfoText(string artist, string title, string album, string year, string size)
+        {
+            var sb = new StringBuilder();
+            sb.AppendFormat("{0} - {1}\r\n", artist, title);
+            sb.AppendFormat("{0} ({1})\r\n", album, year);
+            sb.Append(size);
+            InfoText.Text = sb.ToString();
+        }
+
         public void UpdateMediaInfo(string file, int handle)
         {
             var fi = new FileInfo(file);
             FileName = fi.Name;
             Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/music.png", UriKind.Relative));
-            Size = GetFileSize(fi.Length);
-            Artist = Marshal.PtrToStringAuto(Bass.ChannelGetTags(handle, TagType.MusicAuth));
-            Title = Marshal.PtrToStringAuto(Bass.ChannelGetTags(handle, TagType.MusicName));
-            Album = "";
-            Year = "unknown";
+            var Size = GetFileSize(fi.Length);
+            var Artist = Marshal.PtrToStringAuto(Bass.ChannelGetTags(handle, TagType.MusicAuth));
+            var Title = Marshal.PtrToStringAuto(Bass.ChannelGetTags(handle, TagType.MusicName));
+            SetInfoText(Artist, Title, "", "unknown", Size);
         }
 
         public void UpdateMediaInfo(string file)
@@ -147,11 +134,7 @@ namespace TCPlayer.Controls
             {
                 FileName = file;
                 Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/network.png", UriKind.Relative));
-                Year = DateTime.Now.Year.ToString();
-                Album = "";
-                Title = "Stream";
-                Artist = Path.GetFileName(file);
-                Size = "Infinite";
+                SetInfoText(Path.GetFileName(file), "Stream", "", DateTime.Now.Year.ToString(), "∞");
                 if (notify) App._notify.ShowNotification(file);
                 return;
             }
@@ -162,23 +145,19 @@ namespace TCPlayer.Controls
                 var track = Convert.ToInt32(info[1]);
 
                 var size = ManagedBass.Cd.BassCd.GetTrackLength(drive, track);
-                Size = GetFileSize(size);
-                UpdateCDFlags(track + 1, notify);
+                UpdateCDFlags(track + 1, notify, size);
                 return;
             }
             try
             {
                 var fi = new FileInfo(file);
                 FileName = fi.Name;
-                Size = GetFileSize(fi.Length);
+                var Size = GetFileSize(fi.Length);
 
                 if (Helpers.IsMidi(file))
                 {
                     Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/midi.png", UriKind.Relative));
-                    Album = "";
-                    Title = fi.Name;
-                    Year = "Unknown";
-                    Artist = "";
+                    SetInfoText("", fi.Name, "", "Unknown", Size);
                     if (notify) App._notify.ShowNotification(FileName);
                     return;
                 }
@@ -197,11 +176,12 @@ namespace TCPlayer.Controls
                     ms.Close();
                     Cover = ret;
                 }
-                Year = tags.Tag.Year.ToString();
-                Artist = tags.Tag.Performers[0];
-                Album = tags.Tag.Album;
-                Title = tags.Tag.Title;
+                var Year = tags.Tag.Year.ToString();
+                var Artist = tags.Tag.Performers[0];
+                var Album = tags.Tag.Album;
+                var Title = tags.Tag.Title;
                 if (notify) App._notify.ShowNotification(FileName, Artist, Title);
+                SetInfoText(Artist, Title, Album, Year, Size);
             }
             catch (Exception)
             {
@@ -209,34 +189,30 @@ namespace TCPlayer.Controls
             }
         }
 
-        private void UpdateCDFlags(int track, bool notify)
+        private void UpdateCDFlags(int track, bool notify, int size)
         {
             FileName = string.Format("CD Track #{0}", track);
+            //GetFileSize(size);
             Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/disk.png", UriKind.Relative));
-            Year = "unknown";
+            var Year = "unknown";
+            var Artist = "Track";
+            var Title = string.Format("#{0}", track);
+            var Album = "Audio CD";
             if (App._cddata.Count > 0)
             {
                 Artist = App._cddata[string.Format("PERFORMER{0}", track)];
                 Title = App._cddata[string.Format("TITLE{0}", track)];
                 Album = App._cddata["TITLE0"];
             }
-            else
-            {
-                Artist = "Track";
-                Title = string.Format("#{0}", track);
-                Album = "Audio CD";
-            }
             if (notify)
                 App._notify.ShowNotification("CD Track" + track, Artist, Title);
+            SetInfoText(Artist, Title, Album, Year, GetFileSize(size));
         }
 
         public void Reset()
         {
             Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/unknown.png", UriKind.Relative));
-            Year = "";
-            Album = "";
-            Title = "";
-            Artist = "";
+            InfoText.Text = "";
         }
     }
 }

@@ -356,7 +356,7 @@ namespace TCPlayer.Code
                         _initialized = false;
                     }
 
-                    _initialized = Bass.Init(i, 48000, DeviceInitFlags.Frequency, IntPtr.Zero);
+                    _initialized = Bass.Init(i, Properties.Settings.Default.SampleRate, DeviceInitFlags.Frequency, IntPtr.Zero);
                     CurrentDeviceID = i;
                     if (!_initialized)
                     {

@@ -39,9 +39,15 @@ namespace TCPlayer.Controls
 
         public int DeviceIndex
         {
+            get { return LbDevices.SelectedIndex; }
+        }
+
+        public int SampleRate
+        {
             get
             {
-                return LbDevices.SelectedIndex;
+                var item = CbSampleRate.SelectedItem as ComboBoxItem;
+                return Convert.ToInt32(item.Content);
             }
         }
     }

@@ -17,7 +17,7 @@
         AllowDrop="True"
         Drop="MainWin_Drop"
         Closing="MainWin_Closing"
-        Title="TC Player" Height="297" Width="558">
+        Title="TC Player" Height="360" Width="675">
     <Window.TaskbarItemInfo>
         <TaskbarItemInfo
             ProgressState="None" 
@@ -163,24 +163,26 @@
                 Header="[ Player ]">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="135"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="25"/>
-                        <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition />
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <controls:SongData
                         Grid.Row="0"
+                        Grid.RowSpan="2"
                         x:Name="SongDat"/>
                     <Slider
-                        Margin="10,0"
+                        Margin="10,10"
                         x:Name="SeekSlider"
                         Thumb.DragCompleted="SeekSlider_DragCompleted"
                         Thumb.DragStarted="SeekSlider_DragStarted"
                         ValueChanged="SeekSlider_ValueChanged"
-                        Grid.Row="1"/>
+                        Grid.Row="2"/>
                     <StackPanel
                         Margin="10,0"
-                        Grid.Row="2"
+                        Grid.Row="3"
                         Orientation="Horizontal">
                         <TextBlock
                             x:Name="TbFullTime"
@@ -190,7 +192,7 @@
                             x:Name="TbCurrTime"
                             Text="00:00:00"/>
                         <StackPanel
-                            Margin="170,0,0,0"
+                            Margin="290,0,0,0"
                             VerticalAlignment="Center">
                             <ProgressBar
                                 Width="200"
@@ -206,9 +208,9 @@
                         </StackPanel>
                     </StackPanel>
                     <StackPanel
-                        HorizontalAlignment="Center"
+                        HorizontalAlignment="Left"
                         Orientation="Horizontal"
-                        Grid.Row="3">
+                        Grid.Row="4">
                         <Button
                             ToolTip="Play / Pause"
                             x:Name="BtnPlayPause"

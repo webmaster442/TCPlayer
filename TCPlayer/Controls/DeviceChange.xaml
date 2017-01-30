@@ -10,6 +10,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition/>
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         <TextBlock 
             Text="Please select output device:"
@@ -20,5 +21,22 @@
             Grid.Row="1"
             ItemsSource="{Binding}">
         </ListBox>
+        <StackPanel
+            Grid.Row="2"
+            Orientation="Horizontal">
+            <TextBlock
+                Margin="5,0"
+                Text="Sample Rate: "
+                FontWeight="Bold"/>
+            <ComboBox
+                x:Name="CbSampleRate"
+                Width="70"
+                SelectedIndex="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+                <ComboBoxItem Content="44100"/>
+                <ComboBoxItem Content="48000"/>
+            </ComboBox>
+        </StackPanel>
     </Grid>
 </UserControl>

@@ -237,6 +237,7 @@ namespace TCPlayer
             selector.OkClicked = new Action(() =>
              {
                  var name = devices[selector.DeviceIndex];
+                 Properties.Settings.Default.SampleRate = selector.SampleRate;
                  _player.ChangeDevice(name);
              });
             MainWindow.ShowDialog(selector);
@@ -277,11 +278,13 @@ namespace TCPlayer
                 _timer.IsEnabled = true;
                 if (Helpers.IsTracker(file)) SongDat.UpdateMediaInfo(file, _player.SourceHandle);
                 else SongDat.UpdateMediaInfo(file);
+                SongDat.Handle = _player.MixerHandle;
 
             }
             catch (Exception ex)
             {
                 _timer.IsEnabled = false;
+                SongDat.Handle = 0;
                 Reset();
                 SongDat.Reset();
                 Helpers.ErrorDialog(ex);
