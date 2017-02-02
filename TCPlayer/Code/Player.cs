@@ -25,11 +25,13 @@ using ManagedBass.Mix;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using WPFSoundVisualizationLib;
 using System.Runtime.InteropServices;
+using System.ComponentModel;
 
 namespace TCPlayer.Code
 {
-    internal class Player : IDisposable
+    internal class Player : IDisposable, ISpectrumPlayer
     {
         public bool Is64Bit
         {
@@ -40,9 +42,25 @@ namespace TCPlayer.Code
         private int _source, _mixer;
         private float _lastvol;
         private bool _paused;
+        private bool _isplaying;
         private bool _isstream;
+        private static readonly Player _instance = new Player();
+        private readonly int _maxfft;
+        private DownloadProcedure _callback;
 
-        public Player()
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged(string info)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(info));
+        }
+
+        public static Player Instance
+        {
+            get { return _instance; }
+        }
+
+        private Player()
         {
             var enginedir = AppDomain.CurrentDomain.BaseDirectory;
             if (Is64Bit) enginedir = Path.Combine(enginedir, @"Engine\x64");
@@ -65,6 +83,8 @@ namespace TCPlayer.Code
             Bass.PluginLoad(enginedir + "\\basswma.dll");
             Bass.PluginLoad(enginedir + "\\basswv.dll");
             Bass.PluginLoad(enginedir + "\\bassmidi.dll");
+            _callback = MyDownloadProc;
+            _maxfft = (int)(DataFlags.Available | DataFlags.FFT2048);
         }
 
         protected virtual void Dispose(bool disposing)
@@ -155,6 +175,11 @@ namespace TCPlayer.Code
             }
         }
 
+        private void MyDownloadProc(IntPtr buffer, int length, IntPtr user)
+        {
+
+        }
+
         /// <summary>
         /// Load a file for playback
         /// </summary>
@@ -175,18 +200,20 @@ namespace TCPlayer.Code
             {
                 Bass.StreamFree(_source);
                 _source = 0;
+                IsPlaying = false;
             }
             if (_mixer != 0)
             {
                 Bass.StreamFree(_mixer);
                 _mixer = 0;
+                IsPlaying = false;
             }
             var sourceflags = BassFlags.Decode | BassFlags.Loop | BassFlags.Float | BassFlags.Prescan;
             var mixerflags = BassFlags.MixerDownMix | BassFlags.MixerPositionEx | BassFlags.AutoFree;
 
             if (file.StartsWith("http://") || file.StartsWith("https://"))
             {
-                _source = Bass.CreateStream(file, 0, sourceflags, null);
+                _source = Bass.CreateStream(file, 0, sourceflags, _callback, IntPtr.Zero);
                 _isstream = true;
             }
             else if (file.StartsWith("cd://"))
@@ -205,6 +232,7 @@ namespace TCPlayer.Code
             if (_source == 0)
             {
                 Error("Load failed");
+                IsPlaying = false;
                 _isstream = false;
                 return;
             }
@@ -213,15 +241,19 @@ namespace TCPlayer.Code
             if (_mixer == 0)
             {
                 Error("Mixer stream create failed");
+                IsPlaying = false;
                 return;
             }
             if (!BassMix.MixerAddChannel(_mixer, _source, BassFlags.MixerDownMix))
             {
                 Error("Mixer chanel adding failed");
+                IsPlaying = false;
                 return;
             }
             Bass.ChannelSetAttribute(_mixer, ChannelAttribute.Volume, _lastvol);
+            Bass.ChannelPlay(_mixer, false);
             _paused = false;
+            IsPlaying = true;
         }
 
         public void VolumeValues(out int left, out int right)
@@ -247,24 +279,6 @@ namespace TCPlayer.Code
         }
 
         /// <summary>
-        /// Play
-        /// </summary>
-        public void Play()
-        {
-            _paused = false;
-            Bass.ChannelPlay(_mixer, false);
-        }
-
-        /// <summary>
-        /// Pause
-        /// </summary>
-        public void Pause()
-        {
-            _paused = true;
-            Bass.ChannelPause(_mixer);
-        }
-
-        /// <summary>
         /// Play / Pause
         /// </summary>
         public void PlayPause()
@@ -272,12 +286,14 @@ namespace TCPlayer.Code
             if (_paused)
             {
                 Bass.ChannelPlay(_mixer, false);
+                IsPlaying = true;
                 _paused = false;
             }
             else
             {
                 Bass.ChannelPause(_mixer);
                 _paused = true;
+                IsPlaying = false;
             }
         }
 
@@ -287,6 +303,7 @@ namespace TCPlayer.Code
         public void Stop()
         {
             Bass.ChannelStop(_mixer);
+            IsPlaying = false;
             _paused = false;
         }
 
@@ -298,6 +315,17 @@ namespace TCPlayer.Code
             get
             {
                 return _paused || (_mixer == 0);
+            }
+        }
+
+        public bool IsPlaying
+        {
+            get { return _isplaying; }
+            set
+            {
+                if (value == _isplaying) return;
+                _isplaying = value;
+                NotifyPropertyChanged("IsPlaying");
             }
         }
 
@@ -325,6 +353,7 @@ namespace TCPlayer.Code
             private set;
         }
 
+
         /// <summary>
         /// Change output device
         /// </summary>
@@ -340,6 +369,8 @@ namespace TCPlayer.Code
                 _initialized = Bass.Init(CurrentDeviceID, 48000, DeviceInitFlags.Frequency, IntPtr.Zero);
                 if (!_initialized)
                 {
+                    Properties.Settings.Default.DeviceID = 0;
+                    Properties.Settings.Default.Save();
                     Error("Bass.dll init failed");
                     return;
                 }
@@ -415,5 +446,17 @@ namespace TCPlayer.Code
             return list.ToArray();
         }
 
+        public bool GetFFTData(float[] fftDataBuffer)
+        {
+            return Bass.ChannelGetData(_mixer, fftDataBuffer, _maxfft) > 0;
+        }
+
+        public int GetFFTFrequencyIndex(int frequency)
+        {
+            var length = (int)FFTDataSize.FFT2048;
+            int num = (int)Math.Round((double)length * (double)frequency / (double)Properties.Settings.Default.SampleRate);
+            if (num > length / 2 - 1) num = length / 2 - 1;
+            return num;
+        }
     }
 }

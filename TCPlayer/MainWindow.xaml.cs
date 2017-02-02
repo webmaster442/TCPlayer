@@ -47,7 +47,7 @@ namespace TCPlayer
         public MainWindow()
         {
             InitializeComponent();
-            _player = new Player();
+            _player = Player.Instance;
             _player.ChangeDevice(); //init
             _prevvol = 1.0f;
             _timer = new DispatcherTimer();
@@ -274,7 +274,6 @@ namespace TCPlayer
                     TbFullTime.Text = len.ToShortTime();
                     SeekSlider.Maximum = _player.Length;
                 }
-                _player.Play();
                 _timer.IsEnabled = true;
                 if (Helpers.IsTracker(file)) SongDat.UpdateMediaInfo(file, _player.SourceHandle);
                 else SongDat.UpdateMediaInfo(file);
@@ -297,6 +296,8 @@ namespace TCPlayer
 
             if ((IsActive || Topmost) && (MainView.SelectedIndex == 0))
             {
+                if (!_player.IsPlaying) _player.IsPlaying = true;
+
                 if (_isdrag)
                 {
                     TbCurrTime.Text = TimeSpan.FromSeconds(SeekSlider.Value).ToShortTime();
@@ -304,10 +305,7 @@ namespace TCPlayer
                 }
                 var pos = TimeSpan.FromSeconds(_player.Position);
                 TbCurrTime.Text = pos.ToShortTime();
-                if (_player.IsStream)
-                {
-                    SeekSlider.Value = 0;
-                }
+                if (_player.IsStream) SeekSlider.Value = 0;
                 else
                 {
                     SeekSlider.Value = _player.Position;
@@ -322,8 +320,13 @@ namespace TCPlayer
             }
             else
             {
-                SeekSlider.Value = _player.Position;
-                Taskbar.ProgressValue = SeekSlider.Value / SeekSlider.Maximum;
+                if (_player.IsStream) SeekSlider.Value = 0;
+                else
+                {
+                    SeekSlider.Value = _player.Position;
+                    Taskbar.ProgressValue = SeekSlider.Value / SeekSlider.Maximum;
+                }
+                _player.IsPlaying = false;
             }
         }
 
@@ -352,6 +355,9 @@ namespace TCPlayer
             if (btn == null) return;
             switch (btn.Name)
             {
+                case "BtnOpen":
+                    DoOpen();
+                    break;
                 case "BtnPlayPause":
                     _player.PlayPause();
                     break;
@@ -522,6 +528,17 @@ namespace TCPlayer
                     if (q == MessageBoxResult.Yes) Close();
                 }
                 else Close();
+            }
+        }
+
+        private void DoOpen()
+        {
+            var ofd = new System.Windows.Forms.OpenFileDialog();
+            ofd.Multiselect = true;
+            ofd.Filter = string.Format("Auduio Files|{0}|Playlists|{1}", App.Formats, App.Playlists);
+            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                DoLoadAndPlay(ofd.FileNames);   
             }
         }
     }

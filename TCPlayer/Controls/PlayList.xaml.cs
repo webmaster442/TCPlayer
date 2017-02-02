@@ -39,7 +39,26 @@ namespace TCPlayer.Controls
         {
             InitializeComponent();
             _list = new ObservableCollection<string>();
+            _list.CollectionChanged += (s, e) => { Count = _list.Count; };
             PlaylistView.ItemsSource = _list;
+        }
+
+        private readonly static DependencyProperty CountProperty =
+            DependencyProperty.Register("Count", typeof(int), typeof(PlayList), new PropertyMetadata(0));
+
+        private readonly static DependencyProperty IndexProperty =
+            DependencyProperty.Register("Index", typeof(int), typeof(PlayList), new PropertyMetadata(0));
+
+        public int Count
+        {
+            get { return (int)GetValue(CountProperty); }
+            set { SetValue(CountProperty, value); }
+        }
+
+        public int Index
+        {
+            get { return (int)GetValue(IndexProperty); }
+            set { SetValue(IndexProperty, value); }
         }
 
         public event RoutedEventHandler ItemDoubleClcik;
@@ -61,7 +80,10 @@ namespace TCPlayer.Controls
         public void NextTrack()
         {
             if (PlaylistView.SelectedIndex + 1 < _list.Count)
+            {
                 PlaylistView.SelectedIndex += 1;
+                Index = PlaylistView.SelectedIndex + 1;
+            }
         }
 
         public void PreviousTrack()
@@ -69,13 +91,11 @@ namespace TCPlayer.Controls
             Dispatcher.Invoke(() =>
             {
                 if (PlaylistView.SelectedIndex - 1 > -1)
+                {
                     PlaylistView.SelectedIndex -= 1;
+                    Index = PlaylistView.SelectedIndex + 1;
+                }
             });
-        }
-
-        public int Count
-        {
-            get { return _list.Count; }
         }
 
         public void DoLoad(IEnumerable<string> items)
@@ -149,7 +169,6 @@ namespace TCPlayer.Controls
                 Files.Sort();
                 _list.AddRange(Files);
             }
-
         }
 
         private void AddFiles_Click(object sender, RoutedEventArgs e)
@@ -244,6 +263,7 @@ namespace TCPlayer.Controls
                 var index = PlaylistView.SelectedIndex;
                 if (index < 0) return;
                 ItemDoubleClcik(sender, null);
+                Index = index + 1;
             }
         }
 

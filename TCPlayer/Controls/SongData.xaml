@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TCPlayer.Controls"
+             xmlns:vis="clr-namespace:WPFSoundVisualizationLib"
              mc:Ignorable="d"
              x:Name="SongDat"
              d:DesignHeight="190" d:DesignWidth="670">
@@ -12,20 +13,11 @@
             <ColumnDefinition Width="190"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Polyline
-            Grid.Row="0"
+        <vis:SpectrumAnalyzer
             Grid.Column="1"
-            VerticalAlignment="Center"
-            x:Name="Visual"
-            Height="80"
-            Margin="5,0"
-            StrokeThickness="2"
-            Stroke="{x:Static SystemParameters.WindowGlassBrush}">
-        </Polyline>
+            x:Name="Spectrum"
+            VerticalAlignment="Top"
+            Height="120"/>
         <Image
             Grid.Column="0"
             Grid.RowSpan="2"
@@ -53,20 +45,18 @@
             </Image.Effect>
         </Image>
         <TextBlock
-            Grid.Row="1"
             Grid.Column="1"
+            Panel.ZIndex="99"
             VerticalAlignment="Bottom"
             HorizontalAlignment="Left"
             x:Name="InfoText"
+            ToolTip="{Binding ElementName=SongDat, Path=FileName}"
             Margin="10,5">
             <TextBlock.Effect>
                 <DropShadowEffect
                     Opacity="0.9"
                     Color="#FFFCFCFC"/>
             </TextBlock.Effect>
-            <TextBlock.ToolTip>
-                <TextBlock Text="{Binding FileName}"/>
-            </TextBlock.ToolTip>
         </TextBlock>
     </Grid>
 </UserControl>

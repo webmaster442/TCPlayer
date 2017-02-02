@@ -13,6 +13,12 @@
         </Canvas>
     </Viewbox>
 
+    <Viewbox Width="48" Height="48" x:Key="IconEject">
+        <Canvas Width="24" Height="24">
+            <Path Data="M12,5L5.33,15H18.67M5,17H19V19H5V17Z" Fill="White" />
+        </Canvas>
+    </Viewbox>
+
     <Viewbox Width="48" Height="48" x:Key="IconSeekForward">
         <Canvas Width="24" Height="24">
             <Path Data="M5,5V19H8V5M10,5V19L21,12" Fill="White" />

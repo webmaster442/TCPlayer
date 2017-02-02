@@ -18,6 +18,7 @@
  */
 using ManagedBass;
 using System;
+using System.ComponentModel;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -25,7 +26,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Threading;
 using TCPlayer.Code;
 
 namespace TCPlayer.Controls
@@ -35,15 +35,14 @@ namespace TCPlayer.Controls
     /// </summary>
     public partial class SongData : UserControl
     {
-        private DispatcherTimer _timer;
+        Player _player;
 
         public SongData()
         {
             InitializeComponent();
-            _timer = new DispatcherTimer();
-            _timer.Tick += _timer_Tick;
-            _timer.IsEnabled = true;
-            _timer.Interval = TimeSpan.FromMilliseconds(20);
+            if (DesignerProperties.GetIsInDesignMode(this)) return;
+            _player = Player.Instance;
+            Spectrum.RegisterSoundPlayer(_player);
         }
 
         public static DependencyProperty CoverProperty =
@@ -93,22 +92,12 @@ namespace TCPlayer.Controls
 
         public int Handle { get; set; }
 
-        private void _timer_Tick(object sender, EventArgs e)
-        {
-            if (Handle == 0) return;
-            int length = (int)Bass.ChannelSeconds2Bytes(Handle, 0.01);
-            short[] data = new short[length / 2];
-            length = Bass.ChannelGetData(Handle, data, length);
-            double xscale = Visual.ActualWidth / data.Length;
-            double center = Visual.ActualHeight / 2;
-            double yscale = (Visual.ActualHeight) / (short.MaxValue * 2);
-            Visual.Points.Clear();
-            for (int i = 1; i < data.Length; i += 2)
-                Visual.Points.Add(new Point(i * xscale, (data[i] * yscale) + center));
-        }
-
         private void SetInfoText(string artist, string title, string album, string year, string size)
         {
+            artist = string.IsNullOrEmpty(artist) ? "Unknown Artist" : artist;
+            title = string.IsNullOrEmpty(title) ? "Unknown Song" : title;
+            year = string.IsNullOrEmpty(year) ? DateTime.Now.Year.ToString() : year;
+
             var sb = new StringBuilder();
             sb.AppendFormat("{0} - {1}\r\n", artist, title);
             sb.AppendFormat("{0} ({1})\r\n", album, year);
@@ -118,8 +107,8 @@ namespace TCPlayer.Controls
 
         public void UpdateMediaInfo(string file, int handle)
         {
+            FileName = file;
             var fi = new FileInfo(file);
-            FileName = fi.Name;
             Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/music.png", UriKind.Relative));
             var Size = GetFileSize(fi.Length);
             var Artist = Marshal.PtrToStringAuto(Bass.ChannelGetTags(handle, TagType.MusicAuth));
@@ -129,10 +118,10 @@ namespace TCPlayer.Controls
 
         public void UpdateMediaInfo(string file)
         {
+            FileName = file;
             var notify = Properties.Settings.Default.TrackChangeNotification;
             if (file.StartsWith("http://") || file.StartsWith("https://"))
             {
-                FileName = file;
                 Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/network.png", UriKind.Relative));
                 SetInfoText(Path.GetFileName(file), "Stream", "", DateTime.Now.Year.ToString(), "∞");
                 if (notify) App._notify.ShowNotification(file);
@@ -143,7 +132,6 @@ namespace TCPlayer.Controls
                 string[] info = file.Replace("cd://", "").Split('/');
                 var drive = Convert.ToInt32(info[0]);
                 var track = Convert.ToInt32(info[1]);
-
                 var size = ManagedBass.Cd.BassCd.GetTrackLength(drive, track);
                 UpdateCDFlags(track + 1, notify, size);
                 return;
@@ -151,9 +139,7 @@ namespace TCPlayer.Controls
             try
             {
                 var fi = new FileInfo(file);
-                FileName = fi.Name;
                 var Size = GetFileSize(fi.Length);
-
                 if (Helpers.IsMidi(file))
                 {
                     Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/midi.png", UriKind.Relative));
@@ -177,7 +163,8 @@ namespace TCPlayer.Controls
                     Cover = ret;
                 }
                 var Year = tags.Tag.Year.ToString();
-                var Artist = tags.Tag.Performers[0];
+                var Artist = "";
+                if (tags.Tag.Performers != null && tags.Tag.Performers.Length != 0) Artist = tags.Tag.Performers[0];
                 var Album = tags.Tag.Album;
                 var Title = tags.Tag.Title;
                 if (notify) App._notify.ShowNotification(FileName, Artist, Title);
@@ -212,7 +199,7 @@ namespace TCPlayer.Controls
         public void Reset()
         {
             Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/unknown.png", UriKind.Relative));
-            InfoText.Text = "";
+            InfoText.Text = "Tag read error";
         }
     }
 }

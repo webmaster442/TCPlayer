@@ -1,3 +1,12 @@
+#1.07
+ * Fixed Network stream playback
+ * Redesigned Media info
+ * Redesigned window
+	- Added open button
+	- window is bigger
+	- Audio Spectrum visual
+	- Displays played item index & item count in playlist
+
 #1.06 - 2016.11.04
 
  * Added options dialog, with various settings

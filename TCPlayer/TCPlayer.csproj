@@ -330,6 +330,11 @@
     <Compile Include="Lib\TagLib\Xmp\XmpNodeType.cs" />
     <Compile Include="Lib\TagLib\Xmp\XmpNodeVisitor.cs" />
     <Compile Include="Lib\TagLib\Xmp\XmpTag.cs" />
+    <Compile Include="Lib\WPFSoundVis\FFTDataSize.cs" />
+    <Compile Include="Lib\WPFSoundVis\ISoundPlayer.cs" />
+    <Compile Include="Lib\WPFSoundVis\Spectrum Analyzer\BarHeightScalingStyles.cs" />
+    <Compile Include="Lib\WPFSoundVis\Spectrum Analyzer\ISpectrumPlayer.cs" />
+    <Compile Include="Lib\WPFSoundVis\Spectrum Analyzer\SpectrumAnalyzer.cs" />
     <Compile Include="Style\FileNameConverter.cs" />
     <Page Include="Controls\AboutDialog.xaml">
       <SubType>Designer</SubType>
@@ -544,6 +549,7 @@
     <Content Include="Engine\x86\tags.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Lib\WPFSoundVis\Spectrum Analyzer\WPFSoundVisualizationLib.SpectrumAnalyzer.Icon.Large.png" />
     <Content Include="pluginst.inf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

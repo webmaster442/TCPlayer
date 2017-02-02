@@ -191,8 +191,15 @@
                         <TextBlock
                             x:Name="TbCurrTime"
                             Text="00:00:00"/>
+
+                        <TextBlock
+                            Margin="40,0,0,0"
+                            Text="List: "/>
+                        <TextBlock Text="{Binding ElementName=PlayList, Path=Count}"/>
+                        <TextBlock Text=" / "/>
+                        <TextBlock Text="{Binding ElementName=PlayList, Path=Index}"/>
                         <StackPanel
-                            Margin="290,0,0,0"
+                            Margin="155,0,0,0"
                             VerticalAlignment="Center">
                             <ProgressBar
                                 Width="200"
@@ -212,16 +219,22 @@
                         Orientation="Horizontal"
                         Grid.Row="4">
                         <Button
+                            Margin="5,0"
+                            ToolTip="Open..."
+                            x:Name="BtnOpen"
+                            Click="DoAction"
+                            Content="{StaticResource IconEject}"/>
+                        <Button
                             ToolTip="Play / Pause"
                             x:Name="BtnPlayPause"
                             Click="DoAction"
                             Content="{StaticResource IconPlayPause}"/>
                         <Button
+                            Margin="5,0"
                             ToolTip="Stop"
                             x:Name="BtnStop"
                             Click="DoAction"
-                            Content="{StaticResource IconStop}"
-                            Margin="4,0"/>
+                            Content="{StaticResource IconStop}"/>
                         <Button
                             ToolTip="Seek back"
                             x:Name="BtnSeekBack"
@@ -232,7 +245,7 @@
                             x:Name="BtnSeekFwd"
                             Click="DoAction"
                             Content="{StaticResource IconSeekForward}"
-                            Margin="4,0"/>
+                            Margin="5,0"/>
                         <Button
                             ToolTip="Previous track"
                             x:Name="BtnPrevTrack"
@@ -243,7 +256,7 @@
                             x:Name="BtnNextTrack"
                             Click="DoAction"
                             Content="{StaticResource IconNext}"
-                            Margin="4,0"/>
+                            Margin="5,0"/>
                         <ToggleButton 
                             ToolTip="Mute / Unmute"
                             x:Name="BtnMute"
@@ -254,11 +267,16 @@
                             VerticalAlignment="Center"
                             Maximum="1"
                             Value="1"
-                            Margin="10,0,0,0"
+                            Margin="15,0,0,0"
                             x:Name="VolSlider"
                             ValueChanged="VolSlider_ValueChanged"
                             Grid.Column="1"
-                            Width="120">
+                            Width="180">
+                            <Slider.ToolTip>
+                                <ToolTip
+                                    Content="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Value}"
+                                    ContentStringFormat="Volume: {0:P1}" />
+                            </Slider.ToolTip>
                         </Slider>
                     </StackPanel>
                 </Grid>
