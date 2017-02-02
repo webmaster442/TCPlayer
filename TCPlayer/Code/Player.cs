@@ -18,16 +18,14 @@
  */
 using ManagedBass;
 using ManagedBass.Cd;
-using ManagedBass.DirectX8;
 using ManagedBass.Fx;
 using ManagedBass.Midi;
 using ManagedBass.Mix;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using WPFSoundVisualizationLib;
-using System.Runtime.InteropServices;
-using System.ComponentModel;
 
 namespace TCPlayer.Code
 {
@@ -215,6 +213,7 @@ namespace TCPlayer.Code
             {
                 _source = Bass.CreateStream(file, 0, sourceflags, _callback, IntPtr.Zero);
                 _isstream = true;
+                App.RecentUrls.Add(file);
             }
             else if (file.StartsWith("cd://"))
             {
@@ -425,15 +424,15 @@ namespace TCPlayer.Code
             {
                 var numtracks = BassCd.GetTracks(driveindex);
                 var discid = BassCd.GetID(0, CDID.CDDB); //cddb connect
-                if (App._discid != discid)
+                if (App.DiscID != discid)
                 {
                     var datas = BassCd.GetIDText(driveindex);
-                    App._discid = discid;
-                    App._cddata.Clear();
+                    App.DiscID = discid;
+                    App.CdData.Clear();
                     foreach (var data in datas)
                     {
                         var item = data.Split('=');
-                        App._cddata.Add(item[0], item[1]);
+                        App.CdData.Add(item[0], item[1]);
                     }
                 }
                 for (int i = 0; i < numtracks; i++)

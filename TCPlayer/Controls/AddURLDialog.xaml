@@ -5,17 +5,37 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TCPlayer.Controls"
              mc:Ignorable="d"
-             Width="300"
-             Height="24">
-    <Grid>
+             d:DesignWidth="500"
+             d:DesignHeight="300">
+    <Grid Margin="3">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="40"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <TextBlock 
-           Text="URL:"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock
+            Grid.Row="0"
+            Margin="4,0"
+            Text="URL:"/>
         <TextBox
             x:Name="TbUrl"
+            Margin="4"
+            VerticalAlignment="Center"
+            Grid.Row="0"
             Grid.Column="1"/>
+        <TextBlock
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            Margin="4"
+            Text="Recent URLs:"/>
+        <ListBox
+            x:Name="LbRecent"
+            MouseDown="LbRecent_MouseDown"
+            Grid.Row="2"
+            Grid.ColumnSpan="2"/>
     </Grid>
 </UserControl>

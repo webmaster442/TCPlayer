@@ -124,7 +124,7 @@ namespace TCPlayer.Controls
             {
                 Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/network.png", UriKind.Relative));
                 SetInfoText(Path.GetFileName(file), "Stream", "", DateTime.Now.Year.ToString(), "∞");
-                if (notify) App._notify.ShowNotification(file);
+                if (notify) App.NotifyIcon.ShowNotification(file);
                 return;
             }
             else if (file.StartsWith("cd://"))
@@ -144,7 +144,7 @@ namespace TCPlayer.Controls
                 {
                     Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/midi.png", UriKind.Relative));
                     SetInfoText("", fi.Name, "", "Unknown", Size);
-                    if (notify) App._notify.ShowNotification(FileName);
+                    if (notify) App.NotifyIcon.ShowNotification(FileName);
                     return;
                 }
 
@@ -167,7 +167,7 @@ namespace TCPlayer.Controls
                 if (tags.Tag.Performers != null && tags.Tag.Performers.Length != 0) Artist = tags.Tag.Performers[0];
                 var Album = tags.Tag.Album;
                 var Title = tags.Tag.Title;
-                if (notify) App._notify.ShowNotification(FileName, Artist, Title);
+                if (notify) App.NotifyIcon.ShowNotification(FileName, Artist, Title);
                 SetInfoText(Artist, Title, Album, Year, Size);
             }
             catch (Exception)
@@ -185,14 +185,14 @@ namespace TCPlayer.Controls
             var Artist = "Track";
             var Title = string.Format("#{0}", track);
             var Album = "Audio CD";
-            if (App._cddata.Count > 0)
+            if (App.CdData.Count > 0)
             {
-                Artist = App._cddata[string.Format("PERFORMER{0}", track)];
-                Title = App._cddata[string.Format("TITLE{0}", track)];
-                Album = App._cddata["TITLE0"];
+                Artist = App.CdData[string.Format("PERFORMER{0}", track)];
+                Title = App.CdData[string.Format("TITLE{0}", track)];
+                Album = App.CdData["TITLE0"];
             }
             if (notify)
-                App._notify.ShowNotification("CD Track" + track, Artist, Title);
+                App.NotifyIcon.ShowNotification("CD Track" + track, Artist, Title);
             SetInfoText(Artist, Title, Album, Year, GetFileSize(size));
         }
 

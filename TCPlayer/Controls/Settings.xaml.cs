@@ -41,5 +41,11 @@ namespace TCPlayer.Controls
                 Properties.Settings.Default.SoundfontPath = dialog.FileName;
             }
         }
+
+        private void BtnClearHistory_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Properties.Settings.Default.RecentURLs = "";
+            App.RecentUrls.Clear();
+        }
     }
 }

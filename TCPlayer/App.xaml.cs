@@ -32,9 +32,10 @@ namespace TCPlayer
         internal const string Formats = "*.mp1;*.mp2;*.mp3;*.mp4;*.m4a;*.m4b;*.aac;*.flac;*.ac3;*.wv;*.wav;*.wma;*.ogg;*.midi;*.mid;*.rmi;*.kar;*.xm;*.it;*.s3m;*.mod;*.mtm;*.umx;*.mo3;*.ape;*.mpc;*.mp+;*.mpp;*.ofr;*.ofs;*.spx;*.tta;*.dsf;*.dsdiff;*.opus";
         internal const string Playlists = "*.pls;*.m3u;*.wpl";
 
-        internal static Dictionary<string, string> _cddata;
-        internal static string _discid;
-        internal static NotificationIcon _notify;
+        internal static Dictionary<string, string> CdData;
+        internal static string DiscID;
+        internal static NotificationIcon NotifyIcon;
+        internal static HashSet<string> RecentUrls;
 
         [STAThread]
         public static void Main()
@@ -44,14 +45,35 @@ namespace TCPlayer
             if (si.IsFirstInstance)
             {
                 var application = new App();
-                _cddata = new Dictionary<string, string>();
-                _discid = "";
+                CdData = new Dictionary<string, string>();
+                DiscID = "";
+                RecentUrls = new HashSet<string>();
+                FillUrlList();
                 application.InitializeComponent();
                 application.ShutdownMode = ShutdownMode.OnMainWindowClose;
                 application.Run();
                 si.Close();
             }
             else si.SubmitParameters();
+        }
+
+        private static void FillUrlList()
+        {
+            if (!TCPlayer.Properties.Settings.Default.RememberRecentURLs) return;
+            var items = TCPlayer.Properties.Settings.Default.RecentURLs.Split('\n', '\r');
+            foreach (var item in items)
+            {
+                if (string.IsNullOrEmpty(item)) continue;
+                RecentUrls.Add(item);
+            }
+        }
+
+        public static void SaveRecentUrls()
+        {
+            if (!TCPlayer.Properties.Settings.Default.RememberRecentURLs) return;
+            var sb = new System.Text.StringBuilder();
+            foreach (var url in RecentUrls) sb.AppendLine(url);
+            TCPlayer.Properties.Settings.Default.RecentURLs = sb.ToString();
         }
 
         private static void Si_ReceiveString(string obj)

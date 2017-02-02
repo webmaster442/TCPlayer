@@ -16,9 +16,9 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-using TCPlayer.Code;
 using System;
 using System.Windows.Controls;
+using TCPlayer.Code;
 
 namespace TCPlayer.Controls
 {
@@ -30,6 +30,7 @@ namespace TCPlayer.Controls
         public AddURLDialog()
         {
             InitializeComponent();
+            LbRecent.ItemsSource = App.RecentUrls;
         }
 
         public Action OkClicked
@@ -40,6 +41,12 @@ namespace TCPlayer.Controls
         public string Url
         {
             get { return TbUrl.Text; }
+        }
+
+        private void LbRecent_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (LbRecent.SelectedItem == null) return;
+            TbUrl.Text = LbRecent.SelectedItem.ToString();
         }
     }
 }

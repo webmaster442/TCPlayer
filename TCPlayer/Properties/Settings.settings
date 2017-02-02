@@ -38,5 +38,11 @@
     <Setting Name="SampleRate" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">44100</Value>
     </Setting>
+    <Setting Name="RecentURLs" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="RememberRecentURLs" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

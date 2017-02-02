@@ -37,6 +37,17 @@
                     Margin="2"
                     IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=ConfirmExit, Mode=TwoWay}"
                     Content="Confirm exit with ESC button"/>
+                <CheckBox
+                    Margin="2"
+                    IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=RememberRecentURLs, Mode=TwoWay}"
+                    Content="Remember Last opened url adresses"/>
+                <Button
+                    Margin="25,2"
+                    HorizontalAlignment="Left"
+                    Foreground="White"
+                    x:Name="BtnClearHistory"
+                    Click="BtnClearHistory_Click"
+                    Content="Clear Url history"/>
                 <TextBlock
                     Margin="2"
                     Text="SoundFont path:"/>

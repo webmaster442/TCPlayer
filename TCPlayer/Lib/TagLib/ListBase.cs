@@ -36,7 +36,7 @@ namespace TagLib {
 	///    for objects that implement <see cref="T:System.IComparable`1"/>,
 	///    providing extra features used in lists in TagLib#.
 	/// </summary>
-	public class ListBase<T> : IList<T> where T : IComparable<T>
+	public class ListBase<T> : IList<T> where T : class, IComparable<T>
 	{
 		/// <summary>
 		///    Contains the internal list.

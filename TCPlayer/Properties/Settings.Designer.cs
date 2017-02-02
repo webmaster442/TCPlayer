@@ -166,5 +166,29 @@ namespace TCPlayer.Properties {
                 this["SampleRate"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string RecentURLs {
+            get {
+                return ((string)(this["RecentURLs"]));
+            }
+            set {
+                this["RecentURLs"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool RememberRecentURLs {
+            get {
+                return ((bool)(this["RememberRecentURLs"]));
+            }
+            set {
+                this["RememberRecentURLs"] = value;
+            }
+        }
     }
 }

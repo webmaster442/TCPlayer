@@ -74,7 +74,7 @@ namespace TCPlayer
                 RegisterMultimedaKeys();
 
             if (Properties.Settings.Default.TrackChangeNotification)
-                App._notify = new NotificationIcon();
+                App.NotifyIcon = new NotificationIcon();
         }
 
         private void MainWin_SourceInitialized(object sender, EventArgs e)
@@ -187,10 +187,10 @@ namespace TCPlayer
                 _keyboardhook.Dispose();
                 _keyboardhook = null;
             }
-            if (App._notify != null)
+            if (App.NotifyIcon != null)
             {
-                App._notify.Dispose();
-                App._notify = null;
+                App.NotifyIcon.Dispose();
+                App.NotifyIcon = null;
             }
             GC.SuppressFinalize(this);
         }
@@ -504,8 +504,9 @@ namespace TCPlayer
         {
             Properties.Settings.Default.LastVolume = (float)VolSlider.Value;
             Properties.Settings.Default.DeviceID = _player.CurrentDeviceID;
+            App.SaveRecentUrls();
             Properties.Settings.Default.Save();
-            if (App._notify != null) App._notify.RemoveIcon();
+            if (App.NotifyIcon != null) App.NotifyIcon.RemoveIcon();
         }
 
         private void MainWin_Drop(object sender, DragEventArgs e)
