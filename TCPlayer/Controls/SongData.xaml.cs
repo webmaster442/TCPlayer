@@ -22,6 +22,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -42,6 +43,7 @@ namespace TCPlayer.Controls
             InitializeComponent();
             if (DesignerProperties.GetIsInDesignMode(this)) return;
             _player = Player.Instance;
+            _player.MetaChanged += _player_MetaChanged;
             Spectrum.RegisterSoundPlayer(_player);
         }
 
@@ -105,6 +107,18 @@ namespace TCPlayer.Controls
             InfoText.Text = sb.ToString();
         }
 
+        private void SetInfoText(string artisttitle, string album, string year, string size)
+        {
+            artisttitle = string.IsNullOrEmpty(artisttitle) ? "Unknown Artist - Unknown Song" : artisttitle;
+            year = string.IsNullOrEmpty(year) ? DateTime.Now.Year.ToString() : year;
+
+            var sb = new StringBuilder();
+            sb.AppendFormat("{0}\r\n", artisttitle);
+            sb.AppendFormat("{0} ({1})\r\n", album, year);
+            sb.Append(size);
+            InfoText.Text = sb.ToString();
+        }
+
         public void UpdateMediaInfo(string file, int handle)
         {
             FileName = file;
@@ -116,6 +130,12 @@ namespace TCPlayer.Controls
             SetInfoText(Artist, Title, "", "unknown", Size);
         }
 
+        private void _player_MetaChanged(object sender, string e)
+        {
+            if (!Dispatcher.HasShutdownStarted)
+                Dispatcher.Invoke(() => { SetInfoText(e, FileName, DateTime.Now.Year.ToString(), "stream"); });
+        }
+
         public void UpdateMediaInfo(string file)
         {
             FileName = file;
@@ -123,7 +143,7 @@ namespace TCPlayer.Controls
             if (file.StartsWith("http://") || file.StartsWith("https://"))
             {
                 Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/network.png", UriKind.Relative));
-                SetInfoText(Path.GetFileName(file), "Stream", "", DateTime.Now.Year.ToString(), "∞");
+                SetInfoText(Path.GetFileName(file), "Stream", "", DateTime.Now.Year.ToString(), "stream");
                 if (notify) App.NotifyIcon.ShowNotification(file);
                 return;
             }

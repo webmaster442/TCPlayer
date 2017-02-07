@@ -1,143 +1,143 @@
 <bookmarks>
-<group name="root">
+  <group name="root">
     <group name="Országos rádiók">
-            <group name="Magyar Rádió">
-                <bookmark name="Bartók Rádió" url="http://mr-stream.mediaconnect.hu/4742/mr3hq.mp3"/>
-                <bookmark name="Dankó Rádió" url="http://mr-stream.mediaconnect.hu/4750/mr6p.mp3"/>
-                <bookmark name="Kossuth Rádió" url="http://mr-stream.mediaconnect.hu/4736/mr1.mp3"/>
-                <bookmark name="Nemzetiségi Rádió" url="http://mr-stream.mediaconnect.hu/4744/mr4.mp3"/>
-                <bookmark name="Parlamenti adások" url="http://mr-stream.mediaconnect.hu/4746/mr5.mp3"/>
-                <bookmark name="Petőfi Rádió" url="http://mr-stream.mediaconnect.hu/4738/mr2.mp3"/>
-            </group>
+      <group name="Magyar Rádió">
+        <bookmark name="Bartók Rádió" url="http://mr-stream.mediaconnect.hu/4742/mr3hq.mp3"/>
+        <bookmark name="Dankó Rádió" url="http://mr-stream.mediaconnect.hu/4750/mr6p.mp3"/>
+        <bookmark name="Kossuth Rádió" url="http://mr-stream.mediaconnect.hu/4736/mr1.mp3"/>
+        <bookmark name="Nemzetiségi Rádió" url="http://mr-stream.mediaconnect.hu/4744/mr4.mp3"/>
+        <bookmark name="Parlamenti adások" url="http://mr-stream.mediaconnect.hu/4746/mr5.mp3"/>
+        <bookmark name="Petőfi Rádió" url="http://mr-stream.mediaconnect.hu/4738/mr2.mp3"/>
+      </group>
     </group>
     <group name="Regionális rádiók">
-        <bookmark name="89.5 Music FM" url="http://stream.musicfm.hu:8000/musicfm.mp3"/>
-        <bookmark name="96.4 Rádió 1" url="http://stream.radio1.hu:8000/mid.mp3"/>
-        <bookmark name="Civil Rádió" url="http://civilradio.hu:8000/listen.mp3"/>
-        <bookmark name="Európa Rádió" url="http://radio2.tirek.hu:8000/europaradio"/>
-        <bookmark name="Inforádió" url="http://radioszerver.hu:8400/"/>
-        <bookmark name="90.9 Jazzy Rádió" url="http://94.199.183.186:80/jazzy.mp3"/>
-        <bookmark name="Karc FM" url="http://hosting.42netmedia.com:13100/"/>
-        <bookmark name="Klasszik Rádió" url="http://94.199.183.186:80/klasszik.mp3"/>
-        <bookmark name="Klubrádió" url="http://stream.klubradio.hu:8080/source"/>
-        <bookmark name="Lánchíd Rádió" url="http://91.82.85.44:9004/"/>
-        <bookmark name="Magyar Katolikus Rádió" url="http://katolikusradio.hu:9000/live_hi.mp3"/>
-            <group name="Mária Rádió">
-                <bookmark name="Mária Rádió – Ajka" url="http://honlap.mariaradio.hu:8000/mr_ajka"/>
-                <bookmark name="Mária Rádió – Cegléd" url="http://honlap.mariaradio.hu:8000/mr_cegled"/>
-                <bookmark name="Mária Rádió – Celldömölk" url="http://honlap.mariaradio.hu:8000/mr_celldomolk"/>
-                <bookmark name="Mária Rádió – Mór" url="http://honlap.mariaradio.hu:8000/mr_mor"/>
-                <bookmark name="Mária Rádió – Pápa" url="http://honlap.mariaradio.hu:8000/mr_papa"/>
-                <bookmark name="Mária Rádió – Sárvár" url="http://honlap.mariaradio.hu:8000/mr_sarvar"/>
-                <bookmark name="Mária Rádió – Várpalota" url="http://honlap.mariaradio.hu:8000/mr_varpalota"/>
-                <bookmark name="Mária Rádió – Veszprém" url="http://honlap.mariaradio.hu:8000/mr_veszprem"/>
-            </group>
-        <bookmark name="Radio Q" url="http://radioszerver.hu:8300/"/>
-        <bookmark name="Radió Rock 95.8" url="http://92.61.114.195:13150/"/>
-        <bookmark name="Sláger FM" url="http://92.61.114.159:7812/slagerfm256.mp3"/>
-        <bookmark name="Tilos Rádió" url="http://stream.tilos.hu:80/tilos_128.mp3"/>
-        <bookmark name="Trend FM" url="http://radio.nordtelekom.hu:8000/gazdasagiradio"/>
+      <bookmark name="89.5 Music FM" url="http://stream.musicfm.hu:8000/musicfm.mp3"/>
+      <bookmark name="96.4 Rádió 1" url="http://stream.radio1.hu:8000/mid.mp3"/>
+      <bookmark name="Civil Rádió" url="http://civilradio.hu:8000/listen.mp3"/>
+      <bookmark name="Európa Rádió" url="http://radio2.tirek.hu:8000/europaradio"/>
+      <bookmark name="Inforádió" url="http://radioszerver.hu:8400/"/>
+      <bookmark name="90.9 Jazzy Rádió" url="http://94.199.183.186:80/jazzy.mp3"/>
+      <bookmark name="Karc FM" url="http://hosting.42netmedia.com:13100/"/>
+      <bookmark name="Klasszik Rádió" url="http://94.199.183.186:80/klasszik.mp3"/>
+      <bookmark name="Klubrádió" url="http://stream.klubradio.hu:8080/source"/>
+      <bookmark name="Lánchíd Rádió" url="http://91.82.85.44:9004/"/>
+      <bookmark name="Magyar Katolikus Rádió" url="http://katolikusradio.hu:9000/live_hi.mp3"/>
+      <group name="Mária Rádió">
+        <bookmark name="Mária Rádió – Ajka" url="http://honlap.mariaradio.hu:8000/mr_ajka"/>
+        <bookmark name="Mária Rádió – Cegléd" url="http://honlap.mariaradio.hu:8000/mr_cegled"/>
+        <bookmark name="Mária Rádió – Celldömölk" url="http://honlap.mariaradio.hu:8000/mr_celldomolk"/>
+        <bookmark name="Mária Rádió – Mór" url="http://honlap.mariaradio.hu:8000/mr_mor"/>
+        <bookmark name="Mária Rádió – Pápa" url="http://honlap.mariaradio.hu:8000/mr_papa"/>
+        <bookmark name="Mária Rádió – Sárvár" url="http://honlap.mariaradio.hu:8000/mr_sarvar"/>
+        <bookmark name="Mária Rádió – Várpalota" url="http://honlap.mariaradio.hu:8000/mr_varpalota"/>
+        <bookmark name="Mária Rádió – Veszprém" url="http://honlap.mariaradio.hu:8000/mr_veszprem"/>
+      </group>
+      <bookmark name="Radio Q" url="http://radioszerver.hu:8300/"/>
+      <bookmark name="Radió Rock 95.8" url="http://92.61.114.195:13150/"/>
+      <bookmark name="Sláger FM" url="http://92.61.114.159:7812/slagerfm256.mp3"/>
+      <bookmark name="Tilos Rádió" url="http://stream.tilos.hu:80/tilos_128.mp3"/>
+      <bookmark name="Trend FM" url="http://radio.nordtelekom.hu:8000/gazdasagiradio"/>
     </group>
     <group name="Helyi rádiók">
-        <group name="Dél-Alföld">
-            <bookmark name="Bajai Rádió" url="http://92.61.114.195:9950/"/>
-            <bookmark name="Csaba Rádió" url="http://online.csabaradio.hu:8000/128kbps"/>
-            <bookmark name="Gong Rádió" url="http://stream.gongradio.hu:8000/gong-fm.mp3"/>
-            <bookmark name="Halas Rádió" url="http://92.61.114.195:8110/"/>
-            <bookmark name="KORONAfm100" url="http://82.141.165.6:8000/"/>
-            <bookmark name="Kunság Rádió" url="http://85.90.166.88:8000/live"/>
-            <bookmark name="Mega Rádió" url="http://213.157.112.64:8984/megaradio.mp3"/>
-            <bookmark name="Rádió 1 Békéscsaba" url="http://213.157.112.64:8984/radio1bcs.mp3"/>
-            <bookmark name="Rádió 451" url="http://91.82.85.44:9006/"/>
-            <bookmark name="Rádió 88" url="http://stream.radio88.hu:8000/"/>
-            <group name="Sirius Rádió">
-                <bookmark name="Sirius Rádió - Kiskunfélegyháza" url="http://91.82.84.179:8500/relay_911"/>
-                <bookmark name="Sirius Rádió - Kiskunmajsa" url="http://91.82.84.179:8500/relay_882"/>
-            </group>
-            <bookmark name="Torony Rádió" url="http://87.229.45.44:8020/"/>
+      <group name="Dél-Alföld">
+        <bookmark name="Bajai Rádió" url="http://92.61.114.195:9950/"/>
+        <bookmark name="Csaba Rádió" url="http://online.csabaradio.hu:8000/128kbps"/>
+        <bookmark name="Gong Rádió" url="http://stream.gongradio.hu:8000/gong-fm.mp3"/>
+        <bookmark name="Halas Rádió" url="http://92.61.114.195:8110/"/>
+        <bookmark name="KORONAfm100" url="http://82.141.165.6:8000/"/>
+        <bookmark name="Kunság Rádió" url="http://85.90.166.88:8000/live"/>
+        <bookmark name="Mega Rádió" url="http://213.157.112.64:8984/megaradio.mp3"/>
+        <bookmark name="Rádió 1 Békéscsaba" url="http://213.157.112.64:8984/radio1bcs.mp3"/>
+        <bookmark name="Rádió 451" url="http://91.82.85.44:9006/"/>
+        <bookmark name="Rádió 88" url="http://stream.radio88.hu:8000/"/>
+        <group name="Sirius Rádió">
+          <bookmark name="Sirius Rádió - Kiskunfélegyháza" url="http://91.82.84.179:8500/relay_911"/>
+          <bookmark name="Sirius Rádió - Kiskunmajsa" url="http://91.82.84.179:8500/relay_882"/>
         </group>
-        <group name="Dél-Dunántúl">
-            <bookmark name="Dráva Hullám 102.7" url="http://hosting.42netmedia.com:13070/"/>
-            <bookmark name="Fortuna Rádió" url="http://streamer.impressive.hu:8000/fortuna_paks_live"/>
-            <bookmark name="Part FM" url="http://87.229.53.9:9000/"/>
-            <bookmark name="Rádió 1 Pécs" url="http://stream.radio1pecs.hu:8200/pecs.mp3"/>
-            <bookmark name="Rádió Antritt" url="http://stream.radioantritt.hu:8000/Antritt"/>
-            <bookmark name="Rádió Most" url="http://5.159.233.17:8002/kmost.ogg"/>
-            <bookmark name="Tamási Rádió" url="http://radioszerver.hu:9100/"/>
+        <bookmark name="Torony Rádió" url="http://87.229.45.44:8020/"/>
+      </group>
+      <group name="Dél-Dunántúl">
+        <bookmark name="Dráva Hullám 102.7" url="http://hosting.42netmedia.com:13070/"/>
+        <bookmark name="Fortuna Rádió" url="http://streamer.impressive.hu:8000/fortuna_paks_live"/>
+        <bookmark name="Part FM" url="http://87.229.53.9:9000/"/>
+        <bookmark name="Rádió 1 Pécs" url="http://stream.radio1pecs.hu:8200/pecs.mp3"/>
+        <bookmark name="Rádió Antritt" url="http://stream.radioantritt.hu:8000/Antritt"/>
+        <bookmark name="Rádió Most" url="http://5.159.233.17:8002/kmost.ogg"/>
+        <bookmark name="Tamási Rádió" url="http://radioszerver.hu:9100/"/>
+      </group>
+      <group name="Észak-Alföld">
+        <bookmark name="Aktív Rádió" url="http://195.56.65.180:8000/aktiv.mp3"/>
+        <bookmark name="Amadeus Rádió" url="http://www.amadeusradio.hu:8004/stream192"/>
+        <bookmark name="Best FM" url="http://stream.webthings.hu:8000/fm95-x-128.mp3"/>
+        <bookmark name="Campus Rádió" url="http://91.83.237.206:8000/frissradio96"/>
+        <bookmark name="Debrecen Rádió" url="http://91.82.85.44:80/debrecenradiofm95"/>
+        <bookmark name="Rádió Som" url="http://87.229.45.44:8100/"/>
+        <bookmark name="Retro Rádió" url="http://stream.retrofm.hu:8000/listen"/>
+        <bookmark name="Sunshine Rádió" url="http://195.56.193.129:8100/"/>
+        <bookmark name="Tisza-tó Rádió" url="http://hosting.42netmedia.com:10010/"/>
+        <bookmark name="Trió Rádió" url="http://79.172.217.50:9090/"/>
+      </group>
+      <group name="Észak-Magyarország">
+        <bookmark name="FM7" url="http://hosting.42netmedia.com:10070"/>
+        <bookmark name="Megafon FM" url="http://85.67.247.154:8000/stream"/>
+        <bookmark name="Rádió Eger" url="http://stream.radioeger.hu:18000/"/>
+        <bookmark name="Rádió Focus" url="http://streamhost110.gtk.hu:9086/"/>
+        <bookmark name="Rádió M" url="http://hosting.42netmedia.com:10060/"/>
+        <bookmark name="Rádió Top" url="http://www.radiotop.hu:888/"/>
+        <bookmark name="Szent István Rádió" url="http://online.szentistvanradio.hu:7000/"/>
+      </group>
+      <group name="Közép-Dunántúl">
+        <bookmark name="Fehérvár Rádió" url="http://81.93.193.14:8000/"/>
+        <bookmark name="Forrás Rádió" url="http://91.82.85.44:9000/"/>
+        <bookmark name="Méz Rádió" url="http://host2.radioszerver.hu:9200/"/>
+        <bookmark name="Rádió 24" url="http://hyades.shoutca.st:8652/hq"/>
+        <bookmark name="Vörösmarty Rádió " url="http://217.13.100.100:8000/vorosmarty_mid.mp3"/>
+      </group>
+      <group name="Közép-Magyarország">
+        <bookmark name="Budaörs Rádió" url="http://109.74.61.208:8000/budaorsradio.mp3"/>
+        <bookmark name="Cegléd Rádió" url="http://stream.cegledradio.hu:8000/"/>
+        <bookmark name="Érd FM" url="http://stream.erdfm.hu:8000/"/>
+        <bookmark name="Lakihegy Rádió" url="http://stream.composeit.hu:8300/"/>
+        <bookmark name="Rádió Dabas" url="http://stream3.virtualpro.hu:7093/"/>
+      </group>
+      <group name="Nyugat-Dunántúl">
+        <bookmark name="Egerszeg Rádió" url="http://hosting.42netmedia.com:13010/"/>
+        <bookmark name="Friss FM" url="http://hosting.42netmedia.com:10050/"/>
+        <bookmark name="Győr+ Rádió" url="http://hosting.42netmedia.com:9620/"/>
+        <bookmark name="Helikon Rádió" url="http://217.113.59.10:8020/live.mp3"/>
+        <group name="Isis Rádió">
+          <bookmark name="Isis Rádió – Körmend" url="http://netradio.nyugat.hu:8000/kormendlive"/>
+          <bookmark name="Isis Rádió – Sárvár" url="http://netradio.nyugat.hu:8000/sarvarlive"/>
         </group>
-        <group name="Észak-Alföld">
-            <bookmark name="Aktív Rádió" url="http://195.56.65.180:8000/aktiv.mp3"/>
-            <bookmark name="Amadeus Rádió" url="http://www.amadeusradio.hu:8004/stream192"/>
-            <bookmark name="Best FM" url="http://stream.webthings.hu:8000/fm95-x-128.mp3"/>
-            <bookmark name="Campus Rádió" url="http://91.83.237.206:8000/frissradio96"/>
-            <bookmark name="Debrecen Rádió" url="http://91.82.85.44:80/debrecenradiofm95"/>
-            <bookmark name="Rádió Som" url="http://87.229.45.44:8100/"/>
-            <bookmark name="Retro Rádió" url="http://stream.retrofm.hu:8000/listen"/>
-            <bookmark name="Sunshine Rádió" url="http://195.56.193.129:8100/"/>
-            <bookmark name="Tisza-tó Rádió" url="http://hosting.42netmedia.com:10010/"/>
-            <bookmark name="Trió Rádió" url="http://79.172.217.50:9090/"/>
+        <group name="Kék Duna Rádió">
+          <bookmark name="Kék Duna Rádió – Győr" url="http://87.229.53.9:8006/"/>
+          <bookmark name="Kék Duna Rádió – Komárom-Esztergom megye" url="http://212.92.23.237:8002/"/>
+          <bookmark name="Kék Duna Rádió – Mosonmagyaróvár" url="http://212.92.23.237:8014/"/>
+          <bookmark name="Kék Duna Rádió – Székesfehérvár" url="http://87.229.53.9:8004/"/>
         </group>
-        <group name="Észak-Magyarország">
-            <bookmark name="FM7" url="http://hosting.42netmedia.com:10070"/>
-            <bookmark name="Megafon FM" url="http://85.67.247.154:8000/stream"/>
-            <bookmark name="Rádió Eger" url="http://stream.radioeger.hu:18000/"/>
-            <bookmark name="Rádió Focus" url="http://streamhost110.gtk.hu:9086/"/>
-            <bookmark name="Rádió M" url="http://hosting.42netmedia.com:10060/"/>
-            <bookmark name="Rádió Top" url="http://www.radiotop.hu:888/"/>
-            <bookmark name="Szent István Rádió" url="http://online.szentistvanradio.hu:7000/"/>
-        </group>
-        <group name="Közép-Dunántúl">
-            <bookmark name="Fehérvár Rádió" url="http://81.93.193.14:8000/"/>
-            <bookmark name="Forrás Rádió" url="http://91.82.85.44:9000/"/>
-            <bookmark name="Méz Rádió" url="http://host2.radioszerver.hu:9200/"/>
-            <bookmark name="Rádió 24" url="http://hyades.shoutca.st:8652/hq"/>
-            <bookmark name="Vörösmarty Rádió " url="http://217.13.100.100:8000/vorosmarty_mid.mp3"/>
-        </group>
-        <group name="Közép-Magyarország">
-            <bookmark name="Budaörs Rádió" url="http://109.74.61.208:8000/budaorsradio.mp3"/>
-            <bookmark name="Cegléd Rádió" url="http://stream.cegledradio.hu:8000/"/>
-            <bookmark name="Érd FM" url="http://stream.erdfm.hu:8000/"/>
-            <bookmark name="Lakihegy Rádió" url="http://stream.composeit.hu:8300/"/>
-            <bookmark name="Rádió Dabas" url="http://stream3.virtualpro.hu:7093/"/>
-        </group>
-        <group name="Nyugat-Dunántúl">
-            <bookmark name="Egerszeg Rádió" url="http://hosting.42netmedia.com:13010/"/>
-            <bookmark name="Friss FM" url="http://hosting.42netmedia.com:10050/"/>
-            <bookmark name="Győr+ Rádió" url="http://hosting.42netmedia.com:9620/"/>
-            <bookmark name="Helikon Rádió" url="http://217.113.59.10:8020/live.mp3"/>
-            <group name="Isis Rádió">
-                <bookmark name="Isis Rádió – Körmend" url="http://netradio.nyugat.hu:8000/kormendlive"/>
-                <bookmark name="Isis Rádió – Sárvár" url="http://netradio.nyugat.hu:8000/sarvarlive"/>
-            </group>
-            <group name="Kék Duna Rádió">
-                <bookmark name="Kék Duna Rádió – Győr" url="http://87.229.53.9:8006/"/>
-                <bookmark name="Kék Duna Rádió – Komárom-Esztergom megye" url="http://212.92.23.237:8002/"/>
-                <bookmark name="Kék Duna Rádió – Mosonmagyaróvár" url="http://212.92.23.237:8014/"/>
-                <bookmark name="Kék Duna Rádió – Székesfehérvár" url="http://87.229.53.9:8004/"/>
-            </group>
-            <bookmark name="Nap Rádió" url="http://napradio.hu:8000/napradio"/>
-            <bookmark name="Rábaköz Rádió" url="http://82.141.138.201:8099/stream"/>
-        </group>
+        <bookmark name="Nap Rádió" url="http://napradio.hu:8000/napradio"/>
+        <bookmark name="Rábaköz Rádió" url="http://82.141.138.201:8099/stream"/>
+      </group>
     </group>
     <group name="Kisközösségi rádiók">
-        <bookmark name="Alfa Rádió" url="http://37.221.209.146:8680/live.mp3"/>
-        <bookmark name="Alpha Rádió" url="http://sarloutca.ddns.net:9220/fm889_high"/>
-        <bookmark name="Balaton Rádió" url="http://wssgd.gdsinfo.com:8200/"/>
-        <bookmark name="Best Of Rádió" url="http://bestofradio.hu:9000/stream"/>
-        <bookmark name="Code FM" url="http://95.140.43.42:8000/"/>
-        <bookmark name="Credo Rádió" url="http://hosting.42netmedia.com:10090/"/>
-        <bookmark name="Csillagpont Rádió" url="http://streamer1.borsodweb.hu:48000/csillagpont"/>
-        <bookmark name="EPER" url="http://radio.elte.hu:8000/eper2"/>
-        <bookmark name="FM1 Rádió" url="http://fm1radio.ubinet.hu:6742/"/>
-        <bookmark name="Kontakt Rádió" url="http://37.221.209.146:7000/live.mp3"/>
-        <bookmark name="MaxiRádió" url="http://37.221.209.189:9560/"/>
-        <bookmark name="Pont Rádió" url="http://91.137.201.222:8012/"/>
-        <bookmark name="Rádió Érd FM 87,8" url="http://37.221.209.146:9340/live.mp3"/>
-        <bookmark name="Radio Smile" url="http://92.61.114.195:8010/"/>
-        <bookmark name="Rádió Sun" url="http://radioszerver.net:19730/"/>
-        <bookmark name="Rádió Szarvas" url="http://streamhost110.gtk.hu:9078/"/>
-        <bookmark name="Rádió Szentendre" url="http://stream2.composeit.hu:8400/"/>
-        <bookmark name="Táska Rádió" url="http://radioszerver.hu:7070/"/>
+      <bookmark name="Alfa Rádió" url="http://37.221.209.146:8680/live.mp3"/>
+      <bookmark name="Alpha Rádió" url="http://sarloutca.ddns.net:9220/fm889_high"/>
+      <bookmark name="Balaton Rádió" url="http://wssgd.gdsinfo.com:8200/"/>
+      <bookmark name="Best Of Rádió" url="http://bestofradio.hu:9000/stream"/>
+      <bookmark name="Code FM" url="http://95.140.43.42:8000/"/>
+      <bookmark name="Credo Rádió" url="http://hosting.42netmedia.com:10090/"/>
+      <bookmark name="Csillagpont Rádió" url="http://streamer1.borsodweb.hu:48000/csillagpont"/>
+      <bookmark name="EPER" url="http://radio.elte.hu:8000/eper2"/>
+      <bookmark name="FM1 Rádió" url="http://fm1radio.ubinet.hu:6742/"/>
+      <bookmark name="Kontakt Rádió" url="http://37.221.209.146:7000/live.mp3"/>
+      <bookmark name="MaxiRádió" url="http://37.221.209.189:9560/"/>
+      <bookmark name="Pont Rádió" url="http://91.137.201.222:8012/"/>
+      <bookmark name="Rádió Érd FM 87,8" url="http://37.221.209.146:9340/live.mp3"/>
+      <bookmark name="Radio Smile" url="http://92.61.114.195:8010/"/>
+      <bookmark name="Rádió Sun" url="http://radioszerver.net:19730/"/>
+      <bookmark name="Rádió Szarvas" url="http://streamhost110.gtk.hu:9078/"/>
+      <bookmark name="Rádió Szentendre" url="http://stream2.composeit.hu:8400/"/>
+      <bookmark name="Táska Rádió" url="http://radioszerver.hu:7070/"/>
     </group>
-</group>
+  </group>
 </bookmarks>

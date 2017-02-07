@@ -47,6 +47,7 @@ namespace TCPlayer.Code
         private DownloadProcedure _callback;
 
         public event PropertyChangedEventHandler PropertyChanged;
+        public event EventHandler<string> MetaChanged;
 
         private void NotifyPropertyChanged(string info)
         {
@@ -175,7 +176,47 @@ namespace TCPlayer.Code
 
         private void MyDownloadProc(IntPtr buffer, int length, IntPtr user)
         {
+            var ptr = Bass.ChannelGetTags(_source, TagType.META);
+            if (ptr != IntPtr.Zero)
+            {
+                var array = Native.IntPtrToArray(ptr);
+                if (array != null && MetaChanged != null)
+                    MetaChanged(this, PtocessTags(array));
+            }
+            else
+            {
+                ptr = Bass.ChannelGetTags(_source, TagType.OGG);
+                if (ptr != null)
+                {
+                    var array = Native.IntPtrToArray(ptr);
+                    if (array != null && MetaChanged != null)
+                        MetaChanged(this, PtocessTags(array, true));
+                }
+            }
+        }
 
+        private string PtocessTags(string[] array, bool icecast = false)
+        {
+            string ret = "";
+            if (icecast)
+            {
+                foreach (var item in array)
+                {
+                    if (item.StartsWith("ARTIST")) ret += item.Replace("ARTIST=", "");
+                    else if (item.StartsWith("TITLE")) ret += item.Replace("TITLE=", " - ");
+                    else continue;
+                }
+            }
+            else
+            {
+                var contents = array[0].Split(';');
+                foreach (var item in contents)
+                {
+                    if (item.StartsWith("StreamTitle='")) ret += item.Replace("StreamTitle='", "").Replace("'", "");
+                    else continue;
+                }
+            }
+            return ret;
         }
 
         /// <summary>

@@ -17,7 +17,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace TCPlayer.Code
 {
@@ -33,6 +35,38 @@ namespace TCPlayer.Code
         // Unregisters the hot key with Windows.
         [DllImport("user32.dll")]
         public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+
+        private static int IntPtrSize(IntPtr p)
+        {
+            int num = 0;
+            while (Marshal.ReadByte(p, num) != 0) num++;
+            return num;
+        }
+
+        public static string[] IntPtrToArray(IntPtr pointer)
+        {
+            unsafe
+            {
+                if (pointer != IntPtr.Zero)
+                {
+                    List<string> list = new List<string>();
+                    string item = string.Empty;
+                    while (true)
+                    {
+                        int num = IntPtrSize(pointer);
+                        if (num <= 0) break;
+                        byte[] array = new byte[num];
+                        Marshal.Copy(pointer, array, 0, num);
+                        pointer = new IntPtr((void*)((byte*)((byte*)pointer.ToPointer() + num) + 1));
+                        item = Encoding.UTF8.GetString(array, 0, num);
+                        list.Add(item);
+                    }
+                    if (list.Count > 0) return list.ToArray();
+                }
+                return null;
+            }
+        }
+
     }
 
 
