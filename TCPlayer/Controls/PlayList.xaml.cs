@@ -98,7 +98,7 @@ namespace TCPlayer.Controls
             });
         }
 
-        public void DoLoad(IEnumerable<string> items)
+        public async void DoLoad(IEnumerable<string> items)
         {
             if (items == null)
                 items = Environment.GetCommandLineArgs();
@@ -106,19 +106,22 @@ namespace TCPlayer.Controls
             foreach (var item in items)
             {
                 var ext = Path.GetExtension(item).ToLower();
-                if (App.Playlists.Contains(ext))
+                if (!string.IsNullOrEmpty(ext) && App.Playlists.Contains(ext))
                 {
                     string[] result = null;
                     switch (ext)
                     {
                         case ".pls":
-                            result = PlaylistLoaders.LoadPls(item);
+                            result = await PlaylistLoaders.LoadPls(item);
                             break;
                         case ".m3u":
-                            result = PlaylistLoaders.LoadM3u(item);
+                            result = await PlaylistLoaders.LoadM3u(item);
                             break;
                         case ".wpl":
-                            result = PlaylistLoaders.LoadWPL(item);
+                            result = await PlaylistLoaders.LoadWPL(item);
+                            break;
+                        case ".asx":
+                            result = await PlaylistLoaders.LoadASX(item);
                             break;
                     }
                     _list.AddRange(result);
@@ -127,10 +130,14 @@ namespace TCPlayer.Controls
                 {
                     _list.Add(item);
                 }
+                else
+                {
+                    MessageBox.Show("Unsupported Format", "Format Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 
-        private void AddPlaylist_Click(object sender, RoutedEventArgs e)
+        private async void AddPlaylist_Click(object sender, RoutedEventArgs e)
         {
             var ofd = new System.Windows.Forms.OpenFileDialog();
             ofd.Filter = "Playlists | " + App.Playlists;
@@ -141,13 +148,16 @@ namespace TCPlayer.Controls
                 switch (ext)
                 {
                     case ".pls":
-                        result = PlaylistLoaders.LoadPls(ofd.FileName);
+                        result = await PlaylistLoaders.LoadPls(ofd.FileName);
                         break;
                     case ".m3u":
-                        result = PlaylistLoaders.LoadM3u(ofd.FileName);
+                        result = await PlaylistLoaders.LoadM3u(ofd.FileName);
                         break;
                     case ".wpl":
-                        result = PlaylistLoaders.LoadWPL(ofd.FileName);
+                        result = await PlaylistLoaders.LoadWPL(ofd.FileName);
+                        break;
+                    case ".asx":
+                        result = await PlaylistLoaders.LoadASX(ofd.FileName);
                         break;
                 }
                 _list.AddRange(result);

@@ -542,5 +542,10 @@ namespace TCPlayer
                 DoLoadAndPlay(ofd.FileNames);   
             }
         }
+
+        private void RadioStations_ItemDoubleClcik(object sender, RoutedEventArgs e)
+        {
+            DoLoadAndPlay(new string[] { RadioStations.SelectedUrl });
+        }
     }
 }

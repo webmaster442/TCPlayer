@@ -20,20 +20,34 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace TCPlayer.Code
 {
     internal static class PlaylistLoaders
     {
-        public static string[] LoadM3u(string file)
+        private async static Task<TextReader> LoadFile(string file)
+        {
+            if (file.StartsWith("http://") || file.StartsWith("https://"))
+            {
+                using (var client = new System.Net.WebClient())
+                {
+                    var response = await client.DownloadStringTaskAsync(new Uri(file));
+                    return new StringReader(response);
+                }
+            }
+            else return File.OpenText(file);
+        }
+
+        public static async Task<string[]> LoadM3u(string file)
         {
             try
             {
                 List<string> ret = new List<string>();
                 string filedir = System.IO.Path.GetDirectoryName(file);
                 string line;
-                using (var content = File.OpenText(file))
+                using (var content = await LoadFile(file))
                 {
                     do
                     {
@@ -67,11 +81,12 @@ namespace TCPlayer.Code
             }
         }
 
-        public static string[] LoadWPL(string file)
+        public static async Task<string[]> LoadWPL(string file)
         {
             try
             {
-                var doc = XDocument.Load(file).Descendants("body").Elements("seq").Elements("media");
+                var content = await LoadFile(file);
+                var doc = XDocument.Load(content).Descendants("body").Elements("seq").Elements("media");
                 List<string> ret = new List<string>();
                 foreach (var media in doc)
                 {
@@ -87,8 +102,29 @@ namespace TCPlayer.Code
             }
         }
 
+        public static async Task<string[]> LoadASX(string file)
+        {
+            try
+            {
+                var content = await LoadFile(file);
+                var doc = XDocument.Load(content).Descendants("asx").Elements("entry").Elements("ref");
+                List<string> ret = new List<string>();
+                foreach (var media in doc)
+                {
+                    var src = media.Attribute("href").Value;
+                    ret.Add(src);
+                }
+                return ret.ToArray();
+            }
+            catch (Exception ex)
+            {
+                Helpers.ErrorDialog(ex, "File Load error");
+                return null;
+            }
+        }
 
-        public static string[] LoadPls(string file)
+
+        public static async Task<string[]> LoadPls(string file)
         {
             try
             {
@@ -96,7 +132,7 @@ namespace TCPlayer.Code
                 List<string> ret = new List<string>();
                 string line;
                 string pattern = @"^(File)([0-9])+(=)";
-                using (var content = File.OpenText(file))
+                using (var content = await LoadFile(file))
                 {
                     do
                     {

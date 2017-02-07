@@ -77,6 +77,7 @@
     <Compile Include="Code\Interfaces.cs" />
     <Compile Include="Code\KeyboardHook.cs" />
     <Compile Include="Code\NotificationIcon.cs" />
+    <Compile Include="Code\Radio.cs" />
     <Compile Include="Code\SingleInstance.cs" />
     <Compile Include="Code\Native.cs" />
     <Compile Include="Code\Player.cs" />
@@ -89,6 +90,9 @@
     </Compile>
     <Compile Include="Controls\DeviceChange.xaml.cs">
       <DependentUpon>DeviceChange.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RadioStations.xaml.cs">
+      <DependentUpon>RadioStations.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
@@ -352,6 +356,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\RadioStations.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -550,6 +558,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Resource Include="Lib\WPFSoundVis\Spectrum Analyzer\WPFSoundVisualizationLib.SpectrumAnalyzer.Icon.Large.png" />
+    <Resource Include="Lib\radiotray.hu.xml" />
+    <Resource Include="Lib\radiotray.xml" />
     <Content Include="pluginst.inf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

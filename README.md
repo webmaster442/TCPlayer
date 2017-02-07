@@ -9,8 +9,10 @@ Website: https://webmaster442.github.io/TCPlayer/
 The software uses the following components made by others:
 
 * [ManagedBass.PInvoke](https://github.com/ManagedBass/ManagedBass.PInvoke)
+* [WPF Sound Visualization Library](http://wpfsvl.codeplex.com/)
 * [TagLib#](https://github.com/mono/taglib-sharp)
 * [Material Design Icons](https://materialdesignicons.com/)
+* [The Ultimate List of Radio Satations](https://www.gnome-look.org/content/show.php/Huge+List+of+Internet+Radio+Stations?content=135497)
 
 Code compiles with Visual Studio Community
 
@@ -19,6 +21,7 @@ Code compiles with Visual Studio Community
 * Supports various audio formats: MP3, MP4, AAC, OGG, WAV, FLAC, WavPack, Apple Lossless (ALAC), WMA, AC3, CDDA, APE, MPC, MP+, MPP, OFR, OFS, SPX, TTA, DSF, OPUS
 * Support MIDI & tracker files playback: midi, mid, rmi, kar, xm, it, s3m, mod, mtm, umx, .mo3
 * Supports various playlist formats: PLS, M3U, WPL
+* Supports URL playback
 * 64 bit & 32 bit support
 * Supports Windows 7 & 8 Shell features: Taskbar progress & Taskbar preview buttons
 * Supports multimedia keys

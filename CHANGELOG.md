@@ -1,6 +1,7 @@
 #1.07
  * Fixed Network stream playback
  * Redesigned Media info
+ * Added web radio direrctory
  * Redesigned window
 	- Added open button
 	- window is bigger

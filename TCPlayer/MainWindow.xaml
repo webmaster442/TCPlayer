@@ -23,7 +23,7 @@
             ProgressState="None" 
             ProgressValue="0" 
             x:Name="Taskbar"
-            ThumbnailClipMargin="0,26,425,140">
+            ThumbnailClipMargin="0,30,485,140">
             <TaskbarItemInfo.ThumbButtonInfos>
                 <ThumbButtonInfo
                     Description="Play/Pause"
@@ -286,6 +286,12 @@
                 <controls:PlayList
                     ItemDoubleClcik="PlayList_ItemDoubleClcik"
                     x:Name="PlayList"/>
+            </TabItem>
+            <TabItem
+                Header="[ Radio ]">
+                <controls:RadioStations
+                    x:Name="RadioStations"
+                    ItemDoubleClcik="RadioStations_ItemDoubleClcik"/>
             </TabItem>
         </TabControl>
         <StackPanel 
