@@ -35,6 +35,12 @@ namespace TCPlayer.Code
         // Unregisters the hot key with Windows.
         [DllImport("user32.dll")]
         public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+		
+		[DllImport("kernel32.dll", EntryPoint = "LoadLibrary")]
+        public static extern IntPtr LoadLibrary(string DllToLoad);
+
+        [DllImport("kernel32.dll", EntryPoint = "FreeLibrary")]
+        public static extern bool FreeLibrary(IntPtr hLib);
 
         private static int IntPtrSize(IntPtr p)
         {
@@ -66,7 +72,6 @@ namespace TCPlayer.Code
                 return null;
             }
         }
-
     }
 
 

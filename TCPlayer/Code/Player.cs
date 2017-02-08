@@ -26,7 +26,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using WPFSoundVisualizationLib;
-
 namespace TCPlayer.Code
 {
     internal class Player : IDisposable, ISpectrumPlayer
@@ -72,7 +71,6 @@ namespace TCPlayer.Code
             Bass.PluginLoad(enginedir + "\\bass_ac3.dll");
             Bass.PluginLoad(enginedir + "\\bass_ape.dll");
             Bass.PluginLoad(enginedir + "\\bass_mpc.dll");
-            Bass.PluginLoad(enginedir + "\\bass_ofr.dll");
             Bass.PluginLoad(enginedir + "\\bass_spx.dll");
             Bass.PluginLoad(enginedir + "\\bass_tta.dll");
             Bass.PluginLoad(enginedir + "\\bassalac.dll");

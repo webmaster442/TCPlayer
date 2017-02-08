@@ -14,6 +14,10 @@
 	- Displays played item index & item count in playlist
  * This is the last release that targets the .NET Framework 4.5 Future versions will require 4.6
 
+#1.07 - 2016.11.05
+ * Fixed broken bassmidi.dll
+ * Removed OFR support, because the current version of the bass plugin is broken, will reenable it when it's fixed
+ 
 #1.06 - 2016.11.04
 
  * Added options dialog, with various settings
