@@ -198,17 +198,31 @@
                         <TextBlock Text="{Binding ElementName=PlayList, Path=Count}"/>
                         <TextBlock Text=" / "/>
                         <TextBlock Text="{Binding ElementName=PlayList, Path=Index}"/>
+
+                        <Button
+                            IsEnabled="False"
+                            Margin="40,0,16,0"
+                            Foreground="White"
+                            x:Name="BtnChapters"
+                            Click="BtnChapters_Click"
+                            Content="[ Chapters ]">
+                            <Button.ContextMenu>
+                                <ContextMenu x:Name="ChapterMenu">
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+
                         <StackPanel
-                            Margin="155,0,0,0"
+                            Margin="0,0,0,0"
                             VerticalAlignment="Center">
                             <ProgressBar
-                                Width="200"
+                                Width="180"
                                 Maximum="32768"
                                 Height="8" 
                                 x:Name="VuR"
                                 Margin="0,0,0,2"/>
                             <ProgressBar
-                                Width="200"
+                                Width="180"
                                 Maximum="32768"
                                 x:Name="VuL"
                                 Height="8"/>

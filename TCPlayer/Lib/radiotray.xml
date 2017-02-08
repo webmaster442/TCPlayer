@@ -68,6 +68,8 @@
     </group>
     <group name="Hardstyle / Hardcore">
       <bookmark name="Q-Dance Radio" url="http://stream01.platform02.true.nl:8000/qdance-hard"/>
+      <bookmark name="hardstyle.nu" url="http://listen.hardstyle.nu/listen.pls"/>
+      <bookmark name="Hardcore radio" url="http://www.hardcoreradio.nl/hr.m3u"/>
     </group>
   </group>
 </bookmarks>

@@ -58,6 +58,8 @@
             <TextBlock Text="The software uses the following free software libaries:"/>
             <TextBlock Text=" - ManagedBass.PInvoke"/>
             <TextBlock Text=" - Taglib#"/>
+            <TextBlock Text=" - WPF Sound Visualization Library"/>
+            <TextBlock Text=" - Mp4 Chapters"/>
             <TextBlock Text=" - Material Design Icons"/>
         </StackPanel>
     </ScrollViewer>

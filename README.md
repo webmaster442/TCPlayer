@@ -5,14 +5,18 @@ Website: https://webmaster442.github.io/TCPlayer/
 
 ![alt text](readme/shot01.png "TC Player")
 ![alt text](readme/shot02.png "TC Player")
+![alt text](readme/shot03.png "TC Player")
+![alt text](readme/shot04.png "TC Player")
 
 The software uses the following components made by others:
 
 * [ManagedBass.PInvoke](https://github.com/ManagedBass/ManagedBass.PInvoke)
 * [WPF Sound Visualization Library](http://wpfsvl.codeplex.com/)
 * [TagLib#](https://github.com/mono/taglib-sharp)
+* [mp4 chapters](https://mp4chap.codeplex.com/)
 * [Material Design Icons](https://materialdesignicons.com/)
-* [The Ultimate List of Radio Satations](https://www.gnome-look.org/content/show.php/Huge+List+of+Internet+Radio+Stations?content=135497)
+* [RadioTray's bookmarks](http://radiotray.sourceforge.net/)
+* [Radiotray-hu bookmarks](https://github.com/gyarakilaszlo/Radiotray-hu)
 
 Code compiles with Visual Studio Community
 
@@ -20,11 +24,12 @@ Code compiles with Visual Studio Community
 
 * Supports various audio formats: MP3, MP4, AAC, OGG, WAV, FLAC, WavPack, Apple Lossless (ALAC), WMA, AC3, CDDA, APE, MPC, MP+, MPP, OFR, OFS, SPX, TTA, DSF, OPUS
 * Support MIDI & tracker files playback: midi, mid, rmi, kar, xm, it, s3m, mod, mtm, umx, .mo3
-* Supports various playlist formats: PLS, M3U, WPL
+* Supports various playlist formats: PLS, M3U, WPL, ASX
 * Supports URL playback
 * 64 bit & 32 bit support
 * Supports Windows 7 & 8 Shell features: Taskbar progress & Taskbar preview buttons
 * Supports multimedia keys
+* Supports MP4 chapters
 * Notifications on track change
 
 

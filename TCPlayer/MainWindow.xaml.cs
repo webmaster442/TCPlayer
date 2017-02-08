@@ -43,6 +43,7 @@ namespace TCPlayer
         private bool _loaded;
         private bool _isdrag;
         private KeyboardHook _keyboardhook;
+        private ChapterProvider _chapterprovider;
 
         public MainWindow()
         {
@@ -50,6 +51,8 @@ namespace TCPlayer
             _player = Player.Instance;
             _player.ChangeDevice(); //init
             _prevvol = 1.0f;
+            _chapterprovider = new ChapterProvider(ChapterMenu);
+            _chapterprovider.ChapterClicked += _chapterprovider_ChapterClicked;
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromMilliseconds(40);
             _timer.IsEnabled = false;
@@ -263,13 +266,15 @@ namespace TCPlayer
                 SongDat.Reset();
                 var file = PlayList.SelectedItem;
                 _player.Load(file);
-
                 if (_player.IsStream)
                 {
+                    BtnChapters.IsEnabled = false;
                     Taskbar.ProgressState = TaskbarItemProgressState.Indeterminate;
                 }
                 else
                 {
+                    BtnChapters.IsEnabled = true;
+                    _chapterprovider.CreateChapters(file, _player.Length);
                     var len = TimeSpan.FromSeconds(_player.Length);
                     TbFullTime.Text = len.ToShortTime();
                     SeekSlider.Maximum = _player.Length;
@@ -327,24 +332,6 @@ namespace TCPlayer
                     Taskbar.ProgressValue = SeekSlider.Value / SeekSlider.Maximum;
                 }
                 _player.IsPlaying = false;
-            }
-        }
-
-        private void SeekSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            if (_isdrag) return;
-            if (SeekSlider.Maximum - SeekSlider.Value < 0.5)
-            {
-                if (PlayList.CanDoNextTrack())
-                {
-                    PlayList.NextTrack();
-                    StartPlay();
-                }
-                else
-                {
-                    _player.Stop();
-                    Reset();
-                }
             }
         }
 
@@ -487,6 +474,31 @@ namespace TCPlayer
             });
         }
 
+        private void _chapterprovider_ChapterClicked(object sender, double e)
+        {
+            _isdrag = true;
+            _player.Position = e;
+            _isdrag = false;
+        }
+
+        private void SeekSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (_isdrag) return;
+            if (SeekSlider.Maximum - SeekSlider.Value < 0.5)
+            {
+                if (PlayList.CanDoNextTrack())
+                {
+                    PlayList.NextTrack();
+                    StartPlay();
+                }
+                else
+                {
+                    _player.Stop();
+                    Reset();
+                }
+            }
+        }
+
         private void SeekSlider_DragCompleted(object sender, RoutedEventArgs e)
         {
             if (!_loaded) return;
@@ -546,6 +558,11 @@ namespace TCPlayer
         private void RadioStations_ItemDoubleClcik(object sender, RoutedEventArgs e)
         {
             DoLoadAndPlay(new string[] { RadioStations.SelectedUrl });
+        }
+
+        private void BtnChapters_Click(object sender, RoutedEventArgs e)
+        {
+            BtnChapters.ContextMenu.IsOpen = true;
         }
     }
 }

@@ -73,6 +73,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="Code\ChapterProvider.cs" />
     <Compile Include="Code\Extensions.cs" />
     <Compile Include="Code\Helpers.cs" />
     <Compile Include="Code\Interfaces.cs" />
@@ -98,6 +99,13 @@
     <Compile Include="Controls\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Lib\Mp4Chapters\AsciiEncoding.cs" />
+    <Compile Include="Lib\Mp4Chapters\BoxInfo.cs" />
+    <Compile Include="Lib\Mp4Chapters\ChapterExtractor.cs" />
+    <Compile Include="Lib\Mp4Chapters\ChapterInfo.cs" />
+    <Compile Include="Lib\Mp4Chapters\IAbstractStream.cs" />
+    <Compile Include="Lib\Mp4Chapters\MoovInfo.cs" />
+    <Compile Include="Lib\Mp4Chapters\StreamWrapper.cs" />
     <Compile Include="Lib\TagLib\Aac\AudioHeader.cs" />
     <Compile Include="Lib\TagLib\Aac\BitStream.cs" />
     <Compile Include="Lib\TagLib\Aac\File.cs" />

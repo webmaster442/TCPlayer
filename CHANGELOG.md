@@ -1,12 +1,18 @@
-#1.07
+#1.1 - 2017.02.13
  * Fixed Network stream playback
+ * Network streams now display stram tags (Shoutcast & Icecast)
  * Redesigned Media info
  * Added web radio direrctory
+ * Updated Bass.dll components
+ * Can set sample rate when changing output device
+ * Added MP4 chapter support
+	- If the file doesn't have chapters then the chapters are created automaticaly
  * Redesigned window
 	- Added open button
 	- window is bigger
 	- Audio Spectrum visual
 	- Displays played item index & item count in playlist
+ * This is the last release that targets the .NET Framework 4.5 Future versions will require 4.6
 
 #1.06 - 2016.11.04
 
