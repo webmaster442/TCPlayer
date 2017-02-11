@@ -1,0 +1,367 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Chapters_Begin" xml:space="preserve">
+    <value>Ugrás az elejére</value>
+  </data>
+  <data name="Chapters_Jumpto" xml:space="preserve">
+    <value>Ugrás ide: {0}</value>
+  </data>
+  <data name="Engine_Error" xml:space="preserve">
+    <value>{0}\r\nBass Hiba kód: {1}\r\nLeírás: {2}</value>
+  </data>
+  <data name="Engine_ErrorBass" xml:space="preserve">
+    <value>Bass.dll inicializációs hiba</value>
+  </data>
+  <data name="Engine_ErrorMixer" xml:space="preserve">
+    <value>Mixer csatorna létrehozási hiba</value>
+  </data>
+  <data name="Engine_ErrorMixerChannel" xml:space="preserve">
+    <value>Mixer csatorna hozzáadási hiba</value>
+  </data>
+  <data name="Engine_ErrorSoundfont" xml:space="preserve">
+    <value>Hiányzó vagy nem beállított Sound font. A MIDI lejátszás nem lehetséges</value>
+  </data>
+  <data name="MainWin_About" xml:space="preserve">
+    <value>Névjegy ...</value>
+  </data>
+  <data name="MainWin_AlwaysTopDisabled" xml:space="preserve">
+    <value>Mindig felül: kikapcsolva</value>
+  </data>
+  <data name="MainWin_AlwaysTopEnabled" xml:space="preserve">
+    <value>Mindig felül: bekapcsolva</value>
+  </data>
+  <data name="MainWin_ChangeDevice" xml:space="preserve">
+    <value>[ Kimenet választás ... ]</value>
+  </data>
+  <data name="MainWin_ErrorMediaKeys" xml:space="preserve">
+    <value>A média gombokat egy másik alkalmazás használja.
+A média gombok használatbavételéhez zárj be minden olyan egyéb alkalmazást, ami ezeket használja, majd indítsd újra a lejátszót.</value>
+  </data>
+  <data name="MainWin_ExitApp" xml:space="preserve">
+    <value>Alkalmazás bezárása</value>
+  </data>
+  <data name="MainWin_ExitConfirmTitle" xml:space="preserve">
+    <value>Kilépés</value>
+  </data>
+  <data name="MainWin_ExtitConfirmMessage" xml:space="preserve">
+    <value>Valóban kilépsz ?</value>
+  </data>
+  <data name="MainWin_ListLabel" xml:space="preserve">
+    <value>Lista:</value>
+  </data>
+  <data name="MainWin_Minimize" xml:space="preserve">
+    <value>Tálcára küldés</value>
+  </data>
+  <data name="MainWin_PlayerTab" xml:space="preserve">
+    <value>[ Lejátszó ]</value>
+  </data>
+  <data name="MainWin_PlaylistTab" xml:space="preserve">
+    <value>[ Lista ]</value>
+  </data>
+  <data name="MainWin_RadioTab" xml:space="preserve">
+    <value>[ Rádió ]</value>
+  </data>
+  <data name="MainWin_Settings" xml:space="preserve">
+    <value>Beállítások ...</value>
+  </data>
+  <data name="MainWin_Title" xml:space="preserve">
+    <value>TC Player {0}</value>
+  </data>
+  <data name="Notify_Text" xml:space="preserve">
+    <value>A TC Player fut</value>
+  </data>
+  <data name="Notify_Title" xml:space="preserve">
+    <value>Jelenleg lejátzás alatt</value>
+  </data>
+  <data name="PlayerTab_ButtonChapters" xml:space="preserve">
+    <value>[ Fejezetek ]</value>
+  </data>
+  <data name="PlayerTab_ButtonMuteUnmute" xml:space="preserve">
+    <value>Némitás / Némítás feloldása</value>
+  </data>
+  <data name="PlayerTab_ButtonNextTrack" xml:space="preserve">
+    <value>Következő szám</value>
+  </data>
+  <data name="PlayerTab_ButtonOpen" xml:space="preserve">
+    <value>Fájl vagy lista megnyitása ...</value>
+  </data>
+  <data name="PlayerTab_ButtonPlayPause" xml:space="preserve">
+    <value>Lejátszás / Megállítás</value>
+  </data>
+  <data name="PlayerTab_ButtonPrevousTrack" xml:space="preserve">
+    <value>Előző szám</value>
+  </data>
+  <data name="PlayerTab_ButtonSeekBack" xml:space="preserve">
+    <value>Vissza tekerés</value>
+  </data>
+  <data name="PlayerTab_ButtonSeekForward" xml:space="preserve">
+    <value>Előre tekerés</value>
+  </data>
+  <data name="PlayerTab_ButtonStop" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="PlayerTab_VolumeSliderText" xml:space="preserve">
+    <value>Hangerő: {0:P1}</value>
+  </data>
+  <data name="Playlist_AddFolderDescription" xml:space="preserve">
+    <value>Válaszd ki a hozzáadni kívánt mappát</value>
+  </data>
+  <data name="Playlist_MenuAdd" xml:space="preserve">
+    <value>[ Hozáadás ]</value>
+  </data>
+  <data name="Playlist_MenuAddDirectory" xml:space="preserve">
+    <value>Mappa ...</value>
+  </data>
+  <data name="Playlist_MenuAddFile" xml:space="preserve">
+    <value>Fájlok...</value>
+  </data>
+  <data name="Playlist_MenuAddPlaylist" xml:space="preserve">
+    <value>Lista ...</value>
+  </data>
+  <data name="Playlist_MenuAddUrl" xml:space="preserve">
+    <value>URL ...</value>
+  </data>
+  <data name="Playlist_MenuDisc" xml:space="preserve">
+    <value>[ Lemez ]</value>
+  </data>
+  <data name="Playlist_MenuDiscNotfound" xml:space="preserve">
+    <value>Nem találtam lemez meghajtót</value>
+  </data>
+  <data name="Playlist_MenuManage" xml:space="preserve">
+    <value>[ Kezelés ]</value>
+  </data>
+  <data name="Playlist_MenuManageClear" xml:space="preserve">
+    <value>Lista törlése ...</value>
+  </data>
+  <data name="Playlist_MenuManageDelete" xml:space="preserve">
+    <value>Kiválasztott törlése</value>
+  </data>
+  <data name="Playlist_MenuManageSave" xml:space="preserve">
+    <value>Lista mentése ...</value>
+  </data>
+  <data name="Playlist_MenuSort" xml:space="preserve">
+    <value>[ Rendezés ]</value>
+  </data>
+  <data name="Playlist_MenuSortAsc" xml:space="preserve">
+    <value>A-&gt;Z</value>
+  </data>
+  <data name="Playlist_MenuSortDesc" xml:space="preserve">
+    <value>Z-&gt;A</value>
+  </data>
+  <data name="Playlist_MenuSortRandom" xml:space="preserve">
+    <value>Véletlen szerű</value>
+  </data>
+  <data name="Playlist_NoDiscsFound" xml:space="preserve">
+    <value>Nem található lemez</value>
+  </data>
+  <data name="Playlist_UnsupportedListFormat" xml:space="preserve">
+    <value>Nem támogatott formátum</value>
+  </data>
+  <data name="Playlist_UnsupportedListFormatTitle" xml:space="preserve">
+    <value>Formátum hiba</value>
+  </data>
+  <data name="Radio_RadioHungarian" xml:space="preserve">
+    <value>Magyar rádió adók</value>
+  </data>
+  <data name="Radio_RadioTcPlayer" xml:space="preserve">
+    <value>TC Player rádiók</value>
+  </data>
+  <data name="Radio_StationsLabel" xml:space="preserve">
+    <value>Rádió állomások</value>
+  </data>
+  <data name="Settings_ClearUrlHistory" xml:space="preserve">
+    <value>URL előzmények törlése ...</value>
+  </data>
+  <data name="Settings_Confirm" xml:space="preserve">
+    <value>ESC gomb lenyomásakor kilépés megerősítése</value>
+  </data>
+  <data name="Settings_Mediakeys" xml:space="preserve">
+    <value>Multimédia gombok használata</value>
+  </data>
+  <data name="Settings_Notify" xml:space="preserve">
+    <value>Értesítés szám váltáskor</value>
+  </data>
+  <data name="Settings_RememberUrl" xml:space="preserve">
+    <value>Legutóbb mengyitott URL-ek megjegyzése</value>
+  </data>
+  <data name="Settings_SaveDevice" xml:space="preserve">
+    <value>Használt kimeneti eszköz mentése kilépéskor</value>
+  </data>
+  <data name="Settings_SaveVolume" xml:space="preserve">
+    <value>Hangerő mentése kilépéskor</value>
+  </data>
+  <data name="Settings_SelectSoundFontTitle" xml:space="preserve">
+    <value>Soundfont kiválasztása</value>
+  </data>
+  <data name="Settings_SettingLabel" xml:space="preserve">
+    <value>Beállítások</value>
+  </data>
+  <data name="Settings_SoundfontButton" xml:space="preserve">
+    <value>Tallózás ...</value>
+  </data>
+  <data name="Settings_SoundfontPath" xml:space="preserve">
+    <value>SoundFont Útvonal:</value>
+  </data>
+  <data name="Settings_UrlHistoryCleared" xml:space="preserve">
+    <value>URL előzmények törlése</value>
+  </data>
+  <data name="Settings_UrlHistoryClearTitle" xml:space="preserve">
+    <value>URL előzmények</value>
+  </data>
+  <data name="AddURL_Recent" xml:space="preserve">
+    <value>Nemrég használt címek:</value>
+  </data>
+  <data name="AddURL_URL" xml:space="preserve">
+    <value>Cím:</value>
+  </data>
+  <data name="DeviceChange_SampleRate" xml:space="preserve">
+    <value>Mintavételezési frekvencia: </value>
+  </data>
+  <data name="DeviceChange_SelectLabel" xml:space="preserve">
+    <value>Válassz kimeneti eszközt:</value>
+  </data>
+  <data name="SongData_CdTrack" xml:space="preserve">
+    <value>{0}. Szám </value>
+  </data>
+  <data name="SongData_Error" xml:space="preserve">
+    <value>Info olvasási hiba</value>
+  </data>
+  <data name="SongData_Unknown" xml:space="preserve">
+    <value>Ismeretlen</value>
+  </data>
+  <data name="SongData_UnknownArtist" xml:space="preserve">
+    <value>Ismeretlen Előadó</value>
+  </data>
+  <data name="SongData_UnknownSong" xml:space="preserve">
+    <value>Ismeretlen Szám</value>
+  </data>
+  <data name="Error_Details" xml:space="preserve">
+    <value>Részletek:</value>
+  </data>
+  <data name="Error_Download" xml:space="preserve">
+    <value>Letöltési hiba</value>
+  </data>
+  <data name="Error_FileLoad" xml:space="preserve">
+    <value>Fájl betöltési hiba</value>
+  </data>
+  <data name="Error_Title" xml:space="preserve">
+    <value>Hiba</value>
+  </data>
+</root>
