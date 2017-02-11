@@ -61,6 +61,15 @@ namespace TCPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Visit Website.
+        /// </summary>
+        public static string About_VisitWebsite {
+            get {
+                return ResourceManager.GetString("About_VisitWebsite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Recent URLs:.
         /// </summary>
         public static string AddURL_Recent {

@@ -568,6 +568,8 @@
     <Resource Include="Lib\WPFSoundVis\Spectrum Analyzer\WPFSoundVisualizationLib.SpectrumAnalyzer.Icon.Large.png" />
     <Resource Include="Lib\radiotray.hu.xml" />
     <Resource Include="Lib\radiotray.xml" />
+    <Resource Include="Lib\About.txt" />
+    <Resource Include="Lib\About.hu.txt" />
     <Content Include="pluginst.inf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

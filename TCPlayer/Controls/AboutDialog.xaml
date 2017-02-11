@@ -4,8 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TCPlayer.Controls"
+             xmlns:p="clr-namespace:TCPlayer.Properties"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="500">
     <UserControl.Resources>
         <Style TargetType="TextBlock" x:Key="Title">
             <Setter Property="Foreground" Value="White"/>
@@ -27,40 +28,35 @@
             <Setter Property="FontSize" Value="14"/>
         </Style>
     </UserControl.Resources>
-    <ScrollViewer>
-        <StackPanel>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="110"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <TextBlock
-                    Text="TC Player"
-                    Grid.Column="1"
-                    Grid.Row="0"
-                    Style="{StaticResource Title}"/>
-                <Border
-                    Grid.Row="0"
-                    Child="{StaticResource IconMain}"/>
-                <Button
-                    Grid.Row="1"
-                    Content="Visit Website"
-                    x:Name="BtnWebsite"
-                    Foreground="White"
-                    Click="BtnWebsite_Click"/>
-            </Grid>
-            <TextBlock Text="A Player based on Bass.dll components. Player development by: Ruzsinszki Gábor, aka. Webmaster442"/>
-            <TextBlock Text="This program is free software, distributed under the terms of GPL."/>
-            <TextBlock Text="The software uses the following free software libaries:"/>
-            <TextBlock Text=" - ManagedBass.PInvoke"/>
-            <TextBlock Text=" - Taglib#"/>
-            <TextBlock Text=" - WPF Sound Visualization Library"/>
-            <TextBlock Text=" - Mp4 Chapters"/>
-            <TextBlock Text=" - Material Design Icons"/>
-        </StackPanel>
-    </ScrollViewer>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="110"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock
+            Text="TC Player"
+            Grid.Column="1"
+            Grid.Row="0"
+            Style="{StaticResource Title}"/>
+        <Border
+            Grid.Row="0"
+            Child="{StaticResource IconMain}"/>
+        <Button
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            Content="{x:Static p:Resources.About_VisitWebsite}"
+            x:Name="BtnWebsite"
+            Foreground="White"
+            Click="BtnWebsite_Click"/>
+        <ScrollViewer
+            Grid.Row="2"
+            Grid.ColumnSpan="2">
+            <TextBlock x:Name="AboutView"/>
+        </ScrollViewer>
+    </Grid>
 </UserControl>

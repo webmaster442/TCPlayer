@@ -1,0 +1,11 @@
+﻿Egy zenelejátszó, amely Bass.dll komponenseket használ. Írta: Ruzsinszki Gábor
+
+Ez a program szabad szoftver; terjeszthető illetve módosítható a GPL feltételei szerint
+
+A Program az alábbi komponenseket használja fel:
+
+ - ManagedBass.PInvoke
+ - Taglib#
+ - WPF Sound Visualization Library
+ - Mp4 Chapters
+ - Material Design Icons
