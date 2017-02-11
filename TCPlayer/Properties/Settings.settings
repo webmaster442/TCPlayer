@@ -33,7 +33,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="SoundfontPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Browse ...</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="SampleRate" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">44100</Value>

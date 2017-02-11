@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using TCPlayer.Code;
+using TCPlayer.Properties;
 
 namespace TCPlayer.Controls
 {
@@ -132,7 +133,9 @@ namespace TCPlayer.Controls
                 }
                 else
                 {
-                    MessageBox.Show("Unsupported Format", "Format Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(Properties.Resources.Playlist_UnsupportedListFormat,
+                                    Properties.Resources.Playlist_UnsupportedListFormatTitle,
+                                    MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -168,7 +171,7 @@ namespace TCPlayer.Controls
         {
             string[] filters = App.Formats.Split(';');
             var fbd = new System.Windows.Forms.FolderBrowserDialog();
-            fbd.Description = "Select folder to be added";
+            fbd.Description = Properties.Resources.Playlist_AddFolderDescription;
             if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 List<string> Files = new List<string>(30);
@@ -300,7 +303,7 @@ namespace TCPlayer.Controls
             {
                 MenuItem drive = new MenuItem();
                 drive.Style = FindResource("SubMenuItem") as System.Windows.Style;
-                drive.Header = "No Discs found";
+                drive.Header = Properties.Resources.Playlist_NoDiscsFound;
                 DiscMenu.Items.Add(drive);
             }
         }

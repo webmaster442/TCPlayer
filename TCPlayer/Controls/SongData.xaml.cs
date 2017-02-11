@@ -22,12 +22,12 @@ using System.ComponentModel;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using TCPlayer.Code;
+using TCPlayer.Properties;
 
 namespace TCPlayer.Controls
 {
@@ -96,8 +96,8 @@ namespace TCPlayer.Controls
 
         private void SetInfoText(string artist, string title, string album, string year, string size)
         {
-            artist = string.IsNullOrEmpty(artist) ? "Unknown Artist" : artist;
-            title = string.IsNullOrEmpty(title) ? "Unknown Song" : title;
+            artist = string.IsNullOrEmpty(artist) ? Properties.Resources.SongData_UnknownArtist : artist;
+            title = string.IsNullOrEmpty(title) ? Properties.Resources.SongData_UnknownSong : title;
             year = string.IsNullOrEmpty(year) ? DateTime.Now.Year.ToString() : year;
 
             var sb = new StringBuilder();
@@ -109,7 +109,7 @@ namespace TCPlayer.Controls
 
         private void SetInfoText(string artisttitle, string album, string year, string size)
         {
-            artisttitle = string.IsNullOrEmpty(artisttitle) ? "Unknown Artist - Unknown Song" : artisttitle;
+            artisttitle = string.IsNullOrEmpty(artisttitle) ? string.Format("{0} - {1}", Properties.Resources.SongData_UnknownArtist, Properties.Resources.SongData_UnknownSong) : artisttitle;
             year = string.IsNullOrEmpty(year) ? DateTime.Now.Year.ToString() : year;
 
             var sb = new StringBuilder();
@@ -163,7 +163,7 @@ namespace TCPlayer.Controls
                 if (Helpers.IsMidi(file))
                 {
                     Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/midi.png", UriKind.Relative));
-                    SetInfoText("", fi.Name, "", "Unknown", Size);
+                    SetInfoText("", fi.Name, "", Properties.Resources.SongData_Unknown, Size);
                     if (notify) App.NotifyIcon.ShowNotification(FileName);
                     return;
                 }
@@ -219,7 +219,7 @@ namespace TCPlayer.Controls
         public void Reset()
         {
             Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/unknown.png", UriKind.Relative));
-            InfoText.Text = "Tag read error";
+            InfoText.Text = Properties.Resources.SongData_Error;
         }
     }
 }

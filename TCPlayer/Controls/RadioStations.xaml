@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:code="clr-namespace:TCPlayer.Code"
              xmlns:local="clr-namespace:TCPlayer.Controls"
+             xmlns:p="clr-namespace:TCPlayer.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
@@ -24,13 +25,13 @@
             SelectionChanged="FileSelector_SelectionChanged"
             Grid.Column="1">
             <ComboBoxItem
-                Content="Radiotray bookmarks"/>
+                Content="{x:Static p:Resources.Radio_RadioTcPlayer}"/>
             <ComboBoxItem 
-                Content="Hungarian bookmarks"/>
+                Content="{x:Static p:Resources.Radio_RadioHungarian}"/>
         </ComboBox>
         <TextBlock
             Margin="5"
-            Text="Radio Stations"
+            Text="{x:Static p:Resources.Radio_StationsLabel}"
             Grid.Row="0"/>
         <TreeView
             Grid.Row="1"

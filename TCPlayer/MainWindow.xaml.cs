@@ -59,6 +59,8 @@ namespace TCPlayer
             _timer.Tick += _timer_Tick;
             _loaded = true;
 
+            BtnChapters.IsEnabled = _chapterprovider.ChaptersEnabled;
+
             if (_player.Is64Bit) Title += " (x64)";
             else Title += " (x86)";
 
@@ -266,19 +268,16 @@ namespace TCPlayer
                 SongDat.Reset();
                 var file = PlayList.SelectedItem;
                 _player.Load(file);
-                if (_player.IsStream)
-                {
-                    BtnChapters.IsEnabled = false;
-                    Taskbar.ProgressState = TaskbarItemProgressState.Indeterminate;
-                }
+                _chapterprovider.Clear();
+                if (_player.IsStream) Taskbar.ProgressState = TaskbarItemProgressState.Indeterminate;
                 else
                 {
-                    BtnChapters.IsEnabled = true;
                     _chapterprovider.CreateChapters(file, _player.Length);
                     var len = TimeSpan.FromSeconds(_player.Length);
                     TbFullTime.Text = len.ToShortTime();
                     SeekSlider.Maximum = _player.Length;
                 }
+                BtnChapters.IsEnabled = _chapterprovider.ChaptersEnabled;
                 _timer.IsEnabled = true;
                 if (Helpers.IsTracker(file)) SongDat.UpdateMediaInfo(file, _player.SourceHandle);
                 else SongDat.UpdateMediaInfo(file);
@@ -389,7 +388,7 @@ namespace TCPlayer
             }
             catch (Exception ex)
             {
-                Helpers.ErrorDialog(ex, "Media keys are in use by another application.\r\nTo Use media key functions please close other apps that may use the keys, then restart the player");
+                Helpers.ErrorDialog(ex, Properties.Resources.MainWin_ErrorMediaKeys);
             }
         }
 
@@ -414,11 +413,10 @@ namespace TCPlayer
             }
         }
 
-        private void ThumbButtonInfo_Click(object sender, EventArgs e)
+        private void ThumbButtonInfo_Click(object o, EventArgs e)
         {
-            var btn = sender as ThumbButtonInfo;
-            if (btn == null) return;
-            switch (btn.Description)
+            var param = (o as ThumbButtonInfo).CommandParameter.ToString();
+            switch (param)
             {
                 case "Play/Pause":
                     _player.PlayPause();
@@ -537,7 +535,9 @@ namespace TCPlayer
             {
                 if (Properties.Settings.Default.ConfirmExit)
                 {
-                    var q = MessageBox.Show("Exit program?", "Exit confirmation", MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
+                    var q = MessageBox.Show(Properties.Resources.MainWin_ExtitConfirmMessage, 
+                                            Properties.Resources.MainWin_ExitConfirmTitle,
+                                            MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
                     if (q == MessageBoxResult.Yes) Close();
                 }
                 else Close();
@@ -563,6 +563,11 @@ namespace TCPlayer
         private void BtnChapters_Click(object sender, RoutedEventArgs e)
         {
             BtnChapters.ContextMenu.IsOpen = true;
+        }
+
+        private void ThumbPlay_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

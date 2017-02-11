@@ -145,7 +145,7 @@ namespace TCPlayer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Browse ...")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string SoundfontPath {
             get {
                 return ((string)(this["SoundfontPath"]));

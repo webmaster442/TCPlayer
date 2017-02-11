@@ -19,13 +19,15 @@
 using Mp4Chapters;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using TCPlayer.Properties;
 
 namespace TCPlayer.Code
 {
-    internal class ChapterProvider
+    internal class ChapterProvider: INotifyPropertyChanged
     {
         private Dictionary<double, string> _data;
 
@@ -33,7 +35,15 @@ namespace TCPlayer.Code
 
         private ContextMenu _target;
 
+        private bool _chaptersenabled;
+
         public event EventHandler<double> ChapterClicked;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void Change(string property)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+        }
 
         public ChapterProvider(ContextMenu target)
         {
@@ -52,9 +62,10 @@ namespace TCPlayer.Code
             while (position + divider < lenght)
             {
                 position += divider;
-                var str = string.Format("Jump to {0}", TimeSpan.FromSeconds(position));
+                var str = string.Format(Resources.Chapters_Jumpto, TimeSpan.FromSeconds(position));
                 _data.Add(position, str);
             }
+            DrawToMenu();
         }
 
         public void CreateChapters(string filename, double parsedlength)
@@ -62,12 +73,14 @@ namespace TCPlayer.Code
             try
             {
                 _data.Clear();
+                _target.Items.Clear();
 
                 var extension = Path.GetExtension(filename).ToLower();
 
                 if ((extension != ".mp4") && (extension != ".m4a") &&(extension != ".m4b"))
                 {
                     CreateChapters(parsedlength);
+                    ChaptersEnabled = _data.Count > 0;
                     return;
                 }
 
@@ -80,13 +93,14 @@ namespace TCPlayer.Code
                         _data.Add(c.Time.TotalSeconds, c.Name);
                     }
                 }
+                ChaptersEnabled = _data.Count > 0;
             }
             catch (Exception)
             {
                 _data.Clear();
                 CreateChapters(parsedlength);
+                DrawToMenu();
             }
-            DrawToMenu();
         }
 
         private void DecomissionMenu()
@@ -117,6 +131,24 @@ namespace TCPlayer.Code
         {
             var pos = Convert.ToDouble(((MenuItem)sender).Tag);
             ChapterClicked?.Invoke(sender, pos);
+        }
+
+        public void Clear()
+        {
+            _data.Clear();
+            _target.Items.Clear();
+            ChaptersEnabled = false;
+        }
+
+        public bool ChaptersEnabled
+        {
+            get { return _chaptersenabled; }
+            set
+            {
+                if (value == _chaptersenabled) return;
+                _chaptersenabled = value;
+                Change("ChaptersEnabled");
+            }
         }
     }
 }

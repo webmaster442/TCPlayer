@@ -25,6 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using TCPlayer.Properties;
 using WPFSoundVisualizationLib;
 namespace TCPlayer.Code
 {
@@ -123,7 +124,7 @@ namespace TCPlayer.Code
         private void Error(string message)
         {
             var error = Bass.LastError;
-            string text = string.Format("{0}\r\nBass Error code: {1}\r\nError Description: {2}", message, (int)error, error);
+            string text = string.Format(Resources.Engine_Error, message, (int)error, error);
             throw new Exception(text);
         }
 
@@ -228,7 +229,7 @@ namespace TCPlayer.Code
             {
                 if (!File.Exists(Properties.Settings.Default.SoundfontPath))
                 {
-                    Error("Sound font is missing, or not set. MIDI playback is not possible.");
+                    Error(Resources.Engine_ErrorSoundfont);
                     return;
                 }
                 BassMidi.DefaultFont = Properties.Settings.Default.SoundfontPath;
@@ -278,13 +279,13 @@ namespace TCPlayer.Code
             _mixer = BassMix.CreateMixerStream(ch.Frequency, ch.Channels, mixerflags);
             if (_mixer == 0)
             {
-                Error("Mixer stream create failed");
+                Error(Resources.Engine_ErrorMixer);
                 IsPlaying = false;
                 return;
             }
             if (!BassMix.MixerAddChannel(_mixer, _source, BassFlags.MixerDownMix))
             {
-                Error("Mixer chanel adding failed");
+                Error(Resources.Engine_ErrorMixerChannel);
                 IsPlaying = false;
                 return;
             }
@@ -409,7 +410,7 @@ namespace TCPlayer.Code
                 {
                     Properties.Settings.Default.DeviceID = 0;
                     Properties.Settings.Default.Save();
-                    Error("Bass.dll init failed");
+                    Error(Resources.Engine_ErrorBass);
                     return;
                 }
                 Bass.Start();
@@ -425,11 +426,11 @@ namespace TCPlayer.Code
                         _initialized = false;
                     }
 
-                    _initialized = Bass.Init(i, Properties.Settings.Default.SampleRate, DeviceInitFlags.Frequency, IntPtr.Zero);
+                    _initialized = Bass.Init(i, Settings.Default.SampleRate, DeviceInitFlags.Frequency, IntPtr.Zero);
                     CurrentDeviceID = i;
                     if (!_initialized)
                     {
-                        Error("Bass.dll init failed");
+                        Error(Resources.Engine_ErrorBass);
                         return;
                     }
                     Bass.Start();

@@ -12,7 +12,7 @@
             <RowDefinition Height="30"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Settings"
+        <TextBlock Text="{x:Static props:Resources.Settings_SettingLabel}"
                    FontWeight="Bold"
                    Margin="5,0"/>
         <ScrollViewer Grid.Row="1">
@@ -20,37 +20,37 @@
                 <CheckBox
                     Margin="2"
                     IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=SaveVolume, Mode=TwoWay}"
-                    Content="Save volume on exit"/>
+                    Content="{x:Static props:Resources.Settings_SaveVolume}"/>
                 <CheckBox
                     Margin="2"
                     IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=SaveDevice, Mode=TwoWay}"
-                    Content="Save output device on exit"/>
+                    Content="{x:Static props:Resources.Settings_SaveDevice}"/>
                 <CheckBox
                     Margin="2"
                     IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=RegisterMultimediaKeys, Mode=TwoWay}"
-                    Content="Try to register Multimedia keys for control"/>
+                    Content="{x:Static props:Resources.Settings_Mediakeys}"/>
                 <CheckBox
                     Margin="2"
                     IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=TrackChangeNotification, Mode=TwoWay}"
-                    Content="Send notifications on track change"/>
+                    Content="{x:Static props:Resources.Settings_Notify}"/>
                 <CheckBox
                     Margin="2"
                     IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=ConfirmExit, Mode=TwoWay}"
-                    Content="Confirm exit with ESC button"/>
+                    Content="{x:Static props:Resources.Settings_Confirm}"/>
                 <CheckBox
                     Margin="2"
                     IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=RememberRecentURLs, Mode=TwoWay}"
-                    Content="Remember Last opened url adresses"/>
+                    Content="{x:Static props:Resources.Settings_RememberUrl}"/>
                 <Button
                     Margin="25,2"
                     HorizontalAlignment="Left"
                     Foreground="White"
                     x:Name="BtnClearHistory"
                     Click="BtnClearHistory_Click"
-                    Content="Clear Url history"/>
+                    Content="{x:Static props:Resources.Settings_ClearUrlHistory}"/>
                 <TextBlock
                     Margin="2"
-                    Text="SoundFont path:"/>
+                    Text="{x:Static props:Resources.Settings_SoundfontPath}"/>
                 <Button
                     x:Name="BtnSoundFont"
                     Foreground="White"
@@ -59,7 +59,7 @@
                     Margin="5,2"
                     HorizontalAlignment="Left"
                     Click="BtnSoundFont_Click"
-                    Content="{Binding Source={x:Static props:Settings.Default}, Path=SoundfontPath, Mode=TwoWay}"/>
+                    Content="{Binding Source={x:Static props:Settings.Default}, Path=SoundfontPath, Mode=TwoWay, Converter={StaticResource NullorValueConv}, ConverterParameter={x:Static props:Resources.Settings_SoundfontButton}}"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

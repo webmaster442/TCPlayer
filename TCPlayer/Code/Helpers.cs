@@ -19,6 +19,7 @@
 using System;
 using System.Windows;
 using System.Windows.Threading;
+using TCPlayer.Properties;
 
 namespace TCPlayer.Code
 {
@@ -35,9 +36,9 @@ namespace TCPlayer.Code
             {
                 if (description != null)
                 {
-                    MessageBox.Show(string.Format("{0}\r\nDetails:{1}", description, ex.Message), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(string.Format("{0}\r\n{1}\r\n{2}", description, Resources.Error_Details, ex.Message), Resources.Error_Title, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-                else MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                else MessageBox.Show(ex.Message, Resources.Error_Title, MessageBoxButton.OK, MessageBoxImage.Error);
             });
         }
 

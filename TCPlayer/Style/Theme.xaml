@@ -22,6 +22,7 @@
                     xmlns:soudvis="clr-namespace:WPFSoundVisualizationLib">
 
     <local:FileNameConverter x:Key="FilenameConv"/>
+    <local:NullorValueConverter x:Key="NullorValueConv"/>
 
     <SolidColorBrush x:Key="WindowBackground" Color="#E5000000"/>
     <SolidColorBrush x:Key="WindowTitleBar" Color="#FFc0c0c0"/>

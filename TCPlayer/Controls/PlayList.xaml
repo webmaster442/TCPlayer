@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TCPlayer.Controls"
+             xmlns:p="clr-namespace:TCPlayer.Properties"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="400">
     <Grid>
@@ -12,78 +13,78 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Menu Grid.Row="0">
-            <MenuItem Header="[ Add ]">
+            <MenuItem Header="{x:Static p:Resources.Playlist_MenuAdd}">
                 <MenuItem
                     Icon="{StaticResource IconFolder}"
-                    Header="From directory ..."
+                    Header="{x:Static p:Resources.Playlist_MenuAddDirectory}"
                     Click="AddDir_Click"
                     x:Name="AddDir"
                     Style="{StaticResource SubMenuItem}"/>
                 <MenuItem
                     Icon="{StaticResource IconFile}"
-                    Header="From files..."
+                    Header="{x:Static p:Resources.Playlist_MenuAddFile}"
                     Click="AddFiles_Click"
                     x:Name="AddFiles"
                     Style="{StaticResource SubMenuItem}"/>
                 <MenuItem
                     Icon="{StaticResource IconPlaylist}"
-                    Header="From Playlist ..."
+                    Header="{x:Static p:Resources.Playlist_MenuAddPlaylist}"
                     Click="AddPlaylist_Click"
                     x:Name="AddPlaylist"
                     Style="{StaticResource SubMenuItem}"/>
                 <MenuItem
                     Icon="{StaticResource IconLink}"
-                    Header="URL ..."
+                    Header="{x:Static p:Resources.Playlist_MenuAddUrl}"
                     x:Name="AddURL"
                     Click="AddURL_Click"
                     Style="{StaticResource SubMenuItem}"/>
             </MenuItem>
-            <MenuItem Header="[ Sort ]">
+            <MenuItem Header="{x:Static p:Resources.Playlist_MenuSort}">
                 <MenuItem
-                    Header="A->Z"
+                    Header="{x:Static p:Resources.Playlist_MenuSortAsc}"
                     x:Name="SortAZ"
                     Click="SortAZ_Click"
                     Icon="{StaticResource IconSortAZ}"
                     Style="{StaticResource SubMenuItem}"/>
                 <MenuItem
-                    Header="Z->A"
+                    Header="{x:Static p:Resources.Playlist_MenuSortDesc}"
                     x:Name="SortZA"
                     Click="SortZA_Click"
                     Icon="{StaticResource IconSortZA}"
                     Style="{StaticResource SubMenuItem}"/>
                 <MenuItem
-                    Header="Randomize"
+                    Header="{x:Static p:Resources.Playlist_MenuSortRandom}"
                     x:Name="SortRandom"
                     Click="SortRandom_Click"
                     Icon="{StaticResource IconDice}"
                     Style="{StaticResource SubMenuItem}"/>
             </MenuItem>
-            <MenuItem Header="[ Manage ]">
+            <MenuItem Header="{x:Static p:Resources.Playlist_MenuManage}">
                 <MenuItem 
-                    Header="Save list ..."
+                    Header="{x:Static p:Resources.Playlist_MenuManageSave}"
                     Click="ManageSave_Click"
                     x:Name="ManageSave"
                     Icon="{StaticResource IconSave}"
                     Style="{StaticResource SubMenuItem}"/>
                 <MenuItem 
-                    Header="Clear list ..."
+                    Header="{x:Static p:Resources.Playlist_MenuManageClear}"
                     x:Name="ManageClear"
                     Click="ManageClear_Click"
                     Icon="{StaticResource IconClear}"
                     Style="{StaticResource SubMenuItem}"/>
                 <MenuItem 
-                    Header="Delete selected"
+                    Header="{x:Static p:Resources.Playlist_MenuManageDelete}"
                     x:Name="ManageDelete"
                     Click="ManageDelete_Click"
                     Icon="{StaticResource IconDelete}"
                     Style="{StaticResource SubMenuItem}"/>
             </MenuItem>
             <MenuItem 
-                Header="[ Disc ]"
+                Header="{x:Static p:Resources.Playlist_MenuDisc}"
                 x:Name="DiscMenu"
                 SubmenuOpened="DiscMenu_SubmenuOpened">
                 <MenuItem
-                    Header="No Drive found"
+                    Header="{x:Static p:Resources.Playlist_MenuDiscNotfound}"
                     Style="{StaticResource SubMenuItem}"/>
             </MenuItem>
         </Menu>

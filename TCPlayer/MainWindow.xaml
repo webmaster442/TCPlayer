@@ -2,9 +2,9 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:props="clr-namespace:TCPlayer.Properties"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:TCPlayer.Controls"
-        xmlns:props="clr-namespace:TCPlayer.Properties"
         PreviewKeyDown="MainWin_PreviewKeyDown"
         Style="{StaticResource Window}"
         x:Name="MainWin"
@@ -26,19 +26,23 @@
             ThumbnailClipMargin="0,30,485,140">
             <TaskbarItemInfo.ThumbButtonInfos>
                 <ThumbButtonInfo
-                    Description="Play/Pause"
+                    Description="{x:Static props:Resources.PlayerTab_ButtonPlayPause}"
+                    CommandParameter="Play/Pause"
                     Click="ThumbButtonInfo_Click"
                     ImageSource="Style/taskbar-play-pause.png"/>
                 <ThumbButtonInfo
-                    Description="Previous track"
+                    CommandParameter="Previous track"
+                    Description="{x:Static props:Resources.PlayerTab_ButtonPrevousTrack}"
                     Click="ThumbButtonInfo_Click"
                     ImageSource="Style/taskbar-skip-previous.png"/>
                 <ThumbButtonInfo
-                    Description="Next track"
+                    CommandParameter="Next track"
+                    Description="{x:Static props:Resources.PlayerTab_ButtonNextTrack}"
                     Click="ThumbButtonInfo_Click"
                     ImageSource="Style/taskbar-skip-next.png"/>
                 <ThumbButtonInfo
-                    Description="Mute/UnMute"
+                    CommandParameter="Mute/UnMute"
+                    Description="{x:Static props:Resources.PlayerTab_ButtonMuteUnmute}"
                     Click="ThumbButtonInfo_Click"
                     ImageSource="Style/taskbar-volume-off.png"/>
             </TaskbarItemInfo.ThumbButtonInfos>
@@ -70,13 +74,13 @@
             <Button
                 Content="{StaticResource IconSettings}"
                 Grid.Column="1"
-                ToolTip="Settings ..."
+                ToolTip="{x:Static props:Resources.MainWin_Settings}"
                 x:Name="BtnSettings"
                 Click="BtnSettings_Click"/>
             <Button
                 Content="{StaticResource IconInformation}"
                 Grid.Column="2"
-                ToolTip="About ..."
+                ToolTip="{x:Static props:Resources.MainWin_About}"
                 x:Name="BtnAbout"
                 Click="BtnAbout_Click"/>
             <ToggleButton
@@ -88,11 +92,11 @@
                         <Style.Triggers>
                             <Trigger Property="IsChecked" Value="false">
                                 <Setter Property="Content" Value="{StaticResource IconBack}"/>
-                                <Setter Property="ToolTip" Value="Always top: off"/>
+                                <Setter Property="ToolTip" Value="{x:Static props:Resources.MainWin_AlwaysTopDisabled}"/>
                             </Trigger>
                             <Trigger Property="IsChecked" Value="true">
                                 <Setter Property="Content" Value="{StaticResource IconFront}"/>
-                                <Setter Property="ToolTip" Value="Always top: on"/>
+                                <Setter Property="ToolTip" Value="{x:Static props:Resources.MainWin_AlwaysTopEnabled}"/>
                             </Trigger>
                         </Style.Triggers>
                         <Setter Property="Background" Value="Transparent"/>
@@ -104,12 +108,12 @@
                 Grid.Column="4"
                 x:Name="TitlebarMinimize"
                 Click="TitlebarMinimize_Click"
-                ToolTip="Minimize to Tray"
+                ToolTip="{x:Static props:Resources.MainWin_Minimize}"
                 Content="{StaticResource IconMinimize}"/>
             <Button 
                 Grid.Column="5"
                 x:Name="TitlebarClose"
-                ToolTip="Exit application"
+                ToolTip="{x:Static props:Resources.MainWin_ExitApp}"
                 Content="{StaticResource IconClose}"
                 Click="TitlebarClose_Click"/>
         </Grid>
@@ -160,7 +164,7 @@
             Grid.Row="1"
             Grid.RowSpan="2">
             <TabItem
-                Header="[ Player ]">
+                Header="{x:Static props:Resources.MainWin_PlayerTab}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -194,18 +198,17 @@
 
                         <TextBlock
                             Margin="40,0,0,0"
-                            Text="List: "/>
+                            Text="{x:Static props:Resources.MainWin_ListLabel}"/>
                         <TextBlock Text="{Binding ElementName=PlayList, Path=Count}"/>
                         <TextBlock Text=" / "/>
                         <TextBlock Text="{Binding ElementName=PlayList, Path=Index}"/>
 
                         <Button
-                            IsEnabled="False"
                             Margin="40,0,16,0"
                             Foreground="White"
                             x:Name="BtnChapters"
                             Click="BtnChapters_Click"
-                            Content="[ Chapters ]">
+                            Content="{x:Static props:Resources.PlayerTab_ButtonChapters}">
                             <Button.ContextMenu>
                                 <ContextMenu x:Name="ChapterMenu">
                                 </ContextMenu>
@@ -234,45 +237,45 @@
                         Grid.Row="4">
                         <Button
                             Margin="5,0"
-                            ToolTip="Open..."
+                            ToolTip="{x:Static props:Resources.PlayerTab_ButtonOpen}"
                             x:Name="BtnOpen"
                             Click="DoAction"
                             Content="{StaticResource IconEject}"/>
                         <Button
-                            ToolTip="Play / Pause"
+                            ToolTip="{x:Static props:Resources.PlayerTab_ButtonPlayPause}"
                             x:Name="BtnPlayPause"
                             Click="DoAction"
                             Content="{StaticResource IconPlayPause}"/>
                         <Button
                             Margin="5,0"
-                            ToolTip="Stop"
+                            ToolTip="{x:Static props:Resources.PlayerTab_ButtonStop}"
                             x:Name="BtnStop"
                             Click="DoAction"
                             Content="{StaticResource IconStop}"/>
                         <Button
-                            ToolTip="Seek back"
+                            ToolTip="{x:Static props:Resources.PlayerTab_ButtonSeekBack}"
                             x:Name="BtnSeekBack"
                             Click="DoAction"
                             Content="{StaticResource IconSeekBack}"/>
                         <Button
-                            ToolTip="Seek forward"
+                            ToolTip="{x:Static props:Resources.PlayerTab_ButtonSeekForward}"
                             x:Name="BtnSeekFwd"
                             Click="DoAction"
                             Content="{StaticResource IconSeekForward}"
                             Margin="5,0"/>
                         <Button
-                            ToolTip="Previous track"
+                            ToolTip="{x:Static props:Resources.PlayerTab_ButtonPrevousTrack}"
                             x:Name="BtnPrevTrack"
                             Click="DoAction"
                             Content="{StaticResource IconPrevious}"/>
                         <Button
-                            ToolTip="Next Track"
+                            ToolTip="{x:Static props:Resources.PlayerTab_ButtonNextTrack}"
                             x:Name="BtnNextTrack"
                             Click="DoAction"
                             Content="{StaticResource IconNext}"
                             Margin="5,0"/>
                         <ToggleButton 
-                            ToolTip="Mute / Unmute"
+                            ToolTip="{x:Static props:Resources.PlayerTab_ButtonMuteUnmute}"
                             x:Name="BtnMute"
                             Click="BtnMute_Click"
                             Content="{StaticResource IconMute}"/>
@@ -289,20 +292,20 @@
                             <Slider.ToolTip>
                                 <ToolTip
                                     Content="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Value}"
-                                    ContentStringFormat="Volume: {0:P1}" />
+                                    ContentStringFormat="{x:Static props:Resources.PlayerTab_VolumeSliderText}" />
                             </Slider.ToolTip>
                         </Slider>
                     </StackPanel>
                 </Grid>
             </TabItem>
             <TabItem
-                Header="[ Playlist ]">
+                Header="{x:Static props:Resources.MainWin_PlaylistTab}">
                 <controls:PlayList
                     ItemDoubleClcik="PlayList_ItemDoubleClcik"
                     x:Name="PlayList"/>
             </TabItem>
             <TabItem
-                Header="[ Radio ]">
+                Header="{x:Static props:Resources.MainWin_RadioTab}">
                 <controls:RadioStations
                     x:Name="RadioStations"
                     ItemDoubleClcik="RadioStations_ItemDoubleClcik"/>
@@ -315,7 +318,7 @@
             HorizontalAlignment="Right">
             <Button
                 Foreground="White"
-                Content="[ Change output device... ]"
+                Content="{x:Static props:Resources.MainWin_ChangeDevice}"
                 x:Name="BtnChangeDev"
                 Click="BtnChangeDev_Click"/>
         </StackPanel>

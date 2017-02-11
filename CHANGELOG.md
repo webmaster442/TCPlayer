@@ -1,10 +1,11 @@
-#1.1 - 2017.02.13
+#2.0 -
  * Fixed Network stream playback
  * Network streams now display stram tags (Shoutcast & Icecast)
  * Redesigned Media info
  * Added web radio direrctory
  * Updated Bass.dll components
  * Can set sample rate when changing output device
+ * Support for translations. currently available languages: English, Hungarian
  * Added MP4 chapter support
 	- If the file doesn't have chapters then the chapters are created automaticaly
  * Redesigned window

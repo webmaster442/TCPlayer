@@ -16,6 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+using System.Windows;
 using System.Windows.Controls;
 
 namespace TCPlayer.Controls
@@ -35,17 +36,20 @@ namespace TCPlayer.Controls
             var dialog = new System.Windows.Forms.OpenFileDialog();
             dialog.Filter = "Sound Fonts|*.sf2;*.sfz";
             dialog.Multiselect = false;
-            dialog.Title = "Select soundfont";
+            dialog.Title = Properties.Resources.Settings_SelectSoundFontTitle;
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 Properties.Settings.Default.SoundfontPath = dialog.FileName;
             }
         }
 
-        private void BtnClearHistory_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void BtnClearHistory_Click(object sender, RoutedEventArgs e)
         {
             Properties.Settings.Default.RecentURLs = "";
             App.RecentUrls.Clear();
+            MessageBox.Show(Properties.Resources.Settings_UrlHistoryCleared,
+                            Properties.Resources.Settings_UrlHistoryClearTitle,
+                            MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

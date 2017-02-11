@@ -19,9 +19,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using TCPlayer.Properties;
 
 namespace TCPlayer.Code
 {
@@ -31,10 +33,18 @@ namespace TCPlayer.Code
         {
             if (file.StartsWith("http://") || file.StartsWith("https://"))
             {
-                using (var client = new System.Net.WebClient())
+                try
                 {
-                    var response = await client.DownloadStringTaskAsync(new Uri(file));
-                    return new StringReader(response);
+                    using (var client = new System.Net.WebClient())
+                    {
+                        var response = await client.DownloadStringTaskAsync(new Uri(file));
+                        return new StringReader(response);
+                    }
+                }
+                catch (WebException ex)
+                {
+                    Helpers.ErrorDialog(ex, Resources.Error_Download);
+                    return null;
                 }
             }
             else return File.OpenText(file);
@@ -76,7 +86,7 @@ namespace TCPlayer.Code
             }
             catch (Exception ex)
             {
-                Helpers.ErrorDialog(ex, "File Load error");
+                Helpers.ErrorDialog(ex, Resources.Error_FileLoad);
                 return null;
             }
         }
@@ -97,7 +107,7 @@ namespace TCPlayer.Code
             }
             catch (Exception ex)
             {
-                Helpers.ErrorDialog(ex, "File Load error");
+                Helpers.ErrorDialog(ex, Resources.Error_FileLoad);
                 return null;
             }
         }
@@ -118,7 +128,7 @@ namespace TCPlayer.Code
             }
             catch (Exception ex)
             {
-                Helpers.ErrorDialog(ex, "File Load error");
+                Helpers.ErrorDialog(ex, Resources.Error_FileLoad);
                 return null;
             }
         }
@@ -162,7 +172,7 @@ namespace TCPlayer.Code
             }
             catch (Exception ex)
             {
-                Helpers.ErrorDialog(ex, "File Load error");
+                Helpers.ErrorDialog(ex, Resources.Error_FileLoad);
                 return null;
             }
         }
