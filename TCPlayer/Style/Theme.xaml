@@ -409,39 +409,6 @@
         </Style.Triggers>
     </Style>
 
-    <Style TargetType="{x:Type soudvis:SpectrumAnalyzer}">
-        <Setter Property="BarStyle">
-            <Setter.Value>
-                <Style TargetType="{x:Type Rectangle}">
-                    <Setter Property="Fill"
-                            Value="{StaticResource SpectrumBarBrush}" />
-                </Style>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="PeakStyle">
-            <Setter.Value>
-                <Style TargetType="{x:Type Rectangle}">
-                    <Setter Property="Fill"
-                            Value="{StaticResource SpectrumPeakBrush}" />
-                </Style>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type soudvis:SpectrumAnalyzer}">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}">
-                        <Canvas Name="PART_SpectrumCanvas"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch"
-                                ClipToBounds="True" />
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Style TargetType="TreeView">
         <Setter Property="Background" Value="Transparent"/>
     </Style>
@@ -592,5 +559,39 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="{x:Type soudvis:SpectrumAnalyzer}">
+        <Setter Property="BarStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type Rectangle}">
+                    <Setter Property="Fill"
+                            Value="{StaticResource SpectrumBarBrush}" />
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="PeakStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type Rectangle}">
+                    <Setter Property="Fill"
+                            Value="{StaticResource SpectrumPeakBrush}" />
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type soudvis:SpectrumAnalyzer}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Canvas Name="PART_SpectrumCanvas"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                ClipToBounds="True" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 
 </ResourceDictionary>
