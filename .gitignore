@@ -1,6 +1,8 @@
 /.vs/
 /TCPlayer/bin/
 /TCPlayer/obj/
+/TCPlayer.Lib/bin/
+/TCPlayer.Lib/obj/
 /TCPlayer.MediaLibary/bin/
 /TCPlayer.MediaLibary/obj/
 /packages/
