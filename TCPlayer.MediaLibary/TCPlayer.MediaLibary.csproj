@@ -55,6 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="DB\AlbumCover.cs" />
+    <Compile Include="DB\DataBase.cs" />
+    <Compile Include="DB\DBException.cs" />
     <Compile Include="DB\TrackEntity.cs" />
     <Compile Include="MediaLib.xaml.cs">
       <DependentUpon>MediaLib.xaml</DependentUpon>
@@ -79,12 +82,18 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Compile Include="DB\Database.Private.cs" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\TCPlayer.Lib\TCPlayer.Lib.csproj">
+      <Project>{9DB2968D-9EA0-4334-BD9A-366CCF5F8874}</Project>
+      <Name>TCPlayer.Lib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
