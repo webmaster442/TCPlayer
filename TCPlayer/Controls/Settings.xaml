@@ -56,7 +56,7 @@
                     Foreground="White"
                     MaxWidth="200"
                     MinWidth="80"
-                    Margin="5,2"
+                    Margin="25,2"
                     HorizontalAlignment="Left"
                     Click="BtnSoundFont_Click"
                     Content="{Binding Source={x:Static props:Settings.Default}, Path=SoundfontPath, Mode=TwoWay, Converter={StaticResource NullorValueConv}, ConverterParameter={x:Static props:Resources.Settings_SoundfontButton}}"/>
