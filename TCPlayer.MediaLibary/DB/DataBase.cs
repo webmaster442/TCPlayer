@@ -39,6 +39,37 @@ namespace TCPlayer.MediaLibary.DB
             GC.SuppressFinalize(this);
         }
 
+        public IEnumerable<TrackEntity> Execute(QueryInput input)
+        {
+            if (input == null)
+                throw new ArgumentNullException(nameof(input));
+
+            IEnumerable<TrackEntity> results = null;
+
+            if (!string.IsNullOrEmpty(input.AlbumName))
+            {
+               results = _tracks.Find(item => string.Compare(item.Album, input.AlbumName, true) == 0);
+            }
+
+            if (!string.IsNullOrEmpty(input.Artist))
+            {
+                if (results == null)
+                    results = _tracks.Find(item => string.Compare(item.Artist, input.Artist, true) == 0);
+                else
+                    results = results.Where(item => string.Compare(item.Artist, input.Artist, true) == 0);
+            }
+
+            if (input.Year != null)
+            {
+                if (results == null)
+                    results = _tracks.Find(item => item.Year == input.Year.Value);
+                else
+                    results = results.Where(item => item.Year == input.Year.Value);
+            }
+
+            return results;
+        }
+
 
     }
 }

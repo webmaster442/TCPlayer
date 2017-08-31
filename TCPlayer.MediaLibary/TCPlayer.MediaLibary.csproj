@@ -51,6 +51,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DB\Query.cs" />
     <Page Include="MediaLib.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
