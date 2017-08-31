@@ -20,54 +20,6 @@ namespace TCPlayer.MediaLibary.DB
             }
         }
 
-        /// <summary>
-        /// Add files to database
-        /// </summary>
-        /// <param name="filenames">Filenames to add</param>
-        public async Task AddFiles(params string[] filenames)
-        {
-            var errors = new StringBuilder();
-
-            foreach (var file in filenames)
-            {
-                try
-                {
-                    using (File f = File.Create(file))
-                    {
-                        var song = new TrackEntity
-                        {
-                            AddDate = DateTime.Now,
-                            Album = f.Tag.Album,
-                            Artist = f.Tag.JoinedPerformers,
-                            Comment = f.Tag.Comment,
-                            Disc = f.Tag.Disc,
-                            Track = f.Tag.Track,
-                            FileSize = f.Length,
-                            Generire = f.Tag.FirstGenre,
-                            Length = f.Properties.Duration.TotalSeconds,
-                            LastPlay = DateTime.MinValue,
-                            Path = file,
-                            PlayCounter = 0,
-                            Rating = -1,
-                            Year = f.Tag.Year,
-                            Title = f.Tag.Title
-                        };
-                        CalculateHash(ref song);
-                        _tracks.Insert(song);
-                        await AddCoverIfNotExist(f.Tag);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    errors.AppendLine(ex.Message);
-                }
-
-                if (errors.Length > 0)
-                    throw new DBException(errors);
-            }
-        }
-
-
         private Task AddCoverIfNotExist(Tag t)
         {
             return Task.Run(() =>
@@ -88,6 +40,5 @@ namespace TCPlayer.MediaLibary.DB
                 _covers.Insert(cover);
             });
         }
-
     }
 }

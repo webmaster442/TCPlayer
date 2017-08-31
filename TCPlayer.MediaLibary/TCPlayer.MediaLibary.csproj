@@ -51,21 +51,28 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DB\Cache.cs" />
     <Compile Include="DB\Query.cs" />
-    <Page Include="MediaLib.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="GridView.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Compile Include="DB\AlbumCover.cs" />
     <Compile Include="DB\DataBase.cs" />
     <Compile Include="DB\DBException.cs" />
     <Compile Include="DB\TrackEntity.cs" />
-    <Compile Include="MediaLib.xaml.cs">
-      <DependentUpon>MediaLib.xaml</DependentUpon>
-      <SubType>Code</SubType>
+    <Compile Include="GridView.xaml.cs">
+      <DependentUpon>GridView.xaml</DependentUpon>
     </Compile>
+    <Page Include="MediaWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MediaWindow.xaml.cs">
+      <DependentUpon>MediaWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

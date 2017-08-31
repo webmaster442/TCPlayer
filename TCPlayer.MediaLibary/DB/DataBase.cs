@@ -1,10 +1,10 @@
 ﻿using LiteDB;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TagLib;
 
 namespace TCPlayer.MediaLibary.DB
 {
@@ -13,20 +13,30 @@ namespace TCPlayer.MediaLibary.DB
         private LiteDatabase _database;
         private readonly LiteCollection<TrackEntity> _tracks;
         private readonly LiteCollection<AlbumCover> _covers;
+        private readonly LiteCollection<QueryInput> _querys;
+
         private readonly string _dbpath;
 
+        public Cache DatabaseCache { get; private set; }
 
         public DataBase()
         {
             var musicdir = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
-            _dbpath = Path.Combine(musicdir, "TCPlayerDb.db");
+            _dbpath = System.IO.Path.Combine(musicdir, "TCPlayerDb.db");
             _database = new LiteDatabase(_dbpath);
+
             _tracks = _database.GetCollection<TrackEntity>("Tracks");
             _tracks.EnsureIndex(x => x.Hash);
             _tracks.EnsureIndex(x => x.Artist);
             _tracks.EnsureIndex(x => x.Title);
+
             _covers = _database.GetCollection<AlbumCover>("Covers");
             _covers.EnsureIndex(x => x.ArtitstTitle);
+
+            _querys = _database.GetCollection<QueryInput>("Query");
+            _querys.EnsureIndex(x => x.Name);
+
+            DatabaseCache = new Cache(_tracks);
         }
 
         public void Dispose()
@@ -37,6 +47,55 @@ namespace TCPlayer.MediaLibary.DB
                 _database = null;
             }
             GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Add files to database
+        /// </summary>
+        /// <param name="filenames">Filenames to add</param>
+        public async Task AddFiles(params string[] filenames)
+        {
+            var errors = new StringBuilder();
+
+            foreach (var file in filenames)
+            {
+                try
+                {
+                    using (File f = File.Create(file))
+                    {
+                        var song = new TrackEntity
+                        {
+                            AddDate = DateTime.Now,
+                            Album = f.Tag.Album,
+                            Artist = f.Tag.JoinedPerformers,
+                            Comment = f.Tag.Comment,
+                            Disc = f.Tag.Disc,
+                            Track = f.Tag.Track,
+                            FileSize = f.Length,
+                            Generire = f.Tag.FirstGenre,
+                            Length = f.Properties.Duration.TotalSeconds,
+                            LastPlay = DateTime.MinValue,
+                            Path = file,
+                            PlayCounter = 0,
+                            Rating = -1,
+                            Year = f.Tag.Year,
+                            Title = f.Tag.Title
+                        };
+                        CalculateHash(ref song);
+                        _tracks.Insert(song);
+                        await AddCoverIfNotExist(f.Tag);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    errors.AppendLine(ex.Message);
+                }
+
+                if (errors.Length > 0)
+                    throw new DBException(errors);
+            }
+
+            DatabaseCache.Refresh();
         }
 
         public IEnumerable<TrackEntity> Execute(QueryInput input)

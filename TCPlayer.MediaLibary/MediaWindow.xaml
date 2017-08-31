@@ -1,0 +1,46 @@
+﻿<Window x:Class="TCPlayer.MediaLibary.MediaWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TCPlayer.MediaLibary"
+        mc:Ignorable="d"
+        Title="MediaWindow" Height="300" Width="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="3"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Menu
+            Grid.Row="0"
+            Grid.ColumnSpan="2">
+            <MenuItem Header="Manage">
+                <MenuItem Header="Add Files..."/>
+                <MenuItem Header="Add Folder..."/>
+                <Separator/>
+                <MenuItem Header="Find Duplicates"/>
+            </MenuItem>
+        </Menu>
+        <TreeView
+            Grid.Row="1">
+            <TreeViewItem
+                Header="Artists"/>
+            <TreeViewItem
+                Header="Albums"/>
+            <TreeViewItem
+                Header="Geneires"/>
+            <TreeViewItem
+                Header="Years"/>
+            <TreeViewItem
+                Header="Saved Query"/>
+        </TreeView>
+        <GridSplitter
+            VerticalAlignment="Stretch"/>
+        <ContentPresenter/>
+    </Grid>
+</Window>

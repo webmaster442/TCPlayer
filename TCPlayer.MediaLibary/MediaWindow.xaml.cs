@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace TCPlayer.MediaLibary
 {
     /// <summary>
-    /// Interaction logic for UserControl1.xaml
+    /// Interaction logic for MediaWindow.xaml
     /// </summary>
-    public partial class MediaLib : UserControl
+    public partial class MediaWindow : Window
     {
-        public MediaLib()
+        public MediaWindow()
         {
             InitializeComponent();
         }
