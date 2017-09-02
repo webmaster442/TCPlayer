@@ -6,6 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:TCPlayer.Controls"
         PreviewKeyDown="MainWin_PreviewKeyDown"
+        xmlns:applib="http://github.com/webmaster442/AppLib/WPF"
         Style="{StaticResource Window}"
         x:Name="MainWin"
         Icon="icon.png"
@@ -26,7 +27,7 @@
             ThumbnailClipMargin="0,30,485,140">
             <TaskbarItemInfo.ThumbButtonInfos>
                 <ThumbButtonInfo
-                    Description="{x:Static props:Resources.PlayerTab_ButtonPlayPause}"
+                    Description="{applib:tr PlayerTab_ButtonPlayPause}"
                     CommandParameter="Play/Pause"
                     Click="ThumbButtonInfo_Click"
                     ImageSource="Style/taskbar-play-pause.png"/>
