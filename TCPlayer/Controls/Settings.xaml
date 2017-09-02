@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:TCPlayer.Controls"
+             xmlns:applib="http://github.com/webmaster442/AppLib/WPF"
              xmlns:props="clr-namespace:TCPlayer.Properties"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
@@ -12,7 +12,7 @@
             <RowDefinition Height="30"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <TextBlock Text="{x:Static props:Resources.Settings_SettingLabel}"
+        <TextBlock Text="{applib:Translate Settings_SettingLabel}"
                    FontWeight="Bold"
                    Margin="5,0"/>
         <ScrollViewer Grid.Row="1">
@@ -20,37 +20,37 @@
                 <CheckBox
                     Margin="2"
                     IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=SaveVolume, Mode=TwoWay}"
-                    Content="{x:Static props:Resources.Settings_SaveVolume}"/>
+                    Content="{applib:Translate Settings_SaveVolume}"/>
                 <CheckBox
                     Margin="2"
                     IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=SaveDevice, Mode=TwoWay}"
-                    Content="{x:Static props:Resources.Settings_SaveDevice}"/>
+                    Content="{applib:Translate Settings_SaveDevice}"/>
                 <CheckBox
                     Margin="2"
                     IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=RegisterMultimediaKeys, Mode=TwoWay}"
-                    Content="{x:Static props:Resources.Settings_Mediakeys}"/>
+                    Content="{applib:Translate Settings_Mediakeys}"/>
                 <CheckBox
                     Margin="2"
                     IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=TrackChangeNotification, Mode=TwoWay}"
-                    Content="{x:Static props:Resources.Settings_Notify}"/>
+                    Content="{applib:Translate Settings_Notify}"/>
                 <CheckBox
                     Margin="2"
                     IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=ConfirmExit, Mode=TwoWay}"
-                    Content="{x:Static props:Resources.Settings_Confirm}"/>
+                    Content="{applib:Translate Settings_Confirm}"/>
                 <CheckBox
                     Margin="2"
                     IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=RememberRecentURLs, Mode=TwoWay}"
-                    Content="{x:Static props:Resources.Settings_RememberUrl}"/>
+                    Content="{applib:Translate Settings_RememberUrl}"/>
                 <Button
                     Margin="25,2"
                     HorizontalAlignment="Left"
                     Foreground="White"
                     x:Name="BtnClearHistory"
                     Click="BtnClearHistory_Click"
-                    Content="{x:Static props:Resources.Settings_ClearUrlHistory}"/>
+                    Content="{applib:Translate Settings_ClearUrlHistory}"/>
                 <TextBlock
                     Margin="2"
-                    Text="{x:Static props:Resources.Settings_SoundfontPath}"/>
+                    Text="{applib:Translate Settings_SoundfontPath}"/>
                 <Button
                     x:Name="BtnSoundFont"
                     Foreground="White"
@@ -59,7 +59,7 @@
                     Margin="25,2"
                     HorizontalAlignment="Left"
                     Click="BtnSoundFont_Click"
-                    Content="{Binding Source={x:Static props:Settings.Default}, Path=SoundfontPath, Mode=TwoWay, Converter={StaticResource NullorValueConv}, ConverterParameter={x:Static props:Resources.Settings_SoundfontButton}}"/>
+                    Content="{Binding Source={x:Static props:Settings.Default}, Path=SoundfontPath, Mode=TwoWay, Converter={StaticResource NullorValueConv}, ConverterParameter={applib:Translate Settings_SoundfontButton}}"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

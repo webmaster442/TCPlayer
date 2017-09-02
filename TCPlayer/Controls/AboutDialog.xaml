@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TCPlayer.Controls"
              xmlns:p="clr-namespace:TCPlayer.Properties"
+             xmlns:applib="http://github.com/webmaster442/AppLib/WPF"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="500">
     <UserControl.Resources>
@@ -49,7 +50,7 @@
         <Button
             Grid.Row="1"
             Grid.ColumnSpan="2"
-            Content="{x:Static p:Resources.About_VisitWebsite}"
+            Content="{applib:Translate About_VisitWebsite}"
             x:Name="BtnWebsite"
             Foreground="White"
             Click="BtnWebsite_Click"/>

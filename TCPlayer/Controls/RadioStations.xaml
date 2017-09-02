@@ -3,9 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:code="clr-namespace:TCPlayer.Code"
-             xmlns:local="clr-namespace:TCPlayer.Controls"
-             xmlns:p="clr-namespace:TCPlayer.Properties"
+             xmlns:applib="http://github.com/webmaster442/AppLib/WPF"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
@@ -25,13 +23,13 @@
             SelectionChanged="FileSelector_SelectionChanged"
             Grid.Column="1">
             <ComboBoxItem
-                Content="{x:Static p:Resources.Radio_RadioTcPlayer}"/>
+                Content="{applib:Translate Radio_RadioTcPlayer}"/>
             <ComboBoxItem 
-                Content="{x:Static p:Resources.Radio_RadioHungarian}"/>
+                Content="{applib:Translate Radio_RadioHungarian}"/>
         </ComboBox>
         <TextBlock
             Margin="5"
-            Text="{x:Static p:Resources.Radio_StationsLabel}"
+            Text="{applib:Translate Radio_StationsLabel}"
             Grid.Row="0"/>
         <TreeView
             Grid.Row="1"

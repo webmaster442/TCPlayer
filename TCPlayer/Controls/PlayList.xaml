@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:TCPlayer.Controls"
-             xmlns:p="clr-namespace:TCPlayer.Properties"
+             xmlns:applib="http://github.com/webmaster442/AppLib/WPF"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="400">
     <Grid>
@@ -13,78 +12,78 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Menu Grid.Row="0">
-            <MenuItem Header="{x:Static p:Resources.Playlist_MenuAdd}">
+            <MenuItem Header="{applib:Translate Playlist_MenuAdd}">
                 <MenuItem
                     Icon="{StaticResource IconFolder}"
-                    Header="{x:Static p:Resources.Playlist_MenuAddDirectory}"
+                    Header="{applib:Translate Playlist_MenuAddDirectory}"
                     Click="AddDir_Click"
                     x:Name="AddDir"
                     Style="{StaticResource SubMenuItem}"/>
                 <MenuItem
                     Icon="{StaticResource IconFile}"
-                    Header="{x:Static p:Resources.Playlist_MenuAddFile}"
+                    Header="{applib:Translate Playlist_MenuAddFile}"
                     Click="AddFiles_Click"
                     x:Name="AddFiles"
                     Style="{StaticResource SubMenuItem}"/>
                 <MenuItem
                     Icon="{StaticResource IconPlaylist}"
-                    Header="{x:Static p:Resources.Playlist_MenuAddPlaylist}"
+                    Header="{applib:Translate Playlist_MenuAddPlaylist}"
                     Click="AddPlaylist_Click"
                     x:Name="AddPlaylist"
                     Style="{StaticResource SubMenuItem}"/>
                 <MenuItem
                     Icon="{StaticResource IconLink}"
-                    Header="{x:Static p:Resources.Playlist_MenuAddUrl}"
+                    Header="{applib:Translate Playlist_MenuAddUrl}"
                     x:Name="AddURL"
                     Click="AddURL_Click"
                     Style="{StaticResource SubMenuItem}"/>
             </MenuItem>
-            <MenuItem Header="{x:Static p:Resources.Playlist_MenuSort}">
+            <MenuItem Header="{applib:Translate Playlist_MenuSort}">
                 <MenuItem
-                    Header="{x:Static p:Resources.Playlist_MenuSortAsc}"
+                    Header="{applib:Translate Playlist_MenuSortAsc}"
                     x:Name="SortAZ"
                     Click="SortAZ_Click"
                     Icon="{StaticResource IconSortAZ}"
                     Style="{StaticResource SubMenuItem}"/>
                 <MenuItem
-                    Header="{x:Static p:Resources.Playlist_MenuSortDesc}"
+                    Header="{applib:Translate Playlist_MenuSortDesc}"
                     x:Name="SortZA"
                     Click="SortZA_Click"
                     Icon="{StaticResource IconSortZA}"
                     Style="{StaticResource SubMenuItem}"/>
                 <MenuItem
-                    Header="{x:Static p:Resources.Playlist_MenuSortRandom}"
+                    Header="{applib:Translate Playlist_MenuSortRandom}"
                     x:Name="SortRandom"
                     Click="SortRandom_Click"
                     Icon="{StaticResource IconDice}"
                     Style="{StaticResource SubMenuItem}"/>
             </MenuItem>
-            <MenuItem Header="{x:Static p:Resources.Playlist_MenuManage}">
+            <MenuItem Header="{applib:Translate Playlist_MenuManage}">
                 <MenuItem 
-                    Header="{x:Static p:Resources.Playlist_MenuManageSave}"
+                    Header="{applib:Translate Playlist_MenuManageSave}"
                     Click="ManageSave_Click"
                     x:Name="ManageSave"
                     Icon="{StaticResource IconSave}"
                     Style="{StaticResource SubMenuItem}"/>
                 <MenuItem 
-                    Header="{x:Static p:Resources.Playlist_MenuManageClear}"
+                    Header="{applib:Translate Playlist_MenuManageClear}"
                     x:Name="ManageClear"
                     Click="ManageClear_Click"
                     Icon="{StaticResource IconClear}"
                     Style="{StaticResource SubMenuItem}"/>
                 <MenuItem 
-                    Header="{x:Static p:Resources.Playlist_MenuManageDelete}"
+                    Header="{applib:Translate Playlist_MenuManageDelete}"
                     x:Name="ManageDelete"
                     Click="ManageDelete_Click"
                     Icon="{StaticResource IconDelete}"
                     Style="{StaticResource SubMenuItem}"/>
             </MenuItem>
             <MenuItem 
-                Header="{x:Static p:Resources.Playlist_MenuDisc}"
+                Header="{applib:Translate Playlist_MenuDisc}"
                 x:Name="DiscMenu"
                 SubmenuOpened="DiscMenu_SubmenuOpened">
                 <MenuItem
-                    Header="{x:Static p:Resources.Playlist_MenuDiscNotfound}"
+                    Header="{applib:Translate Playlist_MenuDiscNotfound}"
                     Style="{StaticResource SubMenuItem}"/>
             </MenuItem>
         </Menu>
