@@ -14,69 +14,139 @@
         <Menu Grid.Row="0">
             <MenuItem Header="{applib:Translate Playlist_MenuAdd}">
                 <MenuItem
-                    Icon="{StaticResource IconFolder}"
                     Header="{applib:Translate Playlist_MenuAddDirectory}"
                     Click="AddDir_Click"
                     x:Name="AddDir"
-                    Style="{StaticResource SubMenuItem}"/>
+                    Style="{StaticResource SubMenuItem}">
+                    <MenuItem.Icon>
+                        <applib:ImageAwesome 
+                            Icon="fa_folder_open"
+                            Foreground="White" 
+                            Width="24" 
+                            Height="24"/>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <MenuItem
-                    Icon="{StaticResource IconFile}"
                     Header="{applib:Translate Playlist_MenuAddFile}"
                     Click="AddFiles_Click"
                     x:Name="AddFiles"
-                    Style="{StaticResource SubMenuItem}"/>
+                    Style="{StaticResource SubMenuItem}">
+                    <MenuItem.Icon>
+                        <applib:ImageAwesome 
+                            Icon="fa_file"
+                            Foreground="White" 
+                            Width="24" 
+                            Height="24"/>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <MenuItem
-                    Icon="{StaticResource IconPlaylist}"
                     Header="{applib:Translate Playlist_MenuAddPlaylist}"
                     Click="AddPlaylist_Click"
                     x:Name="AddPlaylist"
-                    Style="{StaticResource SubMenuItem}"/>
+                    Style="{StaticResource SubMenuItem}">
+                    <MenuItem.Icon>
+                        <applib:ImageAwesome 
+                            Icon="fa_list"
+                            Foreground="White" 
+                            Width="24" 
+                            Height="24"/>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <MenuItem
-                    Icon="{StaticResource IconLink}"
                     Header="{applib:Translate Playlist_MenuAddUrl}"
                     x:Name="AddURL"
                     Click="AddURL_Click"
-                    Style="{StaticResource SubMenuItem}"/>
+                    Style="{StaticResource SubMenuItem}">
+                    <MenuItem.Icon>
+                        <applib:ImageAwesome 
+                            Icon="fa_link"
+                            Foreground="White" 
+                            Width="24" 
+                            Height="24"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="{applib:Translate Playlist_MenuSort}">
                 <MenuItem
                     Header="{applib:Translate Playlist_MenuSortAsc}"
                     x:Name="SortAZ"
                     Click="SortAZ_Click"
-                    Icon="{StaticResource IconSortAZ}"
-                    Style="{StaticResource SubMenuItem}"/>
+                    Style="{StaticResource SubMenuItem}">
+                    <MenuItem.Icon>
+                        <applib:ImageAwesome 
+                            Icon="fa_sort_asc"
+                            Foreground="White" 
+                            Width="24" 
+                            Height="24"/>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <MenuItem
                     Header="{applib:Translate Playlist_MenuSortDesc}"
                     x:Name="SortZA"
                     Click="SortZA_Click"
-                    Icon="{StaticResource IconSortZA}"
-                    Style="{StaticResource SubMenuItem}"/>
+                    Style="{StaticResource SubMenuItem}">
+                    <MenuItem.Icon>
+                        <applib:ImageAwesome 
+                            Icon="fa_sort_desc"
+                            Foreground="White" 
+                            Width="24" 
+                            Height="24"/>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <MenuItem
                     Header="{applib:Translate Playlist_MenuSortRandom}"
                     x:Name="SortRandom"
                     Click="SortRandom_Click"
-                    Icon="{StaticResource IconDice}"
-                    Style="{StaticResource SubMenuItem}"/>
+                    Style="{StaticResource SubMenuItem}">
+                    <MenuItem.Icon>
+                        <applib:ImageAwesome 
+                            Icon="fa_random"
+                            Foreground="White" 
+                            Width="24" 
+                            Height="24"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="{applib:Translate Playlist_MenuManage}">
                 <MenuItem 
                     Header="{applib:Translate Playlist_MenuManageSave}"
                     Click="ManageSave_Click"
                     x:Name="ManageSave"
-                    Icon="{StaticResource IconSave}"
-                    Style="{StaticResource SubMenuItem}"/>
+                    Style="{StaticResource SubMenuItem}">
+                    <MenuItem.Icon>
+                        <applib:ImageAwesome 
+                            Icon="fa_floppy_o"
+                            Foreground="White" 
+                            Width="24" 
+                            Height="24"/>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <MenuItem 
                     Header="{applib:Translate Playlist_MenuManageClear}"
                     x:Name="ManageClear"
                     Click="ManageClear_Click"
-                    Icon="{StaticResource IconClear}"
-                    Style="{StaticResource SubMenuItem}"/>
+                    Style="{StaticResource SubMenuItem}">
+                    <MenuItem.Icon>
+                        <applib:ImageAwesome 
+                            Icon="fa_trash"
+                            Foreground="White" 
+                            Width="24" 
+                            Height="24"/>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <MenuItem 
                     Header="{applib:Translate Playlist_MenuManageDelete}"
                     x:Name="ManageDelete"
                     Click="ManageDelete_Click"
-                    Icon="{StaticResource IconDelete}"
-                    Style="{StaticResource SubMenuItem}"/>
+                    Style="{StaticResource SubMenuItem}">
+                    <MenuItem.Icon>
+                        <applib:ImageAwesome 
+                            Icon="fa_remove"
+                            Foreground="White" 
+                            Width="24" 
+                            Height="24"/>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             <MenuItem 
                 Header="{applib:Translate Playlist_MenuDisc}"

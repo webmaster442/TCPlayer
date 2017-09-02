@@ -72,14 +72,16 @@
             <TextBlock
                 Margin="5,0"
                 Text="{Binding ElementName=MainWin, Path=Title}"/>
-            <Button
-                Content="{StaticResource IconSettings}"
+            <applib:FaImageButton
+                Icon="fa_cogs"
+                IconSize="24"
                 Grid.Column="1"
                 ToolTip="{applib:Translate MainWin_Settings}"
                 x:Name="BtnSettings"
                 Click="BtnSettings_Click"/>
-            <Button
-                Content="{StaticResource IconInformation}"
+            <applib:FaImageButton
+                Icon="fa_info"
+                IconSize="24"
                 Grid.Column="2"
                 ToolTip="{applib:Translate MainWin_About}"
                 x:Name="BtnAbout"
@@ -105,17 +107,20 @@
                     </Style>
                 </ToggleButton.Resources>
             </ToggleButton>
-            <Button
+            <applib:FaImageButton
+                Icon="fa_window_minimize"
+                IconSize="24"
                 Grid.Column="4"
                 x:Name="TitlebarMinimize"
                 Click="TitlebarMinimize_Click"
-                ToolTip="{applib:Translate MainWin_Minimize}"
-                Content="{StaticResource IconMinimize}"/>
-            <Button 
+                ToolTip="{applib:Translate MainWin_Minimize}"/>
+            <applib:FaImageButton
+                Icon="fa_window_close"
+                IconSize="24"
+                IconForeground="Red"
                 Grid.Column="5"
                 x:Name="TitlebarClose"
                 ToolTip="{applib:Translate MainWin_ExitApp}"
-                Content="{StaticResource IconClose}"
                 Click="TitlebarClose_Click"/>
         </Grid>
         <Border
@@ -236,44 +241,44 @@
                         HorizontalAlignment="Left"
                         Orientation="Horizontal"
                         Grid.Row="4">
-                        <Button
-                            Margin="5,0"
-                            ToolTip="{applib:Translate PlayerTab_ButtonOpen}"
+                        <applib:FaImageButton
+                            Icon="fa_eject"
                             x:Name="BtnOpen"
                             Click="DoAction"
-                            Content="{StaticResource IconEject}"/>
+                            ToolTip="{applib:Translate PlayerTab_ButtonOpen}"
+                            Margin="5,0"/>
                         <Button
                             ToolTip="{applib:Translate PlayerTab_ButtonPlayPause}"
                             x:Name="BtnPlayPause"
                             Click="DoAction"
                             Content="{StaticResource IconPlayPause}"/>
-                        <Button
+                        <applib:FaImageButton
+                            Icon="fa_stop"
                             Margin="5,0"
                             ToolTip="{applib:Translate PlayerTab_ButtonStop}"
                             x:Name="BtnStop"
-                            Click="DoAction"
-                            Content="{StaticResource IconStop}"/>
-                        <Button
+                            Click="DoAction"/>
+                        <applib:FaImageButton
+                            Icon="fa_backward"
                             ToolTip="{applib:Translate PlayerTab_ButtonSeekBack}"
                             x:Name="BtnSeekBack"
-                            Click="DoAction"
-                            Content="{StaticResource IconSeekBack}"/>
-                        <Button
+                            Click="DoAction"/>
+                        <applib:FaImageButton
+                            Icon="fa_forward"
                             ToolTip="{applib:Translate PlayerTab_ButtonSeekForward}"
                             x:Name="BtnSeekFwd"
                             Click="DoAction"
-                            Content="{StaticResource IconSeekForward}"
                             Margin="5,0"/>
-                        <Button
+                        <applib:FaImageButton
+                            Icon="fa_fast_backward"
                             ToolTip="{applib:Translate PlayerTab_ButtonPrevousTrack}"
                             x:Name="BtnPrevTrack"
-                            Click="DoAction"
-                            Content="{StaticResource IconPrevious}"/>
-                        <Button
+                            Click="DoAction"/>
+                        <applib:FaImageButton
+                            Icon="fa_fast_forward"
                             ToolTip="{applib:Translate PlayerTab_ButtonNextTrack}"
                             x:Name="BtnNextTrack"
                             Click="DoAction"
-                            Content="{StaticResource IconNext}"
                             Margin="5,0"/>
                         <ToggleButton 
                             ToolTip="{applib:Translate PlayerTab_ButtonMuteUnmute}"
