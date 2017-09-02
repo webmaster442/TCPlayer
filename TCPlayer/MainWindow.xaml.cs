@@ -27,6 +27,8 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Shell;
 using System.Windows.Threading;
+using AppLib.Common;
+using AppLib.Common.PInvoke;
 
 namespace TCPlayer
 {
@@ -108,7 +110,7 @@ namespace TCPlayer
         private static Color GetWindowColorizationColor(bool opaque)
         {
             var par = new DWMCOLORIZATIONPARAMS();
-            Native.DwmGetColorizationParameters(ref par);
+            DwmApi.DwmGetColorizationParameters(ref par);
 
             return Color.FromArgb(
                 (byte)(opaque ? 255 : par.ColorizationColor >> 24),
@@ -381,10 +383,10 @@ namespace TCPlayer
             _keyboardhook.KeyPressed += _keyboardhook_KeyPressed;
             try
             {
-                _keyboardhook.RegisterHotKey(Code.ModifierKeys.None, System.Windows.Forms.Keys.MediaPlayPause);
-                _keyboardhook.RegisterHotKey(Code.ModifierKeys.None, System.Windows.Forms.Keys.MediaStop);
-                _keyboardhook.RegisterHotKey(Code.ModifierKeys.None, System.Windows.Forms.Keys.MediaNextTrack);
-                _keyboardhook.RegisterHotKey(Code.ModifierKeys.None, System.Windows.Forms.Keys.MediaPreviousTrack);
+                _keyboardhook.RegisterHotKey(AppLib.Common.ModifierKeys.None, System.Windows.Forms.Keys.MediaPlayPause);
+                _keyboardhook.RegisterHotKey(AppLib.Common.ModifierKeys.None, System.Windows.Forms.Keys.MediaStop);
+                _keyboardhook.RegisterHotKey(AppLib.Common.ModifierKeys.None, System.Windows.Forms.Keys.MediaNextTrack);
+                _keyboardhook.RegisterHotKey(AppLib.Common.ModifierKeys.None, System.Windows.Forms.Keys.MediaPreviousTrack);
             }
             catch (Exception ex)
             {
