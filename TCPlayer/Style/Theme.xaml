@@ -57,6 +57,14 @@
         <Setter Property="WindowStyle" Value="None"/>
     </Style>
 
+    <Style TargetType="applib:CoolWindow" x:Key="MediaWindow">
+        <Setter Property="AllowsTransparency" Value="True"/>
+        <Setter Property="Background" Value="{StaticResource WindowBackground}"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontFamily" Value="Consolas"/>
+        <Setter Property="FontSize" Value="15"/>
+    </Style>
+
     <Style TargetType="TextBlock">
         <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>

@@ -71,6 +71,10 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MediaWindow.xaml.cs">
+      <DependentUpon>MediaWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MediaWindowViewModel.cs" />
     <Compile Include="Lib\WPFSoundVis\FFTDataSize.cs" />
     <Compile Include="Lib\WPFSoundVis\ISoundPlayer.cs" />
     <Compile Include="Lib\WPFSoundVis\Spectrum Analyzer\BarHeightScalingStyles.cs" />
@@ -123,6 +127,10 @@
     <Page Include="Controls\DeviceChange.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MediaWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\PlayList.xaml">
       <SubType>Designer</SubType>
@@ -349,6 +357,10 @@
     <ProjectReference Include="..\TCPlayer.Lib\TCPlayer.Lib.csproj">
       <Project>{9db2968d-9ea0-4334-bd9a-366ccf5f8874}</Project>
       <Name>TCPlayer.Lib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TCPlayer.MediaLibary\TCPlayer.MediaLibary.csproj">
+      <Project>{527b94d5-7b37-4f2f-8664-35a3069723d1}</Project>
+      <Name>TCPlayer.MediaLibary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

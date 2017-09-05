@@ -57,15 +57,8 @@
     <Compile Include="DB\DataBase.cs" />
     <Compile Include="DB\DBException.cs" />
     <Compile Include="DB\TrackEntity.cs" />
-    <Page Include="MediaWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MediaWindow.xaml.cs">
-      <DependentUpon>MediaWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -91,6 +84,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\applib\AppLib.WPF\AppLib.WPF.csproj">
+      <Project>{FAF19388-A6C0-46F9-A588-A46DB392ACE4}</Project>
+      <Name>AppLib.WPF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TCPlayer.Lib\TCPlayer.Lib.csproj">
       <Project>{9DB2968D-9EA0-4334-BD9A-366CCF5F8874}</Project>
       <Name>TCPlayer.Lib</Name>

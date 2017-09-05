@@ -1,0 +1,71 @@
+﻿<applib:CoolWindow
+    x:Class="TCPlayer.MediaWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:TCPlayer"
+    xmlns:applib="http://github.com/webmaster442/AppLib/WPF"
+    mc:Ignorable="d"
+    Title="Media Libary" 
+    Style="{StaticResource MediaWindow}"
+    Height="500"
+    Closing="CoolWindow_Closing"
+    Width="675">
+    <Window.DataContext>
+        <local:MediaWindowViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="3"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Menu
+            Grid.Row="0"
+            Grid.ColumnSpan="3">
+            <MenuItem Header="[ Manage ]">
+                <MenuItem
+                    Header="Add Files..."
+                    Style="{StaticResource SubMenuItem}"/>
+                <MenuItem
+                    Header="Add Folder..."
+                    Style="{StaticResource SubMenuItem}"/>
+            </MenuItem>
+            <MenuItem Header="[ Selection ]">
+                <MenuItem 
+                    Header="Transfer to Playlist"
+                    Style="{StaticResource SubMenuItem}"/>
+                <MenuItem
+                    Header="Copy to..."
+                    Style="{StaticResource SubMenuItem}"/>
+                <MenuItem 
+                    Header="Remove from Libary..."
+                    Style="{StaticResource SubMenuItem}"/>
+            </MenuItem>
+        </Menu>
+        <TreeView
+            Grid.Row="1"
+            Grid.Column="0">
+            <TreeViewItem
+                Header="Artists"/>
+            <TreeViewItem
+                Header="Albums"/>
+            <TreeViewItem
+                Header="Geneires"/>
+            <TreeViewItem
+                Header="Years"/>
+            <TreeViewItem
+                Header="Saved Query"/>
+        </TreeView>
+        <GridSplitter
+            VerticalAlignment="Stretch"/>
+        <ContentPresenter
+            Grid.Column="2"
+            Grid.Row="1"/>
+    </Grid>
+</applib:CoolWindow>

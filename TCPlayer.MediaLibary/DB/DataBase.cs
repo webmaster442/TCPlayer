@@ -10,6 +10,8 @@ namespace TCPlayer.MediaLibary.DB
 {
     public sealed partial class DataBase : IDisposable
     {
+        private static DataBase _Instance;
+
         private LiteDatabase _database;
         private readonly LiteCollection<TrackEntity> _tracks;
         private readonly LiteCollection<AlbumCover> _covers;
@@ -19,7 +21,17 @@ namespace TCPlayer.MediaLibary.DB
 
         public Cache DatabaseCache { get; private set; }
 
-        public DataBase()
+        public static DataBase Instance
+        {
+            get
+            {
+                if (_Instance == null)
+                    _Instance = new DataBase();
+                return _Instance;
+            }
+        }
+
+        private DataBase()
         {
             var musicdir = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
             _dbpath = System.IO.Path.Combine(musicdir, "TCPlayerDb.db");

@@ -46,6 +46,7 @@ namespace TCPlayer
         private bool _isdrag;
         private KeyboardHook _keyboardhook;
         private ChapterProvider _chapterprovider;
+        private MediaWindow _mediawindow;
 
         public MainWindow()
         {
@@ -60,6 +61,7 @@ namespace TCPlayer
             _timer.IsEnabled = false;
             _timer.Tick += _timer_Tick;
             _loaded = true;
+            _mediawindow = new MediaWindow();
 
             BtnChapters.IsEnabled = _chapterprovider.ChaptersEnabled;
 
@@ -570,6 +572,21 @@ namespace TCPlayer
         private void ThumbPlay_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void MediaLib_Click(object sender, RoutedEventArgs e)
+        {
+            switch(_mediawindow.Visibility)
+            {
+                case Visibility.Collapsed:
+                case Visibility.Hidden:
+                    _mediawindow.Visibility = Visibility.Visible;
+                    _mediawindow.BringIntoView();
+                    break;
+                case Visibility.Visible:
+                    _mediawindow.Visibility = Visibility.Collapsed;
+                    break;
+            }
         }
     }
 }

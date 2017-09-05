@@ -18,7 +18,9 @@
         AllowDrop="True"
         Drop="MainWin_Drop"
         Closing="MainWin_Closing"
-        Title="TC Player" Height="360" Width="675">
+        Title="TC Player"
+        Height="360"
+        Width="675">
     <Window.TaskbarItemInfo>
         <TaskbarItemInfo
             ProgressState="None" 
@@ -322,6 +324,11 @@
             Grid.Row="2"
             VerticalAlignment="Bottom"
             HorizontalAlignment="Right">
+            <Button
+                Foreground="White"
+                Content="{applib:Translate MainWin_Libary}"
+                x:Name="MediaLib"
+                Click="MediaLib_Click"/>
             <Button
                 Foreground="White"
                 Content="{applib:Translate MainWin_ChangeDevice}"
