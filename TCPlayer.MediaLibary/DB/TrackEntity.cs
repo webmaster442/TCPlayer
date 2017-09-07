@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TCPlayer.MediaLibary.DB
 {
@@ -12,6 +8,8 @@ namespace TCPlayer.MediaLibary.DB
         public uint Year { get; set; }
 
         public string Artist { get; set; }
+
+        public string AlbumArtist { get; set; }
 
         public string Title { get; set; }
 
@@ -37,7 +35,7 @@ namespace TCPlayer.MediaLibary.DB
 
         public uint PlayCounter { get; set; }
 
-        public short Rating { get; set; }
+        public short? Rating { get; set; }
 
         public DateTime LastPlay { get; set; }
 

@@ -53,7 +53,6 @@
   <ItemGroup>
     <Compile Include="DB\Cache.cs" />
     <Compile Include="DB\Query.cs" />
-    <Compile Include="DB\AlbumCover.cs" />
     <Compile Include="DB\DataBase.cs" />
     <Compile Include="DB\DBException.cs" />
     <Compile Include="DB\TrackEntity.cs" />
@@ -84,6 +83,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\applib\AppLib.Common\AppLib.Common.csproj">
+      <Project>{516087b5-6ac5-44a5-8df1-fe42d7a7a0e6}</Project>
+      <Name>AppLib.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\applib\AppLib.WPF\AppLib.WPF.csproj">
       <Project>{FAF19388-A6C0-46F9-A588-A46DB392ACE4}</Project>
       <Name>AppLib.WPF</Name>

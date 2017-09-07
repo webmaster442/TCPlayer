@@ -1,6 +1,9 @@
-﻿using AppLib.WPF.MVVM;
+﻿using AppLib.Common.Extensions;
+using AppLib.WPF.MVVM;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using TCPlayer.MediaLibary.DB;
 
 namespace TCPlayer
@@ -19,14 +22,39 @@ namespace TCPlayer
             ManageAddFolderCommand = DelegateCommand.ToCommand(ExecuteAddFolder);
         }
 
-        private void ExecuteAddFolder()
+        private async void ExecuteAddFolder()
         {
-            throw new NotImplementedException();
+            string[] filters = App.Formats.Split(';');
+            var fbd = new System.Windows.Forms.FolderBrowserDialog();
+            fbd.Description = Properties.Resources.Playlist_AddFolderDescription;
+            if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                List<string> Files = new List<string>(30);
+                foreach (var filter in filters)
+                {
+                    Files.AddRange(Directory.GetFiles(fbd.SelectedPath, filter));
+                }
+                Files.Sort();
+                await DataBase.Instance.AddFiles(Files);
+            }
         }
 
-        private void ExecuteAddFiles()
+        private async void ExecuteAddFiles()
         {
-            throw new NotImplementedException();
+            var ofd = new System.Windows.Forms.OpenFileDialog();
+            ofd.Multiselect = true;
+            ofd.Filter = "Audio Files|" + App.Formats;
+            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                await DataBase.Instance.AddFiles(ofd.FileNames);
+            }
+        }
+
+        public void DoQuery(QueryInput queryInput)
+        {
+            var items = DataBase.Instance.Execute(queryInput);
+            DisplayItems.Clear();
+            DisplayItems.AddRange(items);
         }
     }
 }

@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:TCPlayer"
     xmlns:applib="http://github.com/webmaster442/AppLib/WPF"
+    xmlns:db="clr-namespace:TCPlayer.MediaLibary.DB;assembly=TCPlayer.MediaLibary"
     mc:Ignorable="d"
     Title="Media Libary" 
     Style="{StaticResource MediaWindow}"
@@ -31,10 +32,12 @@
             <MenuItem Header="[ Manage ]">
                 <MenuItem
                     Header="Add Files..."
-                    Style="{StaticResource SubMenuItem}"/>
+                    Style="{StaticResource SubMenuItem}"
+                    Command="{Binding ManageAddFilesCommand}"/>
                 <MenuItem
                     Header="Add Folder..."
-                    Style="{StaticResource SubMenuItem}"/>
+                    Style="{StaticResource SubMenuItem}"
+                    Command="{Binding ManageAddFolderCommand}"/>
             </MenuItem>
             <MenuItem Header="[ Selection ]">
                 <MenuItem 
@@ -48,24 +51,122 @@
                     Style="{StaticResource SubMenuItem}"/>
             </MenuItem>
         </Menu>
-        <TreeView
+        <applib:AccordionPanel
+            MinWidth="150"
             Grid.Row="1"
             Grid.Column="0">
-            <TreeViewItem
-                Header="Artists"/>
-            <TreeViewItem
-                Header="Albums"/>
-            <TreeViewItem
-                Header="Geneires"/>
-            <TreeViewItem
-                Header="Years"/>
-            <TreeViewItem
-                Header="Saved Query"/>
-        </TreeView>
+            <Expander>
+                <Expander.Header>
+                    <StackPanel
+                        Orientation="Horizontal">
+                        <applib:ImageAwesome
+                            Icon="fa_user"
+                            Width="16"
+                            Foreground="White"/>
+                        <TextBlock
+                            Margin="5,0"
+                            Text="Artists"
+                            Foreground="White"/>
+                    </StackPanel>
+                </Expander.Header>
+                <applib:PagerListBox
+                    x:Name="Artists"
+                    MouseDoubleClick="Artists_MouseDoubleClick"/>
+            </Expander>
+            <Expander>
+                <Expander.Header>
+                    <StackPanel
+                        Orientation="Horizontal">
+                        <applib:ImageAwesome
+                            Icon="fa_music"
+                            Width="16"
+                            Foreground="White"/>
+                        <TextBlock
+                            Margin="5,0"
+                            Text="Albums"
+                            Foreground="White"/>
+                    </StackPanel>
+                </Expander.Header>
+                <applib:PagerListBox
+                    x:Name="Albums"
+                    MouseDoubleClick="Albums_MouseDoubleClick"/>
+            </Expander>
+            <Expander>
+                <Expander.Header>
+                    <StackPanel
+                        Orientation="Horizontal">
+                        <applib:ImageAwesome
+                            Icon="fa_calendar_check_o"
+                            Width="16"
+                            Foreground="White"/>
+                        <TextBlock
+                            Margin="5,0"
+                            Text="Years"
+                            Foreground="White"/>
+                    </StackPanel>
+                </Expander.Header>
+                <applib:PagerListBox
+                    x:Name="Years"/>
+            </Expander>
+            <Expander>
+                <Expander.Header>
+                    <StackPanel
+                        Orientation="Horizontal">
+                        <applib:ImageAwesome
+                            Icon="fa_heart"
+                            Width="16"
+                            Foreground="White"/>
+                        <TextBlock
+                            Margin="5,0"
+                            Text="Genre"
+                            Foreground="White"/>
+                    </StackPanel>
+                </Expander.Header>
+                <applib:PagerListBox
+                    x:Name="Genres"/>
+            </Expander>
+            <Expander>
+                <Expander.Header>
+                    <StackPanel
+                        Orientation="Horizontal">
+                        <applib:ImageAwesome
+                            Icon="fa_bookmark"
+                            Width="16"
+                            Foreground="White"/>
+                        <TextBlock
+                            Margin="5,0"
+                            Text="Saved Query"
+                            Foreground="White"/>
+                    </StackPanel>
+                </Expander.Header>
+                <applib:PagerListBox/>
+            </Expander>
+        </applib:AccordionPanel>
+
         <GridSplitter
-            VerticalAlignment="Stretch"/>
-        <ContentPresenter
+            VerticalAlignment="Stretch"
+            HorizontalAlignment="Stretch"
+            Grid.Column="1"
+            Grid.Row="1"
+            Background="White"/>
+
+        <DataGrid
+            Grid.Row="1"
             Grid.Column="2"
-            Grid.Row="1"/>
+            ItemsSource="{Binding DisplayItems}"
+            SelectionMode="Single"
+            IsReadOnly="True"
+            CanUserResizeColumns="True"
+            CanUserReorderColumns="True"
+            CanUserSortColumns="True"
+            AlternatingRowBackground="Aqua"
+            AlternationCount="2"
+            AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Artist" Binding="{Binding Artist}"/>
+                <DataGridTextColumn Header="Artist" Binding="{Binding Title}"/>
+                <DataGridTextColumn Header="Artist" Binding="{Binding Track}"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </applib:CoolWindow>

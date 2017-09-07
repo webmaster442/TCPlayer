@@ -1,27 +1,31 @@
-﻿using LiteDB;
+﻿using AppLib.Common.Extensions;
+using LiteDB;
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TCPlayer.MediaLibary.DB
 {
+    [Serializable]
     public sealed class Cache
     {
-        public List<string> Artists { get; private set; }
-        public List<string> Albums { get; private set; }
-        public List<string> Geneires { get; private set; }
-        public List<uint> Years { get; private set; }
+        public ObservableCollection<string> Artists { get; private set; }
+        public ObservableCollection<string> Albums { get; private set; }
+        public ObservableCollection<string> Geneires { get; private set; }
+        public ObservableCollection<uint> Years { get; private set; }
 
         private LiteCollection<TrackEntity> _dbref;
 
-        public Cache(LiteCollection<TrackEntity> database)
+        public Cache()
         {
-            Artists = new List<string>();
-            Albums = new List<string>();
-            Geneires = new List<string>();
-            Years = new List<uint>();
+            Artists = new ObservableCollection<string>();
+            Albums = new ObservableCollection<string>();
+            Geneires = new ObservableCollection<string>();
+            Years = new ObservableCollection<uint>();
+        }
+
+        public Cache(LiteCollection<TrackEntity> database) : this()
+        {
             _dbref = database;
         }
 
@@ -56,7 +60,15 @@ namespace TCPlayer.MediaLibary.DB
                          orderby i.Year ascending
                          select i.Year).Distinct();
             Years.AddRange(years);
+        }
 
+        public void RestoreFrom(Cache ci)
+        {
+            Clear();
+            Albums.AddRange(ci.Albums);
+            Artists.AddRange(ci.Artists);
+            Years.AddRange(ci.Years);
+            Geneires.AddRange(ci.Geneires);
         }
     }
 }

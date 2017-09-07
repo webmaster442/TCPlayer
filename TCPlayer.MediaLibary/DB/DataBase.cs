@@ -14,10 +14,13 @@ namespace TCPlayer.MediaLibary.DB
 
         private LiteDatabase _database;
         private readonly LiteCollection<TrackEntity> _tracks;
-        private readonly LiteCollection<AlbumCover> _covers;
         private readonly LiteCollection<QueryInput> _querys;
 
         private readonly string _dbpath;
+
+        private const string CollectionTracks = "Tracks";
+        private const string CollectionQuery = "Query";
+        private const string CollectionCache = "Cache";
 
         public Cache DatabaseCache { get; private set; }
 
@@ -37,18 +40,16 @@ namespace TCPlayer.MediaLibary.DB
             _dbpath = System.IO.Path.Combine(musicdir, "TCPlayerDb.db");
             _database = new LiteDatabase(_dbpath);
 
-            _tracks = _database.GetCollection<TrackEntity>("Tracks");
+            _tracks = _database.GetCollection<TrackEntity>(CollectionTracks);
             _tracks.EnsureIndex(x => x.Hash);
             _tracks.EnsureIndex(x => x.Artist);
             _tracks.EnsureIndex(x => x.Title);
 
-            _covers = _database.GetCollection<AlbumCover>("Covers");
-            _covers.EnsureIndex(x => x.ArtitstTitle);
-
-            _querys = _database.GetCollection<QueryInput>("Query");
+            _querys = _database.GetCollection<QueryInput>(CollectionQuery);
             _querys.EnsureIndex(x => x.Name);
 
             DatabaseCache = new Cache(_tracks);
+            ResoreCacheIfExists();
         }
 
         public void Dispose()
@@ -61,11 +62,16 @@ namespace TCPlayer.MediaLibary.DB
             GC.SuppressFinalize(this);
         }
 
+        public Task AddFiles(params string[] filenames)
+        {
+            return AddFiles(filenames.AsEnumerable());
+        }
+
         /// <summary>
         /// Add files to database
         /// </summary>
         /// <param name="filenames">Filenames to add</param>
-        public async Task AddFiles(params string[] filenames)
+        public async Task AddFiles(IEnumerable<string> filenames)
         {
             var errors = new StringBuilder();
 
@@ -80,6 +86,7 @@ namespace TCPlayer.MediaLibary.DB
                             AddDate = DateTime.Now,
                             Album = f.Tag.Album,
                             Artist = f.Tag.JoinedPerformers,
+                            AlbumArtist = f.Tag.FirstAlbumArtist,
                             Comment = f.Tag.Comment,
                             Disc = f.Tag.Disc,
                             Track = f.Tag.Track,
@@ -102,12 +109,13 @@ namespace TCPlayer.MediaLibary.DB
                 {
                     errors.AppendLine(ex.Message);
                 }
-
-                if (errors.Length > 0)
-                    throw new DBException(errors);
             }
 
             DatabaseCache.Refresh();
+            WriteCache();
+
+            if (errors.Length > 0)
+                throw new DBException(errors);
         }
 
         public IEnumerable<TrackEntity> Execute(QueryInput input)
@@ -119,15 +127,15 @@ namespace TCPlayer.MediaLibary.DB
 
             if (!string.IsNullOrEmpty(input.AlbumName))
             {
-               results = _tracks.Find(item => string.Compare(item.Album, input.AlbumName, true) == 0);
+                results = _tracks.Find(item => item.Album == input.AlbumName);
             }
 
             if (!string.IsNullOrEmpty(input.Artist))
             {
                 if (results == null)
-                    results = _tracks.Find(item => string.Compare(item.Artist, input.Artist, true) == 0);
+                    results = _tracks.Find(item => item.Artist == input.Artist);
                 else
-                    results = results.Where(item => string.Compare(item.Artist, input.Artist, true) == 0);
+                    results = results.Where(item => item.Artist == input.Artist);
             }
 
             if (input.Year != null)
