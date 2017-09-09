@@ -146,6 +146,14 @@ namespace TCPlayer.MediaLibary.DB
                     results = results.Where(item => item.Year == input.Year.Value);
             }
 
+            if (!string.IsNullOrEmpty(input.Geneire))
+            {
+                if (results == null)
+                    results = _tracks.Find(item => item.Generire == input.Geneire);
+                else
+                    results = results.Where(item => item.Generire == input.Geneire);
+            }
+
             return results;
         }
 

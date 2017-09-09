@@ -8,7 +8,12 @@ using TCPlayer.MediaLibary.DB;
 
 namespace TCPlayer
 {
-    public class MediaWindowViewModel: BindableBase
+    public interface IMediaWindowView: IView
+    {
+        bool IsProgressVisible { get; set; }
+    }
+
+    public class MediaWindowViewModel: ViewModel<IMediaWindowView>
     {
         public DelegateCommand ManageAddFilesCommand { get; private set; }
         public DelegateCommand ManageAddFolderCommand { get; private set; }
@@ -29,6 +34,7 @@ namespace TCPlayer
             fbd.Description = Properties.Resources.Playlist_AddFolderDescription;
             if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
+                View.IsProgressVisible = true;
                 List<string> Files = new List<string>(30);
                 foreach (var filter in filters)
                 {
@@ -36,6 +42,7 @@ namespace TCPlayer
                 }
                 Files.Sort();
                 await DataBase.Instance.AddFiles(Files);
+                View.IsProgressVisible = false;
             }
         }
 
@@ -46,7 +53,9 @@ namespace TCPlayer
             ofd.Filter = "Audio Files|" + App.Formats;
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
+                View.IsProgressVisible = true;
                 await DataBase.Instance.AddFiles(ofd.FileNames);
+                View.IsProgressVisible = false;
             }
         }
 

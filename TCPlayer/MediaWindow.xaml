@@ -12,7 +12,10 @@
     Style="{StaticResource MediaWindow}"
     Height="500"
     Closing="CoolWindow_Closing"
-    Width="675">
+    Width="800">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="VisConv"/>
+    </Window.Resources>
     <Window.DataContext>
         <local:MediaWindowViewModel/>
     </Window.DataContext>
@@ -50,6 +53,41 @@
                     Header="Remove from Libary..."
                     Style="{StaticResource SubMenuItem}"/>
             </MenuItem>
+            <MenuItem Header="[ Edit this Query... ]"/>
+            <ToggleButton
+                x:Name="SelectorButton"
+                Foreground="White"
+                Content="[ Visible Columns ]">
+            </ToggleButton>
+            <Popup x:Name="Selector"
+                   IsOpen="{Binding ElementName=SelectorButton, Path=IsChecked}"
+                   StaysOpen="False">
+                <ItemsControl
+                    ItemsSource="{Binding ElementName=Data, Path=Columns}"
+                    Grid.IsSharedSizeScope="True" 
+                    Margin="5">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition SharedSizeGroup="A"/>
+                                    <ColumnDefinition SharedSizeGroup="B"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Text="{Binding Header}"
+                                    Margin="5"/>
+                                <CheckBox 
+                                    Grid.Column="1"
+                                    IsChecked="{Binding Visibility, Converter={applib:VisibilityToBoolConverter}}"
+                                    Margin="5" 
+                                    HorizontalAlignment="Center" 
+                                    VerticalAlignment="Center"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Popup>
         </Menu>
         <applib:AccordionPanel
             MinWidth="150"
@@ -106,7 +144,8 @@
                     </StackPanel>
                 </Expander.Header>
                 <applib:PagerListBox
-                    x:Name="Years"/>
+                    x:Name="Years"
+                    MouseDoubleClick="Years_MouseDoubleClick"/>
             </Expander>
             <Expander>
                 <Expander.Header>
@@ -123,7 +162,8 @@
                     </StackPanel>
                 </Expander.Header>
                 <applib:PagerListBox
-                    x:Name="Genres"/>
+                    x:Name="Genres"
+                    MouseDoubleClick="Genres_MouseDoubleClick"/>
             </Expander>
             <Expander>
                 <Expander.Header>
@@ -139,7 +179,9 @@
                             Foreground="White"/>
                     </StackPanel>
                 </Expander.Header>
-                <applib:PagerListBox/>
+                <applib:PagerListBox
+                    x:Name="Saved"
+                    MouseDoubleClick="Saved_MouseDoubleClick"/>
             </Expander>
         </applib:AccordionPanel>
 
@@ -151,6 +193,7 @@
             Background="White"/>
 
         <DataGrid
+            x:Name="Data"
             Grid.Row="1"
             Grid.Column="2"
             ItemsSource="{Binding DisplayItems}"
@@ -159,14 +202,28 @@
             CanUserResizeColumns="True"
             CanUserReorderColumns="True"
             CanUserSortColumns="True"
-            AlternatingRowBackground="Aqua"
+            AlternatingRowBackground="Gray"
             AlternationCount="2"
-            AutoGenerateColumns="False">
+            AutoGenerateColumns="False"
+            RowBackground="Gray"
+            Background="Transparent"
+            Foreground="Gainsboro">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Artist" Binding="{Binding Artist}"/>
-                <DataGridTextColumn Header="Artist" Binding="{Binding Title}"/>
-                <DataGridTextColumn Header="Artist" Binding="{Binding Track}"/>
+                <DataGridTextColumn Header="Track" Binding="{Binding Track}"/>
+                <DataGridTextColumn Header="Artist"  Binding="{Binding Artist}"/>
+                <DataGridTextColumn Header="Title" Binding="{Binding Title}"/>
+                <DataGridTextColumn Header="Time" Binding="{Binding Length, Converter={applib:SecondsToTimeStringConverter}}"/>
+                <DataGridTextColumn Header="Plays" Binding="{Binding PlayCounter}"/>
             </DataGrid.Columns>
         </DataGrid>
+
+        <applib:AsyncProgressIndicator
+            x:Name="ProgressIndicator"
+            Grid.RowSpan="2"
+            Grid.ColumnSpan="3"
+            BorderBrush="Red"
+            BorderThickness="2"
+            WaitText="Processing files..."
+            Visibility="Collapsed"/>
     </Grid>
 </applib:CoolWindow>
