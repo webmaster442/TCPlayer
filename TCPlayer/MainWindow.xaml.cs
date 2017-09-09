@@ -29,13 +29,14 @@ using System.Windows.Shell;
 using System.Windows.Threading;
 using AppLib.Common;
 using AppLib.Common.PInvoke;
+using AppLib.Common.MessageHandler;
 
 namespace TCPlayer
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, IDisposable
+    public partial class MainWindow : Window, IDisposable, IMessageClient<string>
     {
         private IntPtr hwnd;
         private HwndSource hsource;
@@ -48,9 +49,15 @@ namespace TCPlayer
         private ChapterProvider _chapterprovider;
         private MediaWindow _mediawindow;
 
+        public UId MessageReciverID
+        {
+            get { return new UId(); }
+        }
+
         public MainWindow()
         {
             InitializeComponent();
+            Messager.Instance.SubScribe(this);
             _player = Player.Instance;
             _player.ChangeDevice(); //init
             _prevvol = 1.0f;
@@ -207,6 +214,14 @@ namespace TCPlayer
         public void Dispose()
         {
             Dispose(true);
+        }
+
+        public void HandleMessage(string message)
+        {
+            if (!string.IsNullOrEmpty(message))
+            {
+                DoLoadAndPlay(new string[] { message });
+            }
         }
 
         public void DoLoadAndPlay(IEnumerable<string> items)

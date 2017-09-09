@@ -207,6 +207,8 @@
             AutoGenerateColumns="False"
             RowBackground="Gray"
             Background="Transparent"
+            SelectionChanged="Data_SelectionChanged"
+            MouseDoubleClick="Data_MouseDoubleClick"
             Foreground="Gainsboro">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Track" Binding="{Binding Track}"/>
@@ -214,6 +216,16 @@
                 <DataGridTextColumn Header="Title" Binding="{Binding Title}"/>
                 <DataGridTextColumn Header="Time" Binding="{Binding Length, Converter={applib:SecondsToTimeStringConverter}}"/>
                 <DataGridTextColumn Header="Plays" Binding="{Binding PlayCounter}"/>
+                <DataGridTextColumn Visibility="Collapsed" Header="Year" Binding="{Binding Year}"/>
+                <DataGridTextColumn Visibility="Collapsed" Header="Album Artist" Binding="{Binding AlbumArtist}"/>
+                <DataGridTextColumn Visibility="Collapsed" Header="Album" Binding="{Binding Album}"/>
+                <DataGridTextColumn Visibility="Collapsed" Header="Disc" Binding="{Binding Disc}"/>
+                <DataGridTextColumn Visibility="Collapsed" Header="Generie" Binding="{Binding Generire}"/>
+                <DataGridTextColumn Visibility="Collapsed" Header="AddDate" Binding="{Binding AddDate}"/>
+                <DataGridTextColumn Visibility="Collapsed" Header="File Size" Binding="{Binding FileSize}"/>
+                <DataGridTextColumn Visibility="Collapsed" Header="Number of Plays" Binding="{Binding PlayCounter}"/>
+                <DataGridTextColumn Visibility="Collapsed" Header="Rating" Binding="{Binding Rating}"/>
+                <DataGridTextColumn Visibility="Collapsed" Header="Last Play" Binding="{Binding LastPlay}"/>
             </DataGrid.Columns>
         </DataGrid>
 
