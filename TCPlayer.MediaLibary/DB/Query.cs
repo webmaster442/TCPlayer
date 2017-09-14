@@ -20,14 +20,33 @@ using System;
 
 namespace TCPlayer.MediaLibary.DB
 {
+    public enum QueryOperator: int
+    {
+        Default,
+        Equals,
+        Less,
+        LessOrEqual,
+        Greater,
+        GreaterOrEqual
+    }
+
+    [Serializable]
     public class QueryInput
     {
         public string AlbumName { get; set; }
         public string Artist { get; set; }
         public uint? Year { get; set; }
         public string Geneire { get; set; }
-
         public string Name { get; set; }
+
+        public QueryOperator RatingOperator;
+        public short? Rating { get; set; }
+
+        public QueryOperator PlayCounterOperator;
+        public uint? PlayCount { get; set; }
+
+        public string AlbumArtist { get; set; }
+
 
         public QueryInput()
         {
@@ -36,6 +55,8 @@ namespace TCPlayer.MediaLibary.DB
             Year = null;
             Geneire = null;
             Name = null;
+            Rating = null;
+            RatingOperator = QueryOperator.Default;
         }
 
 
@@ -46,8 +67,10 @@ namespace TCPlayer.MediaLibary.DB
                 AlbumName = null,
                 Artist = null,
                 Geneire = null,
-                Year = year
-            };
+                Year = year,
+                Rating = null,
+                RatingOperator = QueryOperator.Default
+        };
         }
 
         public static QueryInput ArtistQuery(string artist)
@@ -57,7 +80,9 @@ namespace TCPlayer.MediaLibary.DB
                 AlbumName = null,
                 Artist = artist,
                 Geneire = null,
-                Year = null
+                Year = null,
+                Rating = null,
+                RatingOperator = QueryOperator.Default
             };
         }
 
@@ -68,7 +93,9 @@ namespace TCPlayer.MediaLibary.DB
                 AlbumName = album,
                 Artist = null,
                 Geneire = null,
-                Year = null
+                Year = null,
+                Rating = null,
+                RatingOperator = QueryOperator.Default
             };
         }
 
@@ -79,7 +106,9 @@ namespace TCPlayer.MediaLibary.DB
                 AlbumName = null,
                 Artist = null,
                 Geneire = geneire,
-                Year = null
+                Year = null,
+                Rating = null,
+                RatingOperator = QueryOperator.Default
             };
         }
 

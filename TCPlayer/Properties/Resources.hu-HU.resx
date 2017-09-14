@@ -166,12 +166,6 @@ A média gombok használatbavételéhez zárj be minden olyan egyéb alkalmazás
   <data name="MainWin_ListLabel" xml:space="preserve">
     <value>Lista:</value>
   </data>
-  <data name="MainWin_Minimize" xml:space="preserve">
-    <value>Tálcára küldés</value>
-  </data>
-  <data name="MainWin_PlayerTab" xml:space="preserve">
-    <value>[ Lejátszó ]</value>
-  </data>
   <data name="MainWin_PlaylistTab" xml:space="preserve">
     <value>[ Lista ]</value>
   </data>

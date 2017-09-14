@@ -9,7 +9,7 @@
     xmlns:db="clr-namespace:TCPlayer.MediaLibary.DB;assembly=TCPlayer.MediaLibary"
     mc:Ignorable="d"
     Title="Media Libary" 
-    Style="{StaticResource MediaWindow}"
+    WindowState="Maximized"
     Height="500"
     Closing="CoolWindow_Closing"
     Width="800">
@@ -22,6 +22,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -32,33 +33,45 @@
         <Menu
             Grid.Row="0"
             Grid.ColumnSpan="3">
+            <MenuItem Header="[ Player ]">
+                <MenuItem
+                    Header="Show"/>
+            </MenuItem>
             <MenuItem Header="[ Manage ]">
                 <MenuItem
                     Header="Add Files..."
-                    Style="{StaticResource SubMenuItem}"
                     Command="{Binding ManageAddFilesCommand}"/>
                 <MenuItem
                     Header="Add Folder..."
-                    Style="{StaticResource SubMenuItem}"
                     Command="{Binding ManageAddFolderCommand}"/>
+                <Separator/>
+                <MenuItem 
+                    Header="Create Query..."/>
             </MenuItem>
             <MenuItem Header="[ Selection ]">
                 <MenuItem 
-                    Header="Transfer to Playlist"
-                    Style="{StaticResource SubMenuItem}"/>
+                    Header="Transfer to Playlist"/>
                 <MenuItem
-                    Header="Copy to..."
-                    Style="{StaticResource SubMenuItem}"/>
+                    Header="Copy to..."/>
                 <MenuItem 
-                    Header="Remove from Libary..."
-                    Style="{StaticResource SubMenuItem}"/>
+                    Header="Remove from Libary..."/>
             </MenuItem>
-            <MenuItem Header="[ Edit this Query... ]"/>
+        </Menu>
+        <StackPanel
+            Grid.Column="2"
+            Orientation="Horizontal"
+            Grid.Row="1"
+            HorizontalAlignment="Left">
             <ToggleButton
                 x:Name="SelectorButton"
                 Foreground="White"
                 Content="[ Visible Columns ]">
             </ToggleButton>
+            <TextBlock 
+                Margin="10,0"
+                Text="Visible Items: "/>
+            <TextBlock
+                Text="{Binding ElementName=Data, Path=Items.Count}"/>
             <Popup x:Name="Selector"
                    IsOpen="{Binding ElementName=SelectorButton, Path=IsChecked}"
                    StaysOpen="False">
@@ -88,10 +101,11 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </Popup>
-        </Menu>
+        </StackPanel>
         <applib:AccordionPanel
-            MinWidth="150"
+            MaxWidth="250"
             Grid.Row="1"
+            Grid.RowSpan="2"
             Grid.Column="0">
             <Expander>
                 <Expander.Header>
@@ -189,12 +203,12 @@
             VerticalAlignment="Stretch"
             HorizontalAlignment="Stretch"
             Grid.Column="1"
-            Grid.Row="1"
+            Grid.Row="2"
             Background="White"/>
 
         <DataGrid
             x:Name="Data"
-            Grid.Row="1"
+            Grid.Row="2"
             Grid.Column="2"
             ItemsSource="{Binding DisplayItems}"
             SelectionMode="Single"
@@ -202,14 +216,10 @@
             CanUserResizeColumns="True"
             CanUserReorderColumns="True"
             CanUserSortColumns="True"
-            AlternatingRowBackground="Gray"
             AlternationCount="2"
             AutoGenerateColumns="False"
-            RowBackground="Gray"
-            Background="Transparent"
             SelectionChanged="Data_SelectionChanged"
-            MouseDoubleClick="Data_MouseDoubleClick"
-            Foreground="Gainsboro">
+            MouseDoubleClick="Data_MouseDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Track" Binding="{Binding Track}"/>
                 <DataGridTextColumn Header="Artist"  Binding="{Binding Artist}"/>

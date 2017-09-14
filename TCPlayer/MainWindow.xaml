@@ -7,20 +7,18 @@
         xmlns:controls="clr-namespace:TCPlayer.Controls"
         PreviewKeyDown="MainWin_PreviewKeyDown"
         xmlns:applib="http://github.com/webmaster442/AppLib/WPF"
-        Style="{StaticResource Window}"
         x:Name="MainWin"
         Icon="icon.png"
         mc:Ignorable="d"
         Left="{Binding Source={x:Static props:Settings.Default}, Path=Left, Mode=TwoWay}"
         Top="{Binding Source={x:Static props:Settings.Default}, Path=Top, Mode=TwoWay}"
         Topmost="{Binding Source={x:Static props:Settings.Default}, Path=TopMost, Mode=TwoWay}"
-        SourceInitialized="MainWin_SourceInitialized"
         AllowDrop="True"
         Drop="MainWin_Drop"
         Closing="MainWin_Closing"
         Title="TC Player"
-        Height="360"
-        Width="675">
+        Height="600"
+        Width="1024">
     <Window.TaskbarItemInfo>
         <TaskbarItemInfo
             ProgressState="None" 
@@ -53,78 +51,11 @@
     </Window.TaskbarItemInfo>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="26"/>
-            <RowDefinition Height="26"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Grid
-            x:Name="TitleBar"
-            Grid.Row="0"
-            Grid.ColumnSpan="2"
-            MouseDown="TitleBar_MouseDown"
-            Background="{StaticResource WindowTitleBar}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="32"/>
-                <ColumnDefinition Width="32"/>
-                <ColumnDefinition Width="32"/>
-                <ColumnDefinition Width="32"/>
-                <ColumnDefinition Width="32"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock
-                Margin="5,0"
-                Text="{Binding ElementName=MainWin, Path=Title}"/>
-            <applib:FaImageButton
-                Icon="fa_cogs"
-                IconSize="24"
-                Grid.Column="1"
-                ToolTip="{applib:Translate MainWin_Settings}"
-                x:Name="BtnSettings"
-                Click="BtnSettings_Click"/>
-            <applib:FaImageButton
-                Icon="fa_info"
-                IconSize="24"
-                Grid.Column="2"
-                ToolTip="{applib:Translate MainWin_About}"
-                x:Name="BtnAbout"
-                Click="BtnAbout_Click"/>
-            <ToggleButton
-                Grid.Column="3"
-                IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=TopMost, Mode=TwoWay}"
-                x:Name="AllWaysTop">
-                <ToggleButton.Resources>
-                    <Style TargetType="ToggleButton">
-                        <Style.Triggers>
-                            <Trigger Property="IsChecked" Value="false">
-                                <Setter Property="Content" Value="{StaticResource IconBack}"/>
-                                <Setter Property="ToolTip" Value="{applib:Translate MainWin_AlwaysTopDisabled}"/>
-                            </Trigger>
-                            <Trigger Property="IsChecked" Value="true">
-                                <Setter Property="Content" Value="{StaticResource IconFront}"/>
-                                <Setter Property="ToolTip" Value="{applib:Translate MainWin_AlwaysTopEnabled}"/>
-                            </Trigger>
-                        </Style.Triggers>
-                        <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="BorderBrush" Value="{x:Null}"/>
-                    </Style>
-                </ToggleButton.Resources>
-            </ToggleButton>
-            <applib:FaImageButton
-                Icon="fa_window_minimize"
-                IconSize="24"
-                Grid.Column="4"
-                x:Name="TitlebarMinimize"
-                Click="TitlebarMinimize_Click"
-                ToolTip="{applib:Translate MainWin_Minimize}"/>
-            <applib:FaImageButton
-                Icon="fa_window_close"
-                IconSize="24"
-                IconForeground="Red"
-                Grid.Column="5"
-                x:Name="TitlebarClose"
-                ToolTip="{applib:Translate MainWin_ExitApp}"
-                Click="TitlebarClose_Click"/>
-        </Grid>
         <Border
             Panel.ZIndex="100"
             BorderThickness="3"
@@ -162,150 +93,144 @@
                 <Grid
                     Grid.Row="0"
                     x:Name="OverLayContent"
-                    Background="{StaticResource Button.Pressed.Background}"
                     Margin="5"/>
             </Grid>
         </Border>
-        <TabControl
-            TabStripPlacement="Bottom"
+
+        <Menu
+            Grid.Row="0">
+            <MenuItem Header="Player">
+                <MenuItem Header="Exit"/>
+            </MenuItem>
+            <MenuItem
+                x:Name="ChapterMenu"
+                Header="{applib:Translate PlayerTab_ButtonChapters}"/>
+        </Menu>
+
+        <StackPanel
+            x:Name="ButtonBar"
+            HorizontalAlignment="Left"
+            Orientation="Horizontal"
+            Grid.Row="1">
+            
+            <StackPanel
+                Margin="10,0"
+                VerticalAlignment="Center">
+                <StackPanel 
+                    Orientation="Horizontal">
+                    <TextBlock
+                        x:Name="TbFullTime"
+                        Text="00:00:00"/>
+                    <TextBlock Text=" / "/>
+                    <TextBlock
+                        x:Name="TbCurrTime"
+                        Text="00:00:00"/>
+                </StackPanel>
+                <StackPanel
+                    Orientation="Horizontal">
+                    <TextBlock
+                        Text="{applib:Translate MainWin_ListLabel}"/>
+                    <TextBlock
+                        Text="{Binding ElementName=PlayList, Path=Count}"/>
+                    <TextBlock 
+                        Text=" / "/>
+                    <TextBlock 
+                        Text="{Binding ElementName=PlayList, Path=Index}"/>
+                </StackPanel>
+            </StackPanel>
+
+            <applib:FaImageButton
+                Icon="fa_eject"
+                x:Name="BtnOpen"
+                Click="DoAction"
+                ToolTip="{applib:Translate PlayerTab_ButtonOpen}"
+                Margin="5,0"/>
+            <Button
+                ToolTip="{applib:Translate PlayerTab_ButtonPlayPause}"
+                x:Name="BtnPlayPause"
+                Click="DoAction"
+                Content="{StaticResource IconPlayPause}"/>
+            <applib:FaImageButton
+                Icon="fa_stop"
+                Margin="5,0"
+                ToolTip="{applib:Translate PlayerTab_ButtonStop}"
+                x:Name="BtnStop"
+                Click="DoAction"/>
+            <applib:FaImageButton
+                Icon="fa_backward"
+                ToolTip="{applib:Translate PlayerTab_ButtonSeekBack}"
+                x:Name="BtnSeekBack"
+                Click="DoAction"/>
+            <applib:FaImageButton
+                Icon="fa_forward"
+                ToolTip="{applib:Translate PlayerTab_ButtonSeekForward}"
+                x:Name="BtnSeekFwd"
+                Click="DoAction"
+                Margin="5,0"/>
+            <applib:FaImageButton
+                Icon="fa_fast_backward"
+                ToolTip="{applib:Translate PlayerTab_ButtonPrevousTrack}"
+                x:Name="BtnPrevTrack"
+                Click="DoAction"/>
+            <applib:FaImageButton
+                Icon="fa_fast_forward"
+                ToolTip="{applib:Translate PlayerTab_ButtonNextTrack}"
+                x:Name="BtnNextTrack"
+                Click="DoAction"
+                Margin="5,0"/>
+            <ToggleButton 
+                ToolTip="{applib:Translate PlayerTab_ButtonMuteUnmute}"
+                x:Name="BtnMute"
+                Click="BtnMute_Click"
+                Content="{StaticResource IconMute}"/>
+            <Slider
+                Minimum="0"
+                VerticalAlignment="Center"
+                Maximum="1"
+                Value="1"
+                Margin="15,0,0,0"
+                x:Name="VolSlider"
+                ValueChanged="VolSlider_ValueChanged"
+                Grid.Column="1"
+                Width="180">
+                <Slider.ToolTip>
+                    <ToolTip
+                        Content="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Value}"
+                        ContentStringFormat="{applib:Translate PlayerTab_VolumeSliderText}" />
+                </Slider.ToolTip>
+            </Slider>
+
+            <StackPanel
+                Margin="30,0,0,0"
+                VerticalAlignment="Center">
+                <ProgressBar
+                    Width="180"
+                    Maximum="32768"
+                    Height="8" 
+                    x:Name="VuR"
+                    Margin="0,0,0,2"/>
+                <ProgressBar
+                    Width="180"
+                    Maximum="32768"
+                    x:Name="VuL"
+                    Height="8"/>
+            </StackPanel>
+
+        </StackPanel>
+
+        <Slider
+            Margin="10,10"
+            x:Name="SeekSlider"
+            Thumb.DragCompleted="SeekSlider_DragCompleted"
+            Thumb.DragStarted="SeekSlider_DragStarted"
+            ValueChanged="SeekSlider_ValueChanged"
+            Grid.Row="2"/>
+
+        <applib:AnimatedTabControl
+            TabStripPlacement="Left"
             x:Name="MainView"
-            Grid.Row="1"
+            Grid.Row="3"
             Grid.RowSpan="2">
-            <TabItem
-                Header="{applib:Translate MainWin_PlayerTab}">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition />
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <controls:SongData
-                        Grid.Row="0"
-                        Grid.RowSpan="2"
-                        x:Name="SongDat"/>
-                    <Slider
-                        Margin="10,10"
-                        x:Name="SeekSlider"
-                        Thumb.DragCompleted="SeekSlider_DragCompleted"
-                        Thumb.DragStarted="SeekSlider_DragStarted"
-                        ValueChanged="SeekSlider_ValueChanged"
-                        Grid.Row="2"/>
-                    <StackPanel
-                        Margin="10,0"
-                        Grid.Row="3"
-                        Orientation="Horizontal">
-                        <TextBlock
-                            x:Name="TbFullTime"
-                            Text="00:00:00"/>
-                        <TextBlock Text=" / "/>
-                        <TextBlock
-                            x:Name="TbCurrTime"
-                            Text="00:00:00"/>
-
-                        <TextBlock
-                            Margin="40,0,0,0"
-                            Text="{applib:Translate MainWin_ListLabel}"/>
-                        <TextBlock Text="{Binding ElementName=PlayList, Path=Count}"/>
-                        <TextBlock Text=" / "/>
-                        <TextBlock Text="{Binding ElementName=PlayList, Path=Index}"/>
-
-                        <Button
-                            Margin="40,0,16,0"
-                            Foreground="White"
-                            x:Name="BtnChapters"
-                            Click="BtnChapters_Click"
-                            Content="{applib:Translate PlayerTab_ButtonChapters}">
-                            <Button.ContextMenu>
-                                <ContextMenu x:Name="ChapterMenu">
-                                </ContextMenu>
-                            </Button.ContextMenu>
-                        </Button>
-
-                        <StackPanel
-                            Margin="0,0,0,0"
-                            VerticalAlignment="Center">
-                            <ProgressBar
-                                Width="180"
-                                Maximum="32768"
-                                Height="8" 
-                                x:Name="VuR"
-                                Margin="0,0,0,2"/>
-                            <ProgressBar
-                                Width="180"
-                                Maximum="32768"
-                                x:Name="VuL"
-                                Height="8"/>
-                        </StackPanel>
-                    </StackPanel>
-                    <StackPanel
-                        HorizontalAlignment="Left"
-                        Orientation="Horizontal"
-                        Grid.Row="4">
-                        <applib:FaImageButton
-                            Icon="fa_eject"
-                            x:Name="BtnOpen"
-                            Click="DoAction"
-                            ToolTip="{applib:Translate PlayerTab_ButtonOpen}"
-                            Margin="5,0"/>
-                        <Button
-                            ToolTip="{applib:Translate PlayerTab_ButtonPlayPause}"
-                            x:Name="BtnPlayPause"
-                            Click="DoAction"
-                            Content="{StaticResource IconPlayPause}"/>
-                        <applib:FaImageButton
-                            Icon="fa_stop"
-                            Margin="5,0"
-                            ToolTip="{applib:Translate PlayerTab_ButtonStop}"
-                            x:Name="BtnStop"
-                            Click="DoAction"/>
-                        <applib:FaImageButton
-                            Icon="fa_backward"
-                            ToolTip="{applib:Translate PlayerTab_ButtonSeekBack}"
-                            x:Name="BtnSeekBack"
-                            Click="DoAction"/>
-                        <applib:FaImageButton
-                            Icon="fa_forward"
-                            ToolTip="{applib:Translate PlayerTab_ButtonSeekForward}"
-                            x:Name="BtnSeekFwd"
-                            Click="DoAction"
-                            Margin="5,0"/>
-                        <applib:FaImageButton
-                            Icon="fa_fast_backward"
-                            ToolTip="{applib:Translate PlayerTab_ButtonPrevousTrack}"
-                            x:Name="BtnPrevTrack"
-                            Click="DoAction"/>
-                        <applib:FaImageButton
-                            Icon="fa_fast_forward"
-                            ToolTip="{applib:Translate PlayerTab_ButtonNextTrack}"
-                            x:Name="BtnNextTrack"
-                            Click="DoAction"
-                            Margin="5,0"/>
-                        <ToggleButton 
-                            ToolTip="{applib:Translate PlayerTab_ButtonMuteUnmute}"
-                            x:Name="BtnMute"
-                            Click="BtnMute_Click"
-                            Content="{StaticResource IconMute}"/>
-                        <Slider
-                            Minimum="0"
-                            VerticalAlignment="Center"
-                            Maximum="1"
-                            Value="1"
-                            Margin="15,0,0,0"
-                            x:Name="VolSlider"
-                            ValueChanged="VolSlider_ValueChanged"
-                            Grid.Column="1"
-                            Width="180">
-                            <Slider.ToolTip>
-                                <ToolTip
-                                    Content="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Value}"
-                                    ContentStringFormat="{applib:Translate PlayerTab_VolumeSliderText}" />
-                            </Slider.ToolTip>
-                        </Slider>
-                    </StackPanel>
-                </Grid>
-            </TabItem>
             <TabItem
                 Header="{applib:Translate MainWin_PlaylistTab}">
                 <controls:PlayList
@@ -318,22 +243,12 @@
                     x:Name="RadioStations"
                     ItemDoubleClcik="RadioStations_ItemDoubleClcik"/>
             </TabItem>
-        </TabControl>
-        <StackPanel 
-            Orientation="Horizontal"
-            Grid.Row="2"
-            VerticalAlignment="Bottom"
-            HorizontalAlignment="Right">
-            <Button
-                Foreground="White"
-                Content="{applib:Translate MainWin_Libary}"
-                x:Name="MediaLib"
-                Click="MediaLib_Click"/>
-            <Button
+        </applib:AnimatedTabControl>
+        <!--<Button
+            
                 Foreground="White"
                 Content="{applib:Translate MainWin_ChangeDevice}"
                 x:Name="BtnChangeDev"
-                Click="BtnChangeDev_Click"/>
-        </StackPanel>
+                Click="BtnChangeDev_Click"/>-->
     </Grid>
 </Window>

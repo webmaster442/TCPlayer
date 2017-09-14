@@ -166,12 +166,6 @@ To Use media key functions please close other apps that may use the keys, then r
   <data name="MainWin_ListLabel" xml:space="preserve">
     <value>List: </value>
   </data>
-  <data name="MainWin_Minimize" xml:space="preserve">
-    <value>Minimize to Tray</value>
-  </data>
-  <data name="MainWin_PlayerTab" xml:space="preserve">
-    <value>[ Player ]</value>
-  </data>
   <data name="MainWin_PlaylistTab" xml:space="preserve">
     <value>[ Playlist ]</value>
   </data>

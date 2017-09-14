@@ -71,6 +71,13 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\QueryEditor.xaml.cs">
+      <DependentUpon>QueryEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="MediaWindow.xaml.cs">
       <DependentUpon>MediaWindow.xaml</DependentUpon>
     </Compile>
@@ -80,11 +87,8 @@
     <Compile Include="Lib\WPFSoundVis\Spectrum Analyzer\BarHeightScalingStyles.cs" />
     <Compile Include="Lib\WPFSoundVis\Spectrum Analyzer\ISpectrumPlayer.cs" />
     <Compile Include="Lib\WPFSoundVis\Spectrum Analyzer\SpectrumAnalyzer.cs" />
-    <Compile Include="Properties\Resources.hu-HU.Designer.cs">
-      <DependentUpon>Resources.hu-HU.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs" />
+    <Compile Include="Properties\Resources.hu-HU.Designer.cs" />
     <Compile Include="Style\NullorValueConverter.cs" />
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -128,6 +132,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\QueryEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
     <Page Include="MediaWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -144,14 +156,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\SongData.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -159,14 +163,11 @@
     <Compile Include="Controls\PlayList.xaml.cs">
       <DependentUpon>PlayList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\SongData.xaml.cs">
-      <DependentUpon>SongData.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Page Include="Style\Icons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Style\Layout.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -179,24 +180,11 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Properties\Resources.hu-HU.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.hu-HU.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -362,6 +350,10 @@
       <Project>{527b94d5-7b37-4f2f-8664-35a3069723d1}</Project>
       <Name>TCPlayer.MediaLibary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.hu-HU.resx" />
+    <EmbeddedResource Include="Properties\Resources.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

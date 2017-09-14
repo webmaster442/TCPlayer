@@ -51,11 +51,11 @@ namespace TCPlayer
 
         private void ExecutePlaySelectedTrackCommand()
         {
-            if (SelectedTrack != null)
+            /*if (SelectedTrack != null)
             {
                 Messager.Instance.SendMessage(typeof(MainWindow), SelectedTrack.Path);
                 DataBase.Instance.UpdateTrackPlayInfo(SelectedTrack);
-            }
+            }*/
         }
 
         private async void ExecuteAddFolder()

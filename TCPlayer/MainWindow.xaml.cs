@@ -70,8 +70,6 @@ namespace TCPlayer
             _loaded = true;
             _mediawindow = new MediaWindow();
 
-            BtnChapters.IsEnabled = _chapterprovider.ChaptersEnabled;
-
             if (_player.Is64Bit) Title += " (x64)";
             else Title += " (x86)";
 
@@ -91,60 +89,6 @@ namespace TCPlayer
 
             if (Properties.Settings.Default.TrackChangeNotification)
                 App.NotifyIcon = new NotificationIcon();
-        }
-
-        private void MainWin_SourceInitialized(object sender, EventArgs e)
-        {
-            if ((hwnd = new WindowInteropHelper(this).Handle) == IntPtr.Zero)
-            {
-                throw new InvalidOperationException("Could not get window handle.");
-            }
-
-            hsource = HwndSource.FromHwnd(hwnd);
-            hsource.AddHook(WndProc);
-            SetColor();
-        }
-
-        private void SetColor()
-        {
-            Color c = GetWindowColorizationColor(false);
-            TitleBar.Background = new SolidColorBrush(c);
-
-            var r = (byte)(c.R * 0.13);
-            var g = (byte)(c.G * 0.13);
-            var b = (byte)(c.B * 0.13);
-            Background = new SolidColorBrush(Color.FromArgb(0xE5, r, g, b));
-        }
-
-        private static Color GetWindowColorizationColor(bool opaque)
-        {
-            var par = new DWMCOLORIZATIONPARAMS();
-            DwmApi.DwmGetColorizationParameters(ref par);
-
-            return Color.FromArgb(
-                (byte)(opaque ? 255 : par.ColorizationColor >> 24),
-                (byte)(par.ColorizationColor >> 16),
-                (byte)(par.ColorizationColor >> 8),
-                (byte)par.ColorizationColor);
-        }
-
-        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-        {
-            switch (msg)
-            {
-                //WM_DWMCOLORIZATIONCOLORCHANGED
-                case 0x320:
-                    SetColor();
-                    return IntPtr.Zero;
-                default:
-                    return IntPtr.Zero;
-            }
-        }
-
-        private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-                DragMove();
         }
 
         private void TitlebarClose_Click(object sender, RoutedEventArgs e)
@@ -284,7 +228,7 @@ namespace TCPlayer
             {
                 if (!_loaded || PlayList.SelectedItem == null) return;
                 Reset();
-                SongDat.Reset();
+                //SongDat.Reset();
                 var file = PlayList.SelectedItem;
                 _player.Load(file);
                 _chapterprovider.Clear();
@@ -296,19 +240,18 @@ namespace TCPlayer
                     TbFullTime.Text = len.ToShortTime();
                     SeekSlider.Maximum = _player.Length;
                 }
-                BtnChapters.IsEnabled = _chapterprovider.ChaptersEnabled;
                 _timer.IsEnabled = true;
-                if (Helpers.IsTracker(file)) SongDat.UpdateMediaInfo(file, _player.SourceHandle);
+                /*if (Helpers.IsTracker(file)) SongDat.UpdateMediaInfo(file, _player.SourceHandle);
                 else SongDat.UpdateMediaInfo(file);
-                SongDat.Handle = _player.MixerHandle;
+                SongDat.Handle = _player.MixerHandle;*/
 
             }
             catch (Exception ex)
             {
                 _timer.IsEnabled = false;
-                SongDat.Handle = 0;
+                /*SongDat.Handle = 0;
                 Reset();
-                SongDat.Reset();
+                SongDat.Reset();*/
                 Helpers.ErrorDialog(ex);
             }
         }
@@ -577,11 +520,6 @@ namespace TCPlayer
         private void RadioStations_ItemDoubleClcik(object sender, RoutedEventArgs e)
         {
             DoLoadAndPlay(new string[] { RadioStations.SelectedUrl });
-        }
-
-        private void BtnChapters_Click(object sender, RoutedEventArgs e)
-        {
-            BtnChapters.ContextMenu.IsOpen = true;
         }
 
         private void ThumbPlay_Click(object sender, EventArgs e)

@@ -33,7 +33,7 @@ namespace TCPlayer.Code
 
         private const double Minute = 60.0d;
 
-        private ContextMenu _target;
+        private MenuItem _target;
 
         private bool _chaptersenabled;
 
@@ -45,7 +45,7 @@ namespace TCPlayer.Code
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }
 
-        public ChapterProvider(ContextMenu target)
+        public ChapterProvider(MenuItem target)
         {
             _data = new Dictionary<double, string>();
             _target = target;
@@ -80,6 +80,7 @@ namespace TCPlayer.Code
                 if ((extension != ".mp4") && (extension != ".m4a") &&(extension != ".m4b"))
                 {
                     CreateChapters(parsedlength);
+                    DrawToMenu();
                     ChaptersEnabled = _data.Count > 0;
                     return;
                 }
@@ -94,6 +95,7 @@ namespace TCPlayer.Code
                     }
                 }
                 ChaptersEnabled = _data.Count > 0;
+                DrawToMenu();
             }
             catch (Exception)
             {
@@ -120,7 +122,6 @@ namespace TCPlayer.Code
                 MenuItem mnu = new MenuItem();
                 mnu.Header = chapter.Value;
                 mnu.Tag = chapter.Key;
-                mnu.Style = (System.Windows.Style)Application.Current.MainWindow.FindResource("SubMenuItem");
                 mnu.Icon = Application.Current.MainWindow.FindResource("IconArrowRight");
                 mnu.Click += Mnu_Click;
                 _target.Items.Add(mnu);
@@ -148,6 +149,7 @@ namespace TCPlayer.Code
                 if (value == _chaptersenabled) return;
                 _chaptersenabled = value;
                 Change("ChaptersEnabled");
+                _target.IsEnabled = value;
             }
         }
     }

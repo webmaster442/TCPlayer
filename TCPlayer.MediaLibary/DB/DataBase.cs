@@ -179,9 +179,99 @@ namespace TCPlayer.MediaLibary.DB
                     results = results.Where(item => item.Generire == input.Geneire);
             }
 
+            if (input.Rating != null)
+            {
+                if (results == null)
+                {
+                    switch (input.RatingOperator)
+                    {
+                        case QueryOperator.Equals:
+                            results = _tracks.Find(item => item.Rating == input.Rating.Value);
+                            break;
+                        case QueryOperator.Greater:
+                            results = _tracks.Find(item => item.Rating > input.Rating.Value);
+                            break;
+                        case QueryOperator.GreaterOrEqual:
+                            results = _tracks.Find(item => item.Rating >= input.Rating.Value);
+                            break;
+                        case QueryOperator.Less:
+                            results = _tracks.Find(item => item.Rating < input.Rating.Value);
+                            break;
+                        case QueryOperator.LessOrEqual:
+                            results = _tracks.Find(item => item.Rating <= input.Rating.Value);
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (input.RatingOperator)
+                    {
+                        case QueryOperator.Equals:
+                            results = results.Where(item => item.Rating == input.Rating.Value);
+                            break;
+                        case QueryOperator.Greater:
+                            results = results.Where(item => item.Rating > input.Rating.Value);
+                            break;
+                        case QueryOperator.GreaterOrEqual:
+                            results = results.Where(item => item.Rating >= input.Rating.Value);
+                            break;
+                        case QueryOperator.Less:
+                            results = results.Where(item => item.Rating < input.Rating.Value);
+                            break;
+                        case QueryOperator.LessOrEqual:
+                            results = results.Where(item => item.Rating <= input.Rating.Value);
+                            break;
+                    }
+                }
+            }
+
+            if (input.PlayCount != null)
+            {
+                if (results == null)
+                {
+                    switch (input.PlayCounterOperator)
+                    {
+                        case QueryOperator.Equals:
+                            results = _tracks.Find(item => item.PlayCounter == input.PlayCount.Value);
+                            break;
+                        case QueryOperator.Greater:
+                            results = _tracks.Find(item => item.PlayCounter > input.PlayCount.Value);
+                            break;
+                        case QueryOperator.GreaterOrEqual:
+                            results = _tracks.Find(item => item.PlayCounter >= input.PlayCount.Value);
+                            break;
+                        case QueryOperator.Less:
+                            results = _tracks.Find(item => item.PlayCounter < input.PlayCount.Value);
+                            break;
+                        case QueryOperator.LessOrEqual:
+                            results = _tracks.Find(item => item.PlayCounter <= input.PlayCount.Value);
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (input.PlayCounterOperator)
+                    {
+                        case QueryOperator.Equals:
+                            results = results.Where(item => item.PlayCounter == input.PlayCount.Value);
+                            break;
+                        case QueryOperator.Greater:
+                            results = results.Where(item => item.PlayCounter > input.PlayCount.Value);
+                            break;
+                        case QueryOperator.GreaterOrEqual:
+                            results = results.Where(item => item.PlayCounter >= input.PlayCount.Value);
+                            break;
+                        case QueryOperator.Less:
+                            results = results.Where(item => item.PlayCounter < input.PlayCount.Value);
+                            break;
+                        case QueryOperator.LessOrEqual:
+                            results = results.Where(item => item.PlayCounter <= input.PlayCount.Value);
+                            break;
+                    }
+                }
+            }
+
             return results;
         }
-
-
     }
 }

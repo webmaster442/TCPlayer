@@ -302,7 +302,6 @@ namespace TCPlayer.Controls
             if (cds.Count() < 1)
             {
                 MenuItem drive = new MenuItem();
-                drive.Style = FindResource("SubMenuItem") as System.Windows.Style;
                 drive.Header = Properties.Resources.Playlist_NoDiscsFound;
                 DiscMenu.Items.Add(drive);
             }
