@@ -14,6 +14,7 @@ namespace TCPlayer
     {
         public async void DoLoad(IEnumerable<string> items)
         {
+            View?.SetPage(TabPage.PlayList);
             if (items == null)
                 items = Environment.GetCommandLineArgs();
 
@@ -55,16 +56,19 @@ namespace TCPlayer
 
         private void PlaylistDelete()
         {
-            View.DeleteSelectedFromPlaylist();
+            View?.SetPage(TabPage.PlayList);
+            View?.DeleteSelectedFromPlaylist();
         }
 
         private void PlaylistClear()
         {
+            View?.SetPage(TabPage.PlayList);
             PlayList.Clear();
         }
 
         private void PlaylistSave()
         {
+            View?.SetPage(TabPage.PlayList);
             var sfd = new System.Windows.Forms.SaveFileDialog();
             sfd.Filter = "M3U list | *.m3u";
             sfd.FilterIndex = 0;
@@ -90,6 +94,7 @@ namespace TCPlayer
 
         private void PlaylistAddDirectory()
         {
+            View?.SetPage(TabPage.PlayList);
             string[] filters = App.Formats.Split(';');
             var fbd = new System.Windows.Forms.FolderBrowserDialog();
             fbd.Description = Properties.Resources.Playlist_AddFolderDescription;
@@ -107,6 +112,7 @@ namespace TCPlayer
 
         private void PlaylistAddFile()
         {
+            View?.SetPage(TabPage.PlayList);
             var ofd = new System.Windows.Forms.OpenFileDialog();
             ofd.Multiselect = true;
             ofd.Filter = "Audio Files|" + App.Formats;
@@ -118,6 +124,7 @@ namespace TCPlayer
 
         private async void PlaylistAddPlaylist()
         {
+            View?.SetPage(TabPage.PlayList);
             var ofd = new System.Windows.Forms.OpenFileDialog();
             ofd.Filter = "Playlists | " + App.Playlists;
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -145,6 +152,7 @@ namespace TCPlayer
 
         private void PlaylistAddUrl()
         {
+            View?.SetPage(TabPage.PlayList);
             var urld = new AddURLDialog();
             urld.OkClicked = new Action(() =>
             {
@@ -155,6 +163,7 @@ namespace TCPlayer
 
         private void PlaylistSortAsc()
         {
+            View?.SetPage(TabPage.PlayList);
             var q = from i in PlayList orderby i ascending select i;
             var sorted = q.ToList();
             PlayList.Clear();
@@ -163,6 +172,7 @@ namespace TCPlayer
 
         private void PlaylistSortDesc()
         {
+            View?.SetPage(TabPage.PlayList);
             var q = from i in PlayList orderby i descending select i;
             PlayList.Clear();
             PlayList.AddRange(q);
@@ -170,6 +180,7 @@ namespace TCPlayer
 
         private void PlaylistSortRandom()
         {
+            View?.SetPage(TabPage.PlayList);
             var q = from i in PlayList orderby Guid.NewGuid() select i;
             PlayList.Clear();
             PlayList.AddRange(q);
@@ -177,6 +188,7 @@ namespace TCPlayer
 
         private void PlaylistSortDisticnt()
         {
+            View?.SetPage(TabPage.PlayList);
             var q = PlayList.Distinct();
             PlayList.Clear();
             PlayList.AddRange(q);

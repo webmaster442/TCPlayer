@@ -8,6 +8,13 @@ using System.Windows.Controls;
 
 namespace TCPlayer
 {
+    public enum TabPage
+    {
+        NowPlaying = 0,
+        PlayList = 1,
+        Radio = 2
+    }
+
     public interface IMainWindow: IView
     {
         /// <summary>
@@ -19,5 +26,10 @@ namespace TCPlayer
         /// Delete selected items from the playlist
         /// </summary>
         void DeleteSelectedFromPlaylist();
+        /// <summary>
+        /// Set Main window page
+        /// </summary>
+        /// <param name="page">Page id</param>
+        void SetPage(TabPage page);
     }
 }

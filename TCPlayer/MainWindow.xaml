@@ -162,13 +162,19 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem
-                    Header="Add URL Command ..."
+                    Header="Add URL ..."
                     Command="{Binding PlaylistAddUrlCommand}">
                     <MenuItem.Icon>
                         <applib:ImageAwesome 
                             Icon="fa_link"
                             Style="{StaticResource Menu}"/>
                     </MenuItem.Icon>
+                </MenuItem>
+
+                <MenuItem 
+                    Header="Disc ..."
+                    SubmenuOpened="MenuItem_SubmenuOpened">
+                    <MenuItem Header="{applib:Translate Playlist_NoDiscsFound}"/>
                 </MenuItem>
 
                 <Separator/>
@@ -360,7 +366,8 @@
             Grid.RowSpan="2">
             <TabItem
                 Header="[ Now Playing ]">
-                <controls:NowPlaying/>
+                <controls:NowPlaying
+                    x:Name="SongDat"/>
             </TabItem>
             <TabItem
                 Header="{applib:Translate MainWin_PlaylistTab}">

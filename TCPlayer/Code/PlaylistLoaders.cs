@@ -179,7 +179,7 @@ namespace TCPlayer.Code
             }
         }
 
-        public static void BuildAuidoCdMenu(MenuItem target)
+        public static void BuildAuidoCdMenu(MenuItem target, Action<string[]> FoundCDAction)
         {
             target.Items.Clear();
             var q = from cd in DriveInfo.GetDrives()
@@ -195,13 +195,10 @@ namespace TCPlayer.Code
             {
                 MenuItem drive = new MenuItem();
                 drive.Header = cd;
-                drive.Click += async (s, e) =>
+                drive.Click += (s, e) =>
                 {
                     var cddrive = ((MenuItem)s).Header.ToString();
-                    var result = await Task.Run(() =>
-                    {
-                        return Player.GetCdInfo(cddrive);
-                    });
+                    FoundCDAction?.Invoke(Player.GetCdInfo(cddrive));
                 };
                 target.Items.Add(drive);
             }

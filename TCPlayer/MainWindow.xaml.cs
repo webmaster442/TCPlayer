@@ -17,6 +17,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using AppLib.Common;
+using AppLib.Common.Extensions;
 using AppLib.Common.MessageHandler;
 using AppLib.WPF.MVVM;
 using System;
@@ -183,9 +184,7 @@ namespace TCPlayer
                 StartPlay();
             }
             else
-            {
-                Dispatcher.Invoke(() => { MainView.SelectedIndex = 1; });
-            }
+                SetPage(TabPage.PlayList);
             DoBringIntoView();
         }
 
@@ -236,7 +235,7 @@ namespace TCPlayer
             {
                 if (!_loaded || SelectedItem == null) return;
                 ResetSongSeekUI();
-                //SongDat.Reset();
+                SongDat.Reset();
                 var file = SelectedItem;
                 Player.Instance.Load(file);
                 _chapterprovider.Clear();
@@ -249,17 +248,17 @@ namespace TCPlayer
                     SeekSlider.Maximum = Player.Instance.Length;
                 }
                 _SongTimer.IsEnabled = true;
-                /*if (Helpers.IsTracker(file)) SongDat.UpdateMediaInfo(file, Player.Instance.SourceHandle);
+                if (Helpers.IsTracker(file)) SongDat.UpdateMediaInfo(file, Player.Instance.SourceHandle);
                 else SongDat.UpdateMediaInfo(file);
-                SongDat.Handle = Player.Instance.MixerHandle;*/
+                SongDat.Handle = Player.Instance.MixerHandle;
 
             }
             catch (Exception ex)
             {
                 _SongTimer.IsEnabled = false;
-                /*SongDat.Handle = 0;
-                Reset();
-                SongDat.Reset();*/
+                SongDat.Handle = 0;
+                ResetSongSeekUI();
+                SongDat.Reset();
                 Helpers.ErrorDialog(ex);
             }
         }
@@ -441,10 +440,7 @@ namespace TCPlayer
             ViewModel.PlayListIndex = ViewModel.PlayListIndex + 1;
 
             StartPlay();
-            Dispatcher.Invoke(() =>
-            {
-                MainView.SelectedIndex = 0;
-            });
+            SetPage(TabPage.NowPlaying);
         }
 
         private void _chapterprovider_ChapterClicked(object sender, double e)
@@ -533,6 +529,21 @@ namespace TCPlayer
         private void RadioStations_ItemDoubleClcik(object sender, RoutedEventArgs e)
         {
             DoLoadAndPlay(new string[] { RadioStations.SelectedUrl });
+        }
+
+        private void MenuItem_SubmenuOpened(object sender, RoutedEventArgs e)
+        {
+            PlaylistLoaders.BuildAuidoCdMenu((MenuItem)sender, (items) =>
+            {
+                ViewModel.PlayList.AddRange(items);
+                SetPage(TabPage.PlayList);
+            });
+        }
+
+        public void SetPage(TabPage page)
+        {
+            int pageindex = (int)page;
+            Dispatcher.Invoke(() => { MainView.SelectedIndex = pageindex; });
         }
     }
 }

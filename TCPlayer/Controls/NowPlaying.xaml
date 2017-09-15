@@ -6,8 +6,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:vis="clr-namespace:WPFSoundVisualizationLib"
     xmlns:local="clr-namespace:TCPlayer.Controls"
+     x:Name="SongDat"
     mc:Ignorable="d" 
-    d:DesignHeight="300"
+    d:DesignHeight="500"
     d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
@@ -23,11 +24,34 @@
             Grid.Column="0"
             Width="220"
             Height="220"
-            Margin="10"/>
+            Margin="10"
+            Source="{Binding ElementName=SongDat, Path=Cover}">
+            <Image.Effect>
+                <DropShadowEffect
+                    Opacity="0.9"
+                    Color="#FFFCFCFC"/>
+            </Image.Effect>
+        </Image>
         <vis:SpectrumAnalyzer
             Grid.Column="1"
             x:Name="Spectrum"
             VerticalAlignment="Top"
-            Height="120"/>
+            Height="190"/>
+        <StackPanel
+            Grid.Row="1"
+            Grid.ColumnSpan="2">
+            <TextBlock
+                Text="{Binding ElementName=SongDat, Path=FileName}"
+                Margin="10"/>
+            <TextBlock
+                Margin="10"
+                FontSize="14"
+                x:Name="InfoText"/>
+            <TextBlock
+                Margin="10"
+                Text="Actions:"
+                FontSize="16"
+                FontWeight="Bold"/>
+        </StackPanel>
     </Grid>
 </UserControl>

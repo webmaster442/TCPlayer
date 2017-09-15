@@ -194,9 +194,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Style\unknown.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="icon.png" />
   </ItemGroup>
   <ItemGroup>
@@ -314,6 +311,10 @@
     <Content Include="Engine\x86\tags.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Style\audio-file.png" />
+    <Resource Include="Style\audio-midi.png" />
+    <Resource Include="Style\audio-network.png" />
+    <Resource Include="Style\auido-cd.png" />
     <Resource Include="Lib\radiotray.hu.xml" />
     <Resource Include="Lib\radiotray.xml" />
     <Resource Include="Lib\About.txt" />
@@ -322,14 +323,10 @@
     <Content Include="pluginst.inf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Obsolete\midi.png" />
-    <Resource Include="Obsolete\music.png" />
-    <Resource Include="Obsolete\disk.png" />
     <Resource Include="Style\taskbar-play-pause.png" />
     <Resource Include="Style\taskbar-skip-next.png" />
     <Resource Include="Style\taskbar-skip-previous.png" />
     <Resource Include="Style\taskbar-volume-off.png" />
-    <Resource Include="Obsolete\network.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\applib\AppLib.Common\AppLib.Common.csproj">
