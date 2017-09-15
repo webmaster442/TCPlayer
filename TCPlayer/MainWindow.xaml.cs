@@ -16,38 +16,38 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-using TCPlayer.Code;
-using TCPlayer.Controls;
+using AppLib.Common;
+using AppLib.Common.MessageHandler;
+using AppLib.WPF.MVVM;
 using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Shell;
 using System.Windows.Threading;
-using AppLib.Common;
-using AppLib.Common.PInvoke;
-using AppLib.Common.MessageHandler;
+using TCPlayer.Code;
+using TCPlayer.Controls;
 
 namespace TCPlayer
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, IDisposable, IMessageClient<string>
+    public partial class MainWindow : Window, IDisposable, IMainWindow,  IMessageClient<string>
     {
-        private IntPtr hwnd;
-        private HwndSource hsource;
-        private Player _player;
         private float _prevvol;
-        private DispatcherTimer _timer;
+        private DispatcherTimer _SongTimer;
         private bool _loaded;
         private bool _isdrag;
         private KeyboardHook _keyboardhook;
         private ChapterProvider _chapterprovider;
-        private MediaWindow _mediawindow;
+
+        public MainWinViewModel ViewModel
+        {
+            get;
+            private set;
+        }
 
         public UId MessageReciverID
         {
@@ -58,19 +58,18 @@ namespace TCPlayer
         {
             InitializeComponent();
             Messager.Instance.SubScribe(this);
-            _player = Player.Instance;
-            _player.ChangeDevice(); //init
+            Player.Instance.ChangeDevice(); //init
             _prevvol = 1.0f;
             _chapterprovider = new ChapterProvider(ChapterMenu);
             _chapterprovider.ChapterClicked += _chapterprovider_ChapterClicked;
-            _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromMilliseconds(40);
-            _timer.IsEnabled = false;
-            _timer.Tick += _timer_Tick;
+            _SongTimer = new DispatcherTimer();
+            _SongTimer.Interval = TimeSpan.FromMilliseconds(40);
+            _SongTimer.IsEnabled = false;
+            _SongTimer.Tick += _SongTimerTick;
             _loaded = true;
-            _mediawindow = new MediaWindow();
+            ViewModel = this.GetViewModel<MainWinViewModel>();
 
-            if (_player.Is64Bit) Title += " (x64)";
+            if (Player.Instance.Is64Bit) Title += " (x64)";
             else Title += " (x86)";
 
             var src = Environment.GetCommandLineArgs();
@@ -89,31 +88,11 @@ namespace TCPlayer
 
             if (Properties.Settings.Default.TrackChangeNotification)
                 App.NotifyIcon = new NotificationIcon();
+
+            this.GetViewModel<MainWinViewModel>().View = this;
         }
 
-        private void TitlebarClose_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
-        private void TitlebarMinimize_Click(object sender, RoutedEventArgs e)
-        {
-            WindowState = WindowState.Minimized;
-        }
-
-        private void BtnAbout_Click(object sender, RoutedEventArgs e)
-        {
-            var about = new AboutDialog();
-            ShowDialog(about);
-        }
-
-        private void BtnSettings_Click(object sender, RoutedEventArgs e)
-        {
-            var settings = new Settings();
-            ShowDialog(settings);
-        }
-
-        public static void ShowDialog(UserControl dialog)
+        public void ShowDialog(UserControl dialog)
         {
             var main = Application.Current.MainWindow as MainWindow;
             main.OverLayContent.Children.Clear();
@@ -137,10 +116,9 @@ namespace TCPlayer
 
         protected virtual void Dispose(bool native)
         {
-            if (_player != null)
+            if (Player.Instance != null)
             {
-                _player.Dispose();
-                _player = null;
+                Player.Instance.Dispose();
             }
             if (_keyboardhook != null)
             {
@@ -168,14 +146,40 @@ namespace TCPlayer
             }
         }
 
+        public bool CanDoNexPlaylisttTrack()
+        {
+            return (PlaylistView.SelectedIndex + 1) <= (ViewModel.PlayList.Count - 1);
+        }
+
+        public void NextPlaylistTrack()
+        {
+            if (PlaylistView.SelectedIndex + 1 < ViewModel.PlayList.Count)
+            {
+                PlaylistView.SelectedIndex += 1;
+                ViewModel.PlayListIndex = PlaylistView.SelectedIndex + 1;
+            }
+        }
+
+        public void PreviousPlaylistTrack()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                if (PlaylistView.SelectedIndex - 1 > -1)
+                {
+                    PlaylistView.SelectedIndex -= 1;
+                    ViewModel.PlayListIndex = PlaylistView.SelectedIndex + 1;
+                }
+            });
+        }
+
         public void DoLoadAndPlay(IEnumerable<string> items)
         {
             var needplay = false;
-            if (PlayList.Count < 1) needplay = true;
-            PlayList.DoLoad(items);
+            if (ViewModel.PlayList.Count < 1) needplay = true;
+            this.GetViewModel<MainWinViewModel>().DoLoad(items);
             if (needplay)
             {
-                PlayList.NextTrack();
+                NextPlaylistTrack();
                 StartPlay();
             }
             else
@@ -196,24 +200,9 @@ namespace TCPlayer
             }
         }
 
-        private void BtnChangeDev_Click(object sender, RoutedEventArgs e)
+        private void ResetSongSeekUI()
         {
-            if (!_loaded) return;
-            var selector = new DeviceChange();
-            string[] devices = _player.GetDevices();
-            selector.DataContext = devices;
-            selector.OkClicked = new Action(() =>
-             {
-                 var name = devices[selector.DeviceIndex];
-                 Properties.Settings.Default.SampleRate = selector.SampleRate;
-                 _player.ChangeDevice(name);
-             });
-            MainWindow.ShowDialog(selector);
-        }
-
-        private void Reset()
-        {
-            _timer.IsEnabled = false;
+            _SongTimer.IsEnabled = false;
             SeekSlider.Value = 0;
             Taskbar.ProgressState = TaskbarItemProgressState.Normal;
             Taskbar.ProgressValue = 0;
@@ -222,33 +211,52 @@ namespace TCPlayer
         }
 
 
+        private string SelectedItem
+        {
+            get
+            {
+                if (PlaylistView.SelectedIndex == -1) return null;
+                return ViewModel.PlayList[PlaylistView.SelectedIndex];
+            }
+        }
+
+        public void DeleteSelectedFromPlaylist()
+        {
+            if (PlaylistView.SelectedItems.Count == 0) return;
+            while (PlaylistView.SelectedItems.Count > 0)
+            {
+                ViewModel.PlayList.Remove((string)PlaylistView.SelectedItems[0]);
+            }
+
+        }
+
         private void StartPlay()
         {
             try
             {
-                if (!_loaded || PlayList.SelectedItem == null) return;
-                Reset();
+                if (!_loaded || SelectedItem == null) return;
+                ResetSongSeekUI();
                 //SongDat.Reset();
-                var file = PlayList.SelectedItem;
-                _player.Load(file);
+                var file = SelectedItem;
+                Player.Instance.Load(file);
                 _chapterprovider.Clear();
-                if (_player.IsStream) Taskbar.ProgressState = TaskbarItemProgressState.Indeterminate;
+                if (Player.Instance.IsStream) Taskbar.ProgressState = TaskbarItemProgressState.Indeterminate;
                 else
                 {
-                    _chapterprovider.CreateChapters(file, _player.Length);
-                    var len = TimeSpan.FromSeconds(_player.Length);
+                    _chapterprovider.CreateChapters(file, Player.Instance.Length);
+                    var len = TimeSpan.FromSeconds(Player.Instance.Length);
                     TbFullTime.Text = len.ToShortTime();
-                    SeekSlider.Maximum = _player.Length;
+                    SeekSlider.Maximum = Player.Instance.Length;
                 }
-                _timer.IsEnabled = true;
-                /*if (Helpers.IsTracker(file)) SongDat.UpdateMediaInfo(file, _player.SourceHandle);
+                _SongTimer.IsEnabled = true;
+                /*if (Helpers.IsTracker(file)) SongDat.UpdateMediaInfo(file, Player.Instance.SourceHandle);
                 else SongDat.UpdateMediaInfo(file);
-                SongDat.Handle = _player.MixerHandle;*/
+                SongDat.Handle = Player.Instance.MixerHandle;*/
 
             }
             catch (Exception ex)
             {
-                _timer.IsEnabled = false;
+                _SongTimer.IsEnabled = false;
                 /*SongDat.Handle = 0;
                 Reset();
                 SongDat.Reset();*/
@@ -256,29 +264,29 @@ namespace TCPlayer
             }
         }
 
-        private void _timer_Tick(object sender, EventArgs e)
+        private void _SongTimerTick(object sender, EventArgs e)
         {
             if (!_loaded) return;
 
             if ((IsActive || Topmost) && (MainView.SelectedIndex == 0))
             {
-                if (!_player.IsPlaying) _player.IsPlaying = true;
+                if (!Player.Instance.IsPlaying) Player.Instance.IsPlaying = true;
 
                 if (_isdrag)
                 {
                     TbCurrTime.Text = TimeSpan.FromSeconds(SeekSlider.Value).ToShortTime();
                     return;
                 }
-                var pos = TimeSpan.FromSeconds(_player.Position);
+                var pos = TimeSpan.FromSeconds(Player.Instance.Position);
                 TbCurrTime.Text = pos.ToShortTime();
-                if (_player.IsStream) SeekSlider.Value = 0;
+                if (Player.Instance.IsStream) SeekSlider.Value = 0;
                 else
                 {
-                    SeekSlider.Value = _player.Position;
+                    SeekSlider.Value = Player.Instance.Position;
                     Taskbar.ProgressValue = SeekSlider.Value / SeekSlider.Maximum;
                 }
                 int l, r;
-                _player.VolumeValues(out l, out r);
+                Player.Instance.VolumeValues(out l, out r);
                 if (l < 0) l *= -1;
                 if (r < 0) r *= -1;
                 VuR.Value = l;
@@ -286,13 +294,13 @@ namespace TCPlayer
             }
             else
             {
-                if (_player.IsStream) SeekSlider.Value = 0;
+                if (Player.Instance.IsStream) SeekSlider.Value = 0;
                 else
                 {
-                    SeekSlider.Value = _player.Position;
+                    SeekSlider.Value = Player.Instance.Position;
                     Taskbar.ProgressValue = SeekSlider.Value / SeekSlider.Maximum;
                 }
-                _player.IsPlaying = false;
+                Player.Instance.IsPlaying = false;
             }
         }
 
@@ -307,33 +315,33 @@ namespace TCPlayer
                     DoOpen();
                     break;
                 case "BtnPlayPause":
-                    _player.PlayPause();
+                    Player.Instance.PlayPause();
                     break;
                 case "BtnStop":
-                    _player.Stop();
+                    Player.Instance.Stop();
                     break;
                 case "BtnSeekBack":
-                    _timer.IsEnabled = false;
-                    _player.Position -= 5;
-                    _timer.IsEnabled = true;
+                    _SongTimer.IsEnabled = false;
+                    Player.Instance.Position -= 5;
+                    _SongTimer.IsEnabled = true;
                     break;
                 case "BtnSeekFwd":
-                    _timer.IsEnabled = false;
-                    _player.Position += 5;
-                    _timer.IsEnabled = true;
+                    _SongTimer.IsEnabled = false;
+                    Player.Instance.Position += 5;
+                    _SongTimer.IsEnabled = true;
                     break;
                 case "BtnNextTrack":
-                    PlayList.NextTrack();
+                    NextPlaylistTrack();
                     StartPlay();
                     break;
                 case "BtnPrevTrack":
-                    PlayList.PreviousTrack();
+                    PreviousPlaylistTrack();
                     StartPlay();
                     break;
             }
-            _timer.IsEnabled = !_player.IsPaused;
-            if (_player.IsPaused) Taskbar.ProgressState = TaskbarItemProgressState.Paused;
-            else if (!_player.IsStream) Taskbar.ProgressState = TaskbarItemProgressState.Normal;
+            _SongTimer.IsEnabled = !Player.Instance.IsPaused;
+            if (Player.Instance.IsPaused) Taskbar.ProgressState = TaskbarItemProgressState.Paused;
+            else if (!Player.Instance.IsStream) Taskbar.ProgressState = TaskbarItemProgressState.Normal;
             else Taskbar.ProgressState = TaskbarItemProgressState.Indeterminate;
         }
 
@@ -359,18 +367,18 @@ namespace TCPlayer
             switch (e.Key)
             {
                 case System.Windows.Forms.Keys.MediaPlayPause:
-                    _player.PlayPause();
+                    Player.Instance.PlayPause();
                     break;
                 case System.Windows.Forms.Keys.MediaPreviousTrack:
-                    PlayList.PreviousTrack();
+                    PreviousPlaylistTrack();
                     StartPlay();
                     break;
                 case System.Windows.Forms.Keys.MediaNextTrack:
-                    PlayList.NextTrack();
+                    NextPlaylistTrack();
                     StartPlay();
                     break;
                 case System.Windows.Forms.Keys.MediaStop:
-                    _player.Stop();
+                    Player.Instance.Stop();
                     break;
             }
         }
@@ -381,14 +389,14 @@ namespace TCPlayer
             switch (param)
             {
                 case "Play/Pause":
-                    _player.PlayPause();
+                    Player.Instance.PlayPause();
                     break;
                 case "Previous track":
-                    PlayList.PreviousTrack();
+                    PreviousPlaylistTrack();
                     StartPlay();
                     break;
                 case "Next track":
-                    PlayList.NextTrack();
+                    NextPlaylistTrack();
                     StartPlay();
                     break;
                 case "Mute/UnMute":
@@ -397,8 +405,8 @@ namespace TCPlayer
                     BtnMute_Click(null, null);
                     break;
             }
-            _timer.IsEnabled = !_player.IsPaused;
-            if (_player.IsPaused) Taskbar.ProgressState = TaskbarItemProgressState.Paused;
+            _SongTimer.IsEnabled = !Player.Instance.IsPaused;
+            if (Player.Instance.IsPaused) Taskbar.ProgressState = TaskbarItemProgressState.Paused;
             else Taskbar.ProgressState = TaskbarItemProgressState.Normal;
         }
 
@@ -421,12 +429,17 @@ namespace TCPlayer
         private void VolSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (!_loaded) return;
-            _player.Volume = (float)VolSlider.Value;
+            Player.Instance.Volume = (float)VolSlider.Value;
         }
 
         private void PlayList_ItemDoubleClcik(object sender, RoutedEventArgs e)
         {
             if (!_loaded) return;
+
+            ViewModel.PlayListIndex  = PlaylistView.SelectedIndex;
+            if (ViewModel.PlayListIndex < 0) return;
+            ViewModel.PlayListIndex = ViewModel.PlayListIndex + 1;
+
             StartPlay();
             Dispatcher.Invoke(() =>
             {
@@ -437,7 +450,7 @@ namespace TCPlayer
         private void _chapterprovider_ChapterClicked(object sender, double e)
         {
             _isdrag = true;
-            _player.Position = e;
+            Player.Instance.Position = e;
             _isdrag = false;
         }
 
@@ -446,15 +459,15 @@ namespace TCPlayer
             if (_isdrag) return;
             if (SeekSlider.Maximum - SeekSlider.Value < 0.5)
             {
-                if (PlayList.CanDoNextTrack())
+                if (CanDoNexPlaylisttTrack())
                 {
-                    PlayList.NextTrack();
+                    NextPlaylistTrack();
                     StartPlay();
                 }
                 else
                 {
-                    _player.Stop();
-                    Reset();
+                    Player.Instance.Stop();
+                    ResetSongSeekUI();
                 }
             }
         }
@@ -462,7 +475,7 @@ namespace TCPlayer
         private void SeekSlider_DragCompleted(object sender, RoutedEventArgs e)
         {
             if (!_loaded) return;
-            _player.Position = SeekSlider.Value;
+            Player.Instance.Position = SeekSlider.Value;
             _isdrag = false;
         }
 
@@ -475,7 +488,7 @@ namespace TCPlayer
         private void MainWin_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Properties.Settings.Default.LastVolume = (float)VolSlider.Value;
-            Properties.Settings.Default.DeviceID = _player.CurrentDeviceID;
+            Properties.Settings.Default.DeviceID = Player.Instance.CurrentDeviceID;
             App.SaveRecentUrls();
             Properties.Settings.Default.Save();
             if (App.NotifyIcon != null) App.NotifyIcon.RemoveIcon();
@@ -520,26 +533,6 @@ namespace TCPlayer
         private void RadioStations_ItemDoubleClcik(object sender, RoutedEventArgs e)
         {
             DoLoadAndPlay(new string[] { RadioStations.SelectedUrl });
-        }
-
-        private void ThumbPlay_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void MediaLib_Click(object sender, RoutedEventArgs e)
-        {
-            switch(_mediawindow.Visibility)
-            {
-                case Visibility.Collapsed:
-                case Visibility.Hidden:
-                    _mediawindow.Visibility = Visibility.Visible;
-                    _mediawindow.BringIntoView();
-                    break;
-                case Visibility.Visible:
-                    _mediawindow.Visibility = Visibility.Collapsed;
-                    break;
-            }
         }
     }
 }

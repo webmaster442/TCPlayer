@@ -22,8 +22,10 @@ using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Xml.Linq;
 using TCPlayer.Properties;
+using System.Linq;
 
 namespace TCPlayer.Code
 {
@@ -174,6 +176,40 @@ namespace TCPlayer.Code
             {
                 Helpers.ErrorDialog(ex, Resources.Error_FileLoad);
                 return null;
+            }
+        }
+
+        public static void BuildAuidoCdMenu(MenuItem target)
+        {
+            target.Items.Clear();
+            var q = from cd in DriveInfo.GetDrives()
+                    where cd.DriveType == DriveType.CDRom
+                    && cd.IsReady
+                    select cd;
+
+            var cds = from cd in q
+                      where cd.DriveFormat == "CDFS"
+                      select cd.Name;
+
+            foreach (var cd in cds)
+            {
+                MenuItem drive = new MenuItem();
+                drive.Header = cd;
+                drive.Click += async (s, e) =>
+                {
+                    var cddrive = ((MenuItem)s).Header.ToString();
+                    var result = await Task.Run(() =>
+                    {
+                        return Player.GetCdInfo(cddrive);
+                    });
+                };
+                target.Items.Add(drive);
+            }
+            if (cds.Count() < 1)
+            {
+                MenuItem drive = new MenuItem();
+                drive.Header = Properties.Resources.Playlist_NoDiscsFound;
+                target.Items.Add(drive);
             }
         }
     }

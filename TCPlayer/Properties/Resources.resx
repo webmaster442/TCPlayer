@@ -217,51 +217,6 @@ To Use media key functions please close other apps that may use the keys, then r
   <data name="Playlist_AddFolderDescription" xml:space="preserve">
     <value>Select folder to be added</value>
   </data>
-  <data name="Playlist_MenuAdd" xml:space="preserve">
-    <value>[ Add ]</value>
-  </data>
-  <data name="Playlist_MenuAddDirectory" xml:space="preserve">
-    <value>From directory ...</value>
-  </data>
-  <data name="Playlist_MenuAddFile" xml:space="preserve">
-    <value>From Files...</value>
-  </data>
-  <data name="Playlist_MenuAddPlaylist" xml:space="preserve">
-    <value>From Playlist ...</value>
-  </data>
-  <data name="Playlist_MenuAddUrl" xml:space="preserve">
-    <value>URL ...</value>
-  </data>
-  <data name="Playlist_MenuDisc" xml:space="preserve">
-    <value>[ Disc ]</value>
-  </data>
-  <data name="Playlist_MenuDiscNotfound" xml:space="preserve">
-    <value>No Drive found</value>
-  </data>
-  <data name="Playlist_MenuManage" xml:space="preserve">
-    <value>[ Manage ]</value>
-  </data>
-  <data name="Playlist_MenuManageClear" xml:space="preserve">
-    <value>Clear list ...</value>
-  </data>
-  <data name="Playlist_MenuManageDelete" xml:space="preserve">
-    <value>Delete selected</value>
-  </data>
-  <data name="Playlist_MenuManageSave" xml:space="preserve">
-    <value>Save list ...</value>
-  </data>
-  <data name="Playlist_MenuSort" xml:space="preserve">
-    <value>[ Sort ]</value>
-  </data>
-  <data name="Playlist_MenuSortAsc" xml:space="preserve">
-    <value>A-&gt;Z</value>
-  </data>
-  <data name="Playlist_MenuSortDesc" xml:space="preserve">
-    <value>Z-&gt;A</value>
-  </data>
-  <data name="Playlist_MenuSortRandom" xml:space="preserve">
-    <value>Random</value>
-  </data>
   <data name="Playlist_NoDiscsFound" xml:space="preserve">
     <value>No Discs found</value>
   </data>
@@ -330,21 +285,6 @@ To Use media key functions please close other apps that may use the keys, then r
   </data>
   <data name="DeviceChange_SelectLabel" xml:space="preserve">
     <value>Please select output device:</value>
-  </data>
-  <data name="SongData_CdTrack" xml:space="preserve">
-    <value>CD Track #{0}</value>
-  </data>
-  <data name="SongData_Error" xml:space="preserve">
-    <value>Tag read error</value>
-  </data>
-  <data name="SongData_Unknown" xml:space="preserve">
-    <value>Unknown</value>
-  </data>
-  <data name="SongData_UnknownArtist" xml:space="preserve">
-    <value>Unknown Artist</value>
-  </data>
-  <data name="SongData_UnknownSong" xml:space="preserve">
-    <value>Unknown Song</value>
   </data>
   <data name="Error_Details" xml:space="preserve">
     <value>Details: </value>
