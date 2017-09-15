@@ -238,6 +238,8 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
+            <applib:DateTimeTextBlock
+                DateTimeFormat="H:mm:ss"/>
         </Menu>
 
         <StackPanel
