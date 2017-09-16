@@ -19,6 +19,7 @@
 using AppLib.Common;
 using AppLib.Common.Extensions;
 using AppLib.Common.MessageHandler;
+using AppLib.WPF.Controls;
 using AppLib.WPF.MVVM;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ namespace TCPlayer
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, IDisposable, IMainWindow,  IMessageClient<string>
+    public partial class MainWindow : CoolWindow, IDisposable, IMainWindow,  IMessageClient<string>
     {
         private float _prevvol;
         private DispatcherTimer _SongTimer;

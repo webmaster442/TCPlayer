@@ -13,6 +13,13 @@
     </LinearGradientBrush>
 
     <SolidColorBrush x:Key="SpectrumPeakBrush" Color="#FF8c1919" />
+    <SolidColorBrush x:Key="Background" Color="#ecf0f1"/>
+    <SolidColorBrush x:Key="MenuBackground" Color="#2c3e50"/>
+    <SolidColorBrush x:Key="MenuForeground" Color="#ecf0f1"/>
+
+    <Style TargetType="applib:CoolWindow" x:Key="MainWin">
+        <Setter Property="Background" Value="{StaticResource Background}"/>
+    </Style>
 
     <Style TargetType="Button">
         <Setter Property="MinHeight" Value="48"/>
@@ -25,10 +32,59 @@
         <Setter Property="IconSize" Value="32"/>
     </Style>
 
+    <Style TargetType="Menu">
+        <Setter Property="Background" Value="{StaticResource MenuBackground}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource MenuBackground}"/>
+    </Style>
+
     <Style TargetType="applib:ImageAwesome" x:Key="Menu">
         <Setter Property="Width" Value="16"/>
         <Setter Property="Height" Value="16"/>
-        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Foreground" Value="{StaticResource MenuForeground}"/>
+    </Style>
+
+    <Style TargetType="MenuItem">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Background" Value="{StaticResource MenuBackground}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource MenuBackground}"/>
+        <Setter Property="Foreground" Value="{StaticResource MenuForeground}"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="Red"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="Separator" x:Key="sp">
+        <Setter Property="Background" Value="{StaticResource MenuBackground}"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Separator">
+                    <Rectangle
+                        Fill="{StaticResource MenuForeground}"
+                        Height="2"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="applib:AnimatedTabControl">
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+
+    <Style TargetType="TabItem">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="HeaderTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock 
+                        FontSize="14"
+                        Text="{Binding}">
+                    </TextBlock>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style TargetType="ListBox">

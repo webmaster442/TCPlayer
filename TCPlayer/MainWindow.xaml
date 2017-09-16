@@ -1,25 +1,27 @@
-﻿<Window x:Class="TCPlayer.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:props="clr-namespace:TCPlayer.Properties"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:controls="clr-namespace:TCPlayer.Controls"
-        xmlns:applib="http://github.com/webmaster442/AppLib/WPF"
-        xmlns:local="clr-namespace:TCPlayer"
-        x:Name="MainWin"
-        Icon="icon.png"
-        mc:Ignorable="d"
-        Left="{Binding Source={x:Static props:Settings.Default}, Path=Left, Mode=TwoWay}"
-        Top="{Binding Source={x:Static props:Settings.Default}, Path=Top, Mode=TwoWay}"
-        Topmost="{Binding Source={x:Static props:Settings.Default}, Path=TopMost, Mode=TwoWay}"
-        AllowDrop="True"
-        Drop="MainWin_Drop"
-        Closing="MainWin_Closing"
-        PreviewKeyDown="MainWin_PreviewKeyDown"
-        Title="TC Player"
-        Height="600"
-        Width="1024">
+﻿<applib:CoolWindow
+    x:Class="TCPlayer.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:props="clr-namespace:TCPlayer.Properties"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:TCPlayer.Controls"
+    xmlns:applib="http://github.com/webmaster442/AppLib/WPF"
+    xmlns:local="clr-namespace:TCPlayer"
+    Style="{StaticResource MainWin}"
+    x:Name="MainWin"
+    Icon="icon.png"
+    mc:Ignorable="d"
+    Left="{Binding Source={x:Static props:Settings.Default}, Path=Left, Mode=TwoWay}"
+    Top="{Binding Source={x:Static props:Settings.Default}, Path=Top, Mode=TwoWay}"
+    Topmost="{Binding Source={x:Static props:Settings.Default}, Path=TopMost, Mode=TwoWay}"
+    AllowDrop="True"
+    Drop="MainWin_Drop"
+    Closing="MainWin_Closing"
+    PreviewKeyDown="MainWin_PreviewKeyDown"
+    Title="TC Player"
+    Height="600"
+    Width="1024">
     <Window.DataContext>
         <local:MainWinViewModel/>
     </Window.DataContext>
@@ -101,149 +103,166 @@
             </Grid>
         </Border>
 
-        <Menu
-            Grid.Row="0">
-            <MenuItem Header="[ Player ]">
-                <MenuItem
-                    Header="Change output device ..."
-                    Command=""/>
-                <MenuItem 
-                    Header="Settings ..."
-                    Command="{Binding PlayerSettingsCommand}"/>
-                <MenuItem
-                    Header="About..."
-                    Command="{Binding PlayerAboutCommand}"/>
-                <Separator/>
-                <MenuItem 
-                    Header="Exit"
-                    Command="{Binding PlayerExitCommand}"/>
-            </MenuItem>
-            <MenuItem
-                x:Name="ChapterMenu"
-                Header="{applib:Translate PlayerTab_ButtonChapters}"/>
-            <MenuItem Header="[ PlayList ]">
-                <MenuItem 
-                    Header="Save List ..."
-                    Command="{Binding PlaylistSaveCommand}">
-                    <MenuItem.Icon>
-                        <applib:ImageAwesome 
-                            Icon="fa_floppy_o"
-                            Style="{StaticResource Menu}"/>
-                    </MenuItem.Icon>
+        <Grid
+            Grid.Row="0"
+            Height="30"
+            Background="{StaticResource MenuBackground}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Menu
+                Margin="5,0"
+                Grid.Column="0"
+                VerticalAlignment="Center">
+                <MenuItem Header="[ Player ]">
+                    <MenuItem
+                        Header="Change output device ..."
+                        Command=""/>
+                    <MenuItem 
+                        Header="Settings ..."
+                        Command="{Binding PlayerSettingsCommand}"/>
+                    <MenuItem
+                        Header="About..."
+                        Command="{Binding PlayerAboutCommand}"/>
+                    <Separator Style="{StaticResource sp}"/>
+                    <MenuItem 
+                        Header="Exit"
+                        Command="{Binding PlayerExitCommand}"/>
                 </MenuItem>
+                <MenuItem
+                    x:Name="ChapterMenu"
+                    Header="{applib:Translate PlayerTab_ButtonChapters}"/>
+                <MenuItem Header="[ PlayList ]">
+                    <MenuItem 
+                        Header="Save List ..."
+                        Command="{Binding PlaylistSaveCommand}">
+                        <MenuItem.Icon>
+                            <applib:ImageAwesome 
+                                Icon="fa_floppy_o"
+                                Style="{StaticResource Menu}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
 
-                <Separator/>
+                    <Separator Style="{StaticResource sp}"/>
 
-                <MenuItem
-                    Header="Add Directory ..."
-                    Command="{Binding PlaylistAddDirectoryCommnad}">
-                    <MenuItem.Icon>
-                        <applib:ImageAwesome 
-                            Icon="fa_folder_open"
-                            Style="{StaticResource Menu}"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem
-                    Header="Add Files ..."
-                    Command="{Binding PlaylistAddFileCommand}">
-                    <MenuItem.Icon>
-                        <applib:ImageAwesome 
-                            Icon="fa_file"
-                            Style="{StaticResource Menu}"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem
-                    Header="Add Playlist ...."
-                    Command="{Binding PlaylistAddPlaylistCommand}">
-                    <MenuItem.Icon>
-                        <applib:ImageAwesome 
-                            Icon="fa_list"
-                            Style="{StaticResource Menu}"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem
-                    Header="Add URL ..."
-                    Command="{Binding PlaylistAddUrlCommand}">
-                    <MenuItem.Icon>
-                        <applib:ImageAwesome 
-                            Icon="fa_link"
-                            Style="{StaticResource Menu}"/>
-                    </MenuItem.Icon>
-                </MenuItem>
+                    <MenuItem
+                        Header="Add Directory ..."
+                        Command="{Binding PlaylistAddDirectoryCommnad}">
+                        <MenuItem.Icon>
+                            <applib:ImageAwesome 
+                                Icon="fa_folder_open"
+                                Style="{StaticResource Menu}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
+                        Header="Add Files ..."
+                        Command="{Binding PlaylistAddFileCommand}">
+                        <MenuItem.Icon>
+                            <applib:ImageAwesome 
+                                Icon="fa_file"
+                                Style="{StaticResource Menu}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
+                        Header="Add Playlist ...."
+                        Command="{Binding PlaylistAddPlaylistCommand}">
+                        <MenuItem.Icon>
+                            <applib:ImageAwesome 
+                                Icon="fa_list"
+                                Style="{StaticResource Menu}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
+                        Header="Add URL ..."
+                        Command="{Binding PlaylistAddUrlCommand}">
+                        <MenuItem.Icon>
+                            <applib:ImageAwesome 
+                                Icon="fa_link"
+                                Style="{StaticResource Menu}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
 
-                <MenuItem 
-                    Header="Disc ..."
-                    SubmenuOpened="MenuItem_SubmenuOpened">
-                    <MenuItem Header="{applib:Translate Playlist_NoDiscsFound}"/>
-                </MenuItem>
+                    <MenuItem 
+                        Header="Disc ..."
+                        SubmenuOpened="MenuItem_SubmenuOpened">
+                        <MenuItem Header="{applib:Translate Playlist_NoDiscsFound}"/>
+                    </MenuItem>
 
-                <Separator/>
+                    <Separator Style="{StaticResource sp}"/>
 
-                <MenuItem
-                    Header="Sort: Ascending"
-                    Command="{Binding PlaylistSortAscCommand}">
-                    <MenuItem.Icon>
-                        <applib:ImageAwesome 
-                            Icon="fa_sort_asc"
-                            Style="{StaticResource Menu}"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem
+                    <MenuItem
+                        Header="Sort: Ascending"
+                        Command="{Binding PlaylistSortAscCommand}">
+                        <MenuItem.Icon>
+                            <applib:ImageAwesome 
+                                Icon="fa_sort_asc"
+                                Style="{StaticResource Menu}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
                     Header="Sort: Descending"
-                    Command="{Binding PlaylistSortDescCommand}">
-                    <MenuItem.Icon>
-                        <applib:ImageAwesome 
-                            Icon="fa_sort_desc"
-                            Style="{StaticResource Menu}"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem
-                    Header="Sort: Random order"
-                    Command="{Binding PlaylistSortRandomCommand}">
-                    <MenuItem.Icon>
-                        <applib:ImageAwesome 
+                        Command="{Binding PlaylistSortDescCommand}">
+                        <MenuItem.Icon>
+                            <applib:ImageAwesome 
+                                Icon="fa_sort_desc"
+                                Style="{StaticResource Menu}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
+                        Header="Sort: Random order"
+                        Command="{Binding PlaylistSortRandomCommand}">
+                        <MenuItem.Icon>
+                            <applib:ImageAwesome 
                                 Icon="fa_random"
                                 Style="{StaticResource Menu}"/>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem
-                    Header="Sort: Remove Duplicates"
-                    Command="{Binding PlaylistSortDisticntCommand}">
-                    <MenuItem.Icon>
-                        <applib:ImageAwesome 
-                            Icon="fa_diamond"
-                            Style="{StaticResource Menu}"/>
-                    </MenuItem.Icon>
-                </MenuItem>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
+                        Header="Sort: Remove Duplicates"
+                        Command="{Binding PlaylistSortDisticntCommand}">
+                        <MenuItem.Icon>
+                            <applib:ImageAwesome 
+                                Icon="fa_diamond"
+                                Style="{StaticResource Menu}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
 
-                <Separator/>
+                    <Separator Style="{StaticResource sp}"/>
 
-                <MenuItem 
-                    Header="Clear List"
-                    Command="{Binding PlaylistClearCommand}">
-                    <MenuItem.Icon>
-                        <applib:ImageAwesome 
+                    <MenuItem 
+                        Header="Clear List"
+                        Command="{Binding PlaylistClearCommand}">
+                        <MenuItem.Icon>
+                            <applib:ImageAwesome 
                             Icon="fa_trash"
                             Style="{StaticResource Menu}"/>
-                    </MenuItem.Icon>
-                </MenuItem>
+                        </MenuItem.Icon>
+                    </MenuItem>
 
-                <MenuItem 
-                    Header="Delete Selected"
-                    Command="{Binding PlaylistDeleteCommand}">
-                    <MenuItem.Icon>
-                        <applib:ImageAwesome 
-                            Icon="fa_remove"
-                            Style="{StaticResource Menu}"/>
-                    </MenuItem.Icon>
+                    <MenuItem 
+                        Header="Delete Selected"
+                        Command="{Binding PlaylistDeleteCommand}">
+                        <MenuItem.Icon>
+                            <applib:ImageAwesome 
+                                Icon="fa_remove"
+                                Style="{StaticResource Menu}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
-            </MenuItem>
+            </Menu>
             <applib:DateTimeTextBlock
-                DateTimeFormat="H:mm:ss"/>
-        </Menu>
-
+                Grid.Column="1"
+                Foreground="{StaticResource MenuForeground}"
+                Margin="10,0"
+                FontSize="14"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"/>
+        </Grid>
+        
         <StackPanel
             x:Name="ButtonBar"
+            Margin="5,5,0,0"
             HorizontalAlignment="Left"
             Orientation="Horizontal"
             Grid.Row="1">
@@ -265,12 +284,12 @@
                     Orientation="Horizontal">
                     <TextBlock
                         Text="{applib:Translate MainWin_ListLabel}"/>
-                    <TextBlock
-                        Text="{Binding ElementName=PlayList, Path=Count}"/>
+                    <TextBlock 
+                        Text="{Binding PlayListIndex}"/>
                     <TextBlock 
                         Text=" / "/>
-                    <TextBlock 
-                        Text="{Binding ElementName=PlayList, Path=Index}"/>
+                    <TextBlock
+                        Text="{Binding PlayList.Count}"/>
                 </StackPanel>
             </StackPanel>
 
@@ -367,7 +386,7 @@
             Grid.Row="3"
             Grid.RowSpan="2">
             <TabItem
-                Header="[ Now Playing ]">
+                Header="[ Playing ]">
                 <controls:NowPlaying
                     x:Name="SongDat"/>
             </TabItem>
@@ -386,4 +405,4 @@
             </TabItem>
         </applib:AnimatedTabControl>
     </Grid>
-</Window>
+</applib:CoolWindow>
