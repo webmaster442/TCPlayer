@@ -73,6 +73,10 @@
         <Setter Property="Background" Value="Transparent"/>
     </Style>
 
+    <Style TargetType="TreeView">
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+
     <Style TargetType="TabItem">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="HeaderTemplate">

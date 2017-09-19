@@ -36,7 +36,7 @@ namespace TCPlayer
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : CoolWindow, IDisposable, IMainWindow,  IMessageClient<string>
+    public partial class MainWindow : CoolWindow, IDisposable, IMainWindow, IMessageClient<string>
     {
         private float _prevvol;
         private DispatcherTimer _SongTimer;
@@ -150,15 +150,16 @@ namespace TCPlayer
 
         public bool CanDoNexPlaylisttTrack()
         {
-            return (PlaylistView.SelectedIndex + 1) <= (ViewModel.PlayList.Count - 1);
+            return (ViewModel.PlayListIndex + 1) <= (ViewModel.PlayList.Count - 1);
         }
 
         public void NextPlaylistTrack()
         {
-            if (PlaylistView.SelectedIndex + 1 < ViewModel.PlayList.Count)
+            if (ViewModel.PlayListIndex + 1 < ViewModel.PlayList.Count)
             {
-                PlaylistView.SelectedIndex += 1;
-                ViewModel.PlayListIndex = PlaylistView.SelectedIndex + 1;
+                ViewModel.PlayListIndex += 1;
+                PlaylistView.SelectedIndex = ViewModel.PlayListIndex;
+
             }
         }
 
@@ -166,10 +167,10 @@ namespace TCPlayer
         {
             Dispatcher.Invoke(() =>
             {
-                if (PlaylistView.SelectedIndex - 1 > -1)
+                if (ViewModel.PlayListIndex - 1 > -1)
                 {
-                    PlaylistView.SelectedIndex -= 1;
-                    ViewModel.PlayListIndex = PlaylistView.SelectedIndex + 1;
+                    ViewModel.PlayListIndex -= 1;
+                    PlaylistView.SelectedIndex = ViewModel.PlayListIndex;
                 }
             });
         }
@@ -215,8 +216,8 @@ namespace TCPlayer
         {
             get
             {
-                if (PlaylistView.SelectedIndex == -1) return null;
-                return ViewModel.PlayList[PlaylistView.SelectedIndex];
+                if (ViewModel.PlayListIndex == -1) return null;
+                return ViewModel.PlayList[ViewModel.PlayListIndex];
             }
         }
 
@@ -268,40 +269,27 @@ namespace TCPlayer
         {
             if (!_loaded) return;
 
-            if ((IsActive || Topmost) && (MainView.SelectedIndex == 0))
-            {
-                if (!Player.Instance.IsPlaying) Player.Instance.IsPlaying = true;
+            if (!Player.Instance.IsPlaying) Player.Instance.IsPlaying = true;
 
-                if (_isdrag)
-                {
-                    TbCurrTime.Text = TimeSpan.FromSeconds(SeekSlider.Value).ToShortTime();
-                    return;
-                }
-                var pos = TimeSpan.FromSeconds(Player.Instance.Position);
-                TbCurrTime.Text = pos.ToShortTime();
-                if (Player.Instance.IsStream) SeekSlider.Value = 0;
-                else
-                {
-                    SeekSlider.Value = Player.Instance.Position;
-                    Taskbar.ProgressValue = SeekSlider.Value / SeekSlider.Maximum;
-                }
-                int l, r;
-                Player.Instance.VolumeValues(out l, out r);
-                if (l < 0) l *= -1;
-                if (r < 0) r *= -1;
-                VuR.Value = l;
-                VuL.Value = r;
+            if (_isdrag)
+            {
+                TbCurrTime.Text = TimeSpan.FromSeconds(SeekSlider.Value).ToShortTime();
+                return;
             }
+            var pos = TimeSpan.FromSeconds(Player.Instance.Position);
+            TbCurrTime.Text = pos.ToShortTime();
+            if (Player.Instance.IsStream) SeekSlider.Value = 0;
             else
             {
-                if (Player.Instance.IsStream) SeekSlider.Value = 0;
-                else
-                {
-                    SeekSlider.Value = Player.Instance.Position;
-                    Taskbar.ProgressValue = SeekSlider.Value / SeekSlider.Maximum;
-                }
-                Player.Instance.IsPlaying = false;
+                SeekSlider.Value = Player.Instance.Position;
+                Taskbar.ProgressValue = SeekSlider.Value / SeekSlider.Maximum;
             }
+            int l, r;
+            Player.Instance.VolumeValues(out l, out r);
+            if (l < 0) l *= -1;
+            if (r < 0) r *= -1;
+            VuR.Value = l;
+            VuL.Value = r;
         }
 
         private void DoAction(object sender, RoutedEventArgs e)
@@ -436,7 +424,7 @@ namespace TCPlayer
         {
             if (!_loaded) return;
 
-            ViewModel.PlayListIndex  = PlaylistView.SelectedIndex;
+            ViewModel.PlayListIndex = PlaylistView.SelectedIndex;
             if (ViewModel.PlayListIndex < 0) return;
             ViewModel.PlayListIndex = ViewModel.PlayListIndex + 1;
 
@@ -507,7 +495,7 @@ namespace TCPlayer
             {
                 if (Properties.Settings.Default.ConfirmExit)
                 {
-                    var q = MessageBox.Show(Properties.Resources.MainWin_ExtitConfirmMessage, 
+                    var q = MessageBox.Show(Properties.Resources.MainWin_ExtitConfirmMessage,
                                             Properties.Resources.MainWin_ExitConfirmTitle,
                                             MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
                     if (q == MessageBoxResult.Yes) Close();
@@ -523,7 +511,7 @@ namespace TCPlayer
             ofd.Filter = string.Format("Auduio Files|{0}|Playlists|{1}", App.Formats, App.Playlists);
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                DoLoadAndPlay(ofd.FileNames);   
+                DoLoadAndPlay(ofd.FileNames);
             }
         }
 

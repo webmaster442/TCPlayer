@@ -39,6 +39,7 @@ namespace TCPlayer
 
             //Playlist commands
             PlayList = new ObservableCollection<string>();
+            PlayListIndex = -1;
             PlaylistSaveCommand = DelegateCommand.ToCommand(PlaylistSave);
             PlaylistAddDirectoryCommnad = DelegateCommand.ToCommand(PlaylistAddDirectory);
             PlaylistAddFileCommand = DelegateCommand.ToCommand(PlaylistAddFile);

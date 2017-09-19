@@ -118,7 +118,7 @@
                 <MenuItem Header="[ Player ]">
                     <MenuItem
                         Header="Change output device ..."
-                        Command=""/>
+                        Command="{Binding PlayerChangeOutputCommand}"/>
                     <MenuItem 
                         Header="Settings ..."
                         Command="{Binding PlayerSettingsCommand}"/>

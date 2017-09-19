@@ -33,5 +33,15 @@ namespace TCPlayer.Code
         {
             return string.Format("{0:00}:{1:00}:{2:00}", ts.Hours, ts.Minutes, ts.Seconds);
         }
+
+        public static List<string> Clone(this ObservableCollection<string> source)
+        {
+            List<string> ret = new List<string>(source.Count);
+            foreach(var item in source)
+            {
+                ret.Add(string.Copy(item));
+            }
+            return ret;
+        }
     }
 }

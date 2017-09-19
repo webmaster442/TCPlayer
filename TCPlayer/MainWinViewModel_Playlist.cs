@@ -64,6 +64,7 @@ namespace TCPlayer
         {
             View?.SetPage(TabPage.PlayList);
             PlayList.Clear();
+            PlayListIndex = -1;
         }
 
         private void PlaylistSave()
@@ -164,7 +165,7 @@ namespace TCPlayer
         private void PlaylistSortAsc()
         {
             View?.SetPage(TabPage.PlayList);
-            var q = from i in PlayList orderby i ascending select i;
+            var q = from i in PlayList.Clone() orderby i ascending select i;
             var sorted = q.ToList();
             PlayList.Clear();
             PlayList.AddRange(sorted);
@@ -173,7 +174,7 @@ namespace TCPlayer
         private void PlaylistSortDesc()
         {
             View?.SetPage(TabPage.PlayList);
-            var q = from i in PlayList orderby i descending select i;
+            var q = from i in PlayList.Clone() orderby i descending select i;
             PlayList.Clear();
             PlayList.AddRange(q);
         }
@@ -181,7 +182,7 @@ namespace TCPlayer
         private void PlaylistSortRandom()
         {
             View?.SetPage(TabPage.PlayList);
-            var q = from i in PlayList orderby Guid.NewGuid() select i;
+            var q = from i in PlayList.Clone() orderby Guid.NewGuid() select i;
             PlayList.Clear();
             PlayList.AddRange(q);
         }
@@ -189,7 +190,7 @@ namespace TCPlayer
         private void PlaylistSortDisticnt()
         {
             View?.SetPage(TabPage.PlayList);
-            var q = PlayList.Distinct();
+            var q = PlayList.Clone().Distinct();
             PlayList.Clear();
             PlayList.AddRange(q);
         }
