@@ -9,12 +9,12 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <TextBlock Text="{applib:Translate Settings_SettingLabel}"
-                   FontWeight="Bold"
-                   Margin="5,0"/>
+        <TextBlock 
+            Style="{StaticResource Title}"
+            Text="{applib:Translate Settings_SettingLabel}"/>
         <ScrollViewer Grid.Row="1">
             <StackPanel>
                 <CheckBox
@@ -44,7 +44,6 @@
                 <Button
                     Margin="25,2"
                     HorizontalAlignment="Left"
-                    Foreground="White"
                     x:Name="BtnClearHistory"
                     Click="BtnClearHistory_Click"
                     Content="{applib:Translate Settings_ClearUrlHistory}"/>
@@ -53,7 +52,6 @@
                     Text="{applib:Translate Settings_SoundfontPath}"/>
                 <Button
                     x:Name="BtnSoundFont"
-                    Foreground="White"
                     MaxWidth="200"
                     MinWidth="80"
                     Margin="25,2"

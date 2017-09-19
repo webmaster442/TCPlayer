@@ -63,38 +63,39 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Border
-            Panel.ZIndex="100"
-            BorderThickness="3"
-            BorderBrush="Yellow"
+            Style="{StaticResource Overlay}"
             Grid.Row="1"
-            Visibility="Collapsed"
             Grid.RowSpan="10"
-            x:Name="OverLay"
-            Margin="10"
-            Background="Black">
+            Visibility="Collapsed"
+            x:Name="OverLay">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
-                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <StackPanel 
                     Grid.Row="1"
                     HorizontalAlignment="Right"
-                    Orientation="Horizontal">
+                    Orientation="Horizontal"
+                    Margin="10">
                     <Button
+                        FontSize="16"
                         Content="[ Ok ]"
+                        MinHeight="0"
+                        Height="30"
                         Width="100"
                         x:Name="OverLayOk"
                         Click="OverLayOk_Click"
-                        Foreground="White"
                         Margin="5,0"/>
                     <Button 
+                        FontSize="16"
                         Content="[ Cancel ]"
                         Width="100"
+                        Height="30"
+                        MinHeight="0"
                         x:Name="OverLayClose"
                         Click="OverLayClose_Click"
-                        Foreground="White"
-                        Margin="5,0"/>
+                        Margin="10,0"/>
                 </StackPanel>
                 <Grid
                     Grid.Row="0"

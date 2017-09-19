@@ -137,4 +137,25 @@
         </Setter>
     </Style>
 
+    <Style TargetType="Border" x:Key="Overlay">
+        <Setter Property="Panel.ZIndex" Value="100"/>
+        <Setter Property="BorderThickness" Value="3"/>
+        <Setter Property="BorderBrush" Value="Orange"/>
+        <Setter Property="Margin" Value="15"/>
+        <Setter Property="Background" Value="{StaticResource MenuBackground}"/>
+        <Setter Property="Opacity" Value="0.98"/>
+    </Style>
+
+    <Style TargetType="CheckBox">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Foreground" Value="{StaticResource MenuForeground}"/>
+    </Style>
+
+    <Style TargetType="TextBlock" x:Key="Title">
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="{StaticResource MenuForeground}"/>
+        <Setter Property="Margin" Value="10"/>
+    </Style>
+
 </ResourceDictionary>

@@ -426,7 +426,7 @@ namespace TCPlayer
 
             ViewModel.PlayListIndex = PlaylistView.SelectedIndex;
             if (ViewModel.PlayListIndex < 0) return;
-            ViewModel.PlayListIndex = ViewModel.PlayListIndex + 1;
+            //ViewModel.PlayListIndex = ViewModel.PlayListIndex + 1;
 
             StartPlay();
             SetPage(TabPage.NowPlaying);
