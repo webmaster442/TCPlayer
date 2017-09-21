@@ -286,7 +286,7 @@
                     <TextBlock
                         Text="{applib:Translate MainWin_ListLabel}"/>
                     <TextBlock 
-                        Text="{Binding PlayListIndex}"/>
+                        Text="{Binding CorrectedPlayListIndex}"/>
                     <TextBlock 
                         Text=" / "/>
                     <TextBlock
@@ -397,6 +397,10 @@
                     x:Name="PlaylistView"
                     ItemsSource="{Binding PlayList}"
                     MouseDoubleClick="PlayList_ItemDoubleClcik"/>
+            </TabItem>
+            <TabItem 
+                Header="File Browser">
+                <applib:FileExplorer/>
             </TabItem>
             <TabItem
                 Header="{applib:Translate MainWin_RadioTab}">

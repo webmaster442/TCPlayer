@@ -8,6 +8,8 @@ namespace TCPlayer
 {
     public partial class MainWinViewModel: ViewModel<IMainWindow>
     {
+        private int _playlistindex;
+
         //General Player commands
         public DelegateCommand PlayerAboutCommand { get; private set; }
         public DelegateCommand PlayerSettingsCommand { get; private set; }
@@ -27,7 +29,27 @@ namespace TCPlayer
         public DelegateCommand PlaylistDeleteCommand { get; private set; }
 
         public ObservableCollection<string> PlayList { get; private set; }
-        public int PlayListIndex { get; set; }
+
+        public int PlayListIndex
+        {
+            get { return _playlistindex; }
+            set
+            {
+                SetValue(ref _playlistindex, value);
+                NotifyPropertyChanged("CorrectedPlayListIndex");
+            }
+        }
+
+        public int CorrectedPlayListIndex
+        {
+            get
+            {
+                if (_playlistindex < 0 && PlayList.Count == 0)
+                    return 0;
+                else
+                    return _playlistindex + 1;
+            }
+        }
 
         public MainWinViewModel()
         {
