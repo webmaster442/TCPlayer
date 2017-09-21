@@ -152,19 +152,7 @@ namespace TCPlayer.Controls
                 }
 
                 TagLib.File tags = TagLib.File.Create(file);
-                if (tags.Tag.Pictures.Length > 0)
-                {
-                    var picture = tags.Tag.Pictures[0].Data;
-                    MemoryStream ms = new MemoryStream(picture.Data);
-                    BitmapImage ret = new BitmapImage();
-                    ret.BeginInit();
-                    ret.StreamSource = ms;
-                    ret.DecodePixelWidth = 200;
-                    ret.CacheOption = BitmapCacheOption.OnLoad;
-                    ret.EndInit();
-                    ms.Close();
-                    Cover = ret;
-                }
+                ColorizeUIandSetCover(tags);
                 var Year = tags.Tag.Year.ToString();
                 var Artist = "";
                 if (tags.Tag.Performers != null && tags.Tag.Performers.Length != 0) Artist = tags.Tag.Performers[0];
@@ -176,6 +164,34 @@ namespace TCPlayer.Controls
             catch (Exception)
             {
                 Reset();
+            }
+        }
+
+        private void ColorizeUIandSetCover(TagLib.File tags)
+        {
+            if (tags.Tag.Pictures.Length > 0)
+            {
+                var picture = tags.Tag.Pictures[0].Data;
+                MemoryStream ms = new MemoryStream(picture.Data);
+                BitmapImage ret = new BitmapImage();
+                ret.BeginInit();
+                ret.StreamSource = ms;
+                ret.DecodePixelWidth = 200;
+                ret.CacheOption = BitmapCacheOption.OnLoad;
+                ret.EndInit();
+                Cover = ret;
+
+                ms.Seek(0, SeekOrigin.Begin);
+                BitmapImage bg = new BitmapImage();
+                bg.BeginInit();
+                bg.StreamSource = ms;
+                bg.DecodePixelWidth = 4;
+                bg.DecodePixelHeight = 4;
+                bg.CacheOption = BitmapCacheOption.OnLoad;
+                bg.EndInit();
+                ms.Close();
+                DataLayer.Background = new ImageBrush(bg);
+
             }
         }
 
@@ -201,6 +217,7 @@ namespace TCPlayer.Controls
 
         public void Reset()
         {
+            DataLayer.Background = new SolidColorBrush(Colors.Transparent);
             Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/audio-file.png", UriKind.Relative));
             InfoText.Text = Properties.Resources.SongData_Error;
         }
