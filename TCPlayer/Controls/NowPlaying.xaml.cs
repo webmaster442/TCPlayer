@@ -1,4 +1,5 @@
-﻿using ManagedBass;
+﻿using AppLib.WPF.Extensions;
+using ManagedBass;
 using System;
 using System.ComponentModel;
 using System.IO;
@@ -176,21 +177,16 @@ namespace TCPlayer.Controls
                 BitmapImage ret = new BitmapImage();
                 ret.BeginInit();
                 ret.StreamSource = ms;
-                ret.DecodePixelWidth = 200;
+                ret.DecodePixelWidth = 300;
                 ret.CacheOption = BitmapCacheOption.OnLoad;
                 ret.EndInit();
                 Cover = ret;
 
-                ms.Seek(0, SeekOrigin.Begin);
-                BitmapImage bg = new BitmapImage();
-                bg.BeginInit();
-                bg.StreamSource = ms;
-                bg.DecodePixelWidth = 4;
-                bg.DecodePixelHeight = 4;
-                bg.CacheOption = BitmapCacheOption.OnLoad;
-                bg.EndInit();
+                var c = ret.GetDominantColor();
+
                 ms.Close();
-                DataLayer.Background = new ImageBrush(bg);
+                DataLayer.Background = new SolidColorBrush(c);
+                
 
             }
         }

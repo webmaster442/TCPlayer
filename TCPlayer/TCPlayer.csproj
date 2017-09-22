@@ -83,11 +83,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="MainWinViewModel_Commons.cs" />
+    <Compile Include="MainWinViewModel_FileExplorer.cs" />
     <Compile Include="MainWinViewModel_Playlist.cs" />
-    <Compile Include="Obsolete\MediaWindow.xaml.cs">
-      <DependentUpon>MediaWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Obsolete\MediaWindowViewModel.cs" />
     <Compile Include="Lib\WPFSoundVis\FFTDataSize.cs" />
     <Compile Include="Lib\WPFSoundVis\ISoundPlayer.cs" />
     <Compile Include="Lib\WPFSoundVis\Spectrum Analyzer\BarHeightScalingStyles.cs" />
@@ -148,10 +145,6 @@
     <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
-    </Page>
-    <Page Include="Obsolete\MediaWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\RadioStations.xaml">
       <SubType>Designer</SubType>
@@ -348,6 +341,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Obsolete\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

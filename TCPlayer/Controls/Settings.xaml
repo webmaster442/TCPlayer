@@ -18,26 +18,32 @@
         <ScrollViewer Grid.Row="1">
             <StackPanel>
                 <CheckBox
+                    Style="{StaticResource SettingsWindow}"
                     Margin="2"
                     IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=SaveVolume, Mode=TwoWay}"
                     Content="{applib:Translate Settings_SaveVolume}"/>
                 <CheckBox
+                    Style="{StaticResource SettingsWindow}"
                     Margin="2"
                     IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=SaveDevice, Mode=TwoWay}"
                     Content="{applib:Translate Settings_SaveDevice}"/>
                 <CheckBox
+                    Style="{StaticResource SettingsWindow}"
                     Margin="2"
                     IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=RegisterMultimediaKeys, Mode=TwoWay}"
                     Content="{applib:Translate Settings_Mediakeys}"/>
                 <CheckBox
+                     Style="{StaticResource SettingsWindow}"
                     Margin="2"
                     IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=TrackChangeNotification, Mode=TwoWay}"
                     Content="{applib:Translate Settings_Notify}"/>
                 <CheckBox
+                     Style="{StaticResource SettingsWindow}"
                     Margin="2"
                     IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=ConfirmExit, Mode=TwoWay}"
                     Content="{applib:Translate Settings_Confirm}"/>
                 <CheckBox
+                    Style="{StaticResource SettingsWindow}"
                     Margin="2"
                     IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=RememberRecentURLs, Mode=TwoWay}"
                     Content="{applib:Translate Settings_RememberUrl}"/>

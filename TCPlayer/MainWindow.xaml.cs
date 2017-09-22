@@ -36,7 +36,7 @@ namespace TCPlayer
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : CoolWindow, IDisposable, IMainWindow, IMessageClient<string>
+    public partial class MainWindow : CoolWindow, IDisposable, IMainWindow
     {
         private float _prevvol;
         private DispatcherTimer _SongTimer;
@@ -51,15 +51,9 @@ namespace TCPlayer
             private set;
         }
 
-        public UId MessageReciverID
-        {
-            get { return new UId(); }
-        }
-
         public MainWindow()
         {
             InitializeComponent();
-            Messager.Instance.SubScribe(this);
             Player.Instance.ChangeDevice(); //init
             _prevvol = 1.0f;
             _chapterprovider = new ChapterProvider(ChapterMenu);
@@ -140,14 +134,6 @@ namespace TCPlayer
             Dispose(true);
         }
 
-        public void HandleMessage(string message)
-        {
-            if (!string.IsNullOrEmpty(message))
-            {
-                DoLoadAndPlay(new string[] { message });
-            }
-        }
-
         public bool CanDoNexPlaylisttTrack()
         {
             return (ViewModel.PlayListIndex + 1) <= (ViewModel.PlayList.Count - 1);
@@ -190,6 +176,11 @@ namespace TCPlayer
             DoBringIntoView();
         }
 
+        public void DoLoadAndPlay(string item)
+        {
+            DoLoadAndPlay(new string[] { item });
+        }
+
         private void DoBringIntoView()
         {
             if (!Topmost)
@@ -219,6 +210,11 @@ namespace TCPlayer
                 if (ViewModel.PlayListIndex == -1) return null;
                 return ViewModel.PlayList[ViewModel.PlayListIndex];
             }
+        }
+
+        public IEnumerable<string> FileExplorerSelectedFiles
+        {
+            get { return FileExplorer.SelectedFiles; }
         }
 
         public void DeleteSelectedFromPlaylist()

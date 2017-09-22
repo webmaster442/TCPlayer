@@ -12,7 +12,8 @@ namespace TCPlayer
     {
         NowPlaying = 0,
         PlayList = 1,
-        Radio = 2
+        FileBrowser = 2,
+        Radio = 3
     }
 
     public interface IMainWindow: IView
@@ -31,5 +32,19 @@ namespace TCPlayer
         /// </summary>
         /// <param name="page">Page id</param>
         void SetPage(TabPage page);
+        /// <summary>
+        /// Selected files in the file explorer
+        /// </summary>
+        IEnumerable<string> FileExplorerSelectedFiles { get; }
+        /// <summary>
+        /// Load items to playlist and play them
+        /// </summary>
+        /// <param name="items">Items to add</param>
+        void DoLoadAndPlay(IEnumerable<string> items);
+        /// <summary>
+        /// Play a single file
+        /// </summary>
+        /// <param name="item">file to play</param>
+        void DoLoadAndPlay(string item);
     }
 }

@@ -28,6 +28,10 @@ namespace TCPlayer
         public DelegateCommand PlaylistClearCommand { get; private set; }
         public DelegateCommand PlaylistDeleteCommand { get; private set; }
 
+        public DelegateCommand FileExplorerNavigateHomeCommand { get; private set; }
+        public DelegateCommand FileExplorerPlaySelectedCommand { get; private set; }
+        public DelegateCommand FileExplorerAddToPlaylistCommand { get; private set; }
+
         public ObservableCollection<string> PlayList { get; private set; }
 
         public int PlayListIndex
@@ -73,6 +77,10 @@ namespace TCPlayer
             PlaylistSortDisticntCommand = DelegateCommand.ToCommand(PlaylistSortDisticnt);
             PlaylistClearCommand = DelegateCommand.ToCommand(PlaylistClear);
             PlaylistDeleteCommand = DelegateCommand.ToCommand(PlaylistDelete);
+
+            FileExplorerNavigateHomeCommand = DelegateCommand.ToCommand(FileExplorerNavigateHome);
+            FileExplorerAddToPlaylistCommand = DelegateCommand.ToCommand(FileExplorerAddToPlaylist);
+            FileExplorerPlaySelectedCommand = DelegateCommand.ToCommand(FileExplorerPlaySelected);
         }
 
         private void PlayerExit()

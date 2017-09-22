@@ -21,12 +21,12 @@
         <Setter Property="Background" Value="{StaticResource Background}"/>
     </Style>
 
-    <Style TargetType="Button">
+    <Style TargetType="Button" x:Key="PlayButtons">
         <Setter Property="MinHeight" Value="48"/>
         <Setter Property="MinWidth" Value="48"/>
     </Style>
 
-    <Style TargetType="applib:FaImageButton">
+    <Style TargetType="applib:FaImageButton" x:Key="PlayImgButtons">
         <Setter Property="MinHeight" Value="48"/>
         <Setter Property="MinWidth" Value="48"/>
         <Setter Property="IconSize" Value="32"/>
@@ -146,7 +146,7 @@
         <Setter Property="Opacity" Value="0.98"/>
     </Style>
 
-    <Style TargetType="CheckBox">
+    <Style TargetType="CheckBox" x:Key="SettingsWindow">
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="Foreground" Value="{StaticResource MenuForeground}"/>
     </Style>

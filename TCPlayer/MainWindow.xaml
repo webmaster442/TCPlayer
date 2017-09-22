@@ -251,6 +251,41 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
+
+                <MenuItem Header="[ File Explorer ]">
+                    <MenuItem
+                        Command="{Binding FileExplorerNavigateHomeCommand}"
+                        Header="Navigate to start">
+                        <MenuItem.Icon>
+                            <applib:ImageAwesome 
+                                Icon="fa_home"
+                                Style="{StaticResource Menu}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator
+                        Style="{StaticResource sp}"/>
+                    <MenuItem 
+                        IsEnabled="{Binding ElementName=FileExplorer, Path=HasFilesSelected}"
+                        Command="{Binding FileExplorerPlaySelectedCommand}"
+                        Header="Play selected">
+                        <MenuItem.Icon>
+                            <applib:ImageAwesome 
+                                Icon="fa_play"
+                                Style="{StaticResource Menu}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
+                        IsEnabled="{Binding ElementName=FileExplorer, Path=HasFilesSelected}"
+                        Command="{Binding FileExplorerAddToPlaylistCommand}"
+                        Header="Add Selected to Playlist">
+                        <MenuItem.Icon>
+                            <applib:ImageAwesome 
+                                Icon="fa_play"
+                                Style="{StaticResource Menu}"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+
             </Menu>
             <applib:DateTimeTextBlock
                 Grid.Column="1"
@@ -298,36 +333,43 @@
                 Icon="fa_eject"
                 x:Name="BtnOpen"
                 Click="DoAction"
+                Style="{StaticResource PlayImgButtons}"
                 ToolTip="{applib:Translate PlayerTab_ButtonOpen}"
                 Margin="5,0"/>
             <Button
+                Style="{StaticResource PlayButtons}"
                 ToolTip="{applib:Translate PlayerTab_ButtonPlayPause}"
                 x:Name="BtnPlayPause"
                 Click="DoAction"
                 Content="{StaticResource IconPlayPause}"/>
             <applib:FaImageButton
+                Style="{StaticResource PlayImgButtons}"
                 Icon="fa_stop"
                 Margin="5,0"
                 ToolTip="{applib:Translate PlayerTab_ButtonStop}"
                 x:Name="BtnStop"
                 Click="DoAction"/>
             <applib:FaImageButton
+                Style="{StaticResource PlayImgButtons}"
                 Icon="fa_backward"
                 ToolTip="{applib:Translate PlayerTab_ButtonSeekBack}"
                 x:Name="BtnSeekBack"
                 Click="DoAction"/>
             <applib:FaImageButton
+                Style="{StaticResource PlayImgButtons}"
                 Icon="fa_forward"
                 ToolTip="{applib:Translate PlayerTab_ButtonSeekForward}"
                 x:Name="BtnSeekFwd"
                 Click="DoAction"
                 Margin="5,0"/>
             <applib:FaImageButton
+                Style="{StaticResource PlayImgButtons}"
                 Icon="fa_fast_backward"
                 ToolTip="{applib:Translate PlayerTab_ButtonPrevousTrack}"
                 x:Name="BtnPrevTrack"
                 Click="DoAction"/>
             <applib:FaImageButton
+                Style="{StaticResource PlayImgButtons}"
                 Icon="fa_fast_forward"
                 ToolTip="{applib:Translate PlayerTab_ButtonNextTrack}"
                 x:Name="BtnNextTrack"
@@ -399,8 +441,9 @@
                     MouseDoubleClick="PlayList_ItemDoubleClcik"/>
             </TabItem>
             <TabItem 
-                Header="File Browser">
-                <applib:FileExplorer/>
+                Header="[ File Browser ]">
+                <applib:FileExplorer
+                    x:Name="FileExplorer"/>
             </TabItem>
             <TabItem
                 Header="{applib:Translate MainWin_RadioTab}">
