@@ -417,6 +417,7 @@
 
         <Slider
             Margin="10,10"
+            IsMoveToPointEnabled="True"
             x:Name="SeekSlider"
             Thumb.DragCompleted="SeekSlider_DragCompleted"
             Thumb.DragStarted="SeekSlider_DragStarted"
@@ -424,7 +425,7 @@
             Grid.Row="2"/>
 
         <applib:AnimatedTabControl
-            TabStripPlacement="Left"
+            TabStripPlacement="Top"
             x:Name="MainView"
             Grid.Row="3"
             Grid.RowSpan="2">

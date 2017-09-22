@@ -41,7 +41,8 @@ namespace TCPlayer
         private float _prevvol;
         private DispatcherTimer _SongTimer;
         private bool _loaded;
-        private bool _isdrag;
+        private bool _skiptimer;
+        private bool _timerupdate;
         private KeyboardHook _keyboardhook;
         private ChapterProvider _chapterprovider;
 
@@ -267,7 +268,7 @@ namespace TCPlayer
 
             if (!Player.Instance.IsPlaying) Player.Instance.IsPlaying = true;
 
-            if (_isdrag)
+            if (_skiptimer)
             {
                 TbCurrTime.Text = TimeSpan.FromSeconds(SeekSlider.Value).ToShortTime();
                 return;
@@ -277,8 +278,10 @@ namespace TCPlayer
             if (Player.Instance.IsStream) SeekSlider.Value = 0;
             else
             {
+                _timerupdate = true;
                 SeekSlider.Value = Player.Instance.Position;
                 Taskbar.ProgressValue = SeekSlider.Value / SeekSlider.Maximum;
+                _timerupdate = false;
             }
             int l, r;
             Player.Instance.VolumeValues(out l, out r);
@@ -430,14 +433,20 @@ namespace TCPlayer
 
         private void _chapterprovider_ChapterClicked(object sender, double e)
         {
-            _isdrag = true;
+            _skiptimer = true;
             Player.Instance.Position = e;
-            _isdrag = false;
+            _skiptimer = false;
         }
 
         private void SeekSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (_isdrag) return;
+            if (_skiptimer) return;
+            if (!_timerupdate)
+            {
+                _skiptimer = true;
+                Player.Instance.Position = SeekSlider.Value;
+                _skiptimer = false;
+            }
             if (SeekSlider.Maximum - SeekSlider.Value < 0.5)
             {
                 if (CanDoNexPlaylisttTrack())
@@ -457,13 +466,13 @@ namespace TCPlayer
         {
             if (!_loaded) return;
             Player.Instance.Position = SeekSlider.Value;
-            _isdrag = false;
+            _skiptimer = false;
         }
 
         private void SeekSlider_DragStarted(object sender, RoutedEventArgs e)
         {
             if (!_loaded) return;
-            _isdrag = true;
+            _skiptimer = true;
         }
 
         private void MainWin_Closing(object sender, System.ComponentModel.CancelEventArgs e)

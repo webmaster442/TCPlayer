@@ -310,68 +310,7 @@
         </Setter>
     </Style>
 
-    <ControlTemplate TargetType="{x:Type Slider}" x:Key="SliderHorizontal">
-        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="0"/>
-                    <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <ProgressBar x:Name="TrackBackground"
-                             VerticalAlignment="Center"
-                             Height="5" 
-                             Grid.Row="1"
-                             Margin="5,0"
-                             Minimum="{TemplateBinding Minimum}"
-                             Maximum="{TemplateBinding Maximum}"
-                             Value="{TemplateBinding Value}"/>
-                <Track x:Name="PART_Track" Grid.Row="1">
-                    <Track.DecreaseRepeatButton>
-                        <RepeatButton Command="{x:Static Slider.DecreaseLarge}"/>
-                    </Track.DecreaseRepeatButton>
-                    <Track.IncreaseRepeatButton>
-                        <RepeatButton Command="{x:Static Slider.IncreaseLarge}"/>
-                    </Track.IncreaseRepeatButton>
-                    <Track.Thumb>
-                        <Thumb x:Name="Thumb" Background="Transparent"/>
-                    </Track.Thumb>
-                </Track>
-            </Grid>
-        </Border>
-    </ControlTemplate>
 
-    <ControlTemplate TargetType="{x:Type Slider}" x:Key="SliderVertical">
-        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0"/>
-                    <ColumnDefinition Width="Auto" MinWidth="{TemplateBinding MinWidth}"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <ProgressBar x:Name="TrackBackground"
-                             HorizontalAlignment="Center"
-                             Orientation="Vertical"
-                             Width="5"
-                             Grid.Column="1"
-                             Margin="0,5"
-                             Minimum="{TemplateBinding Minimum}"
-                             Maximum="{TemplateBinding Maximum}"
-                             Value="{TemplateBinding Value}"/>
-                <Track x:Name="PART_Track" Grid.Column="1">
-                    <Track.DecreaseRepeatButton>
-                        <RepeatButton Command="{x:Static Slider.DecreaseLarge}"/>
-                    </Track.DecreaseRepeatButton>
-                    <Track.IncreaseRepeatButton>
-                        <RepeatButton Command="{x:Static Slider.IncreaseLarge}"/>
-                    </Track.IncreaseRepeatButton>
-                    <Track.Thumb>
-                        <Thumb x:Name="Thumb" Background="Transparent"/>
-                    </Track.Thumb>
-                </Track>
-            </Grid>
-        </Border>
-    </ControlTemplate>
 
     <Style TargetType="{x:Type Slider}">
         <Style.Triggers>
