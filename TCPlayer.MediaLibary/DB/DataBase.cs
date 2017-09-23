@@ -143,6 +143,11 @@ namespace TCPlayer.MediaLibary.DB
                 throw new DBException(errors);
         }
 
+        /// <summary>
+        /// Execute a Query
+        /// </summary>
+        /// <param name="input">Query Input to execute</param>
+        /// <returns>Tracks that match the input</returns>
         public IEnumerable<TrackEntity> Execute(QueryInput input)
         {
             if (input == null)
@@ -272,6 +277,28 @@ namespace TCPlayer.MediaLibary.DB
             }
 
             return results;
+        }
+
+        /// <summary>
+        /// List saved queries
+        /// </summary>
+        /// <returns>List of saved queries</returns>
+        public IEnumerable<string> ListSavedQueries()
+        {
+            return _querys.FindAll().Select(q => q.Name);
+        }
+
+        /// <summary>
+        /// Save or update a query
+        /// </summary>
+        /// <param name="query"></param>
+        public void SaveOrUpdateQuery(QueryInput query)
+        {
+            var exists = _querys.Find(stored => stored.Name == query.Name).FirstOrDefault();
+            if (exists != null)
+                _querys.Delete(d => d.Name == query.Name);
+
+            _querys.Insert(query);
         }
     }
 }

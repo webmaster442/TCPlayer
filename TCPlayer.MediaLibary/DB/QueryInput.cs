@@ -20,16 +20,6 @@ using System;
 
 namespace TCPlayer.MediaLibary.DB
 {
-    public enum QueryOperator: int
-    {
-        Default,
-        Equals,
-        Less,
-        LessOrEqual,
-        Greater,
-        GreaterOrEqual
-    }
-
     [Serializable]
     public class QueryInput
     {
@@ -56,7 +46,7 @@ namespace TCPlayer.MediaLibary.DB
             Geneire = null;
             Name = null;
             Rating = null;
-            RatingOperator = QueryOperator.Default;
+            RatingOperator = QueryOperator.NotSet;
         }
 
 
@@ -69,8 +59,8 @@ namespace TCPlayer.MediaLibary.DB
                 Geneire = null,
                 Year = year,
                 Rating = null,
-                RatingOperator = QueryOperator.Default
-        };
+                RatingOperator = QueryOperator.NotSet
+            };
         }
 
         public static QueryInput ArtistQuery(string artist)
@@ -82,7 +72,7 @@ namespace TCPlayer.MediaLibary.DB
                 Geneire = null,
                 Year = null,
                 Rating = null,
-                RatingOperator = QueryOperator.Default
+                RatingOperator = QueryOperator.NotSet
             };
         }
 
@@ -95,7 +85,7 @@ namespace TCPlayer.MediaLibary.DB
                 Geneire = null,
                 Year = null,
                 Rating = null,
-                RatingOperator = QueryOperator.Default
+                RatingOperator = QueryOperator.NotSet
             };
         }
 
@@ -108,7 +98,7 @@ namespace TCPlayer.MediaLibary.DB
                 Geneire = geneire,
                 Year = null,
                 Rating = null,
-                RatingOperator = QueryOperator.Default
+                RatingOperator = QueryOperator.NotSet
             };
         }
 
