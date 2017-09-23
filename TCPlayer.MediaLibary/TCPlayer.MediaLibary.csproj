@@ -36,6 +36,7 @@
       <HintPath>..\packages\LiteDB.3.1.4\lib\net462\LiteDB.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,9 +53,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DB\Cache.cs" />
-    <Compile Include="DB\Query.cs" />
+    <Compile Include="DB\QueryInput.cs" />
     <Compile Include="DB\DataBase.cs" />
     <Compile Include="DB\DBException.cs" />
+    <Compile Include="DB\QueryOperator.cs" />
     <Compile Include="DB\TrackEntity.cs" />
   </ItemGroup>
   <ItemGroup>
