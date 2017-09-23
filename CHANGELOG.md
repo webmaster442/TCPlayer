@@ -1,3 +1,6 @@
+#3.0
+ * Redesigned UI with my own Application support libary: Applib
+
 #2.0 -
  * Fixed Network stream playback
  * Network streams now display stram tags (Shoutcast & Icecast)

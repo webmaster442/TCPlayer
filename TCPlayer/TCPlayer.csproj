@@ -90,6 +90,11 @@
     <Compile Include="Lib\WPFSoundVis\Spectrum Analyzer\BarHeightScalingStyles.cs" />
     <Compile Include="Lib\WPFSoundVis\Spectrum Analyzer\ISpectrumPlayer.cs" />
     <Compile Include="Lib\WPFSoundVis\Spectrum Analyzer\SpectrumAnalyzer.cs" />
+    <Compile Include="MediaLibary\IMediaLibary.cs" />
+    <Compile Include="MediaLibary\MediaLibary.xaml.cs">
+      <DependentUpon>MediaLibary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MediaLibary\MediaLibaryViewModel.cs" />
     <Compile Include="Properties\Resources.Designer.cs" />
     <Compile Include="Style\NullorValueConverter.cs" />
     <Page Include="App.xaml">
@@ -158,6 +163,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MediaLibary\MediaLibary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Style\Icons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
