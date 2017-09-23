@@ -1,14 +1,13 @@
 ﻿using AppLib.Common.Extensions;
+using AppLib.Common.MessageHandler;
 using AppLib.WPF.MVVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TCPlayer
 {
-    public partial class MainWinViewModel : ViewModel<IMainWindow>
+    public partial class MainWinViewModel : ViewModel<IMainWindow>, IMessageClient<IEnumerable<string>>
     {
         private void FileExplorerPlaySelected()
         {

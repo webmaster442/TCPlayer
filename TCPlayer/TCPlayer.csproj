@@ -96,6 +96,7 @@
       <DependentUpon>MediaLibary.xaml</DependentUpon>
     </Compile>
     <Compile Include="MediaLibary\MediaLibaryViewModel.cs" />
+    <Compile Include="MediaLibary\MediaLibaryViewModel_Menu.cs" />
     <Compile Include="Properties\Resources.Designer.cs" />
     <Compile Include="Style\NullorValueConverter.cs" />
     <Page Include="App.xaml">

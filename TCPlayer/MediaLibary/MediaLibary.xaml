@@ -63,7 +63,14 @@
                 Content="Query" />
             <ListBox
                 Grid.Row="3"
-                Grid.ColumnSpan="2"/>
+                x:Name="CacheList"
+                Grid.ColumnSpan="2">
+                <ListBox.InputBindings>
+                    <MouseBinding MouseAction="LeftDoubleClick"
+                                  Command="{Binding ListQueryCommand}"
+                                  CommandParameter="{Binding ElementName=CacheList, Path=SelectedItem}"/>
+                </ListBox.InputBindings>
+            </ListBox>
         </Grid>
 
         <GridSplitter
@@ -88,8 +95,7 @@
                 CanUserSortColumns="True"
                 AlternationCount="2"
                 AutoGenerateColumns="False"
-                SelectionChanged="Data_SelectionChanged"
-                MouseDoubleClick="Data_MouseDoubleClick">
+                SelectionChanged="Data_SelectionChanged">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Track" Binding="{Binding Track}" />
                     <DataGridTextColumn Header="Artist" Binding="{Binding Artist}" />

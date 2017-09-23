@@ -18,6 +18,7 @@ namespace TCPlayer.MediaLibary
         public DelegateCommand ListQueryCommand { get; private set; }
 
         public DelegateCommand MenuAddFilesCommand { get; private set; }
+        public DelegateCommand MenuAddFolderCommand { get; private set; }
         public DelegateCommand MenuSendToPlaylistCommand { get; private set; }
         public DelegateCommand MenuCreateQueryCommand { get; private set; }
         public DelegateCommand MenuBackupDbCommand { get; private set; }
@@ -26,6 +27,7 @@ namespace TCPlayer.MediaLibary
 
         public ObservableCollection<TrackEntity> DisplayItems { get; private set; }
         public ObservableCollection<string> ListItems { get; private set; }
+        public ObservableCollection<TrackEntity> SelectedItems { get; private set; }
         
         public ListingType ListingType
         {
@@ -37,6 +39,7 @@ namespace TCPlayer.MediaLibary
         {
             DisplayItems = new ObservableCollection<TrackEntity>();
             ListItems = new ObservableCollection<string>();
+            SelectedItems = new ObservableCollection<TrackEntity>();
             FilterArtstsCommand = DelegateCommand.ToCommand(FilterArtsts);
             FilterAlbumsCommand = DelegateCommand.ToCommand(FilterAlbums);
             FilterYearsCommand = DelegateCommand.ToCommand(FilterYears);
@@ -46,6 +49,7 @@ namespace TCPlayer.MediaLibary
             ListQueryCommand = DelegateCommand.ToCommand(ListQuery);
 
             MenuAddFilesCommand = DelegateCommand.ToCommand(MenuAddFiles);
+            MenuAddFolderCommand = DelegateCommand.ToCommand(MenuAddFolder);
             MenuSendToPlaylistCommand = DelegateCommand.ToCommand(MenuSendToPlaylist);
             MenuCreateQueryCommand = DelegateCommand.ToCommand(MenuCreateQuery);
             MenuBackupDbCommand = DelegateCommand.ToCommand(MenuBackupDb);
@@ -53,7 +57,7 @@ namespace TCPlayer.MediaLibary
 
         private void FilterQuery()
         {
-            throw new NotImplementedException();
+            ListingType = ListingType.Query;
         }
 
         private void FilterGenre()
@@ -88,19 +92,27 @@ namespace TCPlayer.MediaLibary
             DisplayItems.AddRange(items);
         }
 
-        private void ListQuery()
+        private void ListQuery(object selecteditem)
         {
+            string item = selecteditem as string;
+            if (item == null) return;
+
             switch (ListingType)
             {
                 case ListingType.Albums:
+                    DoQuery(QueryInput.AlbumQuery(item));
                     break;
                 case ListingType.Artists:
+                    DoQuery(QueryInput.ArtistQuery(item));
                     break;
                 case ListingType.Genre:
+                    DoQuery(QueryInput.GenerireQuery(item));
                     break;
                 case ListingType.Years:
+                    DoQuery(QueryInput.YearQuery(Convert.ToUInt32(item)));
                     break;
                 case ListingType.Query:
+                    
                     break;
             }
         }

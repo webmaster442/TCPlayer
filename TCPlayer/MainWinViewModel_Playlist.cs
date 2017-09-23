@@ -1,4 +1,5 @@
 ﻿using AppLib.Common.Extensions;
+using AppLib.Common.MessageHandler;
 using AppLib.WPF.MVVM;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using TCPlayer.Controls;
 
 namespace TCPlayer
 {
-    public partial class MainWinViewModel : ViewModel<IMainWindow>
+    public partial class MainWinViewModel : ViewModel<IMainWindow>, IMessageClient<IEnumerable<string>>
     {
         public async void DoLoad(IEnumerable<string> items)
         {
@@ -195,5 +196,9 @@ namespace TCPlayer
             PlayList.AddRange(q);
         }
 
+        public void HandleMessage(IEnumerable<string> message)
+        {
+            PlayList.AddRange(message);
+        }
     }
 }

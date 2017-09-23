@@ -1,12 +1,15 @@
-﻿using AppLib.WPF.MVVM;
+﻿using AppLib.Common;
+using AppLib.Common.MessageHandler;
+using AppLib.WPF.MVVM;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using TCPlayer.Code;
 using TCPlayer.Controls;
 
 namespace TCPlayer
 {
-    public partial class MainWinViewModel: ViewModel<IMainWindow>
+    public partial class MainWinViewModel: ViewModel<IMainWindow>, IMessageClient<IEnumerable<string>>
     {
         private int _playlistindex;
 
@@ -57,6 +60,11 @@ namespace TCPlayer
             }
         }
 
+        public UId MessageReciverID
+        {
+            get { return new UId(); }
+        }
+
         public MainWinViewModel()
         {
             //General Player commands
@@ -85,6 +93,7 @@ namespace TCPlayer
             FileExplorerPlaySelectedCommand = DelegateCommand.ToCommand(FileExplorerPlaySelected);
 
             MediaViewModel = new MediaLibary.MediaLibaryViewModel();
+            Messager.Instance.SubScribe(this);
         }
 
         private void PlayerExit()

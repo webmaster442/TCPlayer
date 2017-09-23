@@ -1,22 +1,46 @@
-﻿using AppLib.WPF.MVVM;
+﻿using AppLib.Common.MessageHandler;
+using AppLib.WPF.MVVM;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using TCPlayer.MediaLibary.DB;
+using TCPlayer.Properties;
 
 namespace TCPlayer.MediaLibary
 {
     public partial class MediaLibaryViewModel : ViewModel<IMediaLibary>
     {
-        private void MenuAddFiles()
+        private async void MenuAddFiles()
         {
-            throw new NotImplementedException();
+            var ofd = new System.Windows.Forms.OpenFileDialog();
+            ofd.Multiselect = true;
+            ofd.Filter = "Audio Files|" + App.Formats;
+            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                await DataBase.Instance.AddFiles(ofd.FileNames);
+            }
+        }
+
+        private async void MenuAddFolder()
+        {
+            string[] filters = App.Formats.Split(';');
+            var fbd = new System.Windows.Forms.FolderBrowserDialog();
+            fbd.Description = Resources.Playlist_AddFolderDescription;
+            if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                List<string> Files = new List<string>(30);
+                foreach (var filter in filters)
+                {
+                    Files.AddRange(Directory.GetFiles(fbd.SelectedPath, filter));
+                }
+                Files.Sort();
+                await DataBase.Instance.AddFiles(Files);
+            }
         }
 
         private void MenuSendToPlaylist()
         {
-            throw new NotImplementedException();
+            Messager.Instance.SendMessage(SelectedItems);
         }
 
         private void MenuCreateQuery()
