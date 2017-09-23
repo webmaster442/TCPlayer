@@ -34,6 +34,8 @@ namespace TCPlayer
 
         public ObservableCollection<string> PlayList { get; private set; }
 
+        public MediaLibary.MediaLibaryViewModel MediaViewModel { get; private set; }
+
         public int PlayListIndex
         {
             get { return _playlistindex; }
@@ -81,6 +83,8 @@ namespace TCPlayer
             FileExplorerNavigateHomeCommand = DelegateCommand.ToCommand(FileExplorerNavigateHome);
             FileExplorerAddToPlaylistCommand = DelegateCommand.ToCommand(FileExplorerAddToPlaylist);
             FileExplorerPlaySelectedCommand = DelegateCommand.ToCommand(FileExplorerPlaySelected);
+
+            MediaViewModel = new MediaLibary.MediaLibaryViewModel();
         }
 
         private void PlayerExit()

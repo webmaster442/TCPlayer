@@ -91,6 +91,7 @@
     <Compile Include="Lib\WPFSoundVis\Spectrum Analyzer\ISpectrumPlayer.cs" />
     <Compile Include="Lib\WPFSoundVis\Spectrum Analyzer\SpectrumAnalyzer.cs" />
     <Compile Include="MediaLibary\IMediaLibary.cs" />
+    <Compile Include="MediaLibary\ListingType.cs" />
     <Compile Include="MediaLibary\MediaLibary.xaml.cs">
       <DependentUpon>MediaLibary.xaml</DependentUpon>
     </Compile>

@@ -8,6 +8,7 @@
     xmlns:controls="clr-namespace:TCPlayer.Controls"
     xmlns:applib="http://github.com/webmaster442/AppLib/WPF"
     xmlns:local="clr-namespace:TCPlayer"
+    xmlns:medialib="clr-namespace:TCPlayer.MediaLibary"
     x:Name="MainWin"
     Title="TC Player"
     Width="1024"
@@ -359,6 +360,10 @@
             </TabItem>
             <TabItem Header="[ File Browser ]">
                 <applib:FileExplorer x:Name="FileExplorer" />
+            </TabItem>
+            <TabItem Header="[ Media Libary ]">
+                <medialib:MediaLibary
+                    DataContext="{Binding MediaViewModel}"/>
             </TabItem>
             <TabItem Header="{applib:Translate MainWin_RadioTab}">
                 <controls:RadioStations x:Name="RadioStations" ItemDoubleClcik="RadioStations_ItemDoubleClcik" />
