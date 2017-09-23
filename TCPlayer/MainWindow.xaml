@@ -118,11 +118,27 @@
                 Margin="5,0"
                 VerticalAlignment="Center">
                 <MenuItem Header="[ Player ]">
-                    <MenuItem Header="Change output device ..." Command="{Binding PlayerChangeOutputCommand}" />
-                    <MenuItem Header="Settings ..." Command="{Binding PlayerSettingsCommand}" />
-                    <MenuItem Header="About..." Command="{Binding PlayerAboutCommand}" />
+                    <MenuItem Header="Change output device ..." Command="{Binding PlayerChangeOutputCommand}">
+                        <MenuItem.Icon>
+                            <applib:ImageAwesome Icon="fa_volume_up" Style="{StaticResource Menu}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Settings ..." Command="{Binding PlayerSettingsCommand}">
+                        <MenuItem.Icon>
+                            <applib:ImageAwesome Icon="fa_cogs" Style="{StaticResource Menu}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="About..." Command="{Binding PlayerAboutCommand}">
+                        <MenuItem.Icon>
+                            <applib:ImageAwesome Icon="fa_info" Style="{StaticResource Menu}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
                     <Separator Style="{StaticResource sp}" />
-                    <MenuItem Header="Exit" Command="{Binding PlayerExitCommand}" />
+                    <MenuItem Header="Exit" Command="{Binding PlayerExitCommand}">
+                        <MenuItem.Icon>
+                            <applib:ImageAwesome Icon="fa_sign_out" Style="{StaticResource Menu}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
                 <MenuItem x:Name="ChapterMenu" Header="{applib:Translate PlayerTab_ButtonChapters}" />
                 <MenuItem Header="[ PlayList ]">
@@ -218,6 +234,37 @@
                         Header="Add Selected to Playlist">
                         <MenuItem.Icon>
                             <applib:ImageAwesome Icon="fa_play" Style="{StaticResource Menu}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+
+                <MenuItem Header="[ Media Libary ]">
+                    <MenuItem Header="Add Directory ..." Command="{Binding MediaViewModel.MenuAddFolderCommand}">
+                        <MenuItem.Icon>
+                            <applib:ImageAwesome Icon="fa_folder_open" Style="{StaticResource Menu}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Add Files ..." Command="{Binding MediaViewModel.MenuAddFilesCommand}">
+                        <MenuItem.Icon>
+                            <applib:ImageAwesome Icon="fa_file" Style="{StaticResource Menu}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator Style="{StaticResource sp}" />
+                    <MenuItem Header="Send selection to playlist" Command="{Binding MediaViewModel.MenuSendToPlaylistCommand}">
+                        <MenuItem.Icon>
+                            <applib:ImageAwesome Icon="fa_list" Style="{StaticResource Menu}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator Style="{StaticResource sp}" />
+                    <MenuItem Header="Create Query ..." Command="{Binding MediaViewModel.MenuCreateQueryCommand}">
+                        <MenuItem.Icon>
+                            <applib:ImageAwesome Icon="fa_search" Style="{StaticResource Menu}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator Style="{StaticResource sp}" />
+                    <MenuItem Header="Backup Database ..." Command="{Binding MediaViewModel.MenuBackupDbCommand}">
+                        <MenuItem.Icon>
+                            <applib:ImageAwesome Icon="fa_save" Style="{StaticResource Menu}" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
@@ -362,8 +409,7 @@
                 <applib:FileExplorer x:Name="FileExplorer" />
             </TabItem>
             <TabItem Header="[ Media Libary ]">
-                <medialib:MediaLibary
-                    DataContext="{Binding MediaViewModel}"/>
+                <medialib:MediaLibary DataContext="{Binding MediaViewModel}" />
             </TabItem>
             <TabItem Header="{applib:Translate MainWin_RadioTab}">
                 <controls:RadioStations x:Name="RadioStations" ItemDoubleClcik="RadioStations_ItemDoubleClcik" />
