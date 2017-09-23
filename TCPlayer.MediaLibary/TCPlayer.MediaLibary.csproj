@@ -56,7 +56,7 @@
     <Compile Include="DB\QueryInput.cs" />
     <Compile Include="DB\DataBase.cs" />
     <Compile Include="DB\DBException.cs" />
-    <Compile Include="DB\QueryOperator.cs" />
+    <Compile Include="DB\QueryOperators.cs" />
     <Compile Include="DB\TrackEntity.cs" />
   </ItemGroup>
   <ItemGroup>

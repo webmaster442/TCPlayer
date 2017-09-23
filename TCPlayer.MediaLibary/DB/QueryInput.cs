@@ -16,27 +16,142 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+using AppLib.WPF.MVVM;
 using System;
+using System.Xml.Serialization;
 
 namespace TCPlayer.MediaLibary.DB
 {
     [Serializable]
-    public class QueryInput
+    public class QueryInput : BindableBase
     {
-        public string AlbumName { get; set; }
-        public string Artist { get; set; }
-        public uint? Year { get; set; }
-        public string Geneire { get; set; }
-        public string Name { get; set; }
+        private string _AlbumName;
+        private StringOperator _AlbumNameOperator;
 
-        public QueryOperator RatingOperator;
-        public short? Rating { get; set; }
+        private string _Artist;
+        private StringOperator _ArtistOperator;
 
-        public QueryOperator PlayCounterOperator;
-        public uint? PlayCount { get; set; }
+        private string _Title;
+        private StringOperator _TitleOperator;
 
-        public string AlbumArtist { get; set; }
+        private uint? _Year;
+        private QueryOperator _YearOperator;
 
+        private string _Geneire;
+        private StringOperator _GeneireOperator;
+
+        private string _QueryName;
+
+        private short? _Rating;
+        private QueryOperator _RatingOperator;
+
+        private uint? _PlayCount;
+        private QueryOperator _PlayCounterOperator;
+
+        [XmlAttribute]
+        public StringOperator AlbumNameOperator
+        {
+            get { return _AlbumNameOperator; }
+            set { SetValue(ref _AlbumNameOperator, value); }
+        }
+
+        [XmlAttribute]
+        public string AlbumName
+        {
+            get { return _AlbumName; }
+            set { SetValue(ref _AlbumName, value); }
+        }
+
+        [XmlAttribute]
+        public StringOperator ArtistOperator
+        {
+            get { return _ArtistOperator; }
+            set { SetValue(ref _ArtistOperator, value); }
+        }
+
+        [XmlAttribute]
+        public string Artist
+        {
+            get { return _Artist; }
+            set { SetValue(ref _Artist, value); }
+        }
+
+        [XmlAttribute]
+        public StringOperator TitleOperator
+        {
+            get { return _TitleOperator; }
+            set { SetValue(ref _TitleOperator, value); }
+        }
+
+        [XmlAttribute]
+        public string Title
+        {
+            get { return _Title; }
+            set { SetValue(ref _Title, value); }
+        }
+
+        [XmlAttribute]
+        public QueryOperator YearOperator
+        {
+            get { return _YearOperator; }
+            set { SetValue(ref _YearOperator, value); }
+        }
+
+        [XmlAttribute]
+        public uint? Year
+        {
+            get { return _Year; }
+            set { SetValue(ref _Year, value); }
+        }
+
+        [XmlAttribute]
+        public StringOperator GeneireOperator
+        {
+            get { return _GeneireOperator; }
+            set { SetValue(ref _GeneireOperator, value); }
+        }
+
+        [XmlAttribute]
+        public string Geneire
+        {
+            get { return _Geneire; }
+            set { SetValue(ref _Geneire, value); }
+        }
+
+        [XmlAttribute]
+        public string QueryName
+        {
+            get { return _QueryName; }
+            set { SetValue(ref _QueryName, value); }
+        }
+
+        [XmlAttribute]
+        public QueryOperator RatingOperator
+        {
+            get { return _RatingOperator; }
+            set { SetValue(ref _RatingOperator, value); }
+        }
+
+        [XmlAttribute]
+        public short? Rating
+        {
+            get { return _Rating; }
+            set { SetValue(ref _Rating, value); }
+        }
+
+        [XmlAttribute]
+        public QueryOperator PlayCounterOperator
+        {
+            get { return _PlayCounterOperator; }
+            set { SetValue(ref _PlayCounterOperator, value); }
+        }
+
+        [XmlAttribute]
+        public uint? PlayCount
+        {
+            get { return _PlayCount; }
+            set { SetValue(ref _PlayCount, value); }
+        }
 
         public QueryInput()
         {
@@ -44,8 +159,14 @@ namespace TCPlayer.MediaLibary.DB
             Artist = null;
             Year = null;
             Geneire = null;
-            Name = null;
+            QueryName = null;
             Rating = null;
+            ArtistOperator = StringOperator.ContainsIgnoreCase;
+            TitleOperator = StringOperator.ContainsIgnoreCase;
+            GeneireOperator = StringOperator.ContainsIgnoreCase;
+            AlbumNameOperator = StringOperator.ContainsIgnoreCase;
+            RatingOperator = QueryOperator.NotSet;
+            YearOperator = QueryOperator.NotSet;
             RatingOperator = QueryOperator.NotSet;
         }
 
@@ -59,6 +180,12 @@ namespace TCPlayer.MediaLibary.DB
                 Geneire = null,
                 Year = year,
                 Rating = null,
+                ArtistOperator = StringOperator.ContainsIgnoreCase,
+                TitleOperator = StringOperator.ContainsIgnoreCase,
+                GeneireOperator = StringOperator.ContainsIgnoreCase,
+                AlbumNameOperator = StringOperator.ContainsIgnoreCase,
+                YearOperator = QueryOperator.Equals,
+                PlayCounterOperator = QueryOperator.NotSet,
                 RatingOperator = QueryOperator.NotSet
             };
         }
@@ -72,6 +199,12 @@ namespace TCPlayer.MediaLibary.DB
                 Geneire = null,
                 Year = null,
                 Rating = null,
+                ArtistOperator = StringOperator.ExactmatchIgnoreCase,
+                TitleOperator = StringOperator.ContainsIgnoreCase,
+                GeneireOperator = StringOperator.ContainsIgnoreCase,
+                AlbumNameOperator = StringOperator.ContainsIgnoreCase,
+                YearOperator = QueryOperator.NotSet,
+                PlayCounterOperator = QueryOperator.NotSet,
                 RatingOperator = QueryOperator.NotSet
             };
         }
@@ -85,6 +218,12 @@ namespace TCPlayer.MediaLibary.DB
                 Geneire = null,
                 Year = null,
                 Rating = null,
+                ArtistOperator = StringOperator.ContainsIgnoreCase,
+                TitleOperator = StringOperator.ContainsIgnoreCase,
+                GeneireOperator = StringOperator.ContainsIgnoreCase,
+                AlbumNameOperator = StringOperator.ExactmatchIgnoreCase,
+                YearOperator = QueryOperator.NotSet,
+                PlayCounterOperator = QueryOperator.NotSet,
                 RatingOperator = QueryOperator.NotSet
             };
         }
@@ -98,6 +237,12 @@ namespace TCPlayer.MediaLibary.DB
                 Geneire = geneire,
                 Year = null,
                 Rating = null,
+                ArtistOperator = StringOperator.ContainsIgnoreCase,
+                TitleOperator = StringOperator.ContainsIgnoreCase,
+                GeneireOperator = StringOperator.ExactmatchIgnoreCase,
+                AlbumNameOperator = StringOperator.ContainsIgnoreCase,
+                YearOperator = QueryOperator.NotSet,
+                PlayCounterOperator = QueryOperator.NotSet,
                 RatingOperator = QueryOperator.NotSet
             };
         }

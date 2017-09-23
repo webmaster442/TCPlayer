@@ -64,7 +64,7 @@ namespace TCPlayer.MediaLibary.DB
             _tracks.EnsureIndex(x => x.Title);
 
             _querys = _database.GetCollection<QueryInput>(CollectionQuery);
-            _querys.EnsureIndex(x => x.Name);
+            _querys.EnsureIndex(x => x.QueryName);
 
             DatabaseCache = new Cache(_tracks);
             ResoreCacheIfExists();
@@ -144,148 +144,12 @@ namespace TCPlayer.MediaLibary.DB
         }
 
         /// <summary>
-        /// Execute a Query
-        /// </summary>
-        /// <param name="input">Query Input to execute</param>
-        /// <returns>Tracks that match the input</returns>
-        public IEnumerable<TrackEntity> Execute(QueryInput input)
-        {
-            if (input == null)
-                throw new ArgumentNullException(nameof(input));
-
-            IEnumerable<TrackEntity> results = null;
-
-            if (!string.IsNullOrEmpty(input.AlbumName))
-            {
-                results = _tracks.Find(item => item.Album == input.AlbumName);
-            }
-
-            if (!string.IsNullOrEmpty(input.Artist))
-            {
-                if (results == null)
-                    results = _tracks.Find(item => item.Artist == input.Artist);
-                else
-                    results = results.Where(item => item.Artist == input.Artist);
-            }
-
-            if (input.Year != null)
-            {
-                if (results == null)
-                    results = _tracks.Find(item => item.Year == input.Year.Value);
-                else
-                    results = results.Where(item => item.Year == input.Year.Value);
-            }
-
-            if (!string.IsNullOrEmpty(input.Geneire))
-            {
-                if (results == null)
-                    results = _tracks.Find(item => item.Generire == input.Geneire);
-                else
-                    results = results.Where(item => item.Generire == input.Geneire);
-            }
-
-            if (input.Rating != null)
-            {
-                if (results == null)
-                {
-                    switch (input.RatingOperator)
-                    {
-                        case QueryOperator.Equals:
-                            results = _tracks.Find(item => item.Rating == input.Rating.Value);
-                            break;
-                        case QueryOperator.Greater:
-                            results = _tracks.Find(item => item.Rating > input.Rating.Value);
-                            break;
-                        case QueryOperator.GreaterOrEqual:
-                            results = _tracks.Find(item => item.Rating >= input.Rating.Value);
-                            break;
-                        case QueryOperator.Less:
-                            results = _tracks.Find(item => item.Rating < input.Rating.Value);
-                            break;
-                        case QueryOperator.LessOrEqual:
-                            results = _tracks.Find(item => item.Rating <= input.Rating.Value);
-                            break;
-                    }
-                }
-                else
-                {
-                    switch (input.RatingOperator)
-                    {
-                        case QueryOperator.Equals:
-                            results = results.Where(item => item.Rating == input.Rating.Value);
-                            break;
-                        case QueryOperator.Greater:
-                            results = results.Where(item => item.Rating > input.Rating.Value);
-                            break;
-                        case QueryOperator.GreaterOrEqual:
-                            results = results.Where(item => item.Rating >= input.Rating.Value);
-                            break;
-                        case QueryOperator.Less:
-                            results = results.Where(item => item.Rating < input.Rating.Value);
-                            break;
-                        case QueryOperator.LessOrEqual:
-                            results = results.Where(item => item.Rating <= input.Rating.Value);
-                            break;
-                    }
-                }
-            }
-
-            if (input.PlayCount != null)
-            {
-                if (results == null)
-                {
-                    switch (input.PlayCounterOperator)
-                    {
-                        case QueryOperator.Equals:
-                            results = _tracks.Find(item => item.PlayCounter == input.PlayCount.Value);
-                            break;
-                        case QueryOperator.Greater:
-                            results = _tracks.Find(item => item.PlayCounter > input.PlayCount.Value);
-                            break;
-                        case QueryOperator.GreaterOrEqual:
-                            results = _tracks.Find(item => item.PlayCounter >= input.PlayCount.Value);
-                            break;
-                        case QueryOperator.Less:
-                            results = _tracks.Find(item => item.PlayCounter < input.PlayCount.Value);
-                            break;
-                        case QueryOperator.LessOrEqual:
-                            results = _tracks.Find(item => item.PlayCounter <= input.PlayCount.Value);
-                            break;
-                    }
-                }
-                else
-                {
-                    switch (input.PlayCounterOperator)
-                    {
-                        case QueryOperator.Equals:
-                            results = results.Where(item => item.PlayCounter == input.PlayCount.Value);
-                            break;
-                        case QueryOperator.Greater:
-                            results = results.Where(item => item.PlayCounter > input.PlayCount.Value);
-                            break;
-                        case QueryOperator.GreaterOrEqual:
-                            results = results.Where(item => item.PlayCounter >= input.PlayCount.Value);
-                            break;
-                        case QueryOperator.Less:
-                            results = results.Where(item => item.PlayCounter < input.PlayCount.Value);
-                            break;
-                        case QueryOperator.LessOrEqual:
-                            results = results.Where(item => item.PlayCounter <= input.PlayCount.Value);
-                            break;
-                    }
-                }
-            }
-
-            return results;
-        }
-
-        /// <summary>
         /// List saved queries
         /// </summary>
         /// <returns>List of saved queries</returns>
         public IEnumerable<string> ListSavedQueries()
         {
-            return _querys.FindAll().Select(q => q.Name);
+            return _querys.FindAll().Select(q => q.QueryName);
         }
 
         /// <summary>
@@ -294,9 +158,9 @@ namespace TCPlayer.MediaLibary.DB
         /// <param name="query"></param>
         public void SaveOrUpdateQuery(QueryInput query)
         {
-            var exists = _querys.Find(stored => stored.Name == query.Name).FirstOrDefault();
+            var exists = _querys.Find(stored => stored.QueryName == query.QueryName).FirstOrDefault();
             if (exists != null)
-                _querys.Delete(d => d.Name == query.Name);
+                _querys.Delete(d => d.QueryName == query.QueryName);
 
             _querys.Insert(query);
         }

@@ -24,14 +24,22 @@ namespace TCPlayer.MediaLibary.DB
     {
         NotSet = -1,
         [Display(Name = "=")]
-        Equals,
+        Equals = 0,
         [Display(Name = "<")]
-        Less,
+        Less = 1,
         [Display(Name = "<=")]
-        LessOrEqual,
+        LessOrEqual = 2,
         [Display(Name = ">")]
-        Greater,
+        Greater = 3,
         [Display(Name = ">=")]
-        GreaterOrEqual
+        GreaterOrEqual = 4
+    }
+
+    public enum StringOperator: int
+    {
+        ContainsIgnoreCase = 0,
+        Contains = 1,
+        ExactmatchIgnoreCase = 2,
+        Exactmatch = 3
     }
 }
