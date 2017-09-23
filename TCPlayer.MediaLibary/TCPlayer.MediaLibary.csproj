@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DB\Cache.cs" />
+    <Compile Include="DB\DataBase.QueryExecute.cs" />
     <Compile Include="DB\QueryInput.cs" />
     <Compile Include="DB\DataBase.cs" />
     <Compile Include="DB\DBException.cs" />

@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AppLib.Common.Extensions;
 
 namespace TCPlayer.MediaLibary.DB
 {
@@ -28,7 +29,39 @@ namespace TCPlayer.MediaLibary.DB
     {
         private bool StringSearchPredicate(string str1, string str2,  StringOperator op)
         {
-            return true;
+            switch (op)
+            {
+                case StringOperator.Contains:
+                    return str1.Contains(str2);
+                case StringOperator.ContainsIgnoreCase:
+                    return str1.Contains(str2, StringComparison.InvariantCultureIgnoreCase);
+                case StringOperator.Exactmatch:
+                    return str1 == str2;
+                case StringOperator.ExactmatchIgnoreCase:
+                    return String.Compare(str1, str2, true) == 0;
+                default:
+                    return false;
+            }
+        }
+
+        public bool IntSearchPredicate(int int1, int int2, QueryOperator op)
+        {
+            switch (op)
+            {
+                case QueryOperator.Equals:
+                    return int1 == int2;
+                case QueryOperator.Greater:
+                    return int1 > int2;
+                case QueryOperator.GreaterOrEqual:
+                    return int1 >= int2;
+                case QueryOperator.Less:
+                    return int1 < int2;
+                case QueryOperator.LessOrEqual:
+                    return int1 <= int2;
+                case QueryOperator.NotSet:
+                default:
+                    return false;
+            }
         }
 
         public IEnumerable<TrackEntity> Execute(QueryInput input)
@@ -37,8 +70,17 @@ namespace TCPlayer.MediaLibary.DB
                 throw new ArgumentNullException(nameof(input));
             IEnumerable<TrackEntity> results = null;
 
+            if (!string.IsNullOrEmpty(input.AlbumName))
+            {
+                results = _tracks.Find(item => StringSearchPredicate(item.Album, input.AlbumName, input.AlbumNameOperator));
+            }
             if (!string.IsNullOrEmpty(input.Artist))
-                results = _tracks.Find(x => StringSearchPredicate(x.Artist, input.Artist, StringOperator.Contains));
+            {
+                if (results == null)
+                    results = _tracks.Find(item => StringSearchPredicate(item.Artist, input.Artist, input.ArtistOperator));
+                else
+                    results = results.Where(item => StringSearchPredicate(item.Artist, input.Artist, input.ArtistOperator));
+            }
 
             return results;
         }
