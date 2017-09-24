@@ -81,7 +81,8 @@ namespace TCPlayer.MediaLibary
         private void FilterGenre()
         {
             ListingType = ListingType.Genre;
-            ListItems = DataBase.Instance.DatabaseCache.Geneires;
+            ListItems.Clear();
+            ListItems.AddRange(DataBase.Instance.DatabaseCache.Geneires);
         }
 
         private void FilterYears()
@@ -94,13 +95,15 @@ namespace TCPlayer.MediaLibary
         private void FilterAlbums()
         {
             ListingType = ListingType.Albums;
-            ListItems = DataBase.Instance.DatabaseCache.Albums;
+            ListItems.Clear();
+            ListItems.AddRange(DataBase.Instance.DatabaseCache.Albums);
         }
 
         private void FilterArtsts()
         {
             ListingType = ListingType.Artists;
-            ListItems = DataBase.Instance.DatabaseCache.Artists;
+            ListItems.Clear();
+            ListItems.AddRange(DataBase.Instance.DatabaseCache.Artists);
         }
 
         private void DoQuery(QueryInput queryInput)

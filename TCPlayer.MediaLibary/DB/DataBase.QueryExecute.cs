@@ -44,7 +44,7 @@ namespace TCPlayer.MediaLibary.DB
             }
         }
 
-        public bool IntSearchPredicate(int int1, int int2, QueryOperator op)
+        public bool UIntSearchPredicate(uint int1, uint int2, QueryOperator op)
         {
             switch (op)
             {
@@ -68,19 +68,48 @@ namespace TCPlayer.MediaLibary.DB
         {
             if (input == null)
                 throw new ArgumentNullException(nameof(input));
+
+            var db = _tracks.FindAll();
             IEnumerable<TrackEntity> results = null;
 
             if (!string.IsNullOrEmpty(input.AlbumName))
             {
-                results = _tracks.Find(item => StringSearchPredicate(item.Album, input.AlbumName, input.AlbumNameOperator));
+                results = db.Where(item => StringSearchPredicate(item.Album, input.AlbumName, input.AlbumNameOperator));
             }
+
             if (!string.IsNullOrEmpty(input.Artist))
             {
                 if (results == null)
-                    results = _tracks.Find(item => StringSearchPredicate(item.Artist, input.Artist, input.ArtistOperator));
+                    results = db.Where(item => StringSearchPredicate(item.Artist, input.Artist, input.ArtistOperator));
                 else
                     results = results.Where(item => StringSearchPredicate(item.Artist, input.Artist, input.ArtistOperator));
             }
+
+            if (!string.IsNullOrEmpty(input.Title))
+            {
+                if (results == null)
+                    results = db.Where(item => StringSearchPredicate(item.Title, input.Title, input.TitleOperator));
+                else
+                    results = results.Where(item => StringSearchPredicate(item.Title, input.Title, input.TitleOperator));
+            }
+
+            if (!string.IsNullOrEmpty(input.Geneire))
+            {
+                if (results == null)
+                    results = db.Where(item => StringSearchPredicate(item.Generire, input.Geneire, input.GeneireOperator));
+                else
+                    results = results.Where(item => StringSearchPredicate(item.Generire, input.Geneire, input.GeneireOperator));
+            }
+
+            if (input.Year != null)
+            {
+                if (results == null)
+                    results = db.Where(item => UIntSearchPredicate(item.Year, input.Year.Value, input.YearOperator));
+                else
+                    results = results.Where(item => UIntSearchPredicate(item.Year, input.Year.Value, input.YearOperator));
+            }
+
+
 
             return results;
         }

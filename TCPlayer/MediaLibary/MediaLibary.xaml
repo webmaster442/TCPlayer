@@ -9,9 +9,15 @@
     d:DesignHeight="500"
     d:DesignWidth="700"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style TargetType="applib:FaImageButton">
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="MinHeight" Value="26"/>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="200" />
             <ColumnDefinition Width="3" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
@@ -64,12 +70,9 @@
             <ListBox
                 Grid.Row="3"
                 x:Name="CacheList"
+                ItemsSource="{Binding ListItems}"
+                MouseDoubleClick="CacheList_MouseDoubleClick"
                 Grid.ColumnSpan="2">
-                <ListBox.InputBindings>
-                    <MouseBinding MouseAction="LeftDoubleClick"
-                                  Command="{Binding ListQueryCommand}"
-                                  CommandParameter="{Binding ElementName=CacheList, Path=SelectedItem}"/>
-                </ListBox.InputBindings>
             </ListBox>
         </Grid>
 

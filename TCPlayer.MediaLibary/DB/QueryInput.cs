@@ -42,7 +42,7 @@ namespace TCPlayer.MediaLibary.DB
 
         private string _QueryName;
 
-        private short? _Rating;
+        private uint? _Rating;
         private QueryOperator _RatingOperator;
 
         private uint? _PlayCount;
@@ -133,7 +133,7 @@ namespace TCPlayer.MediaLibary.DB
         }
 
         [XmlAttribute]
-        public short? Rating
+        public uint? Rating
         {
             get { return _Rating; }
             set { SetValue(ref _Rating, value); }

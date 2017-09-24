@@ -51,5 +51,13 @@ namespace TCPlayer.MediaLibary
 
         public void Close()
         { }
+
+        private void CacheList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            this.ViewModelAction<MediaLibaryViewModel>(vm =>
+            {
+                vm.ListQueryCommand.Execute(CacheList.SelectedItem);
+            });
+        }
     }
 }
