@@ -5,6 +5,8 @@
 /TCPlayer.Lib/obj/
 /TCPlayer.MediaLibary/bin/
 /TCPlayer.MediaLibary/obj/
+/TCPlayer.Installer/bin/
+/TCPlayer.Installer/obj/
 /packages/
 /bin/
 /*.db
