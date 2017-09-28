@@ -5,12 +5,14 @@ VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCPlayer", "TCPlayer\TCPlayer.csproj", "{F7191F4E-6E3B-4775-94E3-199271C19C04}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BassPlayerLister", "ListerPlugin\BassPlayerLister.vcxproj", "{D0DE0F07-AF25-4797-9B62-25C1BA3608B2}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TCPlayerLister", "ListerPlugin\BassPlayerLister.vcxproj", "{D0DE0F07-AF25-4797-9B62-25C1BA3608B2}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BassPlayerPacker", "PackerPlugin\BassPlayerPacker.vcxproj", "{C15D3E88-1DE8-40A4-9F70-439C28EC084C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TCPlayerPacker", "PackerPlugin\BassPlayerPacker.vcxproj", "{C15D3E88-1DE8-40A4-9F70-439C28EC084C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8ED1AC45-6214-4669-B1A4-4388DDD9080D}"
 	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		.gitmodules = .gitmodules
 		CHANGELOG.md = CHANGELOG.md
 		README.md = README.md
 	EndProjectSection
