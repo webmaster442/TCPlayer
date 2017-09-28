@@ -26,10 +26,11 @@ using System.Linq;
 using System.Windows;
 using TCPlayer.Code;
 using TCPlayer.Controls;
+using TCPlayer.MediaLibary.DB;
 
 namespace TCPlayer
 {
-    public partial class MainWinViewModel : ViewModel<IMainWindow>, IMessageClient<IEnumerable<string>>
+    public partial class MainWinViewModel : ViewModel<IMainWindow>, IMessageClient<IEnumerable<TrackEntity>>
     {
         public async void DoLoad(IEnumerable<string> items)
         {
@@ -214,9 +215,11 @@ namespace TCPlayer
             PlayList.AddRange(q);
         }
 
-        public void HandleMessage(IEnumerable<string> message)
+        public void HandleMessage(IEnumerable<TrackEntity> message)
         {
-            PlayList.AddRange(message);
+            var filenames = message.Select(e => e.Path);
+            PlayList.AddRange(filenames);
+            View.SetPage(TabPage.PlayList);
         }
     }
 }

@@ -22,7 +22,7 @@
     <ProjectGuid>{C15D3E88-1DE8-40A4-9F70-439C28EC084C}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>BassPlayerLister</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
     <ProjectName>TCPlayerPacker</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

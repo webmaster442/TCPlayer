@@ -53,7 +53,7 @@ namespace TCPlayer.MediaLibary.DB
 
         public uint PlayCounter { get; set; }
 
-        public short? Rating { get; set; }
+        public uint? Rating { get; set; }
 
         public DateTime LastPlay { get; set; }
 

@@ -22,10 +22,11 @@ using AppLib.WPF.MVVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TCPlayer.MediaLibary.DB;
 
 namespace TCPlayer
 {
-    public partial class MainWinViewModel : ViewModel<IMainWindow>, IMessageClient<IEnumerable<string>>
+    public partial class MainWinViewModel : ViewModel<IMainWindow>, IMessageClient<IEnumerable<TrackEntity>>
     {
         private void FileExplorerPlaySelected()
         {

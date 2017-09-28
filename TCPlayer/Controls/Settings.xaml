@@ -54,14 +54,10 @@
                     Click="BtnClearHistory_Click"
                     Content="{applib:Translate Settings_ClearUrlHistory}" />
                 <TextBlock Margin="2" Text="{applib:Translate Settings_SoundfontPath}" />
-                <Button
-                    x:Name="BtnSoundFont"
-                    MinWidth="80"
-                    MaxWidth="200"
+                <applib:FileSelector
                     Margin="25,2"
-                    HorizontalAlignment="Left"
-                    Click="BtnSoundFont_Click"
-                    Content="{Binding Source={x:Static props:Settings.Default}, Path=SoundfontPath, Mode=TwoWay, Converter={StaticResource NullorValueConv}, ConverterParameter={applib:Translate Settings_SoundfontButton}}" />
+                    SelectedFile="{Binding Source={x:Static props:Settings.Default}, Path=SoundfontPath, Mode=TwoWay}"
+                    Filter="Sound fonts |*.sf2"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

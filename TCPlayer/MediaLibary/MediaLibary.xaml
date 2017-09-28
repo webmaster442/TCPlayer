@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:TCPlayer.MediaLibary"
     xmlns:applib="http://github.com/webmaster442/AppLib/WPF"
     d:DesignHeight="500"
     d:DesignWidth="700"
@@ -91,7 +90,8 @@
                 x:Name="Data"
                 Grid.Row="0"
                 ItemsSource="{Binding DisplayItems}"
-                SelectionMode="Single"
+                SelectionMode="Extended"
+                SelectionUnit="FullRow"
                 IsReadOnly="True"
                 CanUserResizeColumns="True"
                 CanUserReorderColumns="True"
@@ -152,7 +152,6 @@
                 Orientation="Horizontal">
                 <ToggleButton
                     x:Name="SelectorButton"
-                    Foreground="White"
                     Content="[ Visible Columns ]" />
                 <Popup
                     x:Name="Selector"
@@ -185,7 +184,10 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </Popup>
-                <TextBlock Margin="10,0" Text="Visible Items: " />
+                <TextBlock 
+                    Margin="10,0" 
+                    Text="Visible Items: "
+                    VerticalAlignment="Center"/>
                 <TextBlock Text="{Binding ElementName=Data, Path=Items.Count}" />
             </StackPanel>
         </Grid>

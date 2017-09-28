@@ -70,6 +70,11 @@ namespace TCPlayer.MediaLibary.DB
             ResoreCacheIfExists();
         }
 
+        public string DataBaseFileLocation
+        {
+            get { return _dbpath; }
+        }
+
         public void UpdateTrackPlayInfo(TrackEntity selectedTrack)
         { 
             selectedTrack.LastPlay = DateTime.Now;
@@ -121,7 +126,7 @@ namespace TCPlayer.MediaLibary.DB
                             LastPlay = DateTime.MinValue,
                             Path = file,
                             PlayCounter = 0,
-                            Rating = -1,
+                            Rating = null,
                             Year = f.Tag.Year,
                             Title = f.Tag.Title
                         };

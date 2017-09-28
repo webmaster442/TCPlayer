@@ -64,6 +64,29 @@ namespace TCPlayer.MediaLibary.DB
             }
         }
 
+        public bool NUIntSearchPredicate(uint? int1, uint? int2, QueryOperator op)
+        {
+            if (int1 == null)
+                return false;
+
+            switch (op)
+            {
+                case QueryOperator.Equals:
+                    return int1 == int2;
+                case QueryOperator.Greater:
+                    return int1 > int2;
+                case QueryOperator.GreaterOrEqual:
+                    return int1 >= int2;
+                case QueryOperator.Less:
+                    return int1 < int2;
+                case QueryOperator.LessOrEqual:
+                    return int1 <= int2;
+                case QueryOperator.NotSet:
+                default:
+                    return false;
+            }
+        }
+
         public IEnumerable<TrackEntity> Execute(QueryInput input)
         {
             if (input == null)
@@ -109,7 +132,22 @@ namespace TCPlayer.MediaLibary.DB
                     results = results.Where(item => UIntSearchPredicate(item.Year, input.Year.Value, input.YearOperator));
             }
 
+            if (input.Rating != null)
+            {
+                if (results == null)
+                    results = db.Where(item => NUIntSearchPredicate(item.Rating, input.Rating.Value, input.RatingOperator));
+                else
+                    results = results.Where(item => NUIntSearchPredicate(item.Rating, input.Rating.Value, input.RatingOperator));
+            }
 
+
+            if (input.PlayCount != null)
+            {
+                if (results == null)
+                    results = db.Where(item => UIntSearchPredicate(item.PlayCounter, input.PlayCount.Value, input.PlayCounterOperator));
+                else
+                    results = results.Where(item => UIntSearchPredicate(item.PlayCounter, input.PlayCount.Value, input.PlayCounterOperator));
+            }
 
             return results;
         }

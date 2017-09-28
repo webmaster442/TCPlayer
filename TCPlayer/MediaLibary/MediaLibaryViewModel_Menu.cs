@@ -21,6 +21,7 @@ using AppLib.WPF.MVVM;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Windows;
 using TCPlayer.MediaLibary.DB;
 using TCPlayer.Properties;
 
@@ -68,7 +69,14 @@ namespace TCPlayer.MediaLibary
 
         private void MenuBackupDb()
         {
-            throw new NotImplementedException();
+            var sfd = new System.Windows.Forms.SaveFileDialog();
+            sfd.Filter = "TC Player Media database|TCPlayerDb.db";
+            sfd.FileName = "TCPlayerDb.db";
+            if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                File.Copy(DataBase.Instance.DataBaseFileLocation, sfd.FileName);
+                MessageBox.Show("Backup succesfull", "Database backup", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
     }

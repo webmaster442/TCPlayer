@@ -24,10 +24,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using TCPlayer.Code;
 using TCPlayer.Controls;
+using TCPlayer.MediaLibary.DB;
 
 namespace TCPlayer
 {
-    public partial class MainWinViewModel: ViewModel<IMainWindow>, IMessageClient<IEnumerable<string>>
+    public partial class MainWinViewModel: ViewModel<IMainWindow>, IMessageClient<IEnumerable<TrackEntity>>
     {
         private int _playlistindex;
 
