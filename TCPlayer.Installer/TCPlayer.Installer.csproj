@@ -94,5 +94,18 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\applib\AppLib.Common\AppLib.Common.csproj">
+      <Project>{516087b5-6ac5-44a5-8df1-fe42d7a7a0e6}</Project>
+      <Name>AppLib.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\applib\AppLib.WPF\AppLib.WPF.csproj">
+      <Project>{faf19388-a6c0-46f9-a588-a46db392ace4}</Project>
+      <Name>AppLib.WPF</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="wizard.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
