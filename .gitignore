@@ -17,3 +17,7 @@
 /PackerPlugin/x64/
 /PackerPlugin/Debug/
 /PackerPlugin/Release/
+/TCPlayer/Properties/AssemblyInfo.cs
+/TCPlayer.Lib/Properties/AssemblyInfo.cs
+/TCPlayer.MediaLibary/Properties/AssemblyInfo.cs
+/TCPlayer.Installer/Properties/AssemblyInfo.cs

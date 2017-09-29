@@ -316,4 +316,7 @@
     <None Include="TagLib\TagLib.sources" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>$(SolutionDir)prebuild.cmd TCPlayer.Lib_AssemblyInfo.cs $(ProjectName)  $(SolutionDir)</PreBuildEvent>
+  </PropertyGroup>
 </Project>

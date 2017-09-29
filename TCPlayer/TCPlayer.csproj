@@ -97,6 +97,7 @@
     </Compile>
     <Compile Include="MediaLibary\MediaLibaryViewModel.cs" />
     <Compile Include="MediaLibary\MediaLibaryViewModel_Menu.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs" />
     <Compile Include="Style\NullorValueConverter.cs" />
     <Page Include="App.xaml">
@@ -179,9 +180,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -355,6 +353,9 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>$(SolutionDir)prebuild.cmd TCPlayer_AssemblyInfo.cs $(ProjectName) $(SolutionDir) asd</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

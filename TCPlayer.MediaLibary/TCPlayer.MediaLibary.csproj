@@ -100,4 +100,7 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>$(SolutionDir)prebuild.cmd TCPlayer.MediaLibary_AssemblyInfo.cs $(ProjectName)  $(SolutionDir)</PreBuildEvent>
+  </PropertyGroup>
 </Project>

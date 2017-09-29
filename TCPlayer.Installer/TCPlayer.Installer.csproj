@@ -121,4 +121,7 @@
     </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>$(SolutionDir)prebuild.cmd TCPlayer.Installer_AssemblyInfo.cs $(ProjectName)  $(SolutionDir)</PreBuildEvent>
+  </PropertyGroup>
 </Project>
