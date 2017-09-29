@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<VersionIncrement xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Main>3</Main>
+  <Minor>0</Minor>
+  <Revision>0</Revision>
+  <Build>$BUILD$</Build>
+  <BuildCounter>165</BuildCounter>
+</VersionIncrement>
+<!--
+Possible tags:
+$DAY$ - Inserts current day
+$YEAR$ - Inserts current year
+$MONTH$ - Inserts current month
+$TIMESTAMP$ - Creates a timestamp. If time is 11:45:22 then the timestamp will be: 114522
+$BUILD$ - Inserts build counter value
+-->
