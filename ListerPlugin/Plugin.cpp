@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#include <fstream>
 #include <Windows.h>
 #include <cwchar>
 #include <Shlwapi.h>
@@ -80,6 +81,27 @@ void CALLBACK timer_code(HWND hwnd, UINT uMsg, UINT timerId, DWORD dwTime)
 	DestroyWindow(timer);
 }
 
+WCHAR * ReadPathConfig()
+{
+	WCHAR dllpath[MAX_PATH];
+	WCHAR configfile[MAX_PATH];
+	GetModuleFileName((HINSTANCE)&__ImageBase, dllpath, MAX_PATH);
+	PathRemoveFileSpec(dllpath);
+
+	StrCpyW(configfile, dllpath);
+	StrCatW(configfile, L"\\program.loc");
+
+	if (PathFileExists(configfile))
+	{
+		std::ifstream input;
+		input.open(configfile, std::ifstream::in);
+		WCHAR loc[MAX_PATH];
+		
+	}
+
+	return dllpath;
+}
+
 HWND CallKiller(HWND aListerWindow)
 {
 	HWND handle =  CreateWindowEx(WS_EX_CONTROLPARENT,
@@ -104,10 +126,6 @@ HWND __stdcall ListLoad(HWND ParentWin, char* FileToLoad, int ShowFlags)
 HWND __stdcall ListLoadW(HWND ParentWin, WCHAR* FileToLoad, int ShowFlags)
 {
 	WCHAR safefile[MAX_PATH];
-	WCHAR dllpath[MAX_PATH];
-
-	GetModuleFileName((HINSTANCE)&__ImageBase, dllpath, MAX_PATH);
-	PathRemoveFileSpec(dllpath);
 
 	swprintf(safefile, L"\"%s\"", FileToLoad);
 
@@ -118,7 +136,7 @@ HWND __stdcall ListLoadW(HWND ParentWin, WCHAR* FileToLoad, int ShowFlags)
 	ShExecInfo.lpVerb = NULL;
 	ShExecInfo.lpFile = PROGRAMNAME;
 	ShExecInfo.lpParameters = safefile;
-	ShExecInfo.lpDirectory = dllpath;
+	ShExecInfo.lpDirectory = ReadPathConfig();
 	ShExecInfo.nShow = SW_NORMAL;
 	ShExecInfo.hInstApp = NULL;
 	ShellExecuteEx(&ShExecInfo);

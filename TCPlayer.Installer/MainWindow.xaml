@@ -12,6 +12,9 @@
     ResizeMode="CanMinimize"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
+    <Window.DataContext>
+        <local:MainWindowViewModel/>
+    </Window.DataContext>
     <Window.Resources>
         <Style TargetType="applib:FaImageButton">
             <Setter Property="HorizontalAlignment" Value="Center" />
@@ -40,11 +43,14 @@
             VerticalAlignment="Center">
             <applib:FaImageButton
                 Content="Install Lister Plugin..."
+                Command="{Binding InstallListerCommand}"
                 Icon="fa_files_o" />
             <applib:FaImageButton
                 Content="Install Packer Plugin..."
-                Icon="fa_files_o" />
+                Command="{Binding InstallPackerCommand}"
+                Icon="fa_file_archive_o" />
             <applib:FaImageButton
+                Command="{Binding InstallShortcutCommand}"
                 Content="Create shortcut on Desktop"
                 Icon="fa_external_link" />
         </StackPanel>
@@ -65,6 +71,7 @@
                     Margin="10,0"
                     Padding="18,3"
                     VerticalAlignment="Center"
+                    Command="{Binding ExitCommand}"
                     Content="Exit" />
             </StackPanel>
         </Border>
