@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AppLib.Common.INI;
 using AppLib.WPF.MVVM;
-using System.Runtime.InteropServices;
-using System.IO;
-using System.Windows;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using AppLib.Common.INI;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Windows;
 
 namespace TCPlayer.Installer
 {
@@ -79,24 +77,23 @@ namespace TCPlayer.Installer
             p.WaitForExit();
         }
 
-        private void Install(Dictionary<string, string> CopyList)
+        private void Install(Dictionary<string, string> CopyList, Action<string, string> IniFileAction)
         {
             string installfolder;
             if (SelectTCLocation(out installfolder))
             {
-                int index = 0;
-                foreach(var file in CopyList)
+                int i = 0;
+                foreach (var file in CopyList)
                 {
                     var source = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, file.Key);
                     var target = Path.Combine(installfolder, file.Value);
                     var cmd = $"/c copy {source} {target}";
                     RunCommand(cmd);
-                    if (index == 0)
+                    if (i == 0)
                     {
-                        IniFile wincmd = IniFile.Open(Path.Combine(installfolder, "wincmd.ini"));
-                        //wincmd.SetSetting("PackerPlugins", "tcplayer", "277," + target);
+                        IniFileAction(installfolder, Path.Combine(installfolder, "wincmd.ini"));
                     }
-                    index++;
+                    i++;
                 }
             }
         }
@@ -119,18 +116,50 @@ namespace TCPlayer.Installer
 
         private void InstallPacker()
         {
-            var FilesToCopy = new Dictionary<string, string>();
-            FilesToCopy.Add("TCPlayerPacker.wcx", "\\plugins\\wcx\\tcplayerlister\\TCPlayerPacker.wcx");
-            FilesToCopy.Add("TCPlayerPacker.wcx64", "\\plugins\\wcx\\tcplayerlister\\TCPlayerPacker.wcx64");
-            Install(FilesToCopy);
+            try
+            {
+                var FilesToCopy = new Dictionary<string, string>();
+                FilesToCopy.Add("TCPlayerPacker.wcx", "\\plugins\\wcx\\tcplayerlister\\TCPlayerPacker.wcx");
+                FilesToCopy.Add("TCPlayerPacker.wcx64", "\\plugins\\wcx\\tcplayerlister\\TCPlayerPacker.wcx64");
+                Install(FilesToCopy, (installfolder, ini) =>
+                {
+                    IniFile wincmd = IniFile.Open(ini);
+                    wincmd.SetSetting("PackerPlugins", "tcplayer", "277," + Path.Combine(installfolder, "\\plugins\\wcx\\tcplayerlister\\TCPlayerPacker.wcx"));
+                    wincmd.SaveToFile(ini);
+                });
+            }
+            catch (Exception ex)
+            {
+                Error("Install Error:\r\n" + ex.Message);
+            }
         }
 
         private void InstallLister()
         {
-            var FilesToCopy = new Dictionary<string, string>();
-            FilesToCopy.Add("TCPlayerLister.wlx", "\\plugins\\wlx\\tcplayerlister\\TCPlayerLister.wlx");
-            FilesToCopy.Add("TCPlayerLister.wlx64", "\\plugins\\wlx\\tcplayerlister\\TCPlayerLister.wlx64");
-            Install(FilesToCopy);
+            try
+            {
+                var FilesToCopy = new Dictionary<string, string>();
+                FilesToCopy.Add("TCPlayerLister.wlx", "\\plugins\\wlx\\tcplayerlister\\TCPlayerLister.wlx");
+                FilesToCopy.Add("TCPlayerLister.wlx64", "\\plugins\\wlx\\tcplayerlister\\TCPlayerLister.wlx64");
+                Install(FilesToCopy, (installfolder, ini) =>
+                {
+                    IniFile wincmd = IniFile.Open(ini);
+                    int dumy;
+                    var lastkey = (from setting in wincmd
+                                   where setting.Key.Category == "ListerPlugins"
+                                   && int.TryParse(setting.Key.SettingName, out dumy)
+                                   orderby setting.Key.SettingName descending
+                                   select setting.Key.SettingName).FirstOrDefault();
+
+                    int keytoadd = Convert.ToInt32(lastkey) + 1;
+                    wincmd.SetSetting("ListerPlugins", keytoadd.ToString(), Path.Combine(installfolder, "\\plugins\\wlx\\tcplayerlister\\TCPlayerLister.wlx"));
+                    wincmd.SaveToFile(ini);
+                });
+            }
+            catch (Exception ex)
+            {
+                Error("Install Error:\r\n" + ex.Message);
+            }
         }
 
         private void Exit()
