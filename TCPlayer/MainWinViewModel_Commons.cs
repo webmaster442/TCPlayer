@@ -113,6 +113,7 @@ namespace TCPlayer
 
             MediaViewModel = new MediaLibary.MediaLibaryViewModel();
             Messager.Instance.SubScribe(this);
+
         }
 
         private void PlayerExit()

@@ -406,7 +406,8 @@
                     MouseDoubleClick="PlayList_ItemDoubleClcik" />
             </TabItem>
             <TabItem Header="[ File Browser ]">
-                <applib:FileExplorer x:Name="FileExplorer" />
+                <applib:FileExplorer
+                    x:Name="FileExplorer"/>
             </TabItem>
             <TabItem Header="[ Media Libary ]">
                 <medialib:MediaLibary DataContext="{Binding MediaViewModel}" />

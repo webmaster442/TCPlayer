@@ -37,6 +37,7 @@ namespace TCPlayer.Controls
         public static DependencyProperty FileNameProperty =
             DependencyProperty.Register("FileName", typeof(string), typeof(NowPlaying));
 
+
         public ImageSource Cover
         {
             get { return (ImageSource)GetValue(CoverProperty); }
@@ -186,8 +187,9 @@ namespace TCPlayer.Controls
 
                 ms.Close();
                 DataLayer.Background = new SolidColorBrush(c);
-                
+                var c2 = c.Inverse();
 
+                Foreground = new SolidColorBrush(c2);
             }
         }
 

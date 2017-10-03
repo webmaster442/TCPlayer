@@ -19,7 +19,6 @@
 using AppLib.Common.Extensions;
 using AppLib.Common.MessageHandler;
 using AppLib.WPF.MVVM;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using TCPlayer.MediaLibary.DB;
@@ -43,7 +42,8 @@ namespace TCPlayer
 
         private void FileExplorerNavigateHome()
         {
-            throw new NotImplementedException();
+            View.FileExplorerHomeView();
+            View.SetPage(TabPage.FileBrowser);
         }
     }
 }

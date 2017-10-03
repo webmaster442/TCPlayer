@@ -60,5 +60,9 @@ namespace TCPlayer
         /// </summary>
         /// <param name="item">file to play</param>
         void DoLoadAndPlay(string item);
+        /// <summary>
+        /// Render the file explorer home view
+        /// </summary>
+        void FileExplorerHomeView();
     }
 }

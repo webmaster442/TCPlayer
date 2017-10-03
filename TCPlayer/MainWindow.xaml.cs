@@ -87,6 +87,9 @@ namespace TCPlayer
                 App.NotifyIcon = new NotificationIcon();
 
             this.GetViewModel<MainWinViewModel>().View = this;
+
+            FileExplorer.FilteredExtensions = App.Formats.Replace("*", "").Split(';');
+
         }
 
         public void ShowDialog(UserControl dialog)
@@ -538,6 +541,11 @@ namespace TCPlayer
         {
             int pageindex = (int)page;
             Dispatcher.Invoke(() => { MainView.SelectedIndex = pageindex; });
+        }
+
+        public void FileExplorerHomeView()
+        {
+            FileExplorer.RenderHomeView();
         }
     }
 }

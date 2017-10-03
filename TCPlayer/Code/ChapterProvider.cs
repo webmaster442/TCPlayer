@@ -68,6 +68,41 @@ namespace TCPlayer.Code
             DrawToMenu();
         }
 
+        private int CreateChapters(string lyrics)
+        {
+            if (string.IsNullOrEmpty(lyrics))
+                return 0;
+
+            int count = 0;
+
+            _data.Clear();
+
+            using (var sr = new StringReader(lyrics))
+            {
+                string line = null;
+                do
+                {
+                    line = sr.ReadLine();
+                    if (string.IsNullOrEmpty(line)) continue;
+
+                    var parts = line.Split(' ');
+                    TimeSpan ts;
+                    if (TimeSpan.TryParse(parts[0], out ts))
+                    {
+                        ++count;
+                        if (parts.Length > 0)
+                            _data.Add(ts.TotalSeconds, line.Replace(parts[0], ""));
+                        else
+                            _data.Add(ts.TotalSeconds, "Chapter " + count);
+                    }
+                }
+                while (line != null);
+            }
+
+            return count;
+
+        }
+
         public void CreateChapters(string filename, double parsedlength)
         {
             try
@@ -77,31 +112,35 @@ namespace TCPlayer.Code
 
                 var extension = Path.GetExtension(filename).ToLower();
 
-                if ((extension != ".mp4") && (extension != ".m4a") &&(extension != ".m4b"))
+                if (extension == ".mp3")
+                {
+                    TagLib.File f = TagLib.File.Create(filename);
+                    if (CreateChapters(f.Tag.Lyrics) < 1)
+                        CreateChapters(parsedlength);
+                }
+                else if ((extension != ".mp4") && (extension != ".m4a") && (extension != ".m4b"))
                 {
                     CreateChapters(parsedlength);
-                    DrawToMenu();
-                    ChaptersEnabled = _data.Count > 0;
                     return;
                 }
-
-                using (var stream = File.OpenRead(filename))
+                else
                 {
-                    var extractor = new ChapterExtractor(new StreamWrapper(stream));
-                    extractor.Run();
-                    foreach (var c in extractor.Chapters)
+                    using (var stream = File.OpenRead(filename))
                     {
-                        _data.Add(c.Time.TotalSeconds, c.Name);
+                        var extractor = new ChapterExtractor(new StreamWrapper(stream));
+                        extractor.Run();
+                        foreach (var c in extractor.Chapters)
+                        {
+                            _data.Add(c.Time.TotalSeconds, c.Name);
+                        }
                     }
                 }
-                ChaptersEnabled = _data.Count > 0;
                 DrawToMenu();
             }
             catch (Exception)
             {
                 _data.Clear();
                 CreateChapters(parsedlength);
-                DrawToMenu();
             }
         }
 
@@ -126,6 +165,7 @@ namespace TCPlayer.Code
                 mnu.Click += Mnu_Click;
                 _target.Items.Add(mnu);
             }
+            ChaptersEnabled = _data.Count > 0;
         }
 
         private void Mnu_Click(object sender, RoutedEventArgs e)
