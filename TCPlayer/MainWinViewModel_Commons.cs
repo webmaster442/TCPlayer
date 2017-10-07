@@ -84,7 +84,7 @@ namespace TCPlayer
             get { return new UId(); }
         }
 
-        public MainWinViewModel()
+        public MainWinViewModel(IMainWindow mainWindow): base(mainWindow)
         {
             //General Player commands
             PlayerAboutCommand = DelegateCommand.ToCommand(PlayerAbout);
@@ -111,7 +111,7 @@ namespace TCPlayer
             FileExplorerAddToPlaylistCommand = DelegateCommand.ToCommand(FileExplorerAddToPlaylist);
             FileExplorerPlaySelectedCommand = DelegateCommand.ToCommand(FileExplorerPlaySelected);
 
-            MediaViewModel = new MediaLibary.MediaLibaryViewModel();
+            MediaViewModel = new MediaLibary.MediaLibaryViewModel(null);
             Messager.Instance.SubScribe(this);
 
         }

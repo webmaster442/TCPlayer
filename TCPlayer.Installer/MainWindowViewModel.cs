@@ -10,7 +10,7 @@ using System.Windows;
 
 namespace TCPlayer.Installer
 {
-    public interface IMainWindow: IView
+    public interface IMainWindow: ICloseableView<MainWindowViewModel>
     {
 
     }
@@ -22,7 +22,7 @@ namespace TCPlayer.Installer
         public DelegateCommand InstallPackerCommand { get; private set; }
         public DelegateCommand InstallShortcutCommand { get; private set; }
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(IMainWindow mainWindow): base(mainWindow)
         {
             ExitCommand = DelegateCommand.ToCommand(Exit);
             InstallListerCommand = DelegateCommand.ToCommand(InstallLister);
@@ -43,8 +43,10 @@ namespace TCPlayer.Installer
         private bool SelectTCLocation(out string tcpath)
         {
             tcpath = "";
-            var fb = new System.Windows.Forms.FolderBrowserDialog();
-            fb.Description = "Select Total Commander Path";
+            var fb = new System.Windows.Forms.FolderBrowserDialog
+            {
+                Description = "Select Total Commander Path"
+            };
             if (fb.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 var exe = Path.Combine(fb.SelectedPath, "TOTALCMD.EXE");
@@ -79,8 +81,7 @@ namespace TCPlayer.Installer
 
         private void Install(Dictionary<string, string> CopyList, Action<string, string> IniFileAction)
         {
-            string installfolder;
-            if (SelectTCLocation(out installfolder))
+            if (SelectTCLocation(out string installfolder))
             {
                 int i = 0;
                 foreach (var file in CopyList)
@@ -118,9 +119,11 @@ namespace TCPlayer.Installer
         {
             try
             {
-                var FilesToCopy = new Dictionary<string, string>();
-                FilesToCopy.Add("TCPlayerPacker.wcx", "\\plugins\\wcx\\tcplayerlister\\TCPlayerPacker.wcx");
-                FilesToCopy.Add("TCPlayerPacker.wcx64", "\\plugins\\wcx\\tcplayerlister\\TCPlayerPacker.wcx64");
+                var FilesToCopy = new Dictionary<string, string>
+                {
+                    { "TCPlayerPacker.wcx", "\\plugins\\wcx\\tcplayerlister\\TCPlayerPacker.wcx" },
+                    { "TCPlayerPacker.wcx64", "\\plugins\\wcx\\tcplayerlister\\TCPlayerPacker.wcx64" }
+                };
                 Install(FilesToCopy, (installfolder, ini) =>
                 {
                     IniFile wincmd = IniFile.Open(ini);
@@ -138,9 +141,11 @@ namespace TCPlayer.Installer
         {
             try
             {
-                var FilesToCopy = new Dictionary<string, string>();
-                FilesToCopy.Add("TCPlayerLister.wlx", "\\plugins\\wlx\\tcplayerlister\\TCPlayerLister.wlx");
-                FilesToCopy.Add("TCPlayerLister.wlx64", "\\plugins\\wlx\\tcplayerlister\\TCPlayerLister.wlx64");
+                var FilesToCopy = new Dictionary<string, string>
+                {
+                    { "TCPlayerLister.wlx", "\\plugins\\wlx\\tcplayerlister\\TCPlayerLister.wlx" },
+                    { "TCPlayerLister.wlx64", "\\plugins\\wlx\\tcplayerlister\\TCPlayerLister.wlx64" }
+                };
                 Install(FilesToCopy, (installfolder, ini) =>
                 {
                     IniFile wincmd = IniFile.Open(ini);

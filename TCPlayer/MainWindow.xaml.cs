@@ -49,22 +49,25 @@ namespace TCPlayer
         public MainWinViewModel ViewModel
         {
             get;
-            private set;
+            set;
         }
 
         public MainWindow()
         {
             InitializeComponent();
+            ViewModel = new MainWinViewModel(this);
+            this.SetViewModel(ViewModel);
             Player.Instance.ChangeDevice(); //init
             _prevvol = 1.0f;
             _chapterprovider = new ChapterProvider(ChapterMenu);
             _chapterprovider.ChapterClicked += _chapterprovider_ChapterClicked;
-            _SongTimer = new DispatcherTimer();
-            _SongTimer.Interval = TimeSpan.FromMilliseconds(40);
-            _SongTimer.IsEnabled = false;
+            _SongTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(40),
+                IsEnabled = false
+            };
             _SongTimer.Tick += _SongTimerTick;
             _loaded = true;
-            ViewModel = this.GetViewModel<MainWinViewModel>();
 
             if (Player.Instance.Is64Bit) Title += " (x64)";
             else Title += " (x86)";
@@ -286,8 +289,7 @@ namespace TCPlayer
                 Taskbar.ProgressValue = SeekSlider.Value / SeekSlider.Maximum;
                 _timerupdate = false;
             }
-            int l, r;
-            Player.Instance.VolumeValues(out l, out r);
+            Player.Instance.VolumeValues(out int l, out int r);
             if (l < 0) l *= -1;
             if (r < 0) r *= -1;
             VuR.Value = l;
@@ -514,9 +516,11 @@ namespace TCPlayer
 
         private void DoOpen()
         {
-            var ofd = new System.Windows.Forms.OpenFileDialog();
-            ofd.Multiselect = true;
-            ofd.Filter = string.Format("Auduio Files|{0}|Playlists|{1}", App.Formats, App.Playlists);
+            var ofd = new System.Windows.Forms.OpenFileDialog
+            {
+                Multiselect = true,
+                Filter = string.Format("Auduio Files|{0}|Playlists|{1}", App.Formats, App.Playlists)
+            };
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 DoLoadAndPlay(ofd.FileNames);

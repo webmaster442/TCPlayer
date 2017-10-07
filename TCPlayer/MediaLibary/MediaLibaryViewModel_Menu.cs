@@ -31,9 +31,11 @@ namespace TCPlayer.MediaLibary
     {
         private async void MenuAddFiles()
         {
-            var ofd = new System.Windows.Forms.OpenFileDialog();
-            ofd.Multiselect = true;
-            ofd.Filter = "Audio Files|" + App.Formats;
+            var ofd = new System.Windows.Forms.OpenFileDialog
+            {
+                Multiselect = true,
+                Filter = "Audio Files|" + App.Formats
+            };
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 await DataBase.Instance.AddFiles(ofd.FileNames);
@@ -43,8 +45,10 @@ namespace TCPlayer.MediaLibary
         private async void MenuAddFolder()
         {
             string[] filters = App.Formats.Split(';');
-            var fbd = new System.Windows.Forms.FolderBrowserDialog();
-            fbd.Description = Resources.Playlist_AddFolderDescription;
+            var fbd = new System.Windows.Forms.FolderBrowserDialog
+            {
+                Description = Resources.Playlist_AddFolderDescription
+            };
             if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 List<string> Files = new List<string>(30);
@@ -69,9 +73,11 @@ namespace TCPlayer.MediaLibary
 
         private void MenuBackupDb()
         {
-            var sfd = new System.Windows.Forms.SaveFileDialog();
-            sfd.Filter = "TC Player Media database|TCPlayerDb.db";
-            sfd.FileName = "TCPlayerDb.db";
+            var sfd = new System.Windows.Forms.SaveFileDialog
+            {
+                Filter = "TC Player Media database|TCPlayerDb.db",
+                FileName = "TCPlayerDb.db"
+            };
             if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 File.Copy(DataBase.Instance.DataBaseFileLocation, sfd.FileName);

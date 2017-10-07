@@ -17,5 +17,11 @@ namespace TCPlayer.Installer
                 vm.View = this;
             });
         }
+
+        public MainWindowViewModel ViewModel
+        {
+            get;
+            set;
+        }
     }
 }

@@ -33,7 +33,7 @@ namespace TCPlayer.MediaLibary
         public DelegateCommand FilterGenreCommand { get; private set; }
         public DelegateCommand FilterQueryCommand { get; private set; }
 
-        public DelegateCommand ListQueryCommand { get; private set; }
+        public DelegateCommand<string> ListQueryCommand { get; private set; }
 
         public DelegateCommand MenuAddFilesCommand { get; private set; }
         public DelegateCommand MenuAddFolderCommand { get; private set; }
@@ -53,7 +53,7 @@ namespace TCPlayer.MediaLibary
             set { SetValue(ref _listing, value); }
         }
 
-        public MediaLibaryViewModel()
+        public MediaLibaryViewModel(IMediaLibary mediaLibary): base(mediaLibary)
         {
             DisplayItems = new ObservableCollection<TrackEntity>();
             ListItems = new ObservableCollection<string>();
@@ -64,7 +64,7 @@ namespace TCPlayer.MediaLibary
             FilterGenreCommand = DelegateCommand.ToCommand(FilterGenre);
             FilterQueryCommand = DelegateCommand.ToCommand(FilterQuery);
 
-            ListQueryCommand = DelegateCommand.ToCommand(ListQuery);
+            ListQueryCommand = DelegateCommand<string>.ToCommand(ListQuery);
 
             MenuAddFilesCommand = DelegateCommand.ToCommand(MenuAddFiles);
             MenuAddFolderCommand = DelegateCommand.ToCommand(MenuAddFolder);
@@ -113,24 +113,23 @@ namespace TCPlayer.MediaLibary
             DisplayItems.AddRange(items);
         }
 
-        private void ListQuery(object selecteditem)
+        private void ListQuery(string selecteditem)
         {
-            string item = selecteditem as string;
-            if (item == null) return;
+            if (selecteditem == null) return;
 
             switch (ListingType)
             {
                 case ListingType.Albums:
-                    DoQuery(QueryInput.AlbumQuery(item));
+                    DoQuery(QueryInput.AlbumQuery(selecteditem));
                     break;
                 case ListingType.Artists:
-                    DoQuery(QueryInput.ArtistQuery(item));
+                    DoQuery(QueryInput.ArtistQuery(selecteditem));
                     break;
                 case ListingType.Genre:
-                    DoQuery(QueryInput.GenerireQuery(item));
+                    DoQuery(QueryInput.GenerireQuery(selecteditem));
                     break;
                 case ListingType.Years:
-                    DoQuery(QueryInput.YearQuery(Convert.ToUInt32(item)));
+                    DoQuery(QueryInput.YearQuery(Convert.ToUInt32(selecteditem)));
                     break;
                 case ListingType.Query:
                     

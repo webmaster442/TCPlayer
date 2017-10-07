@@ -23,9 +23,6 @@
     Style="{StaticResource MainWin}"
     Icon="icon.png"
     mc:Ignorable="d">
-    <Window.DataContext>
-        <local:MainWinViewModel />
-    </Window.DataContext>
     <Window.TaskbarItemInfo>
         <TaskbarItemInfo
             x:Name="Taskbar"
