@@ -93,10 +93,11 @@ WCHAR * ReadPathConfig()
 
 	if (PathFileExists(configfile))
 	{
-		std::ifstream input;
-		input.open(configfile, std::ifstream::in);
+		std::wifstream input;
+		input.open(configfile, std::wifstream::in);
 		WCHAR loc[MAX_PATH];
-		
+		input.getline(loc, MAX_PATH);
+		return loc;
 	}
 
 	return dllpath;

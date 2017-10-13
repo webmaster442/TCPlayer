@@ -111,6 +111,28 @@ void __stdcall ConfigurePacker(HWND Parent, HINSTANCE DllInstance)
 		L"TC Player Playlist packer", MB_ICONINFORMATION);
 }
 
+WCHAR * ReadPathConfig()
+{
+	WCHAR dllpath[MAX_PATH];
+	WCHAR configfile[MAX_PATH];
+	GetModuleFileName((HINSTANCE)&__ImageBase, dllpath, MAX_PATH);
+	PathRemoveFileSpec(dllpath);
+
+	StrCpyW(configfile, dllpath);
+	StrCatW(configfile, L"\\program.loc");
+
+	if (PathFileExists(configfile))
+	{
+		std::wifstream input;
+		input.open(configfile, std::wifstream::in);
+		WCHAR loc[MAX_PATH];
+		input.getline(loc, MAX_PATH);
+		return loc;
+	}
+
+	return dllpath;
+}
+
 int __stdcall PackFilesW(WCHAR *PackedFile, WCHAR *SubPath, WCHAR *SrcPath, WCHAR *AddList, int Flags)
 {
 	vector<wstring> vector;
@@ -135,11 +157,6 @@ int __stdcall PackFilesW(WCHAR *PackedFile, WCHAR *SubPath, WCHAR *SrcPath, WCHA
 		}
 		tempfile.close();
 
-		WCHAR dllpath[MAX_PATH];
-
-		GetModuleFileName((HINSTANCE)&__ImageBase, dllpath, MAX_PATH);
-		PathRemoveFileSpec(dllpath);
-
 		WCHAR safefile[MAX_PATH];
 		swprintf(safefile, L"\"%s\"", temp_file);
 
@@ -150,7 +167,7 @@ int __stdcall PackFilesW(WCHAR *PackedFile, WCHAR *SubPath, WCHAR *SrcPath, WCHA
 		ShExecInfo.lpVerb = NULL;
 		ShExecInfo.lpFile = PROGRAMNAME;
 		ShExecInfo.lpParameters = safefile;
-		ShExecInfo.lpDirectory = dllpath;
+		ShExecInfo.lpDirectory = ReadPathConfig();
 		ShExecInfo.nShow = SW_NORMAL;
 		ShExecInfo.hInstApp = NULL;
 		ShellExecuteEx(&ShExecInfo);

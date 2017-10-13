@@ -15,14 +15,14 @@ namespace TCPlayer.Installer
 
     }
 
-    public class MainWindowViewModel: ViewModel<IMainWindow>
+    public class MainWindowViewModel : ViewModel<IMainWindow>
     {
         public DelegateCommand ExitCommand { get; private set; }
         public DelegateCommand InstallListerCommand { get; private set; }
         public DelegateCommand InstallPackerCommand { get; private set; }
         public DelegateCommand InstallShortcutCommand { get; private set; }
 
-        public MainWindowViewModel(IMainWindow mainWindow): base(mainWindow)
+        public MainWindowViewModel(IMainWindow mainWindow) : base(mainWindow)
         {
             ExitCommand = DelegateCommand.ToCommand(Exit);
             InstallListerCommand = DelegateCommand.ToCommand(InstallLister);
@@ -40,6 +40,11 @@ namespace TCPlayer.Installer
             MessageBox.Show(s, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
+        /// <summary>
+        /// Select total commander path
+        /// </summary>
+        /// <param name="tcpath">Total commander path</param>
+        /// <returns>true, if totac commander selection was succesfull, false, if selection was canceled</returns>
         private bool SelectTCLocation(out string tcpath)
         {
             tcpath = "";
@@ -69,6 +74,10 @@ namespace TCPlayer.Installer
             return false;
         }
 
+        /// <summary>
+        /// Run a command
+        /// </summary>
+        /// <param name="cmd"></param>
         private void RunCommand(string cmd)
         {
             Process p = new Process();
@@ -79,6 +88,11 @@ namespace TCPlayer.Installer
             p.WaitForExit();
         }
 
+        /// <summary>
+        /// Install
+        /// </summary>
+        /// <param name="CopyList">Files to copy. key: source location, value: target location</param>
+        /// <param name="IniFileAction">Ini file action</param>
         private void Install(Dictionary<string, string> CopyList, Action<string, string> IniFileAction)
         {
             if (SelectTCLocation(out string installfolder))
@@ -96,9 +110,27 @@ namespace TCPlayer.Installer
                     }
                     i++;
                 }
+                CreateProgramLocFile(installfolder);
             }
         }
 
+        /// <summary>
+        /// Create Program loc file
+        /// </summary>
+        /// <param name="targetfolder"></param>
+        private void CreateProgramLocFile(string targetfolder)
+        {
+            var file = Path.Combine(targetfolder, "program.loc");
+            var content = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TCPlayer.exe");
+            using (var loc = File.CreateText(file))
+            {
+                loc.WriteLine(content);
+            }
+        }
+
+        /// <summary>
+        /// Create a shortcut on desktop
+        /// </summary>
         private void InstallShortcut()
         {
             IWshRuntimeLibrary.WshShell wsh = new IWshRuntimeLibrary.WshShell();
@@ -115,6 +147,9 @@ namespace TCPlayer.Installer
             Notify("Shortcut Created");
         }
 
+        /// <summary>
+        /// Install packer plugin
+        /// </summary>
         private void InstallPacker()
         {
             try
@@ -137,6 +172,9 @@ namespace TCPlayer.Installer
             }
         }
 
+        /// <summary>
+        /// Install lister plugin
+        /// </summary>
         private void InstallLister()
         {
             try
@@ -167,6 +205,9 @@ namespace TCPlayer.Installer
             }
         }
 
+        /// <summary>
+        /// Exit
+        /// </summary>
         private void Exit()
         {
             View.Close();
