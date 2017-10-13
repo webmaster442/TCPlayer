@@ -19,6 +19,7 @@
 using AppLib.WPF.MVVM;
 using System.Collections.Generic;
 using System.Windows.Controls;
+using TCPlayer.Code;
 
 namespace TCPlayer
 {

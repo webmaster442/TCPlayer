@@ -95,26 +95,18 @@ namespace TCPlayer
 
         }
 
-        public void ShowDialog(UserControl dialog)
+        public async void ShowDialog(UserControl dialog)
         {
-            var main = Application.Current.MainWindow as MainWindow;
-            main.OverLayContent.Children.Clear();
-            main.OverLayContent.Children.Add(dialog);
-            main.OverLay.Visibility = Visibility.Visible;
-        }
+            Overlay.DialogContent = dialog;
+            Overlay.CancelVisible = dialog is IDialog;
 
-        private void OverLayClose_Click(object sender, RoutedEventArgs e)
-        {
-            OverLay.Visibility = Visibility.Collapsed;
-            OverLayContent.Children.Clear();
-        }
+            var result = await Overlay.Show();
+            if (result == Result.OK)
+            {
+                var id = dialog as IDialog;
+                id?.OkClicked?.Invoke();
+            }
 
-        private void OverLayOk_Click(object sender, RoutedEventArgs e)
-        {
-            OverLay.Visibility = Visibility.Collapsed;
-            var dialog = (OverLayContent.Children[0] as IDialog);
-            dialog?.OkClicked?.Invoke();
-            OverLayContent.Children.Clear();
         }
 
         protected virtual void Dispose(bool native)

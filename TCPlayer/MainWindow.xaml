@@ -52,54 +52,22 @@
             </TaskbarItemInfo.ThumbButtonInfos>
         </TaskbarItemInfo>
     </Window.TaskbarItemInfo>
-    <Grid>
+    <Grid
+        x:Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Border
-            x:Name="OverLay"
-            Grid.Row="1"
-            Grid.RowSpan="10"
-            Style="{StaticResource Overlay}"
-            Visibility="Collapsed">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <StackPanel
-                    Grid.Row="1"
-                    Margin="10"
-                    HorizontalAlignment="Right"
-                    Orientation="Horizontal">
-                    <Button
-                        x:Name="OverLayOk"
-                        Width="100"
-                        Height="30"
-                        MinHeight="0"
-                        Margin="5,0"
-                        FontSize="16"
-                        Content="[ Ok ]"
-                        Click="OverLayOk_Click" />
-                    <Button
-                        x:Name="OverLayClose"
-                        Width="100"
-                        Height="30"
-                        MinHeight="0"
-                        Margin="10,0"
-                        FontSize="16"
-                        Content="[ Cancel ]"
-                        Click="OverLayClose_Click" />
-                </StackPanel>
-                <Grid
-                    x:Name="OverLayContent"
-                    Grid.Row="0"
-                    Margin="5" />
-            </Grid>
-        </Border>
+
+        <controls:Overlay
+            x:Name="Overlay"
+            Panel.ZIndex="100"
+            ContentWidth="{Binding ElementName=MainGrid, Path=ActualWidth, Converter={applib:OperationConverter}, ConverterParameter=* 0.70}"
+            ContentHeight="{Binding ElementName=MainGrid, Path=ActualHeight, Converter={applib:OperationConverter}, ConverterParameter=* 0.50}"
+            Grid.RowSpan="30"
+            Grid.ColumnSpan="33"/>
 
         <Grid
             Grid.Row="0"

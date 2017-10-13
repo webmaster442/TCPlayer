@@ -37,11 +37,7 @@ namespace TCPlayer.Controls
             LoadAbout();
         }
 
-        public Action OkClicked
-        {
-            get;
-            set;
-        }
+        public Action OkClicked { get; set; }
 
         private void BtnWebsite_Click(object sender, System.Windows.RoutedEventArgs e)
         {
