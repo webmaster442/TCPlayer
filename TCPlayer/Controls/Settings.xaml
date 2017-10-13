@@ -14,7 +14,9 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <TextBlock Style="{StaticResource Title}" Text="{applib:Translate Settings_SettingLabel}" />
+        <TextBlock 
+            Style="{StaticResource Title}" 
+            Text="{applib:Translate Settings_SettingLabel}" />
         <ScrollViewer Grid.Row="1">
             <StackPanel>
                 <CheckBox

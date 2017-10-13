@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Animation;
 
 namespace TCPlayer.Controls
 {
@@ -55,14 +57,19 @@ namespace TCPlayer.Controls
 
         private void Hide()
         {
-            Visibility = Visibility.Collapsed;
+            Storyboard closeanim = FindResource("CloseAnim") as Storyboard;
+            BeginStoryboard(closeanim);
             _DialogResult = Result.None;
         }
 
         public async Task<Result> Show()
         {
             _DialogResult = Result.None;
-            Visibility = Visibility.Visible;
+
+            Storyboard openanim = FindResource("OpenAnim") as Storyboard;
+            BeginStoryboard(openanim);
+            await Task.Delay(TimeSpan.FromSeconds(0.3));
+
             while (true)
             {
                 if (_DialogResult == Result.OK)

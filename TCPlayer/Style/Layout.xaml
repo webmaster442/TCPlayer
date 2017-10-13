@@ -141,13 +141,13 @@
 
     <Style TargetType="CheckBox" x:Key="SettingsWindow">
         <Setter Property="FontSize" Value="14"/>
-        <Setter Property="Foreground" Value="{StaticResource MenuForeground}"/>
+        <Setter Property="Foreground" Value="Black"/>
     </Style>
 
     <Style TargetType="TextBlock" x:Key="Title">
         <Setter Property="FontSize" Value="18"/>
         <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="Foreground" Value="{StaticResource MenuForeground}"/>
+        <Setter Property="Foreground" Value="{StaticResource MenuBackground}"/>
         <Setter Property="Margin" Value="10"/>
     </Style>
 

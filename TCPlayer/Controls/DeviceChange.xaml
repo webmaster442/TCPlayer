@@ -16,14 +16,24 @@
         </Grid.RowDefinitions>
         <TextBlock
             Margin="5,0"
+            Style="{StaticResource Title}"
             Text="{applib:Translate DeviceChange_SelectLabel}"
             FontWeight="Bold" />
         <ListBox
             x:Name="LbDevices"
             Grid.Row="1"
-            ItemsSource="{Binding}" />
+            ItemsSource="{Binding}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock 
+                        FontSize="16"
+                        Text="{Binding}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
         <StackPanel Grid.Row="2" Orientation="Horizontal">
             <TextBlock
+                VerticalAlignment="Center"
                 Margin="5,0"
                 Text="{applib:Translate DeviceChange_SelectLabel}"
                 FontWeight="Bold" />
