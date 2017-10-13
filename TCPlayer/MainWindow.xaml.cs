@@ -36,7 +36,7 @@ namespace TCPlayer
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : CoolWindow, IDisposable, IMainWindow
+    public partial class MainWindow : ModernWindow, IDisposable, IMainWindow
     {
         private float _prevvol;
         private DispatcherTimer _SongTimer;
