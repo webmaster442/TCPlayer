@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace TCPlayer.Installer
 {
-    public interface IMainWindow: ICloseableView<MainWindowViewModel>
+    public interface IMainWindow : ICloseableView<MainWindowViewModel>
     {
 
     }
@@ -20,13 +20,30 @@ namespace TCPlayer.Installer
         public DelegateCommand InstallDesktopShortcutCommand { get; private set; }
         public DelegateCommand InstallStartMenuShortcutCommand { get; private set; }
 
+        private Dictionary<string, string> ListerFiles;
+        private Dictionary<string, string> PackerFiles;
+
         public MainWindowViewModel(IMainWindow mainWindow) : base(mainWindow)
         {
+            PackerFiles = new Dictionary<string, string>
+                {
+                    { "TCPlayerPacker.wcx", "\\plugins\\wcx\\tcplayerlister\\TCPlayerPacker.wcx" },
+                    { "TCPlayerPacker.wcx64", "\\plugins\\wcx\\tcplayerlister\\TCPlayerPacker.wcx64" }
+                };
+
+            ListerFiles = new Dictionary<string, string>
+                {
+                    { "TCPlayerLister.wlx", "\\plugins\\wlx\\tcplayerlister\\TCPlayerLister.wlx" },
+                    { "TCPlayerLister.wlx64", "\\plugins\\wlx\\tcplayerlister\\TCPlayerLister.wlx64" }
+                };
+
             ExitCommand = DelegateCommand.ToCommand(Exit);
-            InstallListerCommand = DelegateCommand.ToCommand(InstallLister);
-            InstallPackerCommand = DelegateCommand.ToCommand(InstallPacker);
+            InstallListerCommand = DelegateCommand.ToCommand(InstallLister, CanInstallLister);
+            InstallPackerCommand = DelegateCommand.ToCommand(InstallPacker, CanInstallPacker);
             InstallDesktopShortcutCommand = DelegateCommand.ToCommand(InstallDesktopShortcut);
             InstallStartMenuShortcutCommand = DelegateCommand.ToCommand(InstallStartMenuShortcut);
+
+
         }
 
         /// <summary>
@@ -45,6 +62,19 @@ namespace TCPlayer.Installer
             CreateShortCut(Environment.SpecialFolder.StartMenu);
         }
 
+        private bool CanInstallPacker()
+        {
+            foreach (var file in PackerFiles)
+            {
+                var p = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, file.Key);
+                if (!File.Exists(p))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         /// <summary>
         /// Install packer plugin
         /// </summary>
@@ -52,12 +82,7 @@ namespace TCPlayer.Installer
         {
             try
             {
-                var FilesToCopy = new Dictionary<string, string>
-                {
-                    { "TCPlayerPacker.wcx", "\\plugins\\wcx\\tcplayerlister\\TCPlayerPacker.wcx" },
-                    { "TCPlayerPacker.wcx64", "\\plugins\\wcx\\tcplayerlister\\TCPlayerPacker.wcx64" }
-                };
-                Install(FilesToCopy, (installfolder, ini) =>
+                Install(PackerFiles, (installfolder, ini) =>
                 {
                     IniFile wincmd = IniFile.Open(ini);
                     wincmd.SetSetting("PackerPlugins", "tcplayer", "277," + Path.Combine(installfolder, "\\plugins\\wcx\\tcplayerlister\\TCPlayerPacker.wcx"));
@@ -70,6 +95,19 @@ namespace TCPlayer.Installer
             }
         }
 
+        private bool CanInstallLister()
+        {
+            foreach (var file in ListerFiles)
+            {
+                var p = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, file.Key);
+                if (!File.Exists(p))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         /// <summary>
         /// Install lister plugin
         /// </summary>
@@ -77,12 +115,7 @@ namespace TCPlayer.Installer
         {
             try
             {
-                var FilesToCopy = new Dictionary<string, string>
-                {
-                    { "TCPlayerLister.wlx", "\\plugins\\wlx\\tcplayerlister\\TCPlayerLister.wlx" },
-                    { "TCPlayerLister.wlx64", "\\plugins\\wlx\\tcplayerlister\\TCPlayerLister.wlx64" }
-                };
-                Install(FilesToCopy, (installfolder, ini) =>
+                Install(ListerFiles, (installfolder, ini) =>
                 {
                     IniFile wincmd = IniFile.Open(ini);
                     int dumy;

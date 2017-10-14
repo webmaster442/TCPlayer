@@ -10,6 +10,7 @@ namespace TCPlayer.Installer
 {
     public partial class MainWindowViewModel : ViewModel<IMainWindow>
     {
+
         private void Notify(string s)
         {
             MessageBox.Show(s, "Information", MessageBoxButton.OK, MessageBoxImage.Information);
