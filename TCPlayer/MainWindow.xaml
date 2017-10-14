@@ -1,26 +1,26 @@
 ﻿<applib:ModernWindow
     x:Class="TCPlayer.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:applib="http://github.com/webmaster442/AppLib/WPF"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:applib="http://github.com/webmaster442/AppLib/WPF"
     xmlns:controls="clr-namespace:TCPlayer.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:medialib="clr-namespace:TCPlayer.MediaLibary"
     xmlns:props="clr-namespace:TCPlayer.Properties"
     x:Name="MainWin"
     Title="TC Player"
     Width="1024"
     Height="600"
+    AllowDrop="True"
+    Closing="MainWin_Closing"
+    Drop="MainWin_Drop"
+    Icon="icon.png"
     Left="{Binding Source={x:Static props:Settings.Default}, Path=Left, Mode=TwoWay}"
+    PreviewKeyDown="MainWin_PreviewKeyDown"
     Top="{Binding Source={x:Static props:Settings.Default}, Path=Top, Mode=TwoWay}"
     Topmost="{Binding Source={x:Static props:Settings.Default}, Path=TopMost, Mode=TwoWay}"
     WindowIsTransparent="{Binding Source={x:Static props:Settings.Default}, Path=OpacityState, Mode=TwoWay}"
-    AllowDrop="True"
-    Drop="MainWin_Drop"
-    Closing="MainWin_Closing"
-    PreviewKeyDown="MainWin_PreviewKeyDown"
-    Icon="icon.png"
     mc:Ignorable="d">
     <Window.TaskbarItemInfo>
         <TaskbarItemInfo
@@ -30,30 +30,29 @@
             ThumbnailClipMargin="0,30,485,140">
             <TaskbarItemInfo.ThumbButtonInfos>
                 <ThumbButtonInfo
-                    Description="{applib:Translate PlayerTab_ButtonPlayPause}"
-                    CommandParameter="Play/Pause"
                     Click="ThumbButtonInfo_Click"
+                    CommandParameter="Play/Pause"
+                    Description="{applib:Translate PlayerTab_ButtonPlayPause}"
                     ImageSource="Style/taskbar-play-pause.png" />
                 <ThumbButtonInfo
+                    Click="ThumbButtonInfo_Click"
                     CommandParameter="Previous track"
                     Description="{applib:Translate PlayerTab_ButtonPrevousTrack}"
-                    Click="ThumbButtonInfo_Click"
                     ImageSource="Style/taskbar-skip-previous.png" />
                 <ThumbButtonInfo
+                    Click="ThumbButtonInfo_Click"
                     CommandParameter="Next track"
                     Description="{applib:Translate PlayerTab_ButtonNextTrack}"
-                    Click="ThumbButtonInfo_Click"
                     ImageSource="Style/taskbar-skip-next.png" />
                 <ThumbButtonInfo
+                    Click="ThumbButtonInfo_Click"
                     CommandParameter="Mute/UnMute"
                     Description="{applib:Translate PlayerTab_ButtonMuteUnmute}"
-                    Click="ThumbButtonInfo_Click"
                     ImageSource="Style/taskbar-volume-off.png" />
             </TaskbarItemInfo.ThumbButtonInfos>
         </TaskbarItemInfo>
     </Window.TaskbarItemInfo>
-    <Grid
-        x:Name="MainGrid">
+    <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -63,11 +62,22 @@
 
         <controls:Overlay
             x:Name="Overlay"
-            Panel.ZIndex="100"
-            ContentWidth="{Binding ElementName=MainGrid, Path=ActualWidth, Converter={applib:OperationConverter}, ConverterParameter=* 0.70}"
-            ContentHeight="{Binding ElementName=MainGrid, Path=ActualHeight, Converter={applib:OperationConverter}, ConverterParameter=* 0.50}"
             Grid.RowSpan="30"
-            Grid.ColumnSpan="33"/>
+            Grid.ColumnSpan="33"
+            Panel.ZIndex="100"
+            ContentHeight="{Binding ElementName=MainGrid, Path=ActualHeight, Converter={applib:OperationConverter}, ConverterParameter=* 0.50}"
+            ContentWidth="{Binding ElementName=MainGrid, Path=ActualWidth, Converter={applib:OperationConverter}, ConverterParameter=* 0.70}" />
+
+        <controls:ActionBar
+            x:Name="ActionBar"
+            Grid.RowSpan="30"
+            Grid.ColumnSpan="30"
+            Height="60"
+            VerticalAlignment="Bottom"
+            Panel.ZIndex="50"
+            Background="{StaticResource {x:Static SystemColors.ControlBrushKey}}"
+            BorderBrush="{StaticResource {x:Static SystemColors.MenuHighlightBrushKey}}"
+            BorderThickness="0,2,0,0" />
 
         <Grid
             Grid.Row="0"
@@ -75,160 +85,252 @@
             Background="{StaticResource MenuBackground}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
-                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Menu
                 Grid.Column="0"
                 Margin="5,0"
                 VerticalAlignment="Center">
                 <MenuItem Header="[ Player ]">
-                    <MenuItem Header="Change output device ..." Command="{Binding PlayerChangeOutputCommand}">
+                    <MenuItem
+                        Command="{Binding PlayerChangeOutputCommand}"
+                        Header="Change output device ...">
                         <MenuItem.Icon>
-                            <applib:ImageAwesome Icon="fa_volume_up" Style="{StaticResource Menu}" />
+                            <applib:ImageAwesome
+                                Icon="fa_volume_up"
+                                Style="{StaticResource Menu}" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Settings ..." Command="{Binding PlayerSettingsCommand}">
+                    <MenuItem
+                        Command="{Binding PlayerSettingsCommand}"
+                        Header="Settings ...">
                         <MenuItem.Icon>
-                            <applib:ImageAwesome Icon="fa_cogs" Style="{StaticResource Menu}" />
+                            <applib:ImageAwesome
+                                Icon="fa_cogs"
+                                Style="{StaticResource Menu}" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="About..." Command="{Binding PlayerAboutCommand}">
+                    <MenuItem
+                        Command="{Binding PlayerAboutCommand}"
+                        Header="About...">
                         <MenuItem.Icon>
-                            <applib:ImageAwesome Icon="fa_info" Style="{StaticResource Menu}" />
+                            <applib:ImageAwesome
+                                Icon="fa_info"
+                                Style="{StaticResource Menu}" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator Style="{StaticResource sp}" />
-                    <MenuItem Header="Exit" Command="{Binding PlayerExitCommand}">
+                    <MenuItem
+                        Command="{Binding PlayerExitCommand}"
+                        Header="Exit">
                         <MenuItem.Icon>
-                            <applib:ImageAwesome Icon="fa_sign_out" Style="{StaticResource Menu}" />
+                            <applib:ImageAwesome
+                                Icon="fa_sign_out"
+                                Style="{StaticResource Menu}" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem x:Name="ChapterMenu" Header="{applib:Translate PlayerTab_ButtonChapters}" />
+                <MenuItem
+                    x:Name="ChapterMenu"
+                    Header="{applib:Translate PlayerTab_ButtonChapters}" />
                 <MenuItem Header="[ PlayList ]">
-                    <MenuItem Header="Save List ..." Command="{Binding PlaylistSaveCommand}">
+                    <MenuItem
+                        Command="{Binding PlaylistSaveCommand}"
+                        Header="Save List ...">
                         <MenuItem.Icon>
-                            <applib:ImageAwesome Icon="fa_floppy_o" Style="{StaticResource Menu}" />
+                            <applib:ImageAwesome
+                                Icon="fa_floppy_o"
+                                Style="{StaticResource Menu}" />
                         </MenuItem.Icon>
                     </MenuItem>
 
                     <Separator Style="{StaticResource sp}" />
 
-                    <MenuItem Header="Add Directory ..." Command="{Binding PlaylistAddDirectoryCommnad}">
+                    <MenuItem
+                        Command="{Binding PlaylistAddDirectoryCommnad}"
+                        Header="Add Directory ...">
                         <MenuItem.Icon>
-                            <applib:ImageAwesome Icon="fa_folder_open" Style="{StaticResource Menu}" />
+                            <applib:ImageAwesome
+                                Icon="fa_folder_open"
+                                Style="{StaticResource Menu}" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Add Files ..." Command="{Binding PlaylistAddFileCommand}">
+                    <MenuItem
+                        Command="{Binding PlaylistAddFileCommand}"
+                        Header="Add Files ...">
                         <MenuItem.Icon>
-                            <applib:ImageAwesome Icon="fa_file" Style="{StaticResource Menu}" />
+                            <applib:ImageAwesome
+                                Icon="fa_file"
+                                Style="{StaticResource Menu}" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Add Playlist ...." Command="{Binding PlaylistAddPlaylistCommand}">
+                    <MenuItem
+                        Command="{Binding PlaylistAddPlaylistCommand}"
+                        Header="Add Playlist ....">
                         <MenuItem.Icon>
-                            <applib:ImageAwesome Icon="fa_list" Style="{StaticResource Menu}" />
+                            <applib:ImageAwesome
+                                Icon="fa_list"
+                                Style="{StaticResource Menu}" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Add URL ..." Command="{Binding PlaylistAddUrlCommand}">
+                    <MenuItem
+                        Command="{Binding PlaylistAddUrlCommand}"
+                        Header="Add URL ...">
                         <MenuItem.Icon>
-                            <applib:ImageAwesome Icon="fa_link" Style="{StaticResource Menu}" />
+                            <applib:ImageAwesome
+                                Icon="fa_link"
+                                Style="{StaticResource Menu}" />
                         </MenuItem.Icon>
                     </MenuItem>
 
-                    <MenuItem Header="Disc ..." SubmenuOpened="MenuItem_SubmenuOpened">
+                    <MenuItem
+                        Header="Disc ..."
+                        SubmenuOpened="MenuItem_SubmenuOpened">
                         <MenuItem Header="{applib:Translate Playlist_NoDiscsFound}" />
                     </MenuItem>
 
                     <Separator Style="{StaticResource sp}" />
 
-                    <MenuItem Header="Sort: Ascending" Command="{Binding PlaylistSortAscCommand}">
+                    <MenuItem
+                        Command="{Binding PlaylistSortAscCommand}"
+                        Header="Sort: Ascending">
                         <MenuItem.Icon>
-                            <applib:ImageAwesome Icon="fa_sort_asc" Style="{StaticResource Menu}" />
+                            <applib:ImageAwesome
+                                Icon="fa_sort_asc"
+                                Style="{StaticResource Menu}" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Sort: Descending" Command="{Binding PlaylistSortDescCommand}">
+                    <MenuItem
+                        Command="{Binding PlaylistSortDescCommand}"
+                        Header="Sort: Descending">
                         <MenuItem.Icon>
-                            <applib:ImageAwesome Icon="fa_sort_desc" Style="{StaticResource Menu}" />
+                            <applib:ImageAwesome
+                                Icon="fa_sort_desc"
+                                Style="{StaticResource Menu}" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Sort: Random order" Command="{Binding PlaylistSortRandomCommand}">
+                    <MenuItem
+                        Command="{Binding PlaylistSortRandomCommand}"
+                        Header="Sort: Random order">
                         <MenuItem.Icon>
-                            <applib:ImageAwesome Icon="fa_random" Style="{StaticResource Menu}" />
+                            <applib:ImageAwesome
+                                Icon="fa_random"
+                                Style="{StaticResource Menu}" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Sort: Remove Duplicates" Command="{Binding PlaylistSortDisticntCommand}">
+                    <MenuItem
+                        Command="{Binding PlaylistSortDisticntCommand}"
+                        Header="Sort: Remove Duplicates">
                         <MenuItem.Icon>
-                            <applib:ImageAwesome Icon="fa_diamond" Style="{StaticResource Menu}" />
+                            <applib:ImageAwesome
+                                Icon="fa_diamond"
+                                Style="{StaticResource Menu}" />
                         </MenuItem.Icon>
                     </MenuItem>
 
                     <Separator Style="{StaticResource sp}" />
 
-                    <MenuItem Header="Clear List" Command="{Binding PlaylistClearCommand}">
+                    <MenuItem
+                        Command="{Binding PlaylistClearCommand}"
+                        Header="Clear List">
                         <MenuItem.Icon>
-                            <applib:ImageAwesome Icon="fa_trash" Style="{StaticResource Menu}" />
+                            <applib:ImageAwesome
+                                Icon="fa_trash"
+                                Style="{StaticResource Menu}" />
                         </MenuItem.Icon>
                     </MenuItem>
 
-                    <MenuItem Header="Delete Selected" Command="{Binding PlaylistDeleteCommand}">
+                    <MenuItem
+                        Command="{Binding PlaylistDeleteCommand}"
+                        Header="Delete Selected">
                         <MenuItem.Icon>
-                            <applib:ImageAwesome Icon="fa_remove" Style="{StaticResource Menu}" />
+                            <applib:ImageAwesome
+                                Icon="fa_remove"
+                                Style="{StaticResource Menu}" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
 
                 <MenuItem Header="[ File Explorer ]">
-                    <MenuItem Command="{Binding FileExplorerNavigateHomeCommand}" Header="Navigate to start">
+                    <MenuItem
+                        Command="{Binding FileExplorerNavigateHomeCommand}"
+                        Header="Navigate to start">
                         <MenuItem.Icon>
-                            <applib:ImageAwesome Icon="fa_home" Style="{StaticResource Menu}" />
+                            <applib:ImageAwesome
+                                Icon="fa_home"
+                                Style="{StaticResource Menu}" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator Style="{StaticResource sp}" />
                     <MenuItem
-                        IsEnabled="{Binding ElementName=FileExplorer, Path=HasFilesSelected}"
                         Command="{Binding FileExplorerPlaySelectedCommand}"
-                        Header="Play selected">
+                        Header="Play selected"
+                        IsEnabled="{Binding ElementName=FileExplorer, Path=HasFilesSelected}">
                         <MenuItem.Icon>
-                            <applib:ImageAwesome Icon="fa_play" Style="{StaticResource Menu}" />
+                            <applib:ImageAwesome
+                                Icon="fa_play"
+                                Style="{StaticResource Menu}" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem
-                        IsEnabled="{Binding ElementName=FileExplorer, Path=HasFilesSelected}"
                         Command="{Binding FileExplorerAddToPlaylistCommand}"
-                        Header="Add Selected to Playlist">
+                        Header="Add Selected to Playlist"
+                        IsEnabled="{Binding ElementName=FileExplorer, Path=HasFilesSelected}">
                         <MenuItem.Icon>
-                            <applib:ImageAwesome Icon="fa_play" Style="{StaticResource Menu}" />
+                            <applib:ImageAwesome
+                                Icon="fa_play"
+                                Style="{StaticResource Menu}" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
 
                 <MenuItem Header="[ Media Libary ]">
-                    <MenuItem Header="Add Directory ..." Command="{Binding MediaViewModel.MenuAddFolderCommand}">
+                    <MenuItem
+                        Command="{Binding MediaViewModel.MenuAddFolderCommand}"
+                        Header="Add Directory ...">
                         <MenuItem.Icon>
-                            <applib:ImageAwesome Icon="fa_folder_open" Style="{StaticResource Menu}" />
+                            <applib:ImageAwesome
+                                Icon="fa_folder_open"
+                                Style="{StaticResource Menu}" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Add Files ..." Command="{Binding MediaViewModel.MenuAddFilesCommand}">
+                    <MenuItem
+                        Command="{Binding MediaViewModel.MenuAddFilesCommand}"
+                        Header="Add Files ...">
                         <MenuItem.Icon>
-                            <applib:ImageAwesome Icon="fa_file" Style="{StaticResource Menu}" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <Separator Style="{StaticResource sp}" />
-                    <MenuItem Header="Send selection to playlist" Command="{Binding MediaViewModel.MenuSendToPlaylistCommand}">
-                        <MenuItem.Icon>
-                            <applib:ImageAwesome Icon="fa_list" Style="{StaticResource Menu}" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <Separator Style="{StaticResource sp}" />
-                    <MenuItem Header="Create Query ..." Command="{Binding MediaViewModel.MenuCreateQueryCommand}">
-                        <MenuItem.Icon>
-                            <applib:ImageAwesome Icon="fa_search" Style="{StaticResource Menu}" />
+                            <applib:ImageAwesome
+                                Icon="fa_file"
+                                Style="{StaticResource Menu}" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator Style="{StaticResource sp}" />
-                    <MenuItem Header="Backup Database ..." Command="{Binding MediaViewModel.MenuBackupDbCommand}">
+                    <MenuItem
+                        Command="{Binding MediaViewModel.MenuSendToPlaylistCommand}"
+                        Header="Send selection to playlist">
                         <MenuItem.Icon>
-                            <applib:ImageAwesome Icon="fa_save" Style="{StaticResource Menu}" />
+                            <applib:ImageAwesome
+                                Icon="fa_list"
+                                Style="{StaticResource Menu}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator Style="{StaticResource sp}" />
+                    <MenuItem
+                        Command="{Binding MediaViewModel.MenuCreateQueryCommand}"
+                        Header="Create Query ...">
+                        <MenuItem.Icon>
+                            <applib:ImageAwesome
+                                Icon="fa_search"
+                                Style="{StaticResource Menu}" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator Style="{StaticResource sp}" />
+                    <MenuItem
+                        Command="{Binding MediaViewModel.MenuBackupDbCommand}"
+                        Header="Backup Database ...">
+                        <MenuItem.Icon>
+                            <applib:ImageAwesome
+                                Icon="fa_save"
+                                Style="{StaticResource Menu}" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
@@ -239,8 +341,8 @@
                 Margin="10,0"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
-                Foreground="{StaticResource MenuForeground}"
-                FontSize="14" />
+                FontSize="14"
+                Foreground="{StaticResource MenuForeground}" />
         </Grid>
 
         <StackPanel
@@ -250,11 +352,17 @@
             HorizontalAlignment="Left"
             Orientation="Horizontal">
 
-            <StackPanel Margin="10,0" VerticalAlignment="Center">
+            <StackPanel
+                Margin="10,0"
+                VerticalAlignment="Center">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock x:Name="TbFullTime" Text="00:00:00" />
+                    <TextBlock
+                        x:Name="TbFullTime"
+                        Text="00:00:00" />
                     <TextBlock Text=" / " />
-                    <TextBlock x:Name="TbCurrTime" Text="00:00:00" />
+                    <TextBlock
+                        x:Name="TbCurrTime"
+                        Text="00:00:00" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{applib:Translate MainWin_ListLabel}" />
@@ -267,70 +375,74 @@
             <applib:FaImageButton
                 x:Name="BtnOpen"
                 Margin="5,0"
-                Icon="fa_eject"
                 Click="DoAction"
+                Icon="fa_eject"
                 Style="{StaticResource PlayImgButtons}"
                 ToolTip="{applib:Translate PlayerTab_ButtonOpen}" />
             <Button
                 x:Name="BtnPlayPause"
-                Style="{StaticResource PlayButtons}"
-                ToolTip="{applib:Translate PlayerTab_ButtonPlayPause}"
                 Click="DoAction"
-                Content="{StaticResource IconPlayPause}" />
+                Content="{StaticResource IconPlayPause}"
+                Style="{StaticResource PlayButtons}"
+                ToolTip="{applib:Translate PlayerTab_ButtonPlayPause}" />
             <applib:FaImageButton
                 x:Name="BtnStop"
                 Margin="5,0"
-                Style="{StaticResource PlayImgButtons}"
+                Click="DoAction"
                 Icon="fa_stop"
-                ToolTip="{applib:Translate PlayerTab_ButtonStop}"
-                Click="DoAction" />
+                Style="{StaticResource PlayImgButtons}"
+                ToolTip="{applib:Translate PlayerTab_ButtonStop}" />
             <applib:FaImageButton
                 x:Name="BtnSeekBack"
-                Style="{StaticResource PlayImgButtons}"
+                Click="DoAction"
                 Icon="fa_backward"
-                ToolTip="{applib:Translate PlayerTab_ButtonSeekBack}"
-                Click="DoAction" />
+                Style="{StaticResource PlayImgButtons}"
+                ToolTip="{applib:Translate PlayerTab_ButtonSeekBack}" />
             <applib:FaImageButton
                 x:Name="BtnSeekFwd"
                 Margin="5,0"
-                Style="{StaticResource PlayImgButtons}"
+                Click="DoAction"
                 Icon="fa_forward"
-                ToolTip="{applib:Translate PlayerTab_ButtonSeekForward}"
-                Click="DoAction" />
+                Style="{StaticResource PlayImgButtons}"
+                ToolTip="{applib:Translate PlayerTab_ButtonSeekForward}" />
             <applib:FaImageButton
                 x:Name="BtnPrevTrack"
-                Style="{StaticResource PlayImgButtons}"
+                Click="DoAction"
                 Icon="fa_fast_backward"
-                ToolTip="{applib:Translate PlayerTab_ButtonPrevousTrack}"
-                Click="DoAction" />
+                Style="{StaticResource PlayImgButtons}"
+                ToolTip="{applib:Translate PlayerTab_ButtonPrevousTrack}" />
             <applib:FaImageButton
                 x:Name="BtnNextTrack"
                 Margin="5,0"
-                Style="{StaticResource PlayImgButtons}"
+                Click="DoAction"
                 Icon="fa_fast_forward"
-                ToolTip="{applib:Translate PlayerTab_ButtonNextTrack}"
-                Click="DoAction" />
+                Style="{StaticResource PlayImgButtons}"
+                ToolTip="{applib:Translate PlayerTab_ButtonNextTrack}" />
             <ToggleButton
                 x:Name="BtnMute"
-                ToolTip="{applib:Translate PlayerTab_ButtonMuteUnmute}"
                 Click="BtnMute_Click"
-                Content="{StaticResource IconMute}" />
+                Content="{StaticResource IconMute}"
+                ToolTip="{applib:Translate PlayerTab_ButtonMuteUnmute}" />
             <Slider
                 x:Name="VolSlider"
                 Grid.Column="1"
                 Width="180"
                 Margin="15,0,0,0"
                 VerticalAlignment="Center"
-                Minimum="0"
                 Maximum="1"
+                Minimum="0"
                 ValueChanged="VolSlider_ValueChanged"
                 Value="1">
                 <Slider.ToolTip>
-                    <ToolTip Content="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Value}" ContentStringFormat="{applib:Translate PlayerTab_VolumeSliderText}" />
+                    <ToolTip
+                        Content="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Value}"
+                        ContentStringFormat="{applib:Translate PlayerTab_VolumeSliderText}" />
                 </Slider.ToolTip>
             </Slider>
 
-            <StackPanel Margin="30,0,0,0" VerticalAlignment="Center">
+            <StackPanel
+                Margin="30,0,0,0"
+                VerticalAlignment="Center">
                 <ProgressBar
                     x:Name="VuR"
                     Width="180"
@@ -371,13 +483,16 @@
             </TabItem>
             <TabItem Header="[ File Browser ]">
                 <applib:FileExplorer
-                    x:Name="FileExplorer"/>
+                    x:Name="FileExplorer"
+                    FileDoubleClick="FileExplorer_FileDoubleClick" />
             </TabItem>
             <TabItem Header="[ Media Libary ]">
                 <medialib:MediaLibary DataContext="{Binding MediaViewModel}" />
             </TabItem>
             <TabItem Header="{applib:Translate MainWin_RadioTab}">
-                <controls:RadioStations x:Name="RadioStations" ItemDoubleClcik="RadioStations_ItemDoubleClcik" />
+                <controls:RadioStations
+                    x:Name="RadioStations"
+                    ItemDoubleClcik="RadioStations_ItemDoubleClcik" />
             </TabItem>
         </applib:AnimatedTabControl>
     </Grid>

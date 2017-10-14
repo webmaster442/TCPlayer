@@ -543,5 +543,20 @@ namespace TCPlayer
         {
             FileExplorer.RenderHomeView();
         }
+
+        public void ShowActionPanel(IEnumerable<ActionItem> Actions)
+        {
+            ActionBar.ActionItems.Clear();
+            ActionBar.ActionItems.AddRange(Actions);
+            ActionBar.Open();
+        }
+
+        private void FileExplorer_FileDoubleClick(object sender, FileEventArgs e)
+        {
+            this.ViewModelAction<MainWinViewModel>(vm =>
+            {
+                vm.FileExplorerDoubleClickCommand.Execute(null);
+            });
+        }
     }
 }

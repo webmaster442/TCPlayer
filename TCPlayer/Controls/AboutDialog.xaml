@@ -10,27 +10,6 @@
     d:DesignHeight="300"
     d:DesignWidth="500"
     mc:Ignorable="d">
-    <UserControl.Resources>
-        <Style x:Key="Title" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="FontSize" Value="36" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Foreground" Value="Blue" />
-                    <Setter Property="TextDecorations" Value="Underline" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <Style TargetType="TextBlock">
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="TextWrapping" Value="Wrap" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="TextAlignment" Value="Justify" />
-            <Setter Property="Margin" Value="3" />
-            <Setter Property="FontSize" Value="14" />
-        </Style>
-    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="110" />
@@ -38,7 +17,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="30" />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <TextBlock
@@ -46,14 +25,19 @@
             Grid.Column="1"
             Text="TC Player"
             Style="{StaticResource Title}" />
-        <Border Grid.Row="0" Child="{StaticResource IconMain}" />
         <Button
             x:Name="BtnWebsite"
             Grid.Row="1"
-            Grid.ColumnSpan="2"
+            Grid.Column="1"
+            VerticalAlignment="Center"
+            MinHeight="30"
+            HorizontalAlignment="Left"
             Content="{applib:Translate About_VisitWebsite}"
-            Foreground="White"
             Click="BtnWebsite_Click" />
+        <Border
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Child="{StaticResource IconMain}" />
         <ScrollViewer Grid.Row="2" Grid.ColumnSpan="2">
             <TextBlock x:Name="AboutView" />
         </ScrollViewer>

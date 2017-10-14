@@ -20,6 +20,7 @@ using AppLib.WPF.MVVM;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using TCPlayer.Code;
+using TCPlayer.Controls;
 
 namespace TCPlayer
 {
@@ -65,5 +66,10 @@ namespace TCPlayer
         /// Render the file explorer home view
         /// </summary>
         void FileExplorerHomeView();
+        /// <summary>
+        /// Open Action panel with specified actions
+        /// </summary>
+        /// <param name="Actions">Actions to display</param>
+        void ShowActionPanel(IEnumerable<ActionItem> Actions);
     }
 }

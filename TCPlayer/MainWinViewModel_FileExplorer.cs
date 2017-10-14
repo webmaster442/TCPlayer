@@ -21,6 +21,7 @@ using AppLib.Common.MessageHandler;
 using AppLib.WPF.MVVM;
 using System.Collections.Generic;
 using System.Linq;
+using TCPlayer.Controls;
 using TCPlayer.MediaLibary.DB;
 
 namespace TCPlayer
@@ -44,6 +45,22 @@ namespace TCPlayer
         {
             View.FileExplorerHomeView();
             View.SetPage(TabPage.FileBrowser);
+        }
+
+        private void FileExplorerDoubleClick()
+        {
+            View.ShowActionPanel(new ActionItem[]
+            {
+                new ActionItem
+                {
+                    Content = "Add to Playlist",
+                    ToolTip = "Add selection to playlist",
+                    Click = new System.Action(() =>
+                    {
+                        FileExplorerAddToPlaylist();
+                    })
+                }
+            });
         }
     }
 }

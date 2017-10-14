@@ -51,6 +51,7 @@ namespace TCPlayer
         public DelegateCommand PlaylistDeleteCommand { get; private set; }
 
         public DelegateCommand FileExplorerNavigateHomeCommand { get; private set; }
+        public DelegateCommand FileExplorerDoubleClickCommand { get; private set; }
         public DelegateCommand FileExplorerPlaySelectedCommand { get; private set; }
         public DelegateCommand FileExplorerAddToPlaylistCommand { get; private set; }
 
@@ -110,6 +111,7 @@ namespace TCPlayer
             FileExplorerNavigateHomeCommand = DelegateCommand.ToCommand(FileExplorerNavigateHome);
             FileExplorerAddToPlaylistCommand = DelegateCommand.ToCommand(FileExplorerAddToPlaylist);
             FileExplorerPlaySelectedCommand = DelegateCommand.ToCommand(FileExplorerPlaySelected);
+            FileExplorerDoubleClickCommand = DelegateCommand.ToCommand(FileExplorerDoubleClick);
 
             MediaViewModel = new MediaLibary.MediaLibaryViewModel(null);
             Messager.Instance.SubScribe(this);
