@@ -81,7 +81,7 @@ void CALLBACK timer_code(HWND hwnd, UINT uMsg, UINT timerId, DWORD dwTime)
 	DestroyWindow(timer);
 }
 
-WCHAR * ReadPathConfig()
+void ReadPathConfig(WCHAR * loc)
 {
 	WCHAR dllpath[MAX_PATH];
 	WCHAR configfile[MAX_PATH];
@@ -95,12 +95,13 @@ WCHAR * ReadPathConfig()
 	{
 		std::wifstream input;
 		input.open(configfile, std::wifstream::in);
-		WCHAR loc[MAX_PATH];
 		input.getline(loc, MAX_PATH);
-		return loc;
-	}
 
-	return dllpath;
+	}
+	else
+	{
+		StrCpyW(loc, dllpath);
+	}
 }
 
 HWND CallKiller(HWND aListerWindow)
@@ -127,6 +128,7 @@ HWND __stdcall ListLoad(HWND ParentWin, char* FileToLoad, int ShowFlags)
 HWND __stdcall ListLoadW(HWND ParentWin, WCHAR* FileToLoad, int ShowFlags)
 {
 	WCHAR safefile[MAX_PATH];
+	WCHAR program[MAX_PATH];
 
 	swprintf(safefile, L"\"%s\"", FileToLoad);
 
@@ -135,9 +137,10 @@ HWND __stdcall ListLoadW(HWND ParentWin, WCHAR* FileToLoad, int ShowFlags)
 	ShExecInfo.fMask = SEE_MASK_NOCLOSEPROCESS;
 	ShExecInfo.hwnd = NULL;
 	ShExecInfo.lpVerb = NULL;
+	ReadPathConfig(program);
 	ShExecInfo.lpFile = PROGRAMNAME;
+	ShExecInfo.lpDirectory = program;
 	ShExecInfo.lpParameters = safefile;
-	ShExecInfo.lpDirectory = ReadPathConfig();
 	ShExecInfo.nShow = SW_NORMAL;
 	ShExecInfo.hInstApp = NULL;
 	ShellExecuteEx(&ShExecInfo);

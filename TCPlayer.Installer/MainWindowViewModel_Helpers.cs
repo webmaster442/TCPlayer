@@ -37,10 +37,8 @@ namespace TCPlayer.Installer
             {
                 var exe = Path.Combine(fb.SelectedPath, "TOTALCMD.EXE");
                 var exe64 = Path.Combine(fb.SelectedPath, "TOTALCMD64.EXE");
-                var ini = Path.Combine(fb.SelectedPath, "wincmd.ini");
 
-                if (File.Exists(ini) &&
-                    (File.Exists(exe) || File.Exists(exe64)))
+                if (File.Exists(exe) || File.Exists(exe64))
                 {
                     tcpath = fb.SelectedPath;
                     return true;
@@ -83,15 +81,21 @@ namespace TCPlayer.Installer
                 {
                     var source = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, file.Key);
                     var target = Path.Combine(installfolder, file.Value);
-                    var cmd = $"/c copy {source} {target}";
-                    RunCommand(cmd);
+                    var cmd1 = $"/c mkdir {Path.GetDirectoryName(target)}";
+                    var cmd2 = $"/c copy /y {source} {target}";
+                    RunCommand(cmd1);
+                    RunCommand(cmd2);
                     if (i == 0)
                     {
-                        IniFileAction(installfolder, Path.Combine(installfolder, "wincmd.ini"));
+                        var progini = Path.Combine(installfolder, "wincmd.ini");
+                        var sysini = Environment.ExpandEnvironmentVariables(@"%AppData%\Ghisler\wincmd.ini");
+                        if (File.Exists(progini)) IniFileAction(installfolder, progini);
+                        else if (File.Exists(sysini)) IniFileAction(installfolder, sysini);
+                        else throw new Exception("Ini file can't be found!");
+                        CreateProgramLocFile(Path.GetDirectoryName(target));
                     }
                     i++;
                 }
-                CreateProgramLocFile(installfolder);
                 RestartTC();
             }
         }
@@ -125,10 +129,9 @@ namespace TCPlayer.Installer
         private void CreateProgramLocFile(string targetfolder)
         {
             var file = Path.Combine(targetfolder, "program.loc");
-            var content = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TCPlayer.exe");
             using (var loc = File.CreateText(file))
             {
-                loc.WriteLine(content);
+                loc.WriteLine(AppDomain.CurrentDomain.BaseDirectory);
             }
         }
 

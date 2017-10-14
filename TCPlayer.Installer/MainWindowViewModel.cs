@@ -27,14 +27,14 @@ namespace TCPlayer.Installer
         {
             PackerFiles = new Dictionary<string, string>
                 {
-                    { "TCPlayerPacker.wcx", "\\plugins\\wcx\\tcplayerlister\\TCPlayerPacker.wcx" },
-                    { "TCPlayerPacker.wcx64", "\\plugins\\wcx\\tcplayerlister\\TCPlayerPacker.wcx64" }
+                    { "TCPlayerPacker.wcx", "plugins\\wcx\\tcplayerlister\\TCPlayerPacker.wcx" },
+                    { "TCPlayerPacker.wcx64", "plugins\\wcx\\tcplayerlister\\TCPlayerPacker.wcx64" }
                 };
 
             ListerFiles = new Dictionary<string, string>
                 {
-                    { "TCPlayerLister.wlx", "\\plugins\\wlx\\tcplayerlister\\TCPlayerLister.wlx" },
-                    { "TCPlayerLister.wlx64", "\\plugins\\wlx\\tcplayerlister\\TCPlayerLister.wlx64" }
+                    { "TCPlayerLister.wlx", "plugins\\wlx\\tcplayerlister\\TCPlayerLister.wlx" },
+                    { "TCPlayerLister.wlx64", "plugins\\wlx\\tcplayerlister\\TCPlayerLister.wlx64" }
                 };
 
             ExitCommand = DelegateCommand.ToCommand(Exit);
@@ -85,7 +85,8 @@ namespace TCPlayer.Installer
                 Install(PackerFiles, (installfolder, ini) =>
                 {
                     IniFile wincmd = IniFile.Open(ini);
-                    wincmd.SetSetting("PackerPlugins", "tcplayer", "277," + Path.Combine(installfolder, "\\plugins\\wcx\\tcplayerlister\\TCPlayerPacker.wcx"));
+                    var wcx = Path.Combine(installfolder, "plugins\\wcx\\tcplayerlister\\TCPlayerPacker.wcx");
+                    wincmd.SetSetting("PackerPlugins", "tcplayer", "277," + wcx);
                     wincmd.SaveToFile(ini);
                 });
             }
@@ -125,8 +126,15 @@ namespace TCPlayer.Installer
                                    orderby setting.Key.SettingName descending
                                    select setting.Key.SettingName).FirstOrDefault();
 
-                    int keytoadd = Convert.ToInt32(lastkey) + 1;
-                    wincmd.SetSetting("ListerPlugins", keytoadd.ToString(), Path.Combine(installfolder, "\\plugins\\wlx\\tcplayerlister\\TCPlayerLister.wlx"));
+
+
+                    int keytoadd = 0;
+
+                    if (lastkey != null)
+                        keytoadd = Convert.ToInt32(lastkey) + 1;
+
+                    var wlx = Path.Combine(installfolder, "plugins\\wlx\\tcplayerlister\\TCPlayerLister.wlx");
+                    wincmd.SetSetting("ListerPlugins", keytoadd.ToString(), wlx);
                     wincmd.SaveToFile(ini);
                 });
             }
