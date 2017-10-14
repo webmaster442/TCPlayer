@@ -329,9 +329,6 @@
     <Resource Include="Lib\About.txt" />
     <Resource Include="Lib\About.hu.txt" />
     <Resource Include="Lib\WPFSoundVis\Spectrum Analyzer\WPFSoundVisualizationLib.SpectrumAnalyzer.Icon.Large.png" />
-    <Content Include="pluginst.inf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Resource Include="Style\taskbar-play-pause.png" />
     <Resource Include="Style\taskbar-skip-next.png" />
     <Resource Include="Style\taskbar-skip-previous.png" />
