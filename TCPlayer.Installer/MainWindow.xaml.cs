@@ -11,17 +11,8 @@ namespace TCPlayer.Installer
         public MainWindow()
         {
             InitializeComponent();
-
-            this.ViewModelAction<MainWindowViewModel>(vm =>
-            {
-                vm.View = this;
-            });
+            this.SetViewModel(new MainWindowViewModel(this));
         }
 
-        public MainWindowViewModel ViewModel
-        {
-            get;
-            set;
-        }
     }
 }

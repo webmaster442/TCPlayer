@@ -12,9 +12,6 @@
     ResizeMode="CanMinimize"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Window.DataContext>
-        <local:MainWindowViewModel/>
-    </Window.DataContext>
     <Window.Resources>
         <Style TargetType="applib:FaImageButton">
             <Setter Property="HorizontalAlignment" Value="Center" />
@@ -50,9 +47,13 @@
                 Command="{Binding InstallPackerCommand}"
                 Icon="fa_file_archive_o" />
             <applib:FaImageButton
-                Command="{Binding InstallShortcutCommand}"
+                Command="{Binding InstallDesktopShortcutCommand}"
                 Content="Create shortcut on Desktop"
                 Icon="fa_external_link" />
+            <applib:FaImageButton
+                Command="{Binding InstallStartMenuShortcutCommand}"
+                Content="Create shortcut in Start menu"
+                Icon="fa_windows" />
         </StackPanel>
         <Border
             Grid.Row="2"
