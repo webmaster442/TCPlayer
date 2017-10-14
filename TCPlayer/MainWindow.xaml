@@ -15,6 +15,7 @@
     Left="{Binding Source={x:Static props:Settings.Default}, Path=Left, Mode=TwoWay}"
     Top="{Binding Source={x:Static props:Settings.Default}, Path=Top, Mode=TwoWay}"
     Topmost="{Binding Source={x:Static props:Settings.Default}, Path=TopMost, Mode=TwoWay}"
+    WindowIsTransparent="{Binding Source={x:Static props:Settings.Default}, Path=OpacityState, Mode=TwoWay}"
     AllowDrop="True"
     Drop="MainWin_Drop"
     Closing="MainWin_Closing"

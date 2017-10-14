@@ -190,5 +190,17 @@ namespace TCPlayer.Properties {
                 this["RememberRecentURLs"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool OpacityState {
+            get {
+                return ((bool)(this["OpacityState"]));
+            }
+            set {
+                this["OpacityState"] = value;
+            }
+        }
     }
 }
