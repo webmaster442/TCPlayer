@@ -419,6 +419,7 @@
                 Style="{StaticResource PlayImgButtons}"
                 ToolTip="{applib:Translate PlayerTab_ButtonNextTrack}" />
             <ToggleButton
+                Style="{StaticResource Flat}"
                 x:Name="BtnMute"
                 Click="BtnMute_Click"
                 Content="{StaticResource IconMute}"

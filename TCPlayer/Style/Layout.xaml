@@ -14,15 +14,42 @@
     <SolidColorBrush x:Key="MenuBackground" Color="#2c3e50"/>
     <SolidColorBrush x:Key="MenuForeground" Color="#ecf0f1"/>
 
-    <Style TargetType="Button" x:Key="PlayButtons">
+    <Style x:Key="Flat">
+        <Setter Property="Control.Background" Value="{x:Null}" />
+        <Setter Property="Control.BorderBrush" Value="{x:Null}" />
+        <Style.Triggers>
+            <Trigger Property="Control.IsMouseOver" Value="True">
+                <Setter Property="Control.Background" Value="{x:Null}" />
+                <Setter Property="Control.BorderBrush" Value="{x:Null}" />
+                <Setter Property="Control.FontWeight" Value="Bold" />
+            </Trigger>
+            <Trigger Property="Control.IsFocused" Value="True">
+                <Setter Property="Control.FontWeight" Value="Bold" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="Button" x:Key="PlayButtons" BasedOn="{StaticResource Flat}">
         <Setter Property="MinHeight" Value="48"/>
         <Setter Property="MinWidth" Value="48"/>
     </Style>
 
-    <Style TargetType="applib:FaImageButton" x:Key="PlayImgButtons">
+    <Style TargetType="{x:Type applib:FaImageButton}" x:Key="PlayImgButtons">
         <Setter Property="MinHeight" Value="48"/>
         <Setter Property="MinWidth" Value="48"/>
         <Setter Property="IconSize" Value="32"/>
+        <Setter Property="Background" Value="{x:Null}" />
+        <Setter Property="BorderBrush" Value="{x:Null}" />
+        <Style.Triggers>
+            <Trigger Property="Control.IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{x:Null}" />
+                <Setter Property="BorderBrush" Value="{x:Null}" />
+                <Setter Property="FontWeight" Value="Bold" />
+            </Trigger>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="FontWeight" Value="Bold" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style TargetType="Menu">
