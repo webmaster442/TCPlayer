@@ -27,7 +27,7 @@ using TCPlayer.Properties;
 
 namespace TCPlayer.MediaLibary
 {
-    public partial class MediaLibaryViewModel : ViewModel<IMediaLibary>
+    public partial class MediaLibaryViewModel : ViewModel<IMediaLibaryView>
     {
         private async void MenuAddFiles()
         {
@@ -68,7 +68,12 @@ namespace TCPlayer.MediaLibary
 
         private void MenuCreateQuery()
         {
-            throw new NotImplementedException();
+            var queryeditor = new QueryEditor();
+            queryeditor.OkClicked = () =>
+            {
+                
+            };
+            View.ShowDialog(queryeditor);
         }
 
         private void MenuBackupDb()

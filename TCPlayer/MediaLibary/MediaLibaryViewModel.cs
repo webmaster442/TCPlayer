@@ -25,7 +25,7 @@ using TCPlayer.MediaLibary.DB;
 
 namespace TCPlayer.MediaLibary
 {
-    public partial class MediaLibaryViewModel: ViewModel<IMediaLibary>
+    public partial class MediaLibaryViewModel: ViewModel<IMediaLibaryView>
     {
         public DelegateCommand FilterArtstsCommand { get; private set; }
         public DelegateCommand FilterAlbumsCommand { get; private set; }
@@ -53,7 +53,7 @@ namespace TCPlayer.MediaLibary
             set { SetValue(ref _listing, value); }
         }
 
-        public MediaLibaryViewModel(IMediaLibary mediaLibary): base(mediaLibary)
+        public MediaLibaryViewModel(IMediaLibaryView mediaLibary): base(mediaLibary)
         {
             DisplayItems = new ObservableCollection<TrackEntity>();
             ListItems = new ObservableCollection<string>();

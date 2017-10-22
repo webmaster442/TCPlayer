@@ -17,10 +17,16 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using AppLib.WPF.MVVM;
+using System.Windows.Controls;
 
 namespace TCPlayer.MediaLibary
 {
-    public interface IMediaLibary: IView
+    public interface IMediaLibaryView: IView
     {
+        /// <summary>
+        /// Show a user control in the popup
+        /// </summary>
+        /// <param name="dialog">Dialog to show</param>
+        void ShowDialog(UserControl dialog);
     }
 }

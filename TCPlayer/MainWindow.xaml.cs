@@ -18,7 +18,6 @@
  */
 using AppLib.Common;
 using AppLib.Common.Extensions;
-using AppLib.Common.MessageHandler;
 using AppLib.WPF.Controls;
 using AppLib.WPF.MVVM;
 using System;
@@ -30,13 +29,14 @@ using System.Windows.Shell;
 using System.Windows.Threading;
 using TCPlayer.Code;
 using TCPlayer.Controls;
+using TCPlayer.MediaLibary;
 
 namespace TCPlayer
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : ModernWindow, IDisposable, IMainWindow
+    public partial class MainWindow : ModernWindow, IDisposable, IMainWindow, IMediaLibaryView
     {
         private float _prevvol;
         private DispatcherTimer _SongTimer;

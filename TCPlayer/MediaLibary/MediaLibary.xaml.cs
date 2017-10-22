@@ -25,7 +25,7 @@ namespace TCPlayer.MediaLibary
     /// <summary>
     /// Interaction logic for MediaLibary.xaml
     /// </summary>
-    public partial class MediaLibary : UserControl, IMediaLibary
+    public partial class MediaLibary : UserControl
     {
         public MediaLibary()
         {

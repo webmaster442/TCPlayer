@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using TCPlayer.Code;
 using TCPlayer.Controls;
+using TCPlayer.MediaLibary;
 using TCPlayer.MediaLibary.DB;
 
 namespace TCPlayer
@@ -113,7 +114,7 @@ namespace TCPlayer
             FileExplorerPlaySelectedCommand = DelegateCommand.ToCommand(FileExplorerPlaySelected);
             FileExplorerDoubleClickCommand = DelegateCommand.ToCommand(FileExplorerDoubleClick);
 
-            MediaViewModel = new MediaLibary.MediaLibaryViewModel(null);
+            MediaViewModel = new MediaLibary.MediaLibaryViewModel(mainWindow as IMediaLibaryView);
             Messager.Instance.SubScribe(this);
 
         }

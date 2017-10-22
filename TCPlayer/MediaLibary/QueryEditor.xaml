@@ -5,6 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:applib="http://github.com/webmaster442/AppLib/WPF"
+    xmlns:System="clr-namespace:System;assembly=mscorlib"
     d:DesignHeight="300"
     d:DesignWidth="500"
     mc:Ignorable="d">
@@ -14,6 +15,9 @@
         </Style>
         <Style TargetType="TextBox">
             <Setter Property="Margin" Value="3" />
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
     </UserControl.Resources>
     <Grid>
@@ -114,6 +118,7 @@
             Grid.Column="1"
             IsEnabled="{Binding ElementName=Rating, Path=IsChecked}" />
         <applib:Rating
+            VerticalAlignment="Center"
             Grid.Row="4"
             Grid.Column="2"
             Minimum="0"
