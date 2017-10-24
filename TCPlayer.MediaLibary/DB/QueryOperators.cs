@@ -22,6 +22,7 @@ namespace TCPlayer.MediaLibary.DB
 {
     public enum QueryOperator : int
     {
+        [Display(Name ="")]
         NotSet = -1,
         [Display(Name = "=")]
         Equals = 0,
@@ -37,9 +38,13 @@ namespace TCPlayer.MediaLibary.DB
 
     public enum StringOperator: int
     {
+        [Display(Name = "Contains, Ignore Case")]
         ContainsIgnoreCase = 0,
+        [Display(Name = "Contains")]
         Contains = 1,
+        [Display(Name = "Exact Match, Ignore Case")]
         ExactmatchIgnoreCase = 2,
+        [Display(Name = "Exact Match")]
         Exactmatch = 3
     }
 }

@@ -61,6 +61,9 @@
     <Compile Include="DB\TrackEntity.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Infrastructure\NotNullConverter.cs" />
+    <Compile Include="Infrastructure\QueryConverter.cs" />
+    <Compile Include="Infrastructure\TextNotEmptyConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

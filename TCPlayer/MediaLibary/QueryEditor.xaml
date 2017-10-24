@@ -5,8 +5,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:applib="http://github.com/webmaster442/AppLib/WPF"
-    xmlns:System="clr-namespace:System;assembly=mscorlib"
-    d:DesignHeight="300"
+    xmlns:db="clr-namespace:TCPlayer.MediaLibary.DB;assembly=TCPlayer.MediaLibary"
+    xmlns:dbi="clr-namespace:TCPlayer.MediaLibary.Infrastructure;assembly=TCPlayer.MediaLibary"
     d:DesignWidth="500"
     mc:Ignorable="d">
     <UserControl.Resources>
@@ -20,6 +20,9 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
     </UserControl.Resources>
+    <UserControl.DataContext>
+        <db:QueryInput/>
+    </UserControl.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -42,6 +45,7 @@
             Grid.Column="0"
             Text="Query name:" />
         <TextBox
+            Text="{Binding QueryName}"
             Grid.Row="0"
             Grid.Column="1"
             Grid.ColumnSpan="2" />
@@ -49,95 +53,215 @@
             x:Name="Artist"
             Grid.Row="1"
             Grid.Column="0"
-            Content="Artist:" />
+            Content="Artist:" 
+            IsChecked="{Binding Artist, Converter={dbi:TextNotEmptyConverter}, Mode=OneWay}"/>
+        <ComboBox
+            Grid.Row="1"
+            Grid.Column="1">
+            <ComboBox.IsEnabled>
+                <MultiBinding Converter="{dbi:QueryConverter}">
+                    <Binding ElementName="Artist" Path="IsChecked"/>
+                    <Binding Path="Artist"/>
+                </MultiBinding>
+            </ComboBox.IsEnabled>
+        </ComboBox>
         <TextBox
             Grid.Row="1"
-            Grid.Column="1"
-            Grid.ColumnSpan="2"
-            IsEnabled="{Binding ElementName=Artist, Path=IsChecked}" />
+            Grid.Column="2"
+            Text="{Binding Artist}">
+            <TextBox.IsEnabled>
+                <MultiBinding Converter="{dbi:QueryConverter}">
+                    <Binding ElementName="Artist" Path="IsChecked"/>
+                    <Binding Path="Artist"/>
+                </MultiBinding>
+            </TextBox.IsEnabled>
+        </TextBox>
         <CheckBox
             x:Name="Title"
             Grid.Row="1"
             Grid.Column="3"
-            Content="Title:" />
+            Content="Title:"
+            IsChecked="{Binding Title, Converter={dbi:TextNotEmptyConverter}, Mode=OneWay}"/>
+        <ComboBox
+            Grid.Row="1"
+            Grid.Column="4">
+            <ComboBox.IsEnabled>
+                <MultiBinding Converter="{dbi:QueryConverter}">
+                    <Binding ElementName="Title" Path="IsChecked"/>
+                    <Binding Path="Title"/>
+                </MultiBinding>
+            </ComboBox.IsEnabled>
+        </ComboBox>
         <TextBox
             Grid.Row="1"
-            Grid.Column="4"
-            Grid.ColumnSpan="2"
-            IsEnabled="{Binding ElementName=Title, Path=IsChecked}" />
+            Grid.Column="5">
+            <TextBox.IsEnabled>
+                <MultiBinding Converter="{dbi:QueryConverter}">
+                    <Binding ElementName="Title" Path="IsChecked"/>
+                    <Binding Path="Title"/>
+                </MultiBinding>
+            </TextBox.IsEnabled>
+        </TextBox>
         <CheckBox
             x:Name="Album"
             Grid.Row="2"
             Grid.Column="0"
-            Content="Album" />
+            Content="Album" 
+            IsChecked="{Binding ElementName=Album, Converter={dbi:TextNotEmptyConverter}, Mode=OneWay}"/>
+        <ComboBox
+            Grid.Row="2"
+            Grid.Column="1">
+            <ComboBox.IsEnabled>
+                <MultiBinding Converter="{dbi:QueryConverter}">
+                    <Binding ElementName="Album" Path="IsChecked"/>
+                    <Binding Path="Album"/>
+                </MultiBinding>
+            </ComboBox.IsEnabled>
+        </ComboBox>
         <TextBox
             Grid.Row="2"
-            Grid.Column="1"
-            Grid.ColumnSpan="2"
-            IsEnabled="{Binding ElementName=Album, Path=IsChecked}" />
+            Grid.Column="2">
+            <TextBox.IsEnabled>
+                <MultiBinding Converter="{dbi:QueryConverter}">
+                    <Binding ElementName="Album" Path="IsChecked"/>
+                    <Binding Path="AlbumName"/>
+                </MultiBinding>
+            </TextBox.IsEnabled>
+        </TextBox>
         <CheckBox
             x:Name="Genre"
             Grid.Row="2"
             Grid.Column="3"
-            Content="Genre" />
+            Content="Genre"
+            IsChecked="{Binding ElementName=Genre, Converter={dbi:TextNotEmptyConverter}, Mode=OneWay}"/>
+        <ComboBox
+            Grid.Row="2"
+            Grid.Column="4">
+            <ComboBox.IsEnabled>
+                <MultiBinding Converter="{dbi:QueryConverter}">
+                    <Binding ElementName="Genre" Path="IsChecked"/>
+                    <Binding Path="Genre"/>
+                </MultiBinding>
+            </ComboBox.IsEnabled>
+        </ComboBox>
         <TextBox
             Grid.Row="2"
-            Grid.Column="4"
-            Grid.ColumnSpan="2"
-            IsEnabled="{Binding ElementName=Genre, Path=IsChecked}" />
+            Grid.Column="5">
+            <TextBox.IsEnabled>
+                <MultiBinding Converter="{dbi:QueryConverter}">
+                    <Binding ElementName="Genre" Path="IsChecked"/>
+                    <Binding Path="Genre"/>
+                </MultiBinding>
+            </TextBox.IsEnabled>
+        </TextBox>
         <CheckBox
             x:Name="AlbumArtist"
             Grid.Row="3"
             Grid.Column="0"
-            Content="Album Artist:" />
+            Content="Album Artist:"
+            IsChecked="{Binding ElementName=AlbumArtist, Converter={dbi:TextNotEmptyConverter}, Mode=OneWay}"/>
+        <ComboBox
+            Grid.Row="3"
+            Grid.Column="1">
+            <ComboBox.IsEnabled>
+                <MultiBinding Converter="{dbi:QueryConverter}">
+                    <Binding ElementName="AlbumArtist" Path="IsChecked"/>
+                    <Binding Path="AlbumArtist"/>
+                </MultiBinding>
+            </ComboBox.IsEnabled>
+        </ComboBox>
         <TextBox
             Grid.Row="3"
-            Grid.Column="1"
-            Grid.ColumnSpan="2"
-            IsEnabled="{Binding ElementName=AlbumArtist, Path=IsChecked}" />
+            Grid.Column="2">
+            <TextBox.IsEnabled>
+                <MultiBinding Converter="{dbi:QueryConverter}">
+                    <Binding ElementName="AlbumArtist" Path="IsChecked"/>
+                    <Binding Path="AlbumArtist"/>
+                </MultiBinding>
+            </TextBox.IsEnabled>
+        </TextBox>
         <CheckBox
             x:Name="Year"
             Grid.Row="3"
             Grid.Column="3"
-            Content="Year" />
+            Content="Year"
+            IsChecked="{Binding Year, Converter={dbi:NotNullConverter}, Mode=OneWay}"/>
         <ComboBox
             Grid.Row="3"
-            Grid.Column="4"
-            IsEnabled="{Binding ElementName=Year, Path=IsChecked}" />
+            Grid.Column="4">
+            <ComboBox.IsEnabled>
+                <MultiBinding Converter="{dbi:QueryConverter}">
+                    <Binding ElementName="Year" Path="IsChecked"/>
+                    <Binding Path="Year"/>
+                </MultiBinding>
+            </ComboBox.IsEnabled>
+        </ComboBox>
         <TextBox
             Grid.Row="3"
-            Grid.Column="5"
-            IsEnabled="{Binding ElementName=Year, Path=IsChecked}" />
+            Grid.Column="5">
+            <TextBox.IsEnabled>
+                <MultiBinding Converter="{dbi:QueryConverter}">
+                    <Binding ElementName="Year" Path="IsChecked"/>
+                    <Binding Path="Year"/>
+                </MultiBinding>
+            </TextBox.IsEnabled>
+        </TextBox>
         <CheckBox
             x:Name="Rating"
             Grid.Row="4"
             Grid.Column="0"
-            Content="Rating:" />
+            Content="Rating:"
+            IsChecked="{Binding Rating, Converter={dbi:NotNullConverter}, Mode=OneWay}"/>
         <ComboBox
             Grid.Row="4"
-            Grid.Column="1"
-            IsEnabled="{Binding ElementName=Rating, Path=IsChecked}" />
+            Grid.Column="1">
+            <ComboBox.IsEnabled>
+                <MultiBinding Converter="{dbi:QueryConverter}">
+                    <Binding ElementName="Rating" Path="IsChecked"/>
+                    <Binding Path="Rating"/>
+                </MultiBinding>
+            </ComboBox.IsEnabled>
+        </ComboBox>
         <applib:Rating
             VerticalAlignment="Center"
             Grid.Row="4"
             Grid.Column="2"
             Minimum="0"
             Maximum="5"
-            IsEnabled="{Binding ElementName=Rating, Path=IsChecked}"
-            Value="5" />
+            Value="5">
+            <applib:Rating.IsEnabled>
+                <MultiBinding Converter="{dbi:QueryConverter}">
+                    <Binding ElementName="Rating" Path="IsChecked"/>
+                    <Binding Path="Rating"/>
+                </MultiBinding>
+            </applib:Rating.IsEnabled>
+        </applib:Rating>
         <CheckBox
             x:Name="PlayCount"
             Grid.Row="4"
             Grid.Column="3"
-            Content="Play Count:" />
+            Content="Play Count:"
+            IsChecked="{Binding PlayCount, Converter={dbi:NotNullConverter}, Mode=OneWay}"/>
         <ComboBox
             Grid.Row="4"
-            Grid.Column="4"
-            IsEnabled="{Binding ElementName=PlayCount, Path=IsChecked}" />
+            Grid.Column="4">
+            <ComboBox.IsEnabled>
+                <MultiBinding Converter="{dbi:QueryConverter}">
+                    <Binding ElementName="PlayCount" Path="IsChecked"/>
+                    <Binding Path="PlayCount"/>
+                </MultiBinding>
+            </ComboBox.IsEnabled>
+        </ComboBox>
         <TextBox
             Grid.Row="4"
-            Grid.Column="5"
-            IsEnabled="{Binding ElementName=PlayCount, Path=IsChecked}" />
+            Grid.Column="5">
+            <TextBox.IsEnabled>
+                <MultiBinding Converter="{dbi:QueryConverter}">
+                    <Binding ElementName="PlayCount" Path="IsChecked"/>
+                    <Binding Path="PlayCount"/>
+                </MultiBinding>
+            </TextBox.IsEnabled>
+        </TextBox>
 
     </Grid>
 </UserControl>

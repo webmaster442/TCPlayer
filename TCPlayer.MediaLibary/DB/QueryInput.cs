@@ -28,6 +28,9 @@ namespace TCPlayer.MediaLibary.DB
         private string _AlbumName;
         private StringOperator _AlbumNameOperator;
 
+        private string _AlbumArtist;
+        private StringOperator _AlbumArtistOperator;
+
         private string _Artist;
         private StringOperator _ArtistOperator;
 
@@ -151,6 +154,18 @@ namespace TCPlayer.MediaLibary.DB
         {
             get { return _PlayCount; }
             set { SetValue(ref _PlayCount, value); }
+        }
+
+        public string AlbumArtist
+        {
+            get { return _AlbumArtist; }
+            set { SetValue(ref _AlbumArtist, value); }
+        }
+
+        public StringOperator AlbumArtistOperator
+        {
+            get { return _AlbumArtistOperator; }
+            set { SetValue(ref _AlbumArtistOperator, value); }
         }
 
         public QueryInput()
