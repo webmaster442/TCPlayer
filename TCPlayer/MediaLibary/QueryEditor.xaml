@@ -56,6 +56,8 @@
             Content="Artist:" 
             IsChecked="{Binding Artist, Converter={dbi:TextNotEmptyConverter}, Mode=OneWay}"/>
         <ComboBox
+            SelectedItem="{Binding ArtistOperator, Converter={applib:EnumToCollectionConverter}, Mode=OneTime}"
+            ItemsSource="{Binding ArtistOperator, Converter={applib:EnumToCollectionConverter}}"
             Grid.Row="1"
             Grid.Column="1">
             <ComboBox.IsEnabled>
@@ -84,7 +86,9 @@
             IsChecked="{Binding Title, Converter={dbi:TextNotEmptyConverter}, Mode=OneWay}"/>
         <ComboBox
             Grid.Row="1"
-            Grid.Column="4">
+            Grid.Column="4"
+            SelectedItem="{Binding TitleOperator, Converter={applib:EnumToCollectionConverter}, Mode=OneTime}"
+            ItemsSource="{Binding TitleOperator, Converter={applib:EnumToCollectionConverter}}">
             <ComboBox.IsEnabled>
                 <MultiBinding Converter="{dbi:QueryConverter}">
                     <Binding ElementName="Title" Path="IsChecked"/>
@@ -110,11 +114,13 @@
             IsChecked="{Binding ElementName=Album, Converter={dbi:TextNotEmptyConverter}, Mode=OneWay}"/>
         <ComboBox
             Grid.Row="2"
-            Grid.Column="1">
+            Grid.Column="1"
+            SelectedItem="{Binding AlbumNameOperator, Converter={applib:EnumToCollectionConverter}, Mode=OneTime}"
+            ItemsSource="{Binding AlbumNameOperator, Converter={applib:EnumToCollectionConverter}}">
             <ComboBox.IsEnabled>
                 <MultiBinding Converter="{dbi:QueryConverter}">
                     <Binding ElementName="Album" Path="IsChecked"/>
-                    <Binding Path="Album"/>
+                    <Binding Path="AlbumName"/>
                 </MultiBinding>
             </ComboBox.IsEnabled>
         </ComboBox>
@@ -136,7 +142,9 @@
             IsChecked="{Binding ElementName=Genre, Converter={dbi:TextNotEmptyConverter}, Mode=OneWay}"/>
         <ComboBox
             Grid.Row="2"
-            Grid.Column="4">
+            Grid.Column="4"
+            SelectedItem="{Binding GeneireOperator, Converter={applib:EnumToCollectionConverter}, Mode=OneTime}"
+            ItemsSource="{Binding GeneireOperator, Converter={applib:EnumToCollectionConverter}}">
             <ComboBox.IsEnabled>
                 <MultiBinding Converter="{dbi:QueryConverter}">
                     <Binding ElementName="Genre" Path="IsChecked"/>
@@ -162,7 +170,9 @@
             IsChecked="{Binding ElementName=AlbumArtist, Converter={dbi:TextNotEmptyConverter}, Mode=OneWay}"/>
         <ComboBox
             Grid.Row="3"
-            Grid.Column="1">
+            Grid.Column="1"
+            SelectedItem="{Binding AlbumArtistOperator, Converter={applib:EnumToCollectionConverter}, Mode=OneTime}"
+            ItemsSource="{Binding AlbumArtistOperator, Converter={applib:EnumToCollectionConverter}}">
             <ComboBox.IsEnabled>
                 <MultiBinding Converter="{dbi:QueryConverter}">
                     <Binding ElementName="AlbumArtist" Path="IsChecked"/>
@@ -188,7 +198,9 @@
             IsChecked="{Binding Year, Converter={dbi:NotNullConverter}, Mode=OneWay}"/>
         <ComboBox
             Grid.Row="3"
-            Grid.Column="4">
+            Grid.Column="4"
+            SelectedItem="{Binding YearOperator, Converter={applib:EnumToCollectionConverter}, Mode=OneTime}"
+            ItemsSource="{Binding YearOperator, Converter={applib:EnumToCollectionConverter}}">
             <ComboBox.IsEnabled>
                 <MultiBinding Converter="{dbi:QueryConverter}">
                     <Binding ElementName="Year" Path="IsChecked"/>
@@ -214,7 +226,9 @@
             IsChecked="{Binding Rating, Converter={dbi:NotNullConverter}, Mode=OneWay}"/>
         <ComboBox
             Grid.Row="4"
-            Grid.Column="1">
+            Grid.Column="1"
+            SelectedItem="{Binding RatingOperator, Converter={applib:EnumToCollectionConverter}, Mode=OneTime}"
+            ItemsSource="{Binding RatingOperator, Converter={applib:EnumToCollectionConverter}}">
             <ComboBox.IsEnabled>
                 <MultiBinding Converter="{dbi:QueryConverter}">
                     <Binding ElementName="Rating" Path="IsChecked"/>
@@ -244,11 +258,13 @@
             IsChecked="{Binding PlayCount, Converter={dbi:NotNullConverter}, Mode=OneWay}"/>
         <ComboBox
             Grid.Row="4"
-            Grid.Column="4">
+            Grid.Column="4"
+            SelectedItem="{Binding PlayCounterOperator, Converter={applib:EnumToCollectionConverter}, Mode=OneTime}"
+            ItemsSource="{Binding PlayCounterOperator, Converter={applib:EnumToCollectionConverter}}">
             <ComboBox.IsEnabled>
                 <MultiBinding Converter="{dbi:QueryConverter}">
                     <Binding ElementName="PlayCount" Path="IsChecked"/>
-                    <Binding Path="PlayCount"/>
+                    <Binding Path="PlayCounter"/>
                 </MultiBinding>
             </ComboBox.IsEnabled>
         </ComboBox>

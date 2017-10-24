@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,6 +13,7 @@ namespace TCPlayer.Controls
     public partial class Overlay : UserControl
     {
         private Result _DialogResult;
+        private string _CustomDialogResult;
 
         public static readonly DependencyProperty ContentWidthProperty =
             DependencyProperty.Register("ContentWidth", typeof(double), typeof(Overlay), new PropertyMetadata(280.0d));
@@ -60,12 +62,14 @@ namespace TCPlayer.Controls
             Storyboard closeanim = FindResource("CloseAnim") as Storyboard;
             BeginStoryboard(closeanim);
             _DialogResult = Result.None;
+            _CustomDialogResult = null;
         }
 
         public async Task<Result> Show()
         {
             _DialogResult = Result.None;
-
+            BtnOk.Visibility = Visibility.Visible;
+            CustomButtonContainer.Visibility = Visibility.Collapsed;
             Storyboard openanim = FindResource("OpenAnim") as Storyboard;
             BeginStoryboard(openanim);
             await Task.Delay(TimeSpan.FromSeconds(0.3));
@@ -83,6 +87,61 @@ namespace TCPlayer.Controls
                     return Result.Cancel;
                 }
                 await Task.Delay(100);
+            }
+        }
+
+        public async Task<string> Show(IDictionary<string, string> buttons)
+        {
+            _CustomDialogResult = null;
+            BtnOk.Visibility = Visibility.Collapsed;
+            CustomButtonContainer.Visibility = Visibility.Visible;
+            if (DrawCustomButtons(buttons))
+            {
+                Storyboard openanim = FindResource("OpenAnim") as Storyboard;
+                BeginStoryboard(openanim);
+                await Task.Delay(TimeSpan.FromSeconds(0.3));
+
+                while (true)
+                {
+                    if (!string.IsNullOrEmpty(_CustomDialogResult))
+                    {
+                        Hide();
+                        return _CustomDialogResult;
+                    }
+                    if (_DialogResult == Result.Cancel)
+                    {
+                        Hide();
+                        return null;
+                    }
+                    await Task.Delay(100);
+                }
+            }
+            return null;
+        }
+
+        private bool DrawCustomButtons(IDictionary<string, string> buttons)
+        {
+            CustomButtonContainer.Children.Clear();
+            foreach (var button in buttons)
+            {
+                Button b = new Button
+                {
+                    MinWidth = 70,
+                    Margin = new Thickness(5),
+                    Content = button.Value,
+                    Name = button.Key
+                };
+                b.Click += B_Click;
+                CustomButtonContainer.Children.Add(b);
+            }
+            return true;
+        }
+
+        private void B_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button b)
+            {
+                _CustomDialogResult = b.Content.ToString();
             }
         }
 

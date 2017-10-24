@@ -98,15 +98,25 @@ namespace TCPlayer
         public async void ShowDialog(UserControl dialog)
         {
             Overlay.DialogContent = dialog;
-            Overlay.CancelVisible = dialog is IDialog;
-
-            var result = await Overlay.Show();
-            if (result == Result.OK)
+            if (dialog is IDialog)
             {
-                var id = dialog as IDialog;
-                id?.OkClicked?.Invoke();
+                var result = await Overlay.Show();
+                if (result == Result.OK)
+                {
+                    var id = dialog as IDialog;
+                    id?.OkClicked?.Invoke();
+                }
             }
-
+            else if (dialog is IDialogWithCustomButtons)
+            {
+                var customdialog = dialog as IDialogWithCustomButtons;
+                var result = await Overlay.Show(customdialog.ButtonContents);
+                customdialog?.ButtonClickHandler?.Invoke(result);
+            }
+            else
+            {
+                Overlay.CancelVisible = false;
+            }
         }
 
         protected virtual void Dispose(bool native)

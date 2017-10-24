@@ -69,10 +69,6 @@ namespace TCPlayer.MediaLibary
         private void MenuCreateQuery()
         {
             var queryeditor = new QueryEditor();
-            queryeditor.OkClicked = () =>
-            {
-                
-            };
             View.ShowDialog(queryeditor);
         }
 

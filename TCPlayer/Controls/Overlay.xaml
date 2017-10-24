@@ -89,6 +89,9 @@
                     Grid.Row="1"
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
+                    <StackPanel
+                        x:Name="CustomButtonContainer"
+                        Orientation="Horizontal" />
                     <Button
                         x:Name="BtnOk"
                         Width="70"
