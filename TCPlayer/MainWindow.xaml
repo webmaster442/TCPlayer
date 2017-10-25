@@ -55,9 +55,9 @@
     <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <controls:Overlay
@@ -79,13 +79,69 @@
             BorderBrush="{StaticResource {x:Static SystemColors.MenuHighlightBrushKey}}"
             BorderThickness="0,2,0,0" />
 
-        <Grid
+        <Border
+            x:Name="ViewTitle"
             Grid.Row="0"
+            BorderBrush="Red"
+            Margin="0,2"
+            BorderThickness="0 0 0 2">
+            <TextBlock
+                Margin="10,5,0,2"
+                FontSize="18"
+                Text="{Binding ElementName=MainView, Path=SelectedItem.ToolTip}"/>
+        </Border>
+
+        <TabControl
+            Style="{StaticResource Main}"
+            TabStripPlacement="Bottom"
+            x:Name="MainView"
+            Panel.ZIndex="1"
+            Grid.Row="1">
+            <TabItem 
+                ToolTip="Now Playing"
+                Header="[ Playing ]">
+                <controls:NowPlaying x:Name="SongDat" />
+            </TabItem>
+            <TabItem 
+                ToolTip="Playlist"
+                Header="{applib:Translate MainWin_PlaylistTab}">
+                <ListBox
+                    x:Name="PlaylistView"
+                    ItemsSource="{Binding PlayList}"
+                    MouseDoubleClick="PlayList_ItemDoubleClcik" />
+            </TabItem>
+            <TabItem 
+                ToolTip="File Browser"
+                Header="[ File Browser ]">
+                <applib:FileExplorer
+                    x:Name="FileExplorer"
+                    FileDoubleClick="FileExplorer_FileDoubleClick" />
+            </TabItem>
+            <TabItem 
+                ToolTip="Media Libary"
+                Header="[ Media Libary ]">
+                <medialib:MediaLibary DataContext="{Binding MediaViewModel}" />
+            </TabItem>
+            <TabItem
+                ToolTip="Radio Player"
+                Header="{applib:Translate MainWin_RadioTab}">
+                <controls:RadioStations
+                    x:Name="RadioStations"
+                    ItemDoubleClcik="RadioStations_ItemDoubleClcik" />
+            </TabItem>
+        </TabControl>
+
+        <Grid
+            Grid.RowSpan="5"
+            HorizontalAlignment="Stretch"
+            Margin="0,0,0,100"
+            VerticalAlignment="Bottom"
             Height="30"
             Background="{StaticResource MenuBackground}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Menu
                 Grid.Column="0"
@@ -345,156 +401,133 @@
                 Foreground="{StaticResource MenuForeground}" />
         </Grid>
 
-        <StackPanel
-            x:Name="ButtonBar"
-            Grid.Row="1"
-            Margin="5,5,0,0"
-            HorizontalAlignment="Left"
-            Orientation="Horizontal">
-
-            <StackPanel
-                Margin="10,0"
-                VerticalAlignment="Center">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock
-                        x:Name="TbFullTime"
-                        Text="00:00:00" />
-                    <TextBlock Text=" / " />
-                    <TextBlock
-                        x:Name="TbCurrTime"
-                        Text="00:00:00" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{applib:Translate MainWin_ListLabel}" />
-                    <TextBlock Text="{Binding CorrectedPlayListIndex}" />
-                    <TextBlock Text=" / " />
-                    <TextBlock Text="{Binding PlayList.Count}" />
-                </StackPanel>
-            </StackPanel>
-
-            <applib:FaImageButton
-                x:Name="BtnOpen"
-                Margin="5,0"
-                Click="DoAction"
-                Icon="fa_eject"
-                Style="{StaticResource PlayImgButtons}"
-                ToolTip="{applib:Translate PlayerTab_ButtonOpen}" />
-            <Button
-                x:Name="BtnPlayPause"
-                Click="DoAction"
-                Content="{StaticResource IconPlayPause}"
-                Style="{StaticResource PlayButtons}"
-                ToolTip="{applib:Translate PlayerTab_ButtonPlayPause}" />
-            <applib:FaImageButton
-                x:Name="BtnStop"
-                Margin="5,0"
-                Click="DoAction"
-                Icon="fa_stop"
-                Style="{StaticResource PlayImgButtons}"
-                ToolTip="{applib:Translate PlayerTab_ButtonStop}" />
-            <applib:FaImageButton
-                x:Name="BtnSeekBack"
-                Click="DoAction"
-                Icon="fa_backward"
-                Style="{StaticResource PlayImgButtons}"
-                ToolTip="{applib:Translate PlayerTab_ButtonSeekBack}" />
-            <applib:FaImageButton
-                x:Name="BtnSeekFwd"
-                Margin="5,0"
-                Click="DoAction"
-                Icon="fa_forward"
-                Style="{StaticResource PlayImgButtons}"
-                ToolTip="{applib:Translate PlayerTab_ButtonSeekForward}" />
-            <applib:FaImageButton
-                x:Name="BtnPrevTrack"
-                Click="DoAction"
-                Icon="fa_fast_backward"
-                Style="{StaticResource PlayImgButtons}"
-                ToolTip="{applib:Translate PlayerTab_ButtonPrevousTrack}" />
-            <applib:FaImageButton
-                x:Name="BtnNextTrack"
-                Margin="5,0"
-                Click="DoAction"
-                Icon="fa_fast_forward"
-                Style="{StaticResource PlayImgButtons}"
-                ToolTip="{applib:Translate PlayerTab_ButtonNextTrack}" />
-            <ToggleButton
-                Style="{StaticResource Flat}"
-                x:Name="BtnMute"
-                Click="BtnMute_Click"
-                Content="{StaticResource IconMute}"
-                ToolTip="{applib:Translate PlayerTab_ButtonMuteUnmute}" />
-            <Slider
-                x:Name="VolSlider"
-                Grid.Column="1"
-                Width="180"
-                Margin="15,0,0,0"
-                VerticalAlignment="Center"
-                Maximum="1"
-                Minimum="0"
-                ValueChanged="VolSlider_ValueChanged"
-                Value="1">
-                <Slider.ToolTip>
-                    <ToolTip
-                        Content="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Value}"
-                        ContentStringFormat="{applib:Translate PlayerTab_VolumeSliderText}" />
-                </Slider.ToolTip>
-            </Slider>
-
-            <StackPanel
-                Margin="30,0,0,0"
-                VerticalAlignment="Center">
-                <ProgressBar
-                    x:Name="VuR"
-                    Width="180"
-                    Height="8"
-                    Margin="0,0,0,2"
-                    Maximum="32768" />
-                <ProgressBar
-                    x:Name="VuL"
-                    Width="180"
-                    Height="8"
-                    Maximum="32768" />
-            </StackPanel>
-
-        </StackPanel>
-
-        <Slider
-            x:Name="SeekSlider"
+        <Border
             Grid.Row="2"
-            Margin="10,10"
-            IsMoveToPointEnabled="True"
-            Thumb.DragCompleted="SeekSlider_DragCompleted"
-            Thumb.DragStarted="SeekSlider_DragStarted"
-            ValueChanged="SeekSlider_ValueChanged" />
+            Background="{StaticResource MenuBackground}">
+            <StackPanel
+                x:Name="ButtonBar"
+                Margin="5,5,0,0"
+                HorizontalAlignment="Left"
+                Orientation="Horizontal">
 
-        <applib:AnimatedTabControl
-            x:Name="MainView"
+                <StackPanel
+                    Margin="10,0"
+                    VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock
+                            x:Name="TbFullTime"
+                            Text="00:00:00" />
+                        <TextBlock Text=" / " />
+                        <TextBlock
+                            x:Name="TbCurrTime"
+                            Text="00:00:00" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{applib:Translate MainWin_ListLabel}" />
+                        <TextBlock Text="{Binding CorrectedPlayListIndex}" />
+                        <TextBlock Text=" / " />
+                        <TextBlock Text="{Binding PlayList.Count}" />
+                    </StackPanel>
+                </StackPanel>
+
+                <applib:FaImageButton
+                    x:Name="BtnOpen"
+                    Margin="5,0"
+                    Click="DoAction"
+                    Icon="fa_eject"
+                    Style="{StaticResource PlayImgButtons}"
+                    ToolTip="{applib:Translate PlayerTab_ButtonOpen}" />
+                <Button
+                    x:Name="BtnPlayPause"
+                    Click="DoAction"
+                    Content="{StaticResource IconPlayPause}"
+                    Style="{StaticResource PlayButtons}"
+                    ToolTip="{applib:Translate PlayerTab_ButtonPlayPause}" />
+                <applib:FaImageButton
+                    x:Name="BtnStop"
+                    Margin="5,0"
+                    Click="DoAction"
+                    Icon="fa_stop"
+                    Style="{StaticResource PlayImgButtons}"
+                    ToolTip="{applib:Translate PlayerTab_ButtonStop}" />
+                <applib:FaImageButton
+                    x:Name="BtnSeekBack"
+                    Click="DoAction"
+                    Icon="fa_backward"
+                    Style="{StaticResource PlayImgButtons}"
+                    ToolTip="{applib:Translate PlayerTab_ButtonSeekBack}" />
+                <applib:FaImageButton
+                    x:Name="BtnSeekFwd"
+                    Margin="5,0"
+                    Click="DoAction"
+                    Icon="fa_forward"
+                    Style="{StaticResource PlayImgButtons}"
+                    ToolTip="{applib:Translate PlayerTab_ButtonSeekForward}" />
+                <applib:FaImageButton
+                    x:Name="BtnPrevTrack"
+                    Click="DoAction"
+                    Icon="fa_fast_backward"
+                    Style="{StaticResource PlayImgButtons}"
+                    ToolTip="{applib:Translate PlayerTab_ButtonPrevousTrack}" />
+                <applib:FaImageButton
+                    x:Name="BtnNextTrack"
+                    Margin="5,0"
+                    Click="DoAction"
+                    Icon="fa_fast_forward"
+                    Style="{StaticResource PlayImgButtons}"
+                    ToolTip="{applib:Translate PlayerTab_ButtonNextTrack}" />
+                <ToggleButton
+                    x:Name="BtnMute"
+                    Click="BtnMute_Click"
+                    Content="{StaticResource IconMute}"
+                    Style="{StaticResource Flat}"
+                    ToolTip="{applib:Translate PlayerTab_ButtonMuteUnmute}" />
+                <Slider
+                    x:Name="VolSlider"
+                    Grid.Column="1"
+                    Width="180"
+                    Margin="15,0,0,0"
+                    VerticalAlignment="Center"
+                    Maximum="1"
+                    Minimum="0"
+                    ValueChanged="VolSlider_ValueChanged"
+                    Value="1">
+                    <Slider.ToolTip>
+                        <ToolTip
+                            Content="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Value}"
+                            ContentStringFormat="{applib:Translate PlayerTab_VolumeSliderText}" />
+                    </Slider.ToolTip>
+                </Slider>
+
+                <StackPanel
+                    Margin="30,0,0,0"
+                    VerticalAlignment="Center">
+                    <ProgressBar
+                        x:Name="VuR"
+                        Width="180"
+                        Height="8"
+                        Margin="0,0,0,2"
+                        Maximum="32768" />
+                    <ProgressBar
+                        x:Name="VuL"
+                        Width="180"
+                        Height="8"
+                        Maximum="32768" />
+                </StackPanel>
+
+            </StackPanel>
+        </Border>
+
+        <Border
             Grid.Row="3"
-            Grid.RowSpan="2"
-            TabStripPlacement="Top">
-            <TabItem Header="[ Playing ]">
-                <controls:NowPlaying x:Name="SongDat" />
-            </TabItem>
-            <TabItem Header="{applib:Translate MainWin_PlaylistTab}">
-                <ListBox
-                    x:Name="PlaylistView"
-                    ItemsSource="{Binding PlayList}"
-                    MouseDoubleClick="PlayList_ItemDoubleClcik" />
-            </TabItem>
-            <TabItem Header="[ File Browser ]">
-                <applib:FileExplorer
-                    x:Name="FileExplorer"
-                    FileDoubleClick="FileExplorer_FileDoubleClick" />
-            </TabItem>
-            <TabItem Header="[ Media Libary ]">
-                <medialib:MediaLibary DataContext="{Binding MediaViewModel}" />
-            </TabItem>
-            <TabItem Header="{applib:Translate MainWin_RadioTab}">
-                <controls:RadioStations
-                    x:Name="RadioStations"
-                    ItemDoubleClcik="RadioStations_ItemDoubleClcik" />
-            </TabItem>
-        </applib:AnimatedTabControl>
+            Background="{StaticResource MenuBackground}">
+            <Slider
+                x:Name="SeekSlider"
+                Margin="10,10"
+                IsMoveToPointEnabled="True"
+                Thumb.DragCompleted="SeekSlider_DragCompleted"
+                Thumb.DragStarted="SeekSlider_DragStarted"
+                ValueChanged="SeekSlider_ValueChanged" />
+        </Border>
     </Grid>
 </applib:ModernWindow>
