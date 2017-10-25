@@ -40,7 +40,7 @@ namespace TCPlayer
 
         [STAThread]
         public static void Main()
-        {
+     {
             var si = new SingleInstanceApp(AppName);
             si.ReceiveString += Si_ReceiveString;
             if (si.IsFirstInstance)

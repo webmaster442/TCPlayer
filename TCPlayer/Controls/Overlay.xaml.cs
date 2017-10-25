@@ -61,8 +61,6 @@ namespace TCPlayer.Controls
         {
             Storyboard closeanim = FindResource("CloseAnim") as Storyboard;
             BeginStoryboard(closeanim);
-            _DialogResult = Result.None;
-            _CustomDialogResult = null;
         }
 
         public async Task<Result> Show()
@@ -141,7 +139,7 @@ namespace TCPlayer.Controls
         {
             if (sender is Button b)
             {
-                _CustomDialogResult = b.Content.ToString();
+                _CustomDialogResult = b.Name;
             }
         }
 

@@ -65,7 +65,8 @@
                 Grid.Column="0"
                 Icon="fa_bookmark"
                 IconSize="16"
-                Content="Query" />
+                Content="Query"
+                Command="{Binding FilterQueryCommand}"/>
             <ListBox
                 Grid.Row="3"
                 x:Name="CacheList"

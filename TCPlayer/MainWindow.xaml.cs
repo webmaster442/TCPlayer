@@ -116,6 +116,7 @@ namespace TCPlayer
             else
             {
                 Overlay.CancelVisible = false;
+                await Overlay.Show();
             }
         }
 

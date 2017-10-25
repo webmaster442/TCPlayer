@@ -237,6 +237,7 @@
             </ComboBox.IsEnabled>
         </ComboBox>
         <applib:Rating
+            Margin="5,0"
             VerticalAlignment="Center"
             Grid.Row="4"
             Grid.Column="2"

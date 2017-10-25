@@ -152,9 +152,19 @@ namespace TCPlayer.MediaLibary.DB
         /// List saved queries
         /// </summary>
         /// <returns>List of saved queries</returns>
-        public IEnumerable<string> ListSavedQueries()
+        public IEnumerable<string> GetSavedQueries()
         {
             return _querys.FindAll().Select(q => q.QueryName);
+        }
+
+        /// <summary>
+        /// Get a query by it's name
+        /// </summary>
+        /// <param name="name">Query name to search</param>
+        /// <returns>The query data if found, otherwise null</returns>
+        public QueryInput GetQueryByName(string name)
+        {
+            return _querys.Find(q => q.QueryName == name).FirstOrDefault();
         }
 
         /// <summary>

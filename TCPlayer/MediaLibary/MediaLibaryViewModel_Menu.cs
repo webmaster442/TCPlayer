@@ -69,6 +69,24 @@ namespace TCPlayer.MediaLibary
         private void MenuCreateQuery()
         {
             var queryeditor = new QueryEditor();
+            queryeditor.ButtonClickHandler = (str) =>
+            {
+                if (queryeditor.CurrentQuery == null) return;
+
+                if (str == QueryEditor.ButtonNames.BtnExec.ToString())
+                {
+                    DoQuery(queryeditor.CurrentQuery);
+                }
+                else if (str == QueryEditor.ButtonNames.BtnSave.ToString())
+                {
+                    DataBase.Instance.SaveOrUpdateQuery(queryeditor.CurrentQuery);
+                }
+                else if (str == QueryEditor.ButtonNames.BtnSaveExec.ToString())
+                {
+                    DataBase.Instance.SaveOrUpdateQuery(queryeditor.CurrentQuery);
+                    DoQuery(queryeditor.CurrentQuery);
+                }
+            };
             View.ShowDialog(queryeditor);
         }
 

@@ -76,6 +76,8 @@ namespace TCPlayer.MediaLibary
         private void FilterQuery()
         {
             ListingType = ListingType.Query;
+            ListItems.Clear();
+            ListItems.AddRange(DataBase.Instance.GetSavedQueries());
         }
 
         private void FilterGenre()
@@ -132,7 +134,7 @@ namespace TCPlayer.MediaLibary
                     DoQuery(QueryInput.YearQuery(Convert.ToUInt32(selecteditem)));
                     break;
                 case ListingType.Query:
-                    
+                    DoQuery(DataBase.Instance.GetQueryByName(selecteditem));
                     break;
             }
         }

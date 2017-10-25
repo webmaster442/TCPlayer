@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Controls;
 using TCPlayer.Code;
+using TCPlayer.MediaLibary.DB;
 
 namespace TCPlayer.MediaLibary
 {
@@ -21,11 +22,29 @@ namespace TCPlayer.MediaLibary
             {
                 return new Dictionary<string, string>
                 {
-                    { "BtnSave", "Save" },
-                    { "BtnExec", "Execute" },
-                    { "BtnSaveExec", "Save & Execute" },
+                    { ButtonNames.BtnSave.ToString(), "Save" },
+                    { ButtonNames.BtnExec.ToString(), "Execute" },
+                    { ButtonNames.BtnSaveExec.ToString(), "Save & Execute" },
                 };
             }
+        }
+
+        public QueryInput CurrentQuery
+        {
+            get
+            {
+                if (DataContext != null)
+                    return (DataContext as QueryInput);
+                else
+                    return null;
+            }
+        }
+
+        public enum ButtonNames
+        {
+            BtnSave,
+            BtnExec,
+            BtnSaveExec
         }
 
         public Action<string> ButtonClickHandler
