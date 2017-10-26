@@ -21,6 +21,7 @@
     Top="{Binding Source={x:Static props:Settings.Default}, Path=Top, Mode=TwoWay}"
     Topmost="{Binding Source={x:Static props:Settings.Default}, Path=TopMost, Mode=TwoWay}"
     WindowIsTransparent="{Binding Source={x:Static props:Settings.Default}, Path=OpacityState, Mode=TwoWay}"
+    Background="{StaticResource Background}"
     mc:Ignorable="d">
     <Window.TaskbarItemInfo>
         <TaskbarItemInfo
@@ -58,6 +59,7 @@
             <RowDefinition />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <controls:Overlay
@@ -87,24 +89,23 @@
             BorderThickness="0 0 0 2">
             <TextBlock
                 Margin="10,5,0,2"
-                FontSize="18"
+                Style="{StaticResource ViewTitle}"
                 Text="{Binding ElementName=MainView, Path=SelectedItem.ToolTip}"/>
         </Border>
 
-        <TabControl
-            Style="{StaticResource Main}"
-            TabStripPlacement="Bottom"
+        <applib:AnimatedTabControl
+            TabStripPlacement="Left"
             x:Name="MainView"
             Panel.ZIndex="1"
             Grid.Row="1">
             <TabItem 
                 ToolTip="Now Playing"
-                Header="[ Playing ]">
+                Header="Playing">
                 <controls:NowPlaying x:Name="SongDat" />
             </TabItem>
             <TabItem 
                 ToolTip="Playlist"
-                Header="[ Playlist ]">
+                Header="Playlist">
                 <ListBox
                     x:Name="PlaylistView"
                     ItemsSource="{Binding PlayList}"
@@ -112,38 +113,36 @@
             </TabItem>
             <TabItem 
                 ToolTip="File Browser"
-                Header="[ File Browser ]">
+                Header="File Browser">
                 <applib:FileExplorer
                     x:Name="FileExplorer"
                     FileDoubleClick="FileExplorer_FileDoubleClick" />
             </TabItem>
             <TabItem 
                 ToolTip="Media Libary"
-                Header="[ Media Libary ]">
+                Header="Media Libary">
                 <medialib:MediaLibary DataContext="{Binding MediaViewModel}" />
             </TabItem>
             <TabItem
                 ToolTip="Radio Player"
-                Header="{applib:Translate MainWin_RadioTab}">
+                Header="Radio">
                 <controls:RadioStations
                     x:Name="RadioStations"
                     ItemDoubleClcik="RadioStations_ItemDoubleClcik" />
             </TabItem>
-        </TabControl>
+        </applib:AnimatedTabControl>
 
         <Grid
-            Grid.RowSpan="5"
-            HorizontalAlignment="Stretch"
-            Margin="0,0,0,100"
-            VerticalAlignment="Bottom"
+            Grid.Row="2"
             Height="30"
-            Background="{StaticResource MenuBackground}">
+            Background="{Binding ElementName=MainWin, Path=DwmBorderBrush}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Menu
+                Background="{Binding ElementName=MainWin, Path=DwmBorderBrush}"
+                BorderBrush="{Binding ElementName=MainWin, Path=DwmBorderBrush}"
                 Grid.Column="0"
                 Margin="5,0"
                 VerticalAlignment="Center">
@@ -175,7 +174,7 @@
                                 Style="{StaticResource Menu}" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <Separator Style="{StaticResource sp}" />
+                    <Separator />
                     <MenuItem
                         Command="{Binding PlayerExitCommand}"
                         Header="Exit">
@@ -200,7 +199,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
 
-                    <Separator Style="{StaticResource sp}" />
+                    <Separator />
 
                     <MenuItem
                         Command="{Binding PlaylistAddDirectoryCommnad}"
@@ -245,7 +244,7 @@
                         <MenuItem Header="{applib:Translate Playlist_NoDiscsFound}" />
                     </MenuItem>
 
-                    <Separator Style="{StaticResource sp}" />
+                    <Separator />
 
                     <MenuItem
                         Command="{Binding PlaylistSortAscCommand}"
@@ -284,7 +283,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
 
-                    <Separator Style="{StaticResource sp}" />
+                    <Separator />
 
                     <MenuItem
                         Command="{Binding PlaylistClearCommand}"
@@ -317,7 +316,7 @@
                                 Style="{StaticResource Menu}" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <Separator Style="{StaticResource sp}" />
+                    <Separator />
                     <MenuItem
                         Command="{Binding FileExplorerPlaySelectedCommand}"
                         Header="Play selected"
@@ -359,7 +358,7 @@
                                 Style="{StaticResource Menu}" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <Separator Style="{StaticResource sp}" />
+                    <Separator />
                     <MenuItem
                         Command="{Binding MediaViewModel.MenuSendToPlaylistCommand}"
                         Header="Send selection to playlist">
@@ -369,7 +368,7 @@
                                 Style="{StaticResource Menu}" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <Separator Style="{StaticResource sp}" />
+                    <Separator />
                     <MenuItem
                         Command="{Binding MediaViewModel.MenuCreateQueryCommand}"
                         Header="Create Query ...">
@@ -379,7 +378,7 @@
                                 Style="{StaticResource Menu}" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <Separator Style="{StaticResource sp}" />
+                    <Separator />
                     <MenuItem
                         Command="{Binding MediaViewModel.MenuBackupDbCommand}"
                         Header="Backup Database ...">
@@ -402,8 +401,8 @@
         </Grid>
 
         <Border
-            Grid.Row="2"
-            Background="{StaticResource MenuBackground}">
+            Grid.Row="3"
+            Background="{Binding ElementName=MainWin, Path=DwmBorderBrush}">
             <StackPanel
                 x:Name="ButtonBar"
                 Margin="5,5,0,0"
@@ -519,8 +518,8 @@
         </Border>
 
         <Border
-            Grid.Row="3"
-            Background="{StaticResource MenuBackground}">
+            Grid.Row="4"
+            Background="{Binding ElementName=MainWin, Path=DwmBorderBrush}">
             <Slider
                 x:Name="SeekSlider"
                 Margin="10,10"

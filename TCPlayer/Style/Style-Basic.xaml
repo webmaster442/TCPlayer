@@ -18,15 +18,56 @@
 
     <SolidColorBrush
         x:Key="Background"
-        Color="#ecf0f1" />
-    
+        Color="#EE000000" />
+
     <SolidColorBrush
-        x:Key="MenuBackground"
-        Color="#2c3e50" />
-    
+        x:Key="Foreground"
+        Color="White"/>
+
     <SolidColorBrush
         x:Key="MenuForeground"
-        Color="#ecf0f1" />
+        Color="Black" />
+
+
+    <SolidColorBrush x:Key="Button.Static.Background" Color="Transparent"/>
+    <SolidColorBrush x:Key="Button.Static.Border" Color="Transparent"/>
+    <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FF008080"/>
+    <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FF000080"/>
+    <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="Gray"/>
+
+    <SolidColorBrush
+        x:Key="MenuBackground"
+        Color="Transparent"/>
+
+    <Style TargetType="applib:ModernWindow">
+        <Setter Property="FontFamily" Value="/TCPlayer;Component/Style/Resources/#Lora"/>
+    </Style>
+
+    <Style TargetType="TextBlock">
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="FontFamily" Value="Consolas"/>
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+
+    <Style TargetType="TextBlock" x:Key="ViewTitle">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="FontFamily" Value="/TCPlayer;Component/Style/Resources/#Bree Serif"/>
+    </Style>
+
+    <Style TargetType="ListView">
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+    
+    <Style
+        x:Key="Title"
+        TargetType="TextBlock">
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Margin" Value="10" />
+        <Setter Property="FontFamily" Value="/TCPlayer;Component/Style/Resources/#Bree Serif"/>
+    </Style>
+
 
     <Style x:Key="Flat">
         <Setter Property="Control.Background" Value="{x:Null}" />
@@ -46,6 +87,7 @@
 
     <Style TargetType="TreeView">
         <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{StaticResource Foreground}"/>
     </Style>
 
     <Style
@@ -95,6 +137,7 @@
             <Setter.Value>
                 <DataTemplate>
                     <TextBlock
+                        Foreground="{StaticResource Foreground}"
                         Text="{Binding Converter={StaticResource FilenameConv}}"
                         ToolTip="{Binding}" />
                 </DataTemplate>
@@ -152,15 +195,6 @@
         TargetType="CheckBox">
         <Setter Property="FontSize" Value="14" />
         <Setter Property="Foreground" Value="Black" />
-    </Style>
-
-    <Style
-        x:Key="Title"
-        TargetType="TextBlock">
-        <Setter Property="FontSize" Value="18" />
-        <Setter Property="FontWeight" Value="Bold" />
-        <Setter Property="Foreground" Value="{StaticResource MenuBackground}" />
-        <Setter Property="Margin" Value="10" />
     </Style>
 
     <Style TargetType="{x:Type ProgressBar}">
