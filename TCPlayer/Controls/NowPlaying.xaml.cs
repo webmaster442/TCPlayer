@@ -32,7 +32,7 @@ namespace TCPlayer.Controls
         }
 
         public static DependencyProperty CoverProperty =
-            DependencyProperty.Register("Cover", typeof(ImageSource), typeof(NowPlaying), new PropertyMetadata(new BitmapImage(new Uri("pack://application:,,,/TCPlayer;component/Style/audio-file.png"))));
+            DependencyProperty.Register("Cover", typeof(ImageSource), typeof(NowPlaying), new PropertyMetadata(new BitmapImage(new Uri("pack://application:,,,/TCPlayer;component/Style/Resources/audio-file.png"))));
 
         public static DependencyProperty FileNameProperty =
             DependencyProperty.Register("FileName", typeof(string), typeof(NowPlaying));
@@ -108,7 +108,7 @@ namespace TCPlayer.Controls
         {
             FileName = file;
             var fi = new FileInfo(file);
-            Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/audio-midi.png", UriKind.Relative));
+            Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/Resources/audio-midi.png", UriKind.Relative));
             var Size = GetFileSize(fi.Length);
             var Artist = Marshal.PtrToStringAuto(Bass.ChannelGetTags(handle, TagType.MusicAuth));
             var Title = Marshal.PtrToStringAuto(Bass.ChannelGetTags(handle, TagType.MusicName));
@@ -127,7 +127,7 @@ namespace TCPlayer.Controls
             var notify = Properties.Settings.Default.TrackChangeNotification;
             if (file.StartsWith("http://") || file.StartsWith("https://"))
             {
-                Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/audio-network.png", UriKind.Relative));
+                Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/Resources/audio-network.png", UriKind.Relative));
                 SetInfoText(Path.GetFileName(file), "Stream", "", DateTime.Now.Year.ToString(), "stream");
                 if (notify) App.NotifyIcon.ShowNotification(file);
                 return;
@@ -147,7 +147,7 @@ namespace TCPlayer.Controls
                 var Size = GetFileSize(fi.Length);
                 if (Helpers.IsMidi(file))
                 {
-                    Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/audio-midi.png", UriKind.Relative));
+                    Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/Resources/audio-midi.png", UriKind.Relative));
                     SetInfoText("", fi.Name, "", Properties.Resources.SongData_Unknown, Size);
                     if (notify) App.NotifyIcon.ShowNotification(FileName);
                     return;
@@ -197,7 +197,7 @@ namespace TCPlayer.Controls
         {
             FileName = string.Format("CD Track #{0}", track);
             //GetFileSize(size);
-            Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/audio-cd.png", UriKind.Relative));
+            Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/Resources/audio-cd.png", UriKind.Relative));
             var Year = "unknown";
             var Artist = "Track";
             var Title = string.Format("#{0}", track);
@@ -216,7 +216,7 @@ namespace TCPlayer.Controls
         public void Reset()
         {
             DataLayer.Background = new SolidColorBrush(Colors.Transparent);
-            Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/audio-file.png", UriKind.Relative));
+            Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/Resources/audio-file.png", UriKind.Relative));
             InfoText.Text = Properties.Resources.SongData_Error;
         }
 

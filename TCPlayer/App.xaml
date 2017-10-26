@@ -6,7 +6,10 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Style/Layout.xaml"/>
+                <ResourceDictionary Source="Style/Style-Basic.xaml"/>
+                <ResourceDictionary Source="Style/Style-menu.xaml"/>
+                <ResourceDictionary Source="Style/Style-Slider.xaml"/>
+                <ResourceDictionary Source="Style/Style-TabControl.xaml"/>
                 <ResourceDictionary Source="Style/Icons.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

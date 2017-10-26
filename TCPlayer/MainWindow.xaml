@@ -33,22 +33,22 @@
                     Click="ThumbButtonInfo_Click"
                     CommandParameter="Play/Pause"
                     Description="{applib:Translate PlayerTab_ButtonPlayPause}"
-                    ImageSource="Style/taskbar-play-pause.png" />
+                    ImageSource="Style/Resources/taskbar-play-pause.png" />
                 <ThumbButtonInfo
                     Click="ThumbButtonInfo_Click"
                     CommandParameter="Previous track"
                     Description="{applib:Translate PlayerTab_ButtonPrevousTrack}"
-                    ImageSource="Style/taskbar-skip-previous.png" />
+                    ImageSource="Style/Resources/taskbar-skip-previous.png" />
                 <ThumbButtonInfo
                     Click="ThumbButtonInfo_Click"
                     CommandParameter="Next track"
                     Description="{applib:Translate PlayerTab_ButtonNextTrack}"
-                    ImageSource="Style/taskbar-skip-next.png" />
+                    ImageSource="Style/Resources/taskbar-skip-next.png" />
                 <ThumbButtonInfo
                     Click="ThumbButtonInfo_Click"
                     CommandParameter="Mute/UnMute"
                     Description="{applib:Translate PlayerTab_ButtonMuteUnmute}"
-                    ImageSource="Style/taskbar-volume-off.png" />
+                    ImageSource="Style/Resources/taskbar-volume-off.png" />
             </TaskbarItemInfo.ThumbButtonInfos>
         </TaskbarItemInfo>
     </Window.TaskbarItemInfo>
@@ -104,7 +104,7 @@
             </TabItem>
             <TabItem 
                 ToolTip="Playlist"
-                Header="{applib:Translate MainWin_PlaylistTab}">
+                Header="[ Playlist ]">
                 <ListBox
                     x:Name="PlaylistView"
                     ItemsSource="{Binding PlayList}"

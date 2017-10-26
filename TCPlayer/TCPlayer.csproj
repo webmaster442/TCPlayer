@@ -106,6 +106,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs" />
     <Compile Include="Style\NullorValueConverter.cs" />
+    <Page Include="Style\Style-Slider.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -188,7 +192,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Style\Layout.xaml">
+    <Page Include="Style\Style-Basic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Style\Style-menu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Style\Style-TabControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -205,6 +217,8 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <Resource Include="Style\Resources\Lora-Regular.ttf" />
+    <Resource Include="Style\Resources\BreeSerif-Regular.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -327,19 +341,19 @@
     <Content Include="Engine\x86\tags.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Style\audio-file.png" />
-    <Resource Include="Style\audio-midi.png" />
-    <Resource Include="Style\audio-network.png" />
-    <Resource Include="Style\auido-cd.png" />
+    <Resource Include="Style\Resources\audio-file.png" />
+    <Resource Include="Style\Resources\audio-midi.png" />
+    <Resource Include="Style\Resources\audio-network.png" />
+    <Resource Include="Style\Resources\auido-cd.png" />
     <Resource Include="Lib\radiotray.hu.xml" />
     <Resource Include="Lib\radiotray.xml" />
     <Resource Include="Lib\About.txt" />
     <Resource Include="Lib\About.hu.txt" />
     <Resource Include="Lib\WPFSoundVis\Spectrum Analyzer\WPFSoundVisualizationLib.SpectrumAnalyzer.Icon.Large.png" />
-    <Resource Include="Style\taskbar-play-pause.png" />
-    <Resource Include="Style\taskbar-skip-next.png" />
-    <Resource Include="Style\taskbar-skip-previous.png" />
-    <Resource Include="Style\taskbar-volume-off.png" />
+    <Resource Include="Style\Resources\taskbar-play-pause.png" />
+    <Resource Include="Style\Resources\taskbar-skip-next.png" />
+    <Resource Include="Style\Resources\taskbar-skip-previous.png" />
+    <Resource Include="Style\Resources\taskbar-volume-off.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\applib\AppLib.Common\AppLib.Common.csproj">
