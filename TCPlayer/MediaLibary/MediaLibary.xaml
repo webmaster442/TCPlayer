@@ -37,6 +37,7 @@
                 Grid.Column="0"
                 Icon="fa_user"
                 IconSize="16"
+                IconForeground="Wheat"
                 Content="Artists"
                 Command="{Binding FilterArtstsCommand}"/>
             <applib:FaImageButton
@@ -44,17 +45,20 @@
                 Grid.Column="1"
                 Icon="fa_music"
                 IconSize="16"
+                IconForeground="Wheat"
                 Content="Albums"
                 Command="{Binding FilterAlbumsCommand}"/>
             <applib:FaImageButton
                 Grid.Row="1"
                 Grid.Column="0"
                 Icon="fa_calendar_o"
+                IconForeground="Wheat"
                 IconSize="16"
                 Content="Years"
                 Command="{Binding FilterYearsCommand}"/>
             <applib:FaImageButton
                 Grid.Row="1"
+                IconForeground="Wheat"
                 Grid.Column="1"
                 Icon="fa_headphones"
                 IconSize="16"
@@ -64,6 +68,7 @@
                 Grid.Row="2"
                 Grid.Column="0"
                 Icon="fa_bookmark"
+                IconForeground="Wheat"
                 IconSize="16"
                 Content="Query"
                 Command="{Binding FilterQueryCommand}"/>
@@ -152,8 +157,9 @@
                 Grid.Row="1"
                 Orientation="Horizontal">
                 <ToggleButton
+                    Style="{StaticResource Flat}"
                     x:Name="SelectorButton"
-                    Content="[ Visible Columns ]" />
+                    Content="Visible Columns" />
                 <Popup
                     x:Name="Selector"
                     IsOpen="{Binding ElementName=SelectorButton, Path=IsChecked}"

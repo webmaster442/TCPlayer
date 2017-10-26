@@ -58,7 +58,7 @@
     <Style TargetType="ListView">
         <Setter Property="Background" Value="Transparent"/>
     </Style>
-    
+
     <Style
         x:Key="Title"
         TargetType="TextBlock">
@@ -68,55 +68,9 @@
         <Setter Property="FontFamily" Value="/TCPlayer;Component/Style/Resources/#Bree Serif"/>
     </Style>
 
-
-    <Style x:Key="Flat">
-        <Setter Property="Control.Background" Value="{x:Null}" />
-        <Setter Property="Control.BorderBrush" Value="{x:Null}" />
-        <Style.Triggers>
-            <Trigger Property="Control.IsMouseOver" Value="True">
-                <Setter Property="Control.Background" Value="{x:Null}" />
-                <Setter Property="Control.BorderBrush" Value="{x:Null}" />
-                <Setter Property="Control.FontWeight" Value="Bold" />
-            </Trigger>
-            <Trigger Property="Control.IsFocused" Value="True">
-                <Setter Property="Control.FontWeight" Value="Bold" />
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
-
     <Style TargetType="TreeView">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{StaticResource Foreground}"/>
-    </Style>
-
-    <Style
-        x:Key="PlayButtons"
-        BasedOn="{StaticResource Flat}"
-        TargetType="Button">
-        <Setter Property="MinHeight" Value="48" />
-        <Setter Property="MinWidth" Value="48" />
-    </Style>
-
-    <Style
-        x:Key="PlayImgButtons"
-        TargetType="{x:Type applib:FaImageButton}">
-        <Setter Property="Background" Value="{x:Null}" />
-        <Setter Property="BorderBrush" Value="{x:Null}" />
-        <Setter Property="ContentMargin" Value="0" />
-        <Setter Property="IconSize" Value="32" />
-        <Setter Property="MinHeight" Value="48" />
-        <Setter Property="MinWidth" Value="48" />
-        <Style.Triggers>
-            <Trigger Property="Control.IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{x:Null}" />
-                <Setter Property="BorderBrush" Value="{x:Null}" />
-                <Setter Property="FontWeight" Value="Bold" />
-            </Trigger>
-            <Trigger Property="IsFocused" Value="True">
-                <Setter Property="FontWeight" Value="Bold" />
-            </Trigger>
-        </Style.Triggers>
     </Style>
 
     <Style TargetType="TabItem">
@@ -132,6 +86,12 @@
     </Style>
 
     <Style TargetType="ListBox">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+    
+    
+    <Style TargetType="ListBox" x:Key="Playlist">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="ItemTemplate">
             <Setter.Value>
@@ -212,6 +172,22 @@
                 <ControlTemplate TargetType="{x:Type RepeatButton}">
                     <Rectangle Fill="Transparent" />
                 </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="DataGrid">
+        <Setter Property="Foreground" Value="{StaticResource Foreground}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="ColumnHeaderStyle">
+            <Setter.Value>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Foreground" Value="{StaticResource Foreground}"/>
+                    <Setter Property="Padding" Value="5"/>
+                    <Setter Property="BorderBrush" Value="{StaticResource Foreground}"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                </Style>
             </Setter.Value>
         </Setter>
     </Style>

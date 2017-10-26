@@ -93,14 +93,16 @@
                 Text="{Binding ElementName=MainView, Path=SelectedItem.ToolTip}"/>
         </Border>
 
-        <applib:AnimatedTabControl
-            TabStripPlacement="Left"
+        <TabControl
+            TabStripPlacement="Bottom"
             x:Name="MainView"
             Panel.ZIndex="1"
-            Grid.Row="1">
+            Grid.Row="1"
+            Grid.RowSpan="2"
+            Style="{StaticResource MainTabStyle}">
             <TabItem 
-                ToolTip="Now Playing"
-                Header="Playing">
+                Header="Playing"
+                ToolTip="Now Playing">
                 <controls:NowPlaying x:Name="SongDat" />
             </TabItem>
             <TabItem 
@@ -108,37 +110,37 @@
                 Header="Playlist">
                 <ListBox
                     x:Name="PlaylistView"
+                    Style="{StaticResource Playlist}"
                     ItemsSource="{Binding PlayList}"
                     MouseDoubleClick="PlayList_ItemDoubleClcik" />
             </TabItem>
             <TabItem 
-                ToolTip="File Browser"
-                Header="File Browser">
+              Header="File Browser" 
+                ToolTip="File Browser">
                 <applib:FileExplorer
                     x:Name="FileExplorer"
                     FileDoubleClick="FileExplorer_FileDoubleClick" />
             </TabItem>
             <TabItem 
-                ToolTip="Media Libary"
-                Header="Media Libary">
+                Header="Media Libary"
+                ToolTip="Media Libary">
                 <medialib:MediaLibary DataContext="{Binding MediaViewModel}" />
             </TabItem>
             <TabItem
-                ToolTip="Radio Player"
-                Header="Radio">
+                Header="Radio Player"
+                ToolTip="Radio Player">
                 <controls:RadioStations
                     x:Name="RadioStations"
                     ItemDoubleClcik="RadioStations_ItemDoubleClcik" />
             </TabItem>
-        </applib:AnimatedTabControl>
+        </TabControl>
 
         <Grid
             Grid.Row="2"
             Height="30"
             Background="{Binding ElementName=MainWin, Path=DwmBorderBrush}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Menu
                 Background="{Binding ElementName=MainWin, Path=DwmBorderBrush}"
@@ -146,7 +148,7 @@
                 Grid.Column="0"
                 Margin="5,0"
                 VerticalAlignment="Center">
-                <MenuItem Header="[ Player ]">
+                <MenuItem Header="Player">
                     <MenuItem
                         Command="{Binding PlayerChangeOutputCommand}"
                         Header="Change output device ...">
@@ -187,8 +189,8 @@
                 </MenuItem>
                 <MenuItem
                     x:Name="ChapterMenu"
-                    Header="{applib:Translate PlayerTab_ButtonChapters}" />
-                <MenuItem Header="[ PlayList ]">
+                    Header="Chapters" />
+                <MenuItem Header="PlayList">
                     <MenuItem
                         Command="{Binding PlaylistSaveCommand}"
                         Header="Save List ...">
@@ -306,7 +308,7 @@
                     </MenuItem>
                 </MenuItem>
 
-                <MenuItem Header="[ File Explorer ]">
+                <MenuItem Header="File Explorer">
                     <MenuItem
                         Command="{Binding FileExplorerNavigateHomeCommand}"
                         Header="Navigate to start">
@@ -339,7 +341,7 @@
                     </MenuItem>
                 </MenuItem>
 
-                <MenuItem Header="[ Media Libary ]">
+                <MenuItem Header="Media Libary">
                     <MenuItem
                         Command="{Binding MediaViewModel.MenuAddFolderCommand}"
                         Header="Add Directory ...">
@@ -391,13 +393,6 @@
                 </MenuItem>
 
             </Menu>
-            <applib:DateTimeTextBlock
-                Grid.Column="1"
-                Margin="10,0"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Center"
-                FontSize="14"
-                Foreground="{StaticResource MenuForeground}" />
         </Grid>
 
         <Border

@@ -14,7 +14,7 @@
     <Style TargetType="MenuItem">
         <Setter Property="Background" Value="{StaticResource MenuBackground}" />
         <Setter Property="BorderBrush" Value="{StaticResource MenuBackground}" />
-        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontSize" Value="13" />
         <Setter Property="Foreground" Value="{StaticResource MenuForeground}" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
