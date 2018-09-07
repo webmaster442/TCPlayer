@@ -118,146 +118,146 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Chapters_Begin" xml:space="preserve">
-    <value>Jump to begining</value>
+    <value>Ugrás az elejére</value>
   </data>
   <data name="Chapters_Jumpto" xml:space="preserve">
-    <value>Jump to {0}</value>
+    <value>Ugrás ide: {0}</value>
   </data>
   <data name="Engine_Error" xml:space="preserve">
-    <value>{0}\r\nBass Error code: {1}\r\nError Description: {2}</value>
+    <value>{0}\r\nBass Hiba kód: {1}\r\nLeírás: {2}</value>
   </data>
   <data name="Engine_ErrorBass" xml:space="preserve">
-    <value>Bass.dll init failed</value>
+    <value>Bass.dll inicializációs hiba</value>
   </data>
   <data name="Engine_ErrorMixer" xml:space="preserve">
-    <value>Mixer stream create failed</value>
+    <value>Mixer csatorna létrehozási hiba</value>
   </data>
   <data name="Engine_ErrorMixerChannel" xml:space="preserve">
-    <value>Mixer channel add failed</value>
+    <value>Mixer csatorna hozzáadási hiba</value>
   </data>
   <data name="Engine_ErrorSoundfont" xml:space="preserve">
-    <value>Sound font is missing, or not set. MIDI playback is not possible.</value>
+    <value>Hiányzó vagy nem beállított Sound font. A MIDI lejátszás nem lehetséges</value>
   </data>
   <data name="MainWin_About" xml:space="preserve">
-    <value>About ...</value>
+    <value>Névjegy ...</value>
   </data>
   <data name="MainWin_AlwaysTopDisabled" xml:space="preserve">
-    <value>Always top: off</value>
+    <value>Mindig felül: kikapcsolva</value>
   </data>
   <data name="MainWin_AlwaysTopEnabled" xml:space="preserve">
-    <value>Always top: on</value>
+    <value>Mindig felül: bekapcsolva</value>
   </data>
   <data name="MainWin_ChangeDevice" xml:space="preserve">
-    <value>[ Change output device... ]</value>
+    <value>[ Kimenet választás ... ]</value>
   </data>
   <data name="MainWin_ErrorMediaKeys" xml:space="preserve">
-    <value>Media keys are in use by another application.
-To Use media key functions please close other apps that may use the keys, then restart the player</value>
+    <value>A média gombokat egy másik alkalmazás használja.
+A média gombok használatbavételéhez zárj be minden olyan egyéb alkalmazást, ami ezeket használja, majd indítsd újra a lejátszót.</value>
   </data>
   <data name="MainWin_ExitApp" xml:space="preserve">
-    <value>Exit application</value>
+    <value>Alkalmazás bezárása</value>
   </data>
   <data name="MainWin_ExitConfirmTitle" xml:space="preserve">
-    <value>Exit confirmation</value>
+    <value>Kilépés</value>
   </data>
   <data name="MainWin_ExtitConfirmMessage" xml:space="preserve">
-    <value>Exit program?</value>
+    <value>Valóban kilépsz ?</value>
   </data>
   <data name="MainWin_ListLabel" xml:space="preserve">
-    <value>List: </value>
+    <value>Lista:</value>
   </data>
   <data name="MainWin_Minimize" xml:space="preserve">
-    <value>Minimize to Tray</value>
+    <value>Tálcára küldés</value>
   </data>
   <data name="MainWin_PlayerTab" xml:space="preserve">
-    <value>[ Player ]</value>
+    <value>[ Lejátszó ]</value>
   </data>
   <data name="MainWin_PlaylistTab" xml:space="preserve">
-    <value>[ Playlist ]</value>
+    <value>[ Lista ]</value>
   </data>
   <data name="MainWin_RadioTab" xml:space="preserve">
-    <value>[ Radio ]</value>
+    <value>[ Rádió ]</value>
   </data>
   <data name="MainWin_Settings" xml:space="preserve">
-    <value>Settings ...</value>
+    <value>Beállítások ...</value>
   </data>
   <data name="MainWin_Title" xml:space="preserve">
     <value>TC Player {0}</value>
   </data>
   <data name="Notify_Text" xml:space="preserve">
-    <value>TC Player is running</value>
+    <value>A TC Player fut</value>
   </data>
   <data name="Notify_Title" xml:space="preserve">
-    <value>Now playing</value>
+    <value>Jelenleg lejátzás alatt</value>
   </data>
   <data name="PlayerTab_ButtonChapters" xml:space="preserve">
-    <value>[ Chapters ]</value>
+    <value>[ Fejezetek ]</value>
   </data>
   <data name="PlayerTab_ButtonMuteUnmute" xml:space="preserve">
-    <value>Mute / Unmute</value>
+    <value>Némitás / Némítás feloldása</value>
   </data>
   <data name="PlayerTab_ButtonNextTrack" xml:space="preserve">
-    <value>Next Track</value>
+    <value>Következő szám</value>
   </data>
   <data name="PlayerTab_ButtonOpen" xml:space="preserve">
-    <value>Open file or list...</value>
+    <value>Fájl vagy lista megnyitása ...</value>
   </data>
   <data name="PlayerTab_ButtonPlayPause" xml:space="preserve">
-    <value>Play / Pause</value>
+    <value>Lejátszás / Megállítás</value>
   </data>
   <data name="PlayerTab_ButtonPrevousTrack" xml:space="preserve">
-    <value>Previous Track</value>
+    <value>Előző szám</value>
   </data>
   <data name="PlayerTab_ButtonSeekBack" xml:space="preserve">
-    <value>Seek Back</value>
+    <value>Vissza tekerés</value>
   </data>
   <data name="PlayerTab_ButtonSeekForward" xml:space="preserve">
-    <value>Seek Forward</value>
+    <value>Előre tekerés</value>
   </data>
   <data name="PlayerTab_ButtonStop" xml:space="preserve">
     <value>Stop</value>
   </data>
   <data name="PlayerTab_VolumeSliderText" xml:space="preserve">
-    <value>Volume: {0:P1}</value>
+    <value>Hangerő: {0:P1}</value>
   </data>
   <data name="Playlist_AddFolderDescription" xml:space="preserve">
-    <value>Select folder to be added</value>
+    <value>Válaszd ki a hozzáadni kívánt mappát</value>
   </data>
   <data name="Playlist_MenuAdd" xml:space="preserve">
-    <value>[ Add ]</value>
+    <value>[ Hozáadás ]</value>
   </data>
   <data name="Playlist_MenuAddDirectory" xml:space="preserve">
-    <value>From directory ...</value>
+    <value>Mappa ...</value>
   </data>
   <data name="Playlist_MenuAddFile" xml:space="preserve">
-    <value>From Files...</value>
+    <value>Fájlok...</value>
   </data>
   <data name="Playlist_MenuAddPlaylist" xml:space="preserve">
-    <value>From Playlist ...</value>
+    <value>Lista ...</value>
   </data>
   <data name="Playlist_MenuAddUrl" xml:space="preserve">
     <value>URL ...</value>
   </data>
   <data name="Playlist_MenuDisc" xml:space="preserve">
-    <value>[ Disc ]</value>
+    <value>[ Lemez ]</value>
   </data>
   <data name="Playlist_MenuDiscNotfound" xml:space="preserve">
-    <value>No Drive found</value>
+    <value>Nem találtam lemez meghajtót</value>
   </data>
   <data name="Playlist_MenuManage" xml:space="preserve">
-    <value>[ Manage ]</value>
+    <value>[ Kezelés ]</value>
   </data>
   <data name="Playlist_MenuManageClear" xml:space="preserve">
-    <value>Clear list ...</value>
+    <value>Lista törlése ...</value>
   </data>
   <data name="Playlist_MenuManageDelete" xml:space="preserve">
-    <value>Delete selected</value>
+    <value>Kiválasztott törlése</value>
   </data>
   <data name="Playlist_MenuManageSave" xml:space="preserve">
-    <value>Save list ...</value>
+    <value>Lista mentése ...</value>
   </data>
   <data name="Playlist_MenuSort" xml:space="preserve">
-    <value>[ Sort ]</value>
+    <value>[ Rendezés ]</value>
   </data>
   <data name="Playlist_MenuSortAsc" xml:space="preserve">
     <value>A-&gt;Z</value>
@@ -266,105 +266,105 @@ To Use media key functions please close other apps that may use the keys, then r
     <value>Z-&gt;A</value>
   </data>
   <data name="Playlist_MenuSortRandom" xml:space="preserve">
-    <value>Random</value>
+    <value>Véletlen szerű</value>
   </data>
   <data name="Playlist_NoDiscsFound" xml:space="preserve">
-    <value>No Discs found</value>
+    <value>Nem található lemez</value>
   </data>
   <data name="Playlist_UnsupportedListFormat" xml:space="preserve">
-    <value>Unsupported Format</value>
+    <value>Nem támogatott formátum</value>
   </data>
   <data name="Playlist_UnsupportedListFormatTitle" xml:space="preserve">
-    <value>Format Error</value>
+    <value>Formátum hiba</value>
   </data>
   <data name="Radio_RadioHungarian" xml:space="preserve">
-    <value>Hungarian bookmarks</value>
+    <value>Magyar rádió adók</value>
   </data>
   <data name="Radio_RadioTcPlayer" xml:space="preserve">
-    <value>TC Player bookmarks</value>
+    <value>TC Player rádiók</value>
   </data>
   <data name="Radio_StationsLabel" xml:space="preserve">
-    <value>Radio Stations</value>
+    <value>Rádió állomások</value>
   </data>
   <data name="Settings_ClearUrlHistory" xml:space="preserve">
-    <value>Clear Url history ...</value>
+    <value>URL előzmények törlése ...</value>
   </data>
   <data name="Settings_Confirm" xml:space="preserve">
-    <value>Confirm exit with ESC button</value>
+    <value>ESC gomb lenyomásakor kilépés megerősítése</value>
   </data>
   <data name="Settings_Mediakeys" xml:space="preserve">
-    <value>Try to register Multimedia keys for control</value>
+    <value>Multimédia gombok használata</value>
   </data>
   <data name="Settings_Notify" xml:space="preserve">
-    <value>Send notifications on track change</value>
+    <value>Értesítés szám váltáskor</value>
   </data>
   <data name="Settings_RememberUrl" xml:space="preserve">
-    <value>Remember Last opened url adresses</value>
+    <value>Legutóbb mengyitott URL-ek megjegyzése</value>
   </data>
   <data name="Settings_SaveDevice" xml:space="preserve">
-    <value>Save output device on exit</value>
+    <value>Használt kimeneti eszköz mentése kilépéskor</value>
   </data>
   <data name="Settings_SaveVolume" xml:space="preserve">
-    <value>Save volume on exit</value>
+    <value>Hangerő mentése kilépéskor</value>
   </data>
   <data name="Settings_SelectSoundFontTitle" xml:space="preserve">
-    <value>Select soundfont</value>
+    <value>Soundfont kiválasztása</value>
   </data>
   <data name="Settings_SettingLabel" xml:space="preserve">
-    <value>Settings</value>
+    <value>Beállítások</value>
   </data>
   <data name="Settings_SoundfontButton" xml:space="preserve">
-    <value>Browse ...</value>
+    <value>Tallózás ...</value>
   </data>
   <data name="Settings_SoundfontPath" xml:space="preserve">
-    <value>SoundFont path:</value>
+    <value>SoundFont Útvonal:</value>
   </data>
   <data name="Settings_UrlHistoryCleared" xml:space="preserve">
-    <value>URL History Cleared</value>
+    <value>URL előzmények törlése</value>
   </data>
   <data name="Settings_UrlHistoryClearTitle" xml:space="preserve">
-    <value>URL History</value>
+    <value>URL előzmények</value>
   </data>
   <data name="AddURL_Recent" xml:space="preserve">
-    <value>Recent URLs:</value>
+    <value>Nemrég használt címek:</value>
   </data>
   <data name="AddURL_URL" xml:space="preserve">
-    <value>URL:</value>
+    <value>Cím:</value>
   </data>
   <data name="DeviceChange_SampleRate" xml:space="preserve">
-    <value>Sample Rate: </value>
+    <value>Mintavételezési frekvencia: </value>
   </data>
   <data name="DeviceChange_SelectLabel" xml:space="preserve">
-    <value>Please select output device:</value>
+    <value>Válassz kimeneti eszközt:</value>
   </data>
   <data name="SongData_CdTrack" xml:space="preserve">
-    <value>CD Track #{0}</value>
+    <value>{0}. Szám </value>
   </data>
   <data name="SongData_Error" xml:space="preserve">
-    <value>Tag read error</value>
+    <value>Info olvasási hiba</value>
   </data>
   <data name="SongData_Unknown" xml:space="preserve">
-    <value>Unknown</value>
+    <value>Ismeretlen</value>
   </data>
   <data name="SongData_UnknownArtist" xml:space="preserve">
-    <value>Unknown Artist</value>
+    <value>Ismeretlen Előadó</value>
   </data>
   <data name="SongData_UnknownSong" xml:space="preserve">
-    <value>Unknown Song</value>
+    <value>Ismeretlen Szám</value>
   </data>
   <data name="Error_Details" xml:space="preserve">
-    <value>Details: </value>
+    <value>Részletek:</value>
   </data>
   <data name="Error_Download" xml:space="preserve">
-    <value>Download Error</value>
+    <value>Letöltési hiba</value>
   </data>
   <data name="Error_FileLoad" xml:space="preserve">
-    <value>File Load error</value>
+    <value>Fájl betöltési hiba</value>
   </data>
   <data name="Error_Title" xml:space="preserve">
-    <value>Error</value>
+    <value>Hiba</value>
   </data>
   <data name="About_VisitWebsite" xml:space="preserve">
-    <value>Visit Website</value>
+    <value>Weblap meglátogatása</value>
   </data>
 </root>

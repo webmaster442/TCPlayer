@@ -1,50 +1,42 @@
-﻿<UserControl
-    x:Class="TCPlayer.Controls.DeviceChange"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:applib="http://github.com/webmaster442/AppLib/WPF"
-    d:DesignHeight="300"
-    d:DesignWidth="300"
-    mc:Ignorable="d">
+﻿<UserControl x:Class="TCPlayer.Controls.DeviceChange"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TCPlayer.Controls"
+             xmlns:p="clr-namespace:TCPlayer.Properties"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30" />
-            <RowDefinition />
-            <RowDefinition Height="30" />
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <TextBlock
+        <TextBlock 
+            Text="{x:Static p:Resources.DeviceChange_SelectLabel}"
             Margin="5,0"
-            Style="{StaticResource Title}"
-            Text="{applib:Translate DeviceChange_SelectLabel}"
-            FontWeight="Bold" />
-        <ListBox
+            FontWeight="Bold"/>
+        <ListBox 
             x:Name="LbDevices"
             Grid.Row="1"
             ItemsSource="{Binding}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock 
-                        FontSize="16"
-                        Text="{Binding}"/>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
         </ListBox>
-        <StackPanel Grid.Row="2" Orientation="Horizontal">
+        <StackPanel
+            Grid.Row="2"
+            Orientation="Horizontal">
             <TextBlock
-                VerticalAlignment="Center"
                 Margin="5,0"
-                Text="{applib:Translate DeviceChange_SelectLabel}"
-                FontWeight="Bold" />
+                Text="{x:Static p:Resources.DeviceChange_SelectLabel}"
+                FontWeight="Bold"/>
             <ComboBox
                 x:Name="CbSampleRate"
                 Width="70"
+                SelectedIndex="0"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                SelectedIndex="0">
-                <ComboBoxItem Content="44100" />
-                <ComboBoxItem Content="48000" />
+                VerticalAlignment="Center">
+                <ComboBoxItem Content="44100"/>
+                <ComboBoxItem Content="48000"/>
             </ComboBox>
         </StackPanel>
     </Grid>

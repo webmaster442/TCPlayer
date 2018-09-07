@@ -20,7 +20,6 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using TCPlayer.Code;
-using TCPlayer.Lib;
 
 namespace TCPlayer
 {
@@ -40,7 +39,7 @@ namespace TCPlayer
 
         [STAThread]
         public static void Main()
-     {
+        {
             var si = new SingleInstanceApp(AppName);
             si.ReceiveString += Si_ReceiveString;
             if (si.IsFirstInstance)

@@ -278,15 +278,6 @@ namespace TCPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to [ Libary ].
-        /// </summary>
-        public static string MainWin_Libary {
-            get {
-                return ResourceManager.GetString("MainWin_Libary", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to List: .
         /// </summary>
         public static string MainWin_ListLabel {

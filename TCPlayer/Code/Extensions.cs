@@ -34,14 +34,29 @@ namespace TCPlayer.Code
             return string.Format("{0:00}:{1:00}:{2:00}", ts.Hours, ts.Minutes, ts.Seconds);
         }
 
-        public static List<string> Clone(this ObservableCollection<string> source)
+        /// <summary>
+        /// Converts an IEnumerable to an Observable collection
+        /// </summary>
+        /// <typeparam name="T">Type of elements</typeparam>
+        /// <param name="coll">an IEnumerable collection</param>
+        /// <returns>The elements in an ObservableCollection</returns>
+        public static ObservableCollection<T> ToObservableCollection<T>(this IEnumerable<T> coll)
         {
-            List<string> ret = new List<string>(source.Count);
-            foreach(var item in source)
-            {
-                ret.Add(string.Copy(item));
-            }
-            return ret;
+            var c = new ObservableCollection<T>();
+            foreach (var e in coll) c.Add(e);
+            return c;
+        }
+
+        /// <summary>
+        /// Apends elements from an IEnumerable collection to an observable collection
+        /// </summary>
+        /// <typeparam name="T">Type of elements</typeparam>
+        /// <param name="collection">The ObserbableCollection to apend to</param>
+        /// <param name="elements">an IEnumerable collection</param>
+        public static void AddRange<T>(this ObservableCollection<T> collection, IEnumerable<T> elements)
+        {
+            if (elements == null) return;
+            foreach (var e in elements) collection.Add(e);
         }
     }
 }

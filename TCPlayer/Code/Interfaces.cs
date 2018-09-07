@@ -17,18 +17,11 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
-using System.Collections.Generic;
 
 namespace TCPlayer.Code
 {
     public interface IDialog
     {
         Action OkClicked { get; set; }
-    }
-
-    public interface IDialogWithCustomButtons
-    {
-        IDictionary<string, string> ButtonContents { get; }
-        Action<string> ButtonClickHandler { get; set; }
     }
 }

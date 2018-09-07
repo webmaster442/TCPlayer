@@ -16,60 +16,52 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-using AppLib.Common;
-using AppLib.Common.Extensions;
-using AppLib.WPF.Controls;
-using AppLib.WPF.MVVM;
+using TCPlayer.Code;
+using TCPlayer.Controls;
 using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Interop;
+using System.Windows.Media;
 using System.Windows.Shell;
 using System.Windows.Threading;
-using TCPlayer.Code;
-using TCPlayer.Controls;
-using TCPlayer.MediaLibary;
 
 namespace TCPlayer
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : ModernWindow, IDisposable, IMainWindow, IMediaLibaryView
+    public partial class MainWindow : Window, IDisposable
     {
+        private IntPtr hwnd;
+        private HwndSource hsource;
+        private Player _player;
         private float _prevvol;
-        private DispatcherTimer _SongTimer;
+        private DispatcherTimer _timer;
         private bool _loaded;
-        private bool _skiptimer;
-        private bool _timerupdate;
+        private bool _isdrag;
         private KeyboardHook _keyboardhook;
         private ChapterProvider _chapterprovider;
-
-        public MainWinViewModel ViewModel
-        {
-            get;
-            set;
-        }
 
         public MainWindow()
         {
             InitializeComponent();
-            ViewModel = new MainWinViewModel(this);
-            this.SetViewModel(ViewModel);
-            Player.Instance.ChangeDevice(); //init
+            _player = Player.Instance;
+            _player.ChangeDevice(); //init
             _prevvol = 1.0f;
             _chapterprovider = new ChapterProvider(ChapterMenu);
             _chapterprovider.ChapterClicked += _chapterprovider_ChapterClicked;
-            _SongTimer = new DispatcherTimer
-            {
-                Interval = TimeSpan.FromMilliseconds(40),
-                IsEnabled = false
-            };
-            _SongTimer.Tick += _SongTimerTick;
+            _timer = new DispatcherTimer();
+            _timer.Interval = TimeSpan.FromMilliseconds(40);
+            _timer.IsEnabled = false;
+            _timer.Tick += _timer_Tick;
             _loaded = true;
 
-            if (Player.Instance.Is64Bit) Title += " (x64)";
+            BtnChapters.IsEnabled = _chapterprovider.ChaptersEnabled;
+
+            if (_player.Is64Bit) Title += " (x64)";
             else Title += " (x86)";
 
             var src = Environment.GetCommandLineArgs();
@@ -88,43 +80,112 @@ namespace TCPlayer
 
             if (Properties.Settings.Default.TrackChangeNotification)
                 App.NotifyIcon = new NotificationIcon();
-
-            this.GetViewModel<MainWinViewModel>().View = this;
-
-            FileExplorer.FilteredExtensions = App.Formats.Replace("*", "").Split(';');
-
         }
 
-        public async void ShowDialog(UserControl dialog)
+        private void MainWin_SourceInitialized(object sender, EventArgs e)
         {
-            Overlay.DialogContent = dialog;
-            if (dialog is IDialog)
+            if ((hwnd = new WindowInteropHelper(this).Handle) == IntPtr.Zero)
             {
-                var result = await Overlay.Show();
-                if (result == Result.OK)
-                {
-                    var id = dialog as IDialog;
-                    id?.OkClicked?.Invoke();
-                }
+                throw new InvalidOperationException("Could not get window handle.");
             }
-            else if (dialog is IDialogWithCustomButtons)
+
+            hsource = HwndSource.FromHwnd(hwnd);
+            hsource.AddHook(WndProc);
+            SetColor();
+        }
+
+        private void SetColor()
+        {
+            Color c = GetWindowColorizationColor(false);
+            TitleBar.Background = new SolidColorBrush(c);
+
+            var r = (byte)(c.R * 0.13);
+            var g = (byte)(c.G * 0.13);
+            var b = (byte)(c.B * 0.13);
+            Background = new SolidColorBrush(Color.FromArgb(0xE5, r, g, b));
+        }
+
+        private static Color GetWindowColorizationColor(bool opaque)
+        {
+            var par = new DWMCOLORIZATIONPARAMS();
+            Native.DwmGetColorizationParameters(ref par);
+
+            return Color.FromArgb(
+                (byte)(opaque ? 255 : par.ColorizationColor >> 24),
+                (byte)(par.ColorizationColor >> 16),
+                (byte)(par.ColorizationColor >> 8),
+                (byte)par.ColorizationColor);
+        }
+
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            switch (msg)
             {
-                var customdialog = dialog as IDialogWithCustomButtons;
-                var result = await Overlay.Show(customdialog.ButtonContents);
-                customdialog?.ButtonClickHandler?.Invoke(result);
+                //WM_DWMCOLORIZATIONCOLORCHANGED
+                case 0x320:
+                    SetColor();
+                    return IntPtr.Zero;
+                default:
+                    return IntPtr.Zero;
             }
-            else
-            {
-                Overlay.CancelVisible = false;
-                await Overlay.Show();
-            }
+        }
+
+        private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                DragMove();
+        }
+
+        private void TitlebarClose_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void TitlebarMinimize_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void BtnAbout_Click(object sender, RoutedEventArgs e)
+        {
+            var about = new AboutDialog();
+            ShowDialog(about);
+        }
+
+        private void BtnSettings_Click(object sender, RoutedEventArgs e)
+        {
+            var settings = new Settings();
+            ShowDialog(settings);
+        }
+
+        public static void ShowDialog(UserControl dialog)
+        {
+            var main = Application.Current.MainWindow as MainWindow;
+            main.OverLayContent.Children.Clear();
+            main.OverLayContent.Children.Add(dialog);
+            main.OverLay.Visibility = Visibility.Visible;
+        }
+
+        private void OverLayClose_Click(object sender, RoutedEventArgs e)
+        {
+            OverLay.Visibility = Visibility.Collapsed;
+            OverLayContent.Children.Clear();
+        }
+
+        private void OverLayOk_Click(object sender, RoutedEventArgs e)
+        {
+            OverLay.Visibility = Visibility.Collapsed;
+            var dialog = (OverLayContent.Children[0] as IDialog);
+            dialog?.OkClicked?.Invoke();
+            OverLayContent.Children.Clear();
         }
 
         protected virtual void Dispose(bool native)
         {
-            if (Player.Instance != null)
+            if (_player != null)
             {
-                Player.Instance.Dispose();
+                _player.Dispose();
+                _player = null;
             }
             if (_keyboardhook != null)
             {
@@ -144,51 +205,21 @@ namespace TCPlayer
             Dispose(true);
         }
 
-        public bool CanDoNexPlaylisttTrack()
-        {
-            return (ViewModel.PlayListIndex + 1) <= (ViewModel.PlayList.Count - 1);
-        }
-
-        public void NextPlaylistTrack()
-        {
-            if (ViewModel.PlayListIndex + 1 < ViewModel.PlayList.Count)
-            {
-                ViewModel.PlayListIndex += 1;
-                PlaylistView.SelectedIndex = ViewModel.PlayListIndex;
-
-            }
-        }
-
-        public void PreviousPlaylistTrack()
-        {
-            Dispatcher.Invoke(() =>
-            {
-                if (ViewModel.PlayListIndex - 1 > -1)
-                {
-                    ViewModel.PlayListIndex -= 1;
-                    PlaylistView.SelectedIndex = ViewModel.PlayListIndex;
-                }
-            });
-        }
-
         public void DoLoadAndPlay(IEnumerable<string> items)
         {
             var needplay = false;
-            if (ViewModel.PlayList.Count < 1) needplay = true;
-            this.GetViewModel<MainWinViewModel>().DoLoad(items);
+            if (PlayList.Count < 1) needplay = true;
+            PlayList.DoLoad(items);
             if (needplay)
             {
-                NextPlaylistTrack();
+                PlayList.NextTrack();
                 StartPlay();
             }
             else
-                SetPage(TabPage.PlayList);
+            {
+                Dispatcher.Invoke(() => { MainView.SelectedIndex = 1; });
+            }
             DoBringIntoView();
-        }
-
-        public void DoLoadAndPlay(string item)
-        {
-            DoLoadAndPlay(new string[] { item });
         }
 
         private void DoBringIntoView()
@@ -202,9 +233,24 @@ namespace TCPlayer
             }
         }
 
-        private void ResetSongSeekUI()
+        private void BtnChangeDev_Click(object sender, RoutedEventArgs e)
         {
-            _SongTimer.IsEnabled = false;
+            if (!_loaded) return;
+            var selector = new DeviceChange();
+            string[] devices = _player.GetDevices();
+            selector.DataContext = devices;
+            selector.OkClicked = new Action(() =>
+             {
+                 var name = devices[selector.DeviceIndex];
+                 Properties.Settings.Default.SampleRate = selector.SampleRate;
+                 _player.ChangeDevice(name);
+             });
+            MainWindow.ShowDialog(selector);
+        }
+
+        private void Reset()
+        {
+            _timer.IsEnabled = false;
             SeekSlider.Value = 0;
             Taskbar.ProgressState = TaskbarItemProgressState.Normal;
             Taskbar.ProgressValue = 0;
@@ -213,90 +259,79 @@ namespace TCPlayer
         }
 
 
-        private string SelectedItem
-        {
-            get
-            {
-                if (ViewModel.PlayListIndex == -1) return null;
-                return ViewModel.PlayList[ViewModel.PlayListIndex];
-            }
-        }
-
-        public IEnumerable<string> FileExplorerSelectedFiles
-        {
-            get { return FileExplorer.SelectedFiles; }
-        }
-
-        public void DeleteSelectedFromPlaylist()
-        {
-            if (PlaylistView.SelectedItems.Count == 0) return;
-            while (PlaylistView.SelectedItems.Count > 0)
-            {
-                ViewModel.PlayList.Remove((string)PlaylistView.SelectedItems[0]);
-            }
-
-        }
-
         private void StartPlay()
         {
             try
             {
-                if (!_loaded || SelectedItem == null) return;
-                ResetSongSeekUI();
+                if (!_loaded || PlayList.SelectedItem == null) return;
+                Reset();
                 SongDat.Reset();
-                var file = SelectedItem;
-                Player.Instance.Load(file);
+                var file = PlayList.SelectedItem;
+                _player.Load(file);
                 _chapterprovider.Clear();
-                if (Player.Instance.IsStream) Taskbar.ProgressState = TaskbarItemProgressState.Indeterminate;
+                if (_player.IsStream) Taskbar.ProgressState = TaskbarItemProgressState.Indeterminate;
                 else
                 {
-                    _chapterprovider.CreateChapters(file, Player.Instance.Length);
-                    var len = TimeSpan.FromSeconds(Player.Instance.Length);
+                    _chapterprovider.CreateChapters(file, _player.Length);
+                    var len = TimeSpan.FromSeconds(_player.Length);
                     TbFullTime.Text = len.ToShortTime();
-                    SeekSlider.Maximum = Player.Instance.Length;
+                    SeekSlider.Maximum = _player.Length;
                 }
-                _SongTimer.IsEnabled = true;
-                if (Helpers.IsTracker(file)) SongDat.UpdateMediaInfo(file, Player.Instance.SourceHandle);
+                BtnChapters.IsEnabled = _chapterprovider.ChaptersEnabled;
+                _timer.IsEnabled = true;
+                if (Helpers.IsTracker(file)) SongDat.UpdateMediaInfo(file, _player.SourceHandle);
                 else SongDat.UpdateMediaInfo(file);
-                SongDat.Handle = Player.Instance.MixerHandle;
+                SongDat.Handle = _player.MixerHandle;
 
             }
             catch (Exception ex)
             {
-                _SongTimer.IsEnabled = false;
+                _timer.IsEnabled = false;
                 SongDat.Handle = 0;
-                ResetSongSeekUI();
+                Reset();
                 SongDat.Reset();
                 Helpers.ErrorDialog(ex);
             }
         }
 
-        private void _SongTimerTick(object sender, EventArgs e)
+        private void _timer_Tick(object sender, EventArgs e)
         {
             if (!_loaded) return;
 
-            if (!Player.Instance.IsPlaying) Player.Instance.IsPlaying = true;
-
-            if (_skiptimer)
+            if ((IsActive || Topmost) && (MainView.SelectedIndex == 0))
             {
-                TbCurrTime.Text = TimeSpan.FromSeconds(SeekSlider.Value).ToShortTime();
-                return;
+                if (!_player.IsPlaying) _player.IsPlaying = true;
+
+                if (_isdrag)
+                {
+                    TbCurrTime.Text = TimeSpan.FromSeconds(SeekSlider.Value).ToShortTime();
+                    return;
+                }
+                var pos = TimeSpan.FromSeconds(_player.Position);
+                TbCurrTime.Text = pos.ToShortTime();
+                if (_player.IsStream) SeekSlider.Value = 0;
+                else
+                {
+                    SeekSlider.Value = _player.Position;
+                    Taskbar.ProgressValue = SeekSlider.Value / SeekSlider.Maximum;
+                }
+                int l, r;
+                _player.VolumeValues(out l, out r);
+                if (l < 0) l *= -1;
+                if (r < 0) r *= -1;
+                VuR.Value = l;
+                VuL.Value = r;
             }
-            var pos = TimeSpan.FromSeconds(Player.Instance.Position);
-            TbCurrTime.Text = pos.ToShortTime();
-            if (Player.Instance.IsStream) SeekSlider.Value = 0;
             else
             {
-                _timerupdate = true;
-                SeekSlider.Value = Player.Instance.Position;
-                Taskbar.ProgressValue = SeekSlider.Value / SeekSlider.Maximum;
-                _timerupdate = false;
+                if (_player.IsStream) SeekSlider.Value = 0;
+                else
+                {
+                    SeekSlider.Value = _player.Position;
+                    Taskbar.ProgressValue = SeekSlider.Value / SeekSlider.Maximum;
+                }
+                _player.IsPlaying = false;
             }
-            Player.Instance.VolumeValues(out int l, out int r);
-            if (l < 0) l *= -1;
-            if (r < 0) r *= -1;
-            VuR.Value = l;
-            VuL.Value = r;
         }
 
         private void DoAction(object sender, RoutedEventArgs e)
@@ -310,33 +345,33 @@ namespace TCPlayer
                     DoOpen();
                     break;
                 case "BtnPlayPause":
-                    Player.Instance.PlayPause();
+                    _player.PlayPause();
                     break;
                 case "BtnStop":
-                    Player.Instance.Stop();
+                    _player.Stop();
                     break;
                 case "BtnSeekBack":
-                    _SongTimer.IsEnabled = false;
-                    Player.Instance.Position -= 5;
-                    _SongTimer.IsEnabled = true;
+                    _timer.IsEnabled = false;
+                    _player.Position -= 5;
+                    _timer.IsEnabled = true;
                     break;
                 case "BtnSeekFwd":
-                    _SongTimer.IsEnabled = false;
-                    Player.Instance.Position += 5;
-                    _SongTimer.IsEnabled = true;
+                    _timer.IsEnabled = false;
+                    _player.Position += 5;
+                    _timer.IsEnabled = true;
                     break;
                 case "BtnNextTrack":
-                    NextPlaylistTrack();
+                    PlayList.NextTrack();
                     StartPlay();
                     break;
                 case "BtnPrevTrack":
-                    PreviousPlaylistTrack();
+                    PlayList.PreviousTrack();
                     StartPlay();
                     break;
             }
-            _SongTimer.IsEnabled = !Player.Instance.IsPaused;
-            if (Player.Instance.IsPaused) Taskbar.ProgressState = TaskbarItemProgressState.Paused;
-            else if (!Player.Instance.IsStream) Taskbar.ProgressState = TaskbarItemProgressState.Normal;
+            _timer.IsEnabled = !_player.IsPaused;
+            if (_player.IsPaused) Taskbar.ProgressState = TaskbarItemProgressState.Paused;
+            else if (!_player.IsStream) Taskbar.ProgressState = TaskbarItemProgressState.Normal;
             else Taskbar.ProgressState = TaskbarItemProgressState.Indeterminate;
         }
 
@@ -346,10 +381,10 @@ namespace TCPlayer
             _keyboardhook.KeyPressed += _keyboardhook_KeyPressed;
             try
             {
-                _keyboardhook.RegisterHotKey(AppLib.Common.ModifierKeys.None, System.Windows.Forms.Keys.MediaPlayPause);
-                _keyboardhook.RegisterHotKey(AppLib.Common.ModifierKeys.None, System.Windows.Forms.Keys.MediaStop);
-                _keyboardhook.RegisterHotKey(AppLib.Common.ModifierKeys.None, System.Windows.Forms.Keys.MediaNextTrack);
-                _keyboardhook.RegisterHotKey(AppLib.Common.ModifierKeys.None, System.Windows.Forms.Keys.MediaPreviousTrack);
+                _keyboardhook.RegisterHotKey(Code.ModifierKeys.None, System.Windows.Forms.Keys.MediaPlayPause);
+                _keyboardhook.RegisterHotKey(Code.ModifierKeys.None, System.Windows.Forms.Keys.MediaStop);
+                _keyboardhook.RegisterHotKey(Code.ModifierKeys.None, System.Windows.Forms.Keys.MediaNextTrack);
+                _keyboardhook.RegisterHotKey(Code.ModifierKeys.None, System.Windows.Forms.Keys.MediaPreviousTrack);
             }
             catch (Exception ex)
             {
@@ -362,18 +397,18 @@ namespace TCPlayer
             switch (e.Key)
             {
                 case System.Windows.Forms.Keys.MediaPlayPause:
-                    Player.Instance.PlayPause();
+                    _player.PlayPause();
                     break;
                 case System.Windows.Forms.Keys.MediaPreviousTrack:
-                    PreviousPlaylistTrack();
+                    PlayList.PreviousTrack();
                     StartPlay();
                     break;
                 case System.Windows.Forms.Keys.MediaNextTrack:
-                    NextPlaylistTrack();
+                    PlayList.NextTrack();
                     StartPlay();
                     break;
                 case System.Windows.Forms.Keys.MediaStop:
-                    Player.Instance.Stop();
+                    _player.Stop();
                     break;
             }
         }
@@ -384,14 +419,14 @@ namespace TCPlayer
             switch (param)
             {
                 case "Play/Pause":
-                    Player.Instance.PlayPause();
+                    _player.PlayPause();
                     break;
                 case "Previous track":
-                    PreviousPlaylistTrack();
+                    PlayList.PreviousTrack();
                     StartPlay();
                     break;
                 case "Next track":
-                    NextPlaylistTrack();
+                    PlayList.NextTrack();
                     StartPlay();
                     break;
                 case "Mute/UnMute":
@@ -400,8 +435,8 @@ namespace TCPlayer
                     BtnMute_Click(null, null);
                     break;
             }
-            _SongTimer.IsEnabled = !Player.Instance.IsPaused;
-            if (Player.Instance.IsPaused) Taskbar.ProgressState = TaskbarItemProgressState.Paused;
+            _timer.IsEnabled = !_player.IsPaused;
+            if (_player.IsPaused) Taskbar.ProgressState = TaskbarItemProgressState.Paused;
             else Taskbar.ProgressState = TaskbarItemProgressState.Normal;
         }
 
@@ -424,48 +459,40 @@ namespace TCPlayer
         private void VolSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (!_loaded) return;
-            Player.Instance.Volume = (float)VolSlider.Value;
+            _player.Volume = (float)VolSlider.Value;
         }
 
         private void PlayList_ItemDoubleClcik(object sender, RoutedEventArgs e)
         {
             if (!_loaded) return;
-
-            ViewModel.PlayListIndex = PlaylistView.SelectedIndex;
-            if (ViewModel.PlayListIndex < 0) return;
-            //ViewModel.PlayListIndex = ViewModel.PlayListIndex + 1;
-
             StartPlay();
-            SetPage(TabPage.NowPlaying);
+            Dispatcher.Invoke(() =>
+            {
+                MainView.SelectedIndex = 0;
+            });
         }
 
         private void _chapterprovider_ChapterClicked(object sender, double e)
         {
-            _skiptimer = true;
-            Player.Instance.Position = e;
-            _skiptimer = false;
+            _isdrag = true;
+            _player.Position = e;
+            _isdrag = false;
         }
 
         private void SeekSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (_skiptimer) return;
-            if (!_timerupdate)
-            {
-                _skiptimer = true;
-                Player.Instance.Position = SeekSlider.Value;
-                _skiptimer = false;
-            }
+            if (_isdrag) return;
             if (SeekSlider.Maximum - SeekSlider.Value < 0.5)
             {
-                if (CanDoNexPlaylisttTrack())
+                if (PlayList.CanDoNextTrack())
                 {
-                    NextPlaylistTrack();
+                    PlayList.NextTrack();
                     StartPlay();
                 }
                 else
                 {
-                    Player.Instance.Stop();
-                    ResetSongSeekUI();
+                    _player.Stop();
+                    Reset();
                 }
             }
         }
@@ -473,20 +500,20 @@ namespace TCPlayer
         private void SeekSlider_DragCompleted(object sender, RoutedEventArgs e)
         {
             if (!_loaded) return;
-            Player.Instance.Position = SeekSlider.Value;
-            _skiptimer = false;
+            _player.Position = SeekSlider.Value;
+            _isdrag = false;
         }
 
         private void SeekSlider_DragStarted(object sender, RoutedEventArgs e)
         {
             if (!_loaded) return;
-            _skiptimer = true;
+            _isdrag = true;
         }
 
         private void MainWin_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Properties.Settings.Default.LastVolume = (float)VolSlider.Value;
-            Properties.Settings.Default.DeviceID = Player.Instance.CurrentDeviceID;
+            Properties.Settings.Default.DeviceID = _player.CurrentDeviceID;
             App.SaveRecentUrls();
             Properties.Settings.Default.Save();
             if (App.NotifyIcon != null) App.NotifyIcon.RemoveIcon();
@@ -508,7 +535,7 @@ namespace TCPlayer
             {
                 if (Properties.Settings.Default.ConfirmExit)
                 {
-                    var q = MessageBox.Show(Properties.Resources.MainWin_ExtitConfirmMessage,
+                    var q = MessageBox.Show(Properties.Resources.MainWin_ExtitConfirmMessage, 
                                             Properties.Resources.MainWin_ExitConfirmTitle,
                                             MessageBoxButton.YesNo, MessageBoxImage.Asterisk);
                     if (q == MessageBoxResult.Yes) Close();
@@ -519,14 +546,12 @@ namespace TCPlayer
 
         private void DoOpen()
         {
-            var ofd = new System.Windows.Forms.OpenFileDialog
-            {
-                Multiselect = true,
-                Filter = string.Format("Auduio Files|{0}|Playlists|{1}", App.Formats, App.Playlists)
-            };
+            var ofd = new System.Windows.Forms.OpenFileDialog();
+            ofd.Multiselect = true;
+            ofd.Filter = string.Format("Auduio Files|{0}|Playlists|{1}", App.Formats, App.Playlists);
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                DoLoadAndPlay(ofd.FileNames);
+                DoLoadAndPlay(ofd.FileNames);   
             }
         }
 
@@ -535,39 +560,14 @@ namespace TCPlayer
             DoLoadAndPlay(new string[] { RadioStations.SelectedUrl });
         }
 
-        private void MenuItem_SubmenuOpened(object sender, RoutedEventArgs e)
+        private void BtnChapters_Click(object sender, RoutedEventArgs e)
         {
-            PlaylistLoaders.BuildAuidoCdMenu((MenuItem)sender, (items) =>
-            {
-                ViewModel.PlayList.AddRange(items);
-                SetPage(TabPage.PlayList);
-            });
+            BtnChapters.ContextMenu.IsOpen = true;
         }
 
-        public void SetPage(TabPage page)
+        private void ThumbPlay_Click(object sender, EventArgs e)
         {
-            int pageindex = (int)page;
-            Dispatcher.Invoke(() => { MainView.SelectedIndex = pageindex; });
-        }
 
-        public void FileExplorerHomeView()
-        {
-            FileExplorer.RenderHomeView();
-        }
-
-        public void ShowActionPanel(IEnumerable<ActionItem> Actions)
-        {
-            ActionBar.ActionItems.Clear();
-            ActionBar.ActionItems.AddRange(Actions);
-            ActionBar.Open();
-        }
-
-        private void FileExplorer_FileDoubleClick(object sender, FileEventArgs e)
-        {
-            this.ViewModelAction<MainWinViewModel>(vm =>
-            {
-                vm.FileExplorerDoubleClickCommand.Execute(null);
-            });
         }
     }
 }
