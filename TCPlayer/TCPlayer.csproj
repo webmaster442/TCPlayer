@@ -46,6 +46,15 @@
   <PropertyGroup>
     <StartupObject>TCPlayer.App</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>tcplayer.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ManagedBass.PInvoke, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ManagedBass.PInvoke.0.6.1\lib\net45\ManagedBass.PInvoke.dll</HintPath>
@@ -71,6 +80,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Code\EngineHashChecker.cs" />
     <Compile Include="Lib\TagLib\Aac\AudioHeader.cs" />
     <Compile Include="Lib\TagLib\Aac\BitStream.cs" />
     <Compile Include="Lib\TagLib\Aac\File.cs" />
@@ -449,6 +459,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="tcplayer.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

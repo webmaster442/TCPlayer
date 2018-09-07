@@ -169,6 +169,15 @@ namespace TCPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bass.dll components are corrupted. Please reinstall program..
+        /// </summary>
+        public static string Error_CorruptDll {
+            get {
+                return ResourceManager.GetString("Error_CorruptDll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Details: .
         /// </summary>
         public static string Error_Details {

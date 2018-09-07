@@ -367,4 +367,7 @@ To Use media key functions please close other apps that may use the keys, then r
   <data name="About_VisitWebsite" xml:space="preserve">
     <value>Visit Website</value>
   </data>
+  <data name="Error_CorruptDll" xml:space="preserve">
+    <value>Bass.dll components are corrupted. Please reinstall program.</value>
+  </data>
 </root>

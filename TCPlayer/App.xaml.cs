@@ -44,6 +44,15 @@ namespace TCPlayer
             si.ReceiveString += Si_ReceiveString;
             if (si.IsFirstInstance)
             {
+                var hasher = new EngineHashChecker();
+                if (!hasher.CheckHashes())
+                {
+                    MessageBox.Show(TCPlayer.Properties.Resources.Error_CorruptDll,
+                                    TCPlayer.Properties.Resources.Error_Title,
+                                    MessageBoxButton.OK,
+                                    MessageBoxImage.Error);
+                    return;
+                }
                 var application = new App();
                 CdData = new Dictionary<string, string>();
                 DiscID = "";

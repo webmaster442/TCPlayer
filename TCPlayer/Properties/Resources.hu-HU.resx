@@ -367,4 +367,7 @@ A média gombok használatbavételéhez zárj be minden olyan egyéb alkalmazás
   <data name="About_VisitWebsite" xml:space="preserve">
     <value>Weblap meglátogatása</value>
   </data>
+  <data name="Error_CorruptDll" xml:space="preserve">
+    <value>A Bass.dll komponensek meghibásodtak. Kérlek telepítsd újra a programot.</value>
+  </data>
 </root>
