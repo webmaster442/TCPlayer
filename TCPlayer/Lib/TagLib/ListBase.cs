@@ -36,7 +36,7 @@ namespace TagLib {
 	///    for objects that implement <see cref="T:System.IComparable`1"/>,
 	///    providing extra features used in lists in TagLib#.
 	/// </summary>
-	public class ListBase<T> : IList<T> where T : class, IComparable<T>
+	public class ListBase<T> : IList<T> where T : IComparable<T>
 	{
 		/// <summary>
 		///    Contains the internal list.
@@ -291,7 +291,7 @@ namespace TagLib {
 		
 		/// <summary>
 		///    Inserts a single value into the current instance at a
-		//     specified index.
+		///    specified index.
 		/// </summary>
 		/// <param name="index">
 		///    A <see cref="int" /> value specifying the position at

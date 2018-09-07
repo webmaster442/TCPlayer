@@ -71,49 +71,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\Resources.hu-HU.Designer.cs">
-      <DependentUpon>Resources.hu-HU.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Style\NullorValueConverter.cs" />
-    <Page Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="Code\ChapterProvider.cs" />
-    <Compile Include="Code\Extensions.cs" />
-    <Compile Include="Code\Helpers.cs" />
-    <Compile Include="Code\Interfaces.cs" />
-    <Compile Include="Code\KeyboardHook.cs" />
-    <Compile Include="Code\NotificationIcon.cs" />
-    <Compile Include="Code\Radio.cs" />
-    <Compile Include="Code\SingleInstance.cs" />
-    <Compile Include="Code\Native.cs" />
-    <Compile Include="Code\Player.cs" />
-    <Compile Include="Code\PlaylistLoaders.cs" />
-    <Compile Include="Controls\AboutDialog.xaml.cs">
-      <DependentUpon>AboutDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\AddURLDialog.xaml.cs">
-      <DependentUpon>AddURLDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\DeviceChange.xaml.cs">
-      <DependentUpon>DeviceChange.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\RadioStations.xaml.cs">
-      <DependentUpon>RadioStations.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Settings.xaml.cs">
-      <DependentUpon>Settings.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Lib\Mp4Chapters\AsciiEncoding.cs" />
-    <Compile Include="Lib\Mp4Chapters\BoxInfo.cs" />
-    <Compile Include="Lib\Mp4Chapters\ChapterExtractor.cs" />
-    <Compile Include="Lib\Mp4Chapters\ChapterInfo.cs" />
-    <Compile Include="Lib\Mp4Chapters\IAbstractStream.cs" />
-    <Compile Include="Lib\Mp4Chapters\MoovInfo.cs" />
-    <Compile Include="Lib\Mp4Chapters\StreamWrapper.cs" />
     <Compile Include="Lib\TagLib\Aac\AudioHeader.cs" />
     <Compile Include="Lib\TagLib\Aac\BitStream.cs" />
     <Compile Include="Lib\TagLib\Aac\File.cs" />
@@ -167,9 +124,8 @@
     <Compile Include="Lib\TagLib\Id3v2\Frame.cs" />
     <Compile Include="Lib\TagLib\Id3v2\FrameFactory.cs" />
     <Compile Include="Lib\TagLib\Id3v2\FrameHeader.cs" />
-    <Compile Include="Lib\TagLib\Id3v2\Frames\AttachedPictureFrame.cs" />
+    <Compile Include="Lib\TagLib\Id3v2\Frames\AttachmentFrame.cs" />
     <Compile Include="Lib\TagLib\Id3v2\Frames\CommentsFrame.cs" />
-    <Compile Include="Lib\TagLib\Id3v2\Frames\GeneralEncapsulatedObjectFrame.cs" />
     <Compile Include="Lib\TagLib\Id3v2\Frames\MusicCdIdentifierFrame.cs" />
     <Compile Include="Lib\TagLib\Id3v2\Frames\PlayCountFrame.cs" />
     <Compile Include="Lib\TagLib\Id3v2\Frames\PopularimeterFrame.cs" />
@@ -240,6 +196,7 @@
     <Compile Include="Lib\TagLib\IFD\Tags\SonyMakerNoteEntryTag.cs" />
     <Compile Include="Lib\TagLib\IIM\IIMReader.cs" />
     <Compile Include="Lib\TagLib\IIM\IIMTag.cs" />
+    <Compile Include="Lib\TagLib\ILazy.cs" />
     <Compile Include="Lib\TagLib\Image\Codec.cs" />
     <Compile Include="Lib\TagLib\Image\CombinedImageTag.cs" />
     <Compile Include="Lib\TagLib\Image\File.cs" />
@@ -253,13 +210,19 @@
     <Compile Include="Lib\TagLib\Jpeg\Marker.cs" />
     <Compile Include="Lib\TagLib\Jpeg\Table.cs" />
     <Compile Include="Lib\TagLib\ListBase.cs" />
+    <Compile Include="Lib\TagLib\Matroska\Attachment.cs" />
     <Compile Include="Lib\TagLib\Matroska\AudioTrack.cs" />
     <Compile Include="Lib\TagLib\Matroska\EBMLElement.cs" />
     <Compile Include="Lib\TagLib\Matroska\EBMLIDs.cs" />
+    <Compile Include="Lib\TagLib\Matroska\EBMLreader.cs" />
     <Compile Include="Lib\TagLib\Matroska\File.cs" />
+    <Compile Include="Lib\TagLib\Matroska\IUIDElement.cs" />
     <Compile Include="Lib\TagLib\Matroska\MatroskaIDs.cs" />
+    <Compile Include="Lib\TagLib\Matroska\SimpleTag.cs" />
     <Compile Include="Lib\TagLib\Matroska\SubtitleTrack.cs" />
     <Compile Include="Lib\TagLib\Matroska\Tag.cs" />
+    <Compile Include="Lib\TagLib\Matroska\Tags.cs" />
+    <Compile Include="Lib\TagLib\Matroska\TargetType.cs" />
     <Compile Include="Lib\TagLib\Matroska\Track.cs" />
     <Compile Include="Lib\TagLib\Matroska\VideoTrack.cs" />
     <Compile Include="Lib\TagLib\Mpc\File.cs" />
@@ -314,6 +277,7 @@
     <Compile Include="Lib\TagLib\Ogg\Paginator.cs" />
     <Compile Include="Lib\TagLib\Ogg\XiphComment.cs" />
     <Compile Include="Lib\TagLib\Picture.cs" />
+    <Compile Include="Lib\TagLib\PictureLazy.cs" />
     <Compile Include="Lib\TagLib\Png\Codec.cs" />
     <Compile Include="Lib\TagLib\Png\File.cs" />
     <Compile Include="Lib\TagLib\Png\PngTag.cs" />
@@ -351,6 +315,49 @@
     <Compile Include="Lib\TagLib\Xmp\XmpNodeType.cs" />
     <Compile Include="Lib\TagLib\Xmp\XmpNodeVisitor.cs" />
     <Compile Include="Lib\TagLib\Xmp\XmpTag.cs" />
+    <Compile Include="Properties\Resources.hu-HU.Designer.cs">
+      <DependentUpon>Resources.hu-HU.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Style\NullorValueConverter.cs" />
+    <Page Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Code\ChapterProvider.cs" />
+    <Compile Include="Code\Extensions.cs" />
+    <Compile Include="Code\Helpers.cs" />
+    <Compile Include="Code\Interfaces.cs" />
+    <Compile Include="Code\KeyboardHook.cs" />
+    <Compile Include="Code\NotificationIcon.cs" />
+    <Compile Include="Code\Radio.cs" />
+    <Compile Include="Code\SingleInstance.cs" />
+    <Compile Include="Code\Native.cs" />
+    <Compile Include="Code\Player.cs" />
+    <Compile Include="Code\PlaylistLoaders.cs" />
+    <Compile Include="Controls\AboutDialog.xaml.cs">
+      <DependentUpon>AboutDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AddURLDialog.xaml.cs">
+      <DependentUpon>AddURLDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DeviceChange.xaml.cs">
+      <DependentUpon>DeviceChange.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RadioStations.xaml.cs">
+      <DependentUpon>RadioStations.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Lib\Mp4Chapters\AsciiEncoding.cs" />
+    <Compile Include="Lib\Mp4Chapters\BoxInfo.cs" />
+    <Compile Include="Lib\Mp4Chapters\ChapterExtractor.cs" />
+    <Compile Include="Lib\Mp4Chapters\ChapterInfo.cs" />
+    <Compile Include="Lib\Mp4Chapters\IAbstractStream.cs" />
+    <Compile Include="Lib\Mp4Chapters\MoovInfo.cs" />
+    <Compile Include="Lib\Mp4Chapters\StreamWrapper.cs" />
     <Compile Include="Lib\WPFSoundVis\FFTDataSize.cs" />
     <Compile Include="Lib\WPFSoundVis\ISoundPlayer.cs" />
     <Compile Include="Lib\WPFSoundVis\Spectrum Analyzer\BarHeightScalingStyles.cs" />
@@ -434,6 +441,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Engine\Engine.sha256" />
     <None Include="Lib\TagLib\TagLib.sources" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
