@@ -13,9 +13,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagedBass", "ManagedBass\Windows\ManagedBass.csproj", "{57C787D9-351E-4C61-9ABB-619F6F6AA03A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ManagedBass", "ManagedBass", "{A66A4A50-DAF7-4385-B263-F35505BB1387}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{A66A4A50-DAF7-4385-B263-F35505BB1387}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared", "ManagedBass\Shared\Shared.shproj", "{EC57D38F-2B7C-4547-9012-3F1AAD7E8BAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibItunesXmlDb", "LibItunesXmlDb\LibItunesXmlDb.csproj", "{4F887EA6-858F-4968-8907-BC413794560C}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -55,6 +57,18 @@ Global
 		{57C787D9-351E-4C61-9ABB-619F6F6AA03A}.Release|x64.Build.0 = Release|Any CPU
 		{57C787D9-351E-4C61-9ABB-619F6F6AA03A}.Release|x86.ActiveCfg = Release|Any CPU
 		{57C787D9-351E-4C61-9ABB-619F6F6AA03A}.Release|x86.Build.0 = Release|Any CPU
+		{4F887EA6-858F-4968-8907-BC413794560C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F887EA6-858F-4968-8907-BC413794560C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F887EA6-858F-4968-8907-BC413794560C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4F887EA6-858F-4968-8907-BC413794560C}.Debug|x64.Build.0 = Debug|Any CPU
+		{4F887EA6-858F-4968-8907-BC413794560C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4F887EA6-858F-4968-8907-BC413794560C}.Debug|x86.Build.0 = Debug|Any CPU
+		{4F887EA6-858F-4968-8907-BC413794560C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F887EA6-858F-4968-8907-BC413794560C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F887EA6-858F-4968-8907-BC413794560C}.Release|x64.ActiveCfg = Release|Any CPU
+		{4F887EA6-858F-4968-8907-BC413794560C}.Release|x64.Build.0 = Release|Any CPU
+		{4F887EA6-858F-4968-8907-BC413794560C}.Release|x86.ActiveCfg = Release|Any CPU
+		{4F887EA6-858F-4968-8907-BC413794560C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +76,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{57C787D9-351E-4C61-9ABB-619F6F6AA03A} = {A66A4A50-DAF7-4385-B263-F35505BB1387}
 		{EC57D38F-2B7C-4547-9012-3F1AAD7E8BAB} = {A66A4A50-DAF7-4385-B263-F35505BB1387}
+		{4F887EA6-858F-4968-8907-BC413794560C} = {A66A4A50-DAF7-4385-B263-F35505BB1387}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {723BD690-F0B8-499B-AD2A-2ED77C4B3A29}
