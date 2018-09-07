@@ -1,8 +1,11 @@
-#2.5 -
+#2.1 - 2018.09.07
+ * Just source code release
  * Reverted source after a failed rewrite attempt to 2.0
  * Updated internal libaries
  * Updated bass.dll components
  * Updated project to .net 4.7
+ * Assembly is now strongly signed & checks hash code of native dll files
+ * ManagedBass.Pinvoke is now compiled from code for signing
 
 #2.0 - 2017.02.17
  * Fixed Network stream playback
