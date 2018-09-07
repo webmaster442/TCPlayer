@@ -77,6 +77,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Code\EngineHashChecker.cs" />
+    <Compile Include="Controls\ITunesMenu.xaml.cs">
+      <DependentUpon>ITunesMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Lib\TagLib\Aac\AudioHeader.cs" />
     <Compile Include="Lib\TagLib\Aac\BitStream.cs" />
     <Compile Include="Lib\TagLib\Aac\File.cs" />
@@ -382,6 +385,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\ITunesMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\PlayList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -598,6 +605,10 @@
     <Resource Include="Style\network.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LibItunesXmlDb\LibItunesXmlDb.csproj">
+      <Project>{4f887ea6-858f-4968-8907-bc413794560c}</Project>
+      <Name>LibItunesXmlDb</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ManagedBass\Windows\ManagedBass.csproj">
       <Project>{57c787d9-351e-4c61-9abb-619f6f6aa03a}</Project>
       <Name>ManagedBass</Name>
