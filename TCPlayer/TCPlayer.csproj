@@ -56,10 +56,6 @@
     <AssemblyOriginatorKeyFile>tcplayer.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ManagedBass.PInvoke, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ManagedBass.PInvoke.0.6.1\lib\net45\ManagedBass.PInvoke.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -453,7 +449,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Engine\Engine.sha256" />
     <None Include="Lib\TagLib\TagLib.sources" />
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -601,6 +596,12 @@
     <Resource Include="Style\taskbar-skip-previous.png" />
     <Resource Include="Style\taskbar-volume-off.png" />
     <Resource Include="Style\network.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ManagedBass\Windows\ManagedBass.csproj">
+      <Project>{57c787d9-351e-4c61-9abb-619f6f6aa03a}</Project>
+      <Name>ManagedBass</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,0 +1,6 @@
+E:\GIT\TCPlayer\ManagedBass\Windows\bin\Debug\ManagedBass.PInvoke.xml
+E:\GIT\TCPlayer\ManagedBass\Windows\bin\Debug\ManagedBass.PInvoke.dll
+E:\GIT\TCPlayer\ManagedBass\Windows\bin\Debug\ManagedBass.PInvoke.pdb
+E:\GIT\TCPlayer\ManagedBass\Windows\obj\Debug\Windows.csproj.CoreCompileInputs.cache
+E:\GIT\TCPlayer\ManagedBass\Windows\obj\Debug\ManagedBass.PInvoke.dll
+E:\GIT\TCPlayer\ManagedBass\Windows\obj\Debug\ManagedBass.PInvoke.pdb

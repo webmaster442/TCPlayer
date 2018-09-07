@@ -100,7 +100,7 @@ namespace TCPlayer.Code
             BassCd.Unload();
             BassMix.Unload();
             Bass.PluginFree(0);
-            Bass.Unload();
+            Bass.Free();
             GC.SuppressFinalize(this);
         }
 
