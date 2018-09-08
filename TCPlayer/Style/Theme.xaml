@@ -27,12 +27,7 @@
     <local:NullorValueConverter
         x:Key="NullorValueConv" />
 
-    <SolidColorBrush
-        x:Key="WindowBackground"
-        Color="#E5000000" />
-    <SolidColorBrush
-        x:Key="WindowTitleBar"
-        Color="#FFc0c0c0" />
+
 
     <SolidColorBrush
         x:Key="Button.Static.Background"
@@ -66,18 +61,6 @@
     <SolidColorBrush
         x:Key="SpectrumPeakBrush"
         Color="#FF8c1919" />
-
-    <Style
-        x:Key="Window"
-        TargetType="Window">
-        <Setter Property="AllowsTransparency" Value="True" />
-        <Setter Property="Background" Value="{StaticResource WindowBackground}" />
-        <Setter Property="Foreground" Value="White" />
-        <Setter Property="FontFamily" Value="Consolas" />
-        <Setter Property="FontSize" Value="15" />
-        <Setter Property="ResizeMode" Value="NoResize" />
-        <Setter Property="WindowStyle" Value="None" />
-    </Style>
 
     <Style
         TargetType="TextBlock">

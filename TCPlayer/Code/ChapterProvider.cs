@@ -117,11 +117,12 @@ namespace TCPlayer.Code
             _target.Items.Clear();
             foreach (var chapter in _data)
             {
-                MenuItem mnu = new MenuItem();
-                mnu.Header = chapter.Value;
-                mnu.Tag = chapter.Key;
-                mnu.Style = (System.Windows.Style)Application.Current.MainWindow.FindResource("SubMenuItem");
-                mnu.Icon = Application.Current.MainWindow.FindResource("IconArrowRight");
+                MenuItem mnu = new MenuItem
+                {
+                    Header = chapter.Value,
+                    Tag = chapter.Key,
+                    Icon = Application.Current.MainWindow.FindResource("IconArrowRight")
+                };
                 mnu.Click += Mnu_Click;
                 _target.Items.Add(mnu);
             }

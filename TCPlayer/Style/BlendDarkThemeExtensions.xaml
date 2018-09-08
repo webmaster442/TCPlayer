@@ -1,0 +1,26 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:TCPlayer.Style">
+
+    <Style
+        x:Key="Window"
+        BasedOn="{StaticResource {x:Type Window}}"
+        TargetType="Window">
+        <Setter Property="AllowsTransparency" Value="True" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontFamily" Value="Consolas" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="ResizeMode" Value="NoResize" />
+        <Setter Property="WindowStyle" Value="None" />
+    </Style>
+
+    <SolidColorBrush
+        x:Key="WindowBackground"
+        Color="#E5000000" />
+    
+    <SolidColorBrush
+        x:Key="WindowTitleBar"
+        Color="#FFc0c0c0" />
+
+</ResourceDictionary>

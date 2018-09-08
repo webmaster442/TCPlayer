@@ -11,26 +11,21 @@
     <MenuItem
         x:Name="MenuAlbums"
         Header="{x:Static p:Resources.iTunes_Albums}"
-        Tag="Albums"
-        Style="{StaticResource SubMenuItem}"/>
+        Tag="Albums" />
     <MenuItem
         x:Name="MenuArtists"
         Header="{x:Static p:Resources.iTunes_Artists}"
-        Tag="Artists"
-        Style="{StaticResource SubMenuItem}"/>
+        Tag="Artists" />
     <MenuItem
         x:Name="MenuYears"
         Header="{x:Static p:Resources.iTunes_Years}"
-        Tag="Years"
-        Style="{StaticResource SubMenuItem}"/>
+        Tag="Years" />
     <MenuItem
         x:Name="MenuGenres"
         Header="{x:Static p:Resources.iTunes_Genres}"
-        Tag="Genres"
-        Style="{StaticResource SubMenuItem}"/>
+        Tag="Genres" />
     <MenuItem
         x:Name="MenuPlaylists"
         Header="{x:Static p:Resources.iTunes_Playlists}"
-        Tag="Playlists"
-        Style="{StaticResource SubMenuItem}"/>
+        Tag="Playlists" />
 </MenuItem>

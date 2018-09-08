@@ -295,20 +295,18 @@ namespace TCPlayer.Controls
             {
                 MenuItem drive = new MenuItem();
                 drive.Header = cd;
-                drive.Style = FindResource("SubMenuItem") as System.Windows.Style;
-                drive.Click += drive_Click;
+                drive.Click += Drive_Click;
                 DiscMenu.Items.Add(drive);
             }
             if (cds.Count() < 1)
             {
                 MenuItem drive = new MenuItem();
-                drive.Style = FindResource("SubMenuItem") as System.Windows.Style;
                 drive.Header = Properties.Resources.Playlist_NoDiscsFound;
                 DiscMenu.Items.Add(drive);
             }
         }
 
-        private async void drive_Click(object sender, RoutedEventArgs e)
+        private async void Drive_Click(object sender, RoutedEventArgs e)
         {
             var drive = ((MenuItem)sender).Header.ToString();
             var result = await Task.Run(() =>

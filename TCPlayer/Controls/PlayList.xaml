@@ -22,26 +22,22 @@
                     x:Name="AddDir"
                     Click="AddDir_Click"
                     Header="{x:Static p:Resources.Playlist_MenuAddDirectory}"
-                    Icon="{StaticResource IconFolder}"
-                    Style="{StaticResource SubMenuItem}" />
+                    Icon="{StaticResource IconFolder}" />
                 <MenuItem
                     x:Name="AddFiles"
                     Click="AddFiles_Click"
                     Header="{x:Static p:Resources.Playlist_MenuAddFile}"
-                    Icon="{StaticResource IconFile}"
-                    Style="{StaticResource SubMenuItem}" />
+                    Icon="{StaticResource IconFile}" />
                 <MenuItem
                     x:Name="AddPlaylist"
                     Click="AddPlaylist_Click"
                     Header="{x:Static p:Resources.Playlist_MenuAddPlaylist}"
-                    Icon="{StaticResource IconPlaylist}"
-                    Style="{StaticResource SubMenuItem}" />
+                    Icon="{StaticResource IconPlaylist}" />
                 <MenuItem
                     x:Name="AddURL"
                     Click="AddURL_Click"
                     Header="{x:Static p:Resources.Playlist_MenuAddUrl}"
-                    Icon="{StaticResource IconLink}"
-                    Style="{StaticResource SubMenuItem}" />
+                    Icon="{StaticResource IconLink}" />
             </MenuItem>
             <MenuItem
                 Header="{x:Static p:Resources.Playlist_MenuSort}">
@@ -49,20 +45,17 @@
                     x:Name="SortAZ"
                     Click="SortAZ_Click"
                     Header="{x:Static p:Resources.Playlist_MenuSortAsc}"
-                    Icon="{StaticResource IconSortAZ}"
-                    Style="{StaticResource SubMenuItem}" />
+                    Icon="{StaticResource IconSortAZ}" />
                 <MenuItem
                     x:Name="SortZA"
                     Click="SortZA_Click"
                     Header="{x:Static p:Resources.Playlist_MenuSortDesc}"
-                    Icon="{StaticResource IconSortZA}"
-                    Style="{StaticResource SubMenuItem}" />
+                    Icon="{StaticResource IconSortZA}" />
                 <MenuItem
                     x:Name="SortRandom"
                     Click="SortRandom_Click"
                     Header="{x:Static p:Resources.Playlist_MenuSortRandom}"
-                    Icon="{StaticResource IconDice}"
-                    Style="{StaticResource SubMenuItem}" />
+                    Icon="{StaticResource IconDice}" />
             </MenuItem>
             <local:ITunesMenu
                 FilesProvidedEvent="ITunesMenu_FilesProvidedEvent" />
@@ -72,28 +65,24 @@
                     x:Name="ManageSave"
                     Click="ManageSave_Click"
                     Header="{x:Static p:Resources.Playlist_MenuManageSave}"
-                    Icon="{StaticResource IconSave}"
-                    Style="{StaticResource SubMenuItem}" />
+                    Icon="{StaticResource IconSave}" />
                 <MenuItem
                     x:Name="ManageClear"
                     Click="ManageClear_Click"
                     Header="{x:Static p:Resources.Playlist_MenuManageClear}"
-                    Icon="{StaticResource IconClear}"
-                    Style="{StaticResource SubMenuItem}" />
+                    Icon="{StaticResource IconClear}" />
                 <MenuItem
                     x:Name="ManageDelete"
                     Click="ManageDelete_Click"
                     Header="{x:Static p:Resources.Playlist_MenuManageDelete}"
-                    Icon="{StaticResource IconDelete}"
-                    Style="{StaticResource SubMenuItem}" />
+                    Icon="{StaticResource IconDelete}" />
             </MenuItem>
             <MenuItem
                 x:Name="DiscMenu"
                 Header="{x:Static p:Resources.Playlist_MenuDisc}"
                 SubmenuOpened="DiscMenu_SubmenuOpened">
                 <MenuItem
-                    Header="{x:Static p:Resources.Playlist_MenuDiscNotfound}"
-                    Style="{StaticResource SubMenuItem}" />
+                    Header="{x:Static p:Resources.Playlist_MenuDiscNotfound}" />
             </MenuItem>
         </Menu>
         <ListBox
