@@ -7,7 +7,7 @@
     xmlns:vis="clr-namespace:WPFSoundVisualizationLib"
     x:Name="SongDat"
     d:DesignHeight="190"
-    d:DesignWidth="670"
+    d:DesignWidth="657"
     mc:Ignorable="d">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -39,11 +39,6 @@
                         Source="{Binding Path=Source}" />
                 </ToolTip>
             </Image.ToolTip>
-            <Image.Effect>
-                <DropShadowEffect
-                    Opacity="0.9"
-                    Color="#FFFCFCFC" />
-            </Image.Effect>
         </Image>
         <TextBlock
             x:Name="InfoText"
@@ -53,11 +48,6 @@
             VerticalAlignment="Bottom"
             Panel.ZIndex="99"
             ToolTip="{Binding ElementName=SongDat, Path=FileName}">
-            <TextBlock.Effect>
-                <DropShadowEffect
-                    Opacity="0.9"
-                    Color="#FFFCFCFC" />
-            </TextBlock.Effect>
         </TextBlock>
     </Grid>
 </UserControl>

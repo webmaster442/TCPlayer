@@ -45,6 +45,15 @@
     </Style>
 
     <Style
+        x:Key="TitleBarButton"
+        BasedOn="{StaticResource {x:Type Button}}"
+        TargetType="Button">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+    </Style>
+
+    <Style
         x:Key="Playlist"
         TargetType="ListBox">
         <Setter Property="Background" Value="Transparent" />

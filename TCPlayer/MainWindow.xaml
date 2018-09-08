@@ -75,12 +75,14 @@
                 Margin="5,0"
                 Text="{Binding ElementName=MainWin, Path=Title}" />
             <Button
+                Style="{StaticResource TitleBarButton}"
                 x:Name="BtnSettings"
                 Grid.Column="1"
                 Click="BtnSettings_Click"
                 Content="{StaticResource IconSettings}"
                 ToolTip="{x:Static props:Resources.MainWin_Settings}" />
             <Button
+                Style="{StaticResource TitleBarButton}"
                 x:Name="BtnAbout"
                 Grid.Column="2"
                 Click="BtnAbout_Click"
@@ -89,6 +91,9 @@
             <ToggleButton
                 x:Name="AllWaysTop"
                 Grid.Column="3"
+                Background="Transparent"
+                BorderThickness="0"
+                BorderBrush="Transparent"
                 IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=TopMost, Mode=TwoWay}">
                 <ToggleButton.Resources>
                     <Style
@@ -109,12 +114,14 @@
                 </ToggleButton.Resources>
             </ToggleButton>
             <Button
+                Style="{StaticResource TitleBarButton}"
                 x:Name="TitlebarMinimize"
                 Grid.Column="4"
                 Click="TitlebarMinimize_Click"
                 Content="{StaticResource IconMinimize}"
                 ToolTip="{x:Static props:Resources.MainWin_Minimize}" />
             <Button
+                Style="{StaticResource TitleBarButton}"
                 x:Name="TitlebarClose"
                 Grid.Column="5"
                 Click="TitlebarClose_Click"
@@ -184,7 +191,6 @@
                         x:Name="SeekSlider"
                         Grid.Row="2"
                         Margin="10,10"
-                        IsMoveToPointEnabled="True"
                         Thumb.DragCompleted="SeekSlider_DragCompleted"
                         Thumb.DragStarted="SeekSlider_DragStarted"
                         ValueChanged="SeekSlider_ValueChanged"
