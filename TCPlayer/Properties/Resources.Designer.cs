@@ -214,6 +214,51 @@ namespace TCPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Albums.
+        /// </summary>
+        public static string iTunes_Albums {
+            get {
+                return ResourceManager.GetString("iTunes_Albums", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Artists.
+        /// </summary>
+        public static string iTunes_Artists {
+            get {
+                return ResourceManager.GetString("iTunes_Artists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Genres.
+        /// </summary>
+        public static string iTunes_Genres {
+            get {
+                return ResourceManager.GetString("iTunes_Genres", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Playlists.
+        /// </summary>
+        public static string iTunes_Playlists {
+            get {
+                return ResourceManager.GetString("iTunes_Playlists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Years.
+        /// </summary>
+        public static string iTunes_Years {
+            get {
+                return ResourceManager.GetString("iTunes_Years", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to About ....
         /// </summary>
         public static string MainWin_About {
@@ -526,6 +571,15 @@ namespace TCPlayer.Properties {
         public static string Playlist_MenuDiscNotfound {
             get {
                 return ResourceManager.GetString("Playlist_MenuDiscNotfound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [ iTunes ].
+        /// </summary>
+        public static string Playlist_MenuItunes {
+            get {
+                return ResourceManager.GetString("Playlist_MenuItunes", resourceCulture);
             }
         }
         

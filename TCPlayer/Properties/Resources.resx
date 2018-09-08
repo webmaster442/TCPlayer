@@ -370,4 +370,22 @@ To Use media key functions please close other apps that may use the keys, then r
   <data name="Error_CorruptDll" xml:space="preserve">
     <value>Bass.dll components are corrupted. Please reinstall program.</value>
   </data>
+  <data name="iTunes_Albums" xml:space="preserve">
+    <value>Albums</value>
+  </data>
+  <data name="iTunes_Artists" xml:space="preserve">
+    <value>Artists</value>
+  </data>
+  <data name="iTunes_Genres" xml:space="preserve">
+    <value>Genres</value>
+  </data>
+  <data name="iTunes_Playlists" xml:space="preserve">
+    <value>Playlists</value>
+  </data>
+  <data name="iTunes_Years" xml:space="preserve">
+    <value>Years</value>
+  </data>
+  <data name="Playlist_MenuItunes" xml:space="preserve">
+    <value>[ iTunes ]</value>
+  </data>
 </root>

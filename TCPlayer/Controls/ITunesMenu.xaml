@@ -4,32 +4,28 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:p="clr-namespace:TCPlayer.Properties"
     x:Name="MenuItunes"
-    Header="[ iTunes ]"
+    Header="{x:Static p:Resources.Playlist_MenuItunes}"
     mc:Ignorable="d">
     <MenuItem
         x:Name="MenuAlbums"
-        Header="Albums"
-        Tag="Albums">
-    </MenuItem>
+        Header="{x:Static p:Resources.iTunes_Albums}"
+        Tag="Albums" />
     <MenuItem
         x:Name="MenuArtists"
-        Header="Artists"
-        Tag="Artists">
-    </MenuItem>
+        Header="{x:Static p:Resources.iTunes_Artists}"
+        Tag="Artists" />
     <MenuItem
         x:Name="MenuYears"
-        Header="Years"
-        Tag="Years">
-    </MenuItem>
+        Header="{x:Static p:Resources.iTunes_Years}"
+        Tag="Years" />
     <MenuItem
         x:Name="MenuGenres"
-        Header="Genres"
-        Tag="Genres">
-    </MenuItem>
+        Header="{x:Static p:Resources.iTunes_Genres}"
+        Tag="Genres" />
     <MenuItem
         x:Name="MenuPlaylists"
-        Header="Playlists"
-        Tag="Playlists">
-    </MenuItem>
+        Header="{x:Static p:Resources.iTunes_Playlists}"
+        Tag="Playlists" />
 </MenuItem>

@@ -370,4 +370,22 @@ A média gombok használatbavételéhez zárj be minden olyan egyéb alkalmazás
   <data name="Error_CorruptDll" xml:space="preserve">
     <value>A Bass.dll komponensek meghibásodtak. Kérlek telepítsd újra a programot.</value>
   </data>
+  <data name="iTunes_Albums" xml:space="preserve">
+    <value>Albumok</value>
+  </data>
+  <data name="iTunes_Artists" xml:space="preserve">
+    <value>Előadók</value>
+  </data>
+  <data name="iTunes_Genres" xml:space="preserve">
+    <value>Műfajok</value>
+  </data>
+  <data name="iTunes_Playlists" xml:space="preserve">
+    <value>Listák</value>
+  </data>
+  <data name="iTunes_Years" xml:space="preserve">
+    <value>Évek</value>
+  </data>
+  <data name="Playlist_MenuItunes" xml:space="preserve">
+    <value>[ iTunes ]</value>
+  </data>
 </root>
