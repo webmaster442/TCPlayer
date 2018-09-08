@@ -1,61 +1,62 @@
-﻿<UserControl x:Class="TCPlayer.Controls.SongData"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:TCPlayer.Controls"
-             xmlns:vis="clr-namespace:WPFSoundVisualizationLib"
-             mc:Ignorable="d"
-             x:Name="SongDat"
-             d:DesignHeight="190" d:DesignWidth="670">
+﻿<UserControl
+    x:Class="TCPlayer.Controls.SongData"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vis="clr-namespace:WPFSoundVisualizationLib"
+    x:Name="SongDat"
+    d:DesignHeight="190"
+    d:DesignWidth="670"
+    mc:Ignorable="d">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="190"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="190" />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <vis:SpectrumAnalyzer
-            Grid.Column="1"
             x:Name="Spectrum"
-            VerticalAlignment="Top"
-            Height="120"/>
+            Grid.Column="1"
+            Height="120"
+            VerticalAlignment="Top" />
         <Image
-            Grid.Column="0"
+            x:Name="Img"
             Grid.RowSpan="2"
+            Grid.Column="0"
+            Width="185"
             VerticalAlignment="Bottom"
             Panel.ZIndex="10"
-            Width="185"
-            x:Name="Img"
             Source="{Binding ElementName=SongDat, Path=Cover}"
             Stretch="Uniform">
             <Image.ToolTip>
                 <ToolTip
                     Background="Black"
-                    HasDropShadow="False"
-                    DataContext="{Binding Path=PlacementTarget, RelativeSource={x:Static RelativeSource.Self}}">
+                    DataContext="{Binding Path=PlacementTarget, RelativeSource={x:Static RelativeSource.Self}}"
+                    HasDropShadow="False">
                     <Image
                         Width="300"
                         Height="300"
-                        Source="{Binding Path=Source}"/>
+                        Source="{Binding Path=Source}" />
                 </ToolTip>
             </Image.ToolTip>
             <Image.Effect>
                 <DropShadowEffect
                     Opacity="0.9"
-                    Color="#FFFCFCFC"/>
+                    Color="#FFFCFCFC" />
             </Image.Effect>
         </Image>
         <TextBlock
-            Grid.Column="1"
-            Panel.ZIndex="99"
-            VerticalAlignment="Bottom"
-            HorizontalAlignment="Left"
             x:Name="InfoText"
-            ToolTip="{Binding ElementName=SongDat, Path=FileName}"
-            Margin="10,5">
+            Grid.Column="1"
+            Margin="10,5"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Bottom"
+            Panel.ZIndex="99"
+            ToolTip="{Binding ElementName=SongDat, Path=FileName}">
             <TextBlock.Effect>
                 <DropShadowEffect
                     Opacity="0.9"
-                    Color="#FFFCFCFC"/>
+                    Color="#FFFCFCFC" />
             </TextBlock.Effect>
         </TextBlock>
     </Grid>
