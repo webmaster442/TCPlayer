@@ -317,5 +317,10 @@ namespace TCPlayer.Controls
             });
             _list.AddRange(result);
         }
+
+        private void ITunesMenu_FilesProvidedEvent(object sender, IEnumerable<string> e)
+        {
+            _list.AddRange(e);
+        }
     }
 }

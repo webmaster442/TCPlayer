@@ -19,6 +19,10 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Linq;
+using System.Reflection;
 
 namespace TCPlayer.Code
 {
@@ -42,8 +46,7 @@ namespace TCPlayer.Code
         /// <returns>The elements in an ObservableCollection</returns>
         public static ObservableCollection<T> ToObservableCollection<T>(this IEnumerable<T> coll)
         {
-            var c = new ObservableCollection<T>();
-            foreach (var e in coll) c.Add(e);
+            var c = new ObservableCollection<T>(coll);
             return c;
         }
 
@@ -53,10 +56,34 @@ namespace TCPlayer.Code
         /// <typeparam name="T">Type of elements</typeparam>
         /// <param name="collection">The ObserbableCollection to apend to</param>
         /// <param name="elements">an IEnumerable collection</param>
-        public static void AddRange<T>(this ObservableCollection<T> collection, IEnumerable<T> elements)
+        public static void AddRange<T>(this ObservableCollection<T> collection, IEnumerable<T> items)
         {
-            if (elements == null) return;
-            foreach (var e in elements) collection.Add(e);
+            if (collection == null || items == null || !items.Any())
+                return;
+
+            Type type = collection.GetType();
+
+            var bindflags = BindingFlags.Instance | BindingFlags.InvokeMethod | BindingFlags.NonPublic;
+
+            type.InvokeMember("CheckReentrancy", bindflags, null, collection, null);
+
+            var itemsProp = type.BaseType.GetProperty("Items", BindingFlags.NonPublic | BindingFlags.FlattenHierarchy | BindingFlags.Instance);
+
+            var privateItems = itemsProp.GetValue(collection) as IList<T>;
+
+            foreach (var item in items)
+            {
+                privateItems.Add(item);
+            }
+
+            type.InvokeMember("OnPropertyChanged", bindflags, null,
+              collection, new object[] { new PropertyChangedEventArgs("Count") });
+
+            type.InvokeMember("OnPropertyChanged", bindflags, null,
+              collection, new object[] { new PropertyChangedEventArgs("Item[]") });
+
+            type.InvokeMember("OnCollectionChanged", bindflags, null,
+              collection, new object[] { new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset) });
         }
     }
 }
