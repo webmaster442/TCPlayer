@@ -8,6 +8,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Style/BendDarkTheme.xaml"/>
                 <ResourceDictionary Source="Style/BlendDarkThemeExtensions.xaml"/>
+                <ResourceDictionary Source="Style/BlendDarkThemeSongSlider.xaml"/>
                 <ResourceDictionary Source="Style/Icons.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

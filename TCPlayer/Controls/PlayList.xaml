@@ -15,8 +15,11 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <Menu
-            Grid.Row="0">
+            Grid.Row="0"
+            VerticalAlignment="Center"
+            Background="DarkBlue">
             <MenuItem
+                VerticalAlignment="Center"
                 Header="{x:Static p:Resources.Playlist_MenuAdd}">
                 <MenuItem
                     x:Name="AddDir"
@@ -40,6 +43,7 @@
                     Icon="{StaticResource IconLink}" />
             </MenuItem>
             <MenuItem
+                VerticalAlignment="Center"
                 Header="{x:Static p:Resources.Playlist_MenuSort}">
                 <MenuItem
                     x:Name="SortAZ"
@@ -60,6 +64,7 @@
             <local:ITunesMenu
                 FilesProvidedEvent="ITunesMenu_FilesProvidedEvent" />
             <MenuItem
+                VerticalAlignment="Center"
                 Header="{x:Static p:Resources.Playlist_MenuManage}">
                 <MenuItem
                     x:Name="ManageSave"
@@ -79,6 +84,7 @@
             </MenuItem>
             <MenuItem
                 x:Name="DiscMenu"
+                VerticalAlignment="Center"
                 Header="{x:Static p:Resources.Playlist_MenuDisc}"
                 SubmenuOpened="DiscMenu_SubmenuOpened">
                 <MenuItem
@@ -88,6 +94,7 @@
         <ListBox
             x:Name="PlaylistView"
             Grid.Row="1"
-            MouseDoubleClick="PlaylistView_MouseDoubleClick" />
+            MouseDoubleClick="PlaylistView_MouseDoubleClick"
+            Style="{StaticResource Playlist}" />
     </Grid>
 </UserControl>
