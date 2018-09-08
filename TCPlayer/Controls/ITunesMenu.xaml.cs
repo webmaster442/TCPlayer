@@ -78,7 +78,8 @@ namespace TCPlayer.Controls
                 MenuItem subitem = new MenuItem
                 {
                     Tag = string.Copy(menuTarget.Tag as string),
-                    Header = item
+                    Header = item,
+                    Style = FindResource("SubMenuItem") as System.Windows.Style
                 };
                 subitem.Click += Subitem_Click;
                 menuTarget.Items.Add(subitem);
