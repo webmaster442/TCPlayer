@@ -124,7 +124,9 @@
     <value>Ugrás ide: {0}</value>
   </data>
   <data name="Engine_Error" xml:space="preserve">
-    <value>{0}\r\nBass Hiba kód: {1}\r\nLeírás: {2}</value>
+    <value>{0}
+Bass Hiba kód: {1}
+Leírás: {2}</value>
   </data>
   <data name="Engine_ErrorBass" xml:space="preserve">
     <value>Bass.dll inicializációs hiba</value>

@@ -18,10 +18,9 @@
         x:Key="WindowTitleBar"
         Color="#FFc0c0c0" />
 
-    <LinearGradientBrush x:Key="SpectrumBarBrush" StartPoint="0.5,1" EndPoint="0.5,0">
-        <GradientStop Offset="0" Color="#FF66b2b2" />
-        <GradientStop Offset="1" Color="#FF008080" />
-    </LinearGradientBrush>
+    <SolidColorBrush
+        x:Key="SpectrumBarBrush"
+        Color="Orange" />
 
     <SolidColorBrush
         x:Key="SpectrumPeakBrush"

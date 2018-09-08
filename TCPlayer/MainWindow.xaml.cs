@@ -72,7 +72,11 @@ namespace TCPlayer
             if (Properties.Settings.Default.SaveVolume)
             {
                 var vol = Properties.Settings.Default.LastVolume;
-                if (vol > -1) VolSlider.Value = vol;
+                if (vol > -1)
+                {
+                    VolSlider.Value = vol;
+                    VolSlider_ValueChanged(this, null);
+                }
             }
 
             if (Properties.Settings.Default.RegisterMultimediaKeys)

@@ -36,7 +36,7 @@ namespace TCPlayer.Code
             {
                 if (description != null)
                 {
-                    MessageBox.Show(string.Format("{0}\r\n{1}\r\n{2}", description, Resources.Error_Details, ex.Message), Resources.Error_Title, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"{description}\n{Resources.Error_Details}\n{ex.Message}", Resources.Error_Title, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 else MessageBox.Show(ex.Message, Resources.Error_Title, MessageBoxButton.OK, MessageBoxImage.Error);
             });

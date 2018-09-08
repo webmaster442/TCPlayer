@@ -20,6 +20,7 @@
     Style="{StaticResource Window}"
     Top="{Binding Source={x:Static props:Settings.Default}, Path=Top, Mode=TwoWay}"
     Topmost="{Binding Source={x:Static props:Settings.Default}, Path=TopMost, Mode=TwoWay}"
+    Opacity="0.9"
     mc:Ignorable="d">
     <Window.TaskbarItemInfo>
         <TaskbarItemInfo

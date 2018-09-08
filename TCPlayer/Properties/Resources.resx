@@ -124,7 +124,9 @@
     <value>Jump to {0}</value>
   </data>
   <data name="Engine_Error" xml:space="preserve">
-    <value>{0}\r\nBass Error code: {1}\r\nError Description: {2}</value>
+    <value>{0}
+Bass Error code: {1}
+Error Description: {2}</value>
   </data>
   <data name="Engine_ErrorBass" xml:space="preserve">
     <value>Bass.dll init failed</value>

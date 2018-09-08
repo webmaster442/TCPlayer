@@ -124,7 +124,9 @@ namespace TCPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}\r\nBass Error code: {1}\r\nError Description: {2}.
+        ///   Looks up a localized string similar to {0}
+        ///Bass Error code: {1}
+        ///Error Description: {2}.
         /// </summary>
         public static string Engine_Error {
             get {
