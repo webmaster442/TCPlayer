@@ -478,7 +478,7 @@ namespace TCPlayer
         private void SeekSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (_isdrag) return;
-            if (SeekSlider.Maximum - SeekSlider.Value < 0.5)
+            if (SeekSlider.Maximum - SeekSlider.Value < 0.1d)
             {
                 if (PlayList.CanDoNextTrack())
                 {

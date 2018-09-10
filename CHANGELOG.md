@@ -1,3 +1,11 @@
+#2.5
+ * Playlist can now acces songs from iTunes (Requires iTunes to be installed)
+ * New, more flexible song notification
+ * Changed player skin
+ * Small internal nullreference issue fix
+ * Gapeless playback improvements
+ * Program now requires .net 4.7
+
 #2.1 - 2018.09.07
  * Just source code release
  * Reverted source after a failed rewrite attempt to 2.0
