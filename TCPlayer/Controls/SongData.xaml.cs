@@ -27,6 +27,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using TCPlayer.Code;
+using TCPlayer.Notification;
 using TCPlayer.Properties;
 
 namespace TCPlayer.Controls
@@ -144,7 +145,11 @@ namespace TCPlayer.Controls
             {
                 Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/network.png", UriKind.Relative));
                 SetInfoText(Path.GetFileName(file), "Stream", "", DateTime.Now.Year.ToString(), "stream");
-                if (notify) App.NotifyIcon.ShowNotification(file);
+                if (notify)
+                {
+                    SongChangeNotification.DisplaySongChangeNotification(file);
+                    //App.NotifyIcon.ShowNotification(file);
+                }
                 return;
             }
             else if (file.StartsWith("cd://"))
@@ -164,7 +169,11 @@ namespace TCPlayer.Controls
                 {
                     Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/midi.png", UriKind.Relative));
                     SetInfoText("", fi.Name, "", Properties.Resources.SongData_Unknown, Size);
-                    if (notify) App.NotifyIcon.ShowNotification(FileName);
+                    if (notify)
+                    {
+                        SongChangeNotification.DisplaySongChangeNotification(FileName);
+                        //App.NotifyIcon.ShowNotification(FileName);
+                    }
                     return;
                 }
 
@@ -187,7 +196,11 @@ namespace TCPlayer.Controls
                 if (tags.Tag.Performers != null && tags.Tag.Performers.Length != 0) Artist = tags.Tag.Performers[0];
                 var Album = tags.Tag.Album;
                 var Title = tags.Tag.Title;
-                if (notify) App.NotifyIcon.ShowNotification(FileName, Artist, Title);
+                if (notify)
+                {
+                    SongChangeNotification.DisplaySongChangeNotification(FileName, Artist, Title);
+                    //App.NotifyIcon.ShowNotification(FileName, Artist, Title);
+                }
                 SetInfoText(Artist, Title, Album, Year, Size);
             }
             catch (Exception)
@@ -212,7 +225,10 @@ namespace TCPlayer.Controls
                 Album = App.CdData["TITLE0"];
             }
             if (notify)
-                App.NotifyIcon.ShowNotification("CD Track" + track, Artist, Title);
+            {
+                SongChangeNotification.DisplaySongChangeNotification("CD Track" + track, Artist, Title);
+                //App.NotifyIcon.ShowNotification("CD Track" + track, Artist, Title);
+            }
             SetInfoText(Artist, Title, Album, Year, GetFileSize(size));
         }
 

@@ -324,7 +324,11 @@
     <Compile Include="Lib\TagLib\Xmp\XmpNodeType.cs" />
     <Compile Include="Lib\TagLib\Xmp\XmpNodeVisitor.cs" />
     <Compile Include="Lib\TagLib\Xmp\XmpTag.cs" />
+    <Compile Include="Notification\NotificationPlaceSelector.xaml.cs">
+      <DependentUpon>NotificationPlaceSelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Notification\NotificationPosition.cs" />
+    <Compile Include="Notification\NotificationPositionConverter.cs" />
     <Compile Include="Notification\NotificationWindow.xaml.cs">
       <DependentUpon>NotificationWindow.xaml</DependentUpon>
     </Compile>
@@ -345,7 +349,6 @@
     <Compile Include="Code\Helpers.cs" />
     <Compile Include="Code\Interfaces.cs" />
     <Compile Include="Code\KeyboardHook.cs" />
-    <Compile Include="Code\NotificationIcon.cs" />
     <Compile Include="Code\Radio.cs" />
     <Compile Include="Code\SingleInstance.cs" />
     <Compile Include="Code\Native.cs" />
@@ -429,6 +432,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Notification\NotificationPlaceSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Notification\NotificationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -88,9 +88,12 @@ namespace TCPlayer.Code
                 {
                     var extractor = new ChapterExtractor(new StreamWrapper(stream));
                     extractor.Run();
-                    foreach (var c in extractor.Chapters)
+                    if (extractor.Chapters != null)
                     {
-                        _data.Add(c.Time.TotalSeconds, c.Name);
+                        foreach (var c in extractor.Chapters)
+                        {
+                            _data.Add(c.Time.TotalSeconds, c.Name);
+                        }
                     }
                 }
                 ChaptersEnabled = _data.Count > 0;

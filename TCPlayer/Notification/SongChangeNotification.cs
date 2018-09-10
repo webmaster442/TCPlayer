@@ -5,23 +5,34 @@ namespace TCPlayer.Notification
     public class SongChangeNotification
     {
         private static NotificationWindow _window;
+        private const int Time = 2000;
 
-        public static void DisplaySongChangeNotification(NotificationPosition position, int time, string row1, string row2 = null)
+        public static void DisplaySongChangeNotification(string row1)
         {
+            DisplaySongChangeNotification(row1);
+        }
+
+        public static void DisplaySongChangeNotification(string row1, string row2, string row3 = null)
+        {
+            var position = (NotificationPosition)Properties.Settings.Default.NotificationPlace;
+
             if (_window != null && _window.Visibility == Visibility.Visible)
             {
-                _window.ResetTimer(time);
+                _window.ResetTimer(Time);
                 _window.Row1 = row1;
                 _window.Row2 = row2;
+                _window.Row3 = row3;
                 SetWindowPosition(position);
+                _window.Display();
             }
             else
             {
-                _window = new NotificationWindow(time);
+                _window = new NotificationWindow(Time);
                 _window.Row1 = row1;
                 _window.Row2 = row2;
+                _window.Row3 = row3;
                 SetWindowPosition(position);
-                _window.Show();
+                _window.Display();
             }
         }
 
@@ -31,9 +42,9 @@ namespace TCPlayer.Notification
             double top = 0;
             double margin = 10;
             double screenWidth = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width;
-            double screenHeight = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width;
-            double windowWidth = _window.ActualWidth;
-            double windowHeight = _window.ActualHeight;
+            double screenHeight = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height;
+            double windowWidth = _window.Width;
+            double windowHeight = _window.Height;
 
             switch (position)
             {

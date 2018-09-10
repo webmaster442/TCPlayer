@@ -190,5 +190,17 @@ namespace TCPlayer.Properties {
                 this["RememberRecentURLs"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int NotificationPlace {
+            get {
+                return ((int)(this["NotificationPlace"]));
+            }
+            set {
+                this["NotificationPlace"] = value;
+            }
+        }
     }
 }

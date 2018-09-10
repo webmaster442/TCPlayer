@@ -34,7 +34,6 @@ namespace TCPlayer
 
         internal static Dictionary<string, string> CdData;
         internal static string DiscID;
-        internal static NotificationIcon NotifyIcon;
         internal static HashSet<string> RecentUrls;
 
         [STAThread]

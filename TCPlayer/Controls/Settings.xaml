@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:notification="clr-namespace:TCPlayer.Notification"
     xmlns:props="clr-namespace:TCPlayer.Properties"
     d:DesignHeight="300"
     d:DesignWidth="300"
@@ -34,8 +35,19 @@
                     IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=RegisterMultimediaKeys, Mode=TwoWay}" />
                 <CheckBox
                     Margin="2"
+                    x:Name="Notify"
                     Content="{x:Static props:Resources.Settings_Notify}"
                     IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=TrackChangeNotification, Mode=TwoWay}" />
+                <TextBlock
+                    IsEnabled="{Binding ElementName=Notify, Path=IsChecked}"
+                    Margin="10,2"
+                    Text="Notification position:" />
+                <notification:NotificationPlaceSelector
+                    IsEnabled="{Binding ElementName=Notify, Path=IsChecked}"
+                    Width="100"
+                    Margin="10,0,0,10"
+                    HorizontalAlignment="Left"
+                    Position="{Binding Source={x:Static props:Settings.Default}, Path=NotificationPlace, Mode=TwoWay, Converter={notification:NotificationPositionConverter}}" />
                 <CheckBox
                     Margin="2"
                     Content="{x:Static props:Resources.Settings_Confirm}"
