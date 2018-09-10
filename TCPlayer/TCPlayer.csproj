@@ -324,6 +324,11 @@
     <Compile Include="Lib\TagLib\Xmp\XmpNodeType.cs" />
     <Compile Include="Lib\TagLib\Xmp\XmpNodeVisitor.cs" />
     <Compile Include="Lib\TagLib\Xmp\XmpTag.cs" />
+    <Compile Include="Notification\NotificationPosition.cs" />
+    <Compile Include="Notification\NotificationWindow.xaml.cs">
+      <DependentUpon>NotificationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Notification\SongChangeNotification.cs" />
     <Compile Include="Properties\Resources.hu-HU.Designer.cs">
       <DependentUpon>Resources.hu-HU.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -424,6 +429,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Notification\NotificationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Style\BendDarkTheme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
