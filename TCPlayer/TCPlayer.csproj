@@ -80,6 +80,9 @@
     <Compile Include="Controls\ITunesMenu.xaml.cs">
       <DependentUpon>ITunesMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\NetworkMenu\NetworkMenu.xaml.cs">
+      <DependentUpon>NetworkMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Lib\TagLib\Aac\AudioHeader.cs" />
     <Compile Include="Lib\TagLib\Aac\BitStream.cs" />
     <Compile Include="Lib\TagLib\Aac\File.cs" />
@@ -324,15 +327,15 @@
     <Compile Include="Lib\TagLib\Xmp\XmpNodeType.cs" />
     <Compile Include="Lib\TagLib\Xmp\XmpNodeVisitor.cs" />
     <Compile Include="Lib\TagLib\Xmp\XmpTag.cs" />
-    <Compile Include="Notification\NotificationPlaceSelector.xaml.cs">
+    <Compile Include="Controls\Notification\NotificationPlaceSelector.xaml.cs">
       <DependentUpon>NotificationPlaceSelector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Notification\NotificationPosition.cs" />
-    <Compile Include="Notification\NotificationPositionConverter.cs" />
-    <Compile Include="Notification\NotificationWindow.xaml.cs">
+    <Compile Include="Controls\Notification\NotificationPosition.cs" />
+    <Compile Include="Controls\Notification\NotificationPositionConverter.cs" />
+    <Compile Include="Controls\Notification\NotificationWindow.xaml.cs">
       <DependentUpon>NotificationWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Notification\SongChangeNotification.cs" />
+    <Compile Include="Controls\Notification\SongChangeNotification.cs" />
     <Compile Include="Properties\Resources.hu-HU.Designer.cs">
       <DependentUpon>Resources.hu-HU.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -398,6 +401,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\NetworkMenu\NetworkMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\PlayList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -432,11 +439,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Notification\NotificationPlaceSelector.xaml">
+    <Page Include="Controls\Notification\NotificationPlaceSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Notification\NotificationWindow.xaml">
+    <Page Include="Controls\Notification\NotificationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
