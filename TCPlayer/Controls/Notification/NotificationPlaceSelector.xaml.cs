@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace TCPlayer.Notification
+namespace TCPlayer.Controls.Notification
 {
     /// <summary>
     /// Interaction logic for NotificationPlaceSelector.xaml

@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace TCPlayer.Notification
+namespace TCPlayer.Controls.Notification
 {
     public class NotificationPositionConverter : MarkupExtension, IValueConverter
     {

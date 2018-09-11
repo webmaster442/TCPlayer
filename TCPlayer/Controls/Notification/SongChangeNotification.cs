@@ -1,11 +1,11 @@
 ﻿using System.Windows;
 
-namespace TCPlayer.Notification
+namespace TCPlayer.Controls.Notification
 {
     public class SongChangeNotification
     {
         private static NotificationWindow _window;
-        private const int Time = 2000;
+        private const int Time = 3000;
 
         public static void DisplaySongChangeNotification(string row1)
         {

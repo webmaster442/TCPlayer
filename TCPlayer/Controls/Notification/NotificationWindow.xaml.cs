@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
-namespace TCPlayer.Notification
+namespace TCPlayer.Controls.Notification
 {
     /// <summary>
     /// Interaction logic for NotificationWindow.xaml

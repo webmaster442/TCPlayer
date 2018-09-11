@@ -1,4 +1,4 @@
-﻿namespace TCPlayer.Notification
+﻿namespace TCPlayer.Controls.Notification
 {
     public enum  NotificationPosition
     {
