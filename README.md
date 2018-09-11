@@ -1,4 +1,4 @@
-#TC Player
+# TC Player
 
 Total Commander Audio Player plugin & standalone player written in C#, based on bass.dll components.
 Website: https://webmaster442.github.io/TCPlayer/
@@ -17,10 +17,11 @@ The software uses the following components made by others:
 * [Material Design Icons](https://materialdesignicons.com/)
 * [RadioTray's bookmarks](http://radiotray.sourceforge.net/)
 * [Radiotray-hu bookmarks](https://github.com/gyarakilaszlo/Radiotray-hu)
+* [WpfExpressionBlendTheme](https://github.com/DanPristupov/WpfExpressionBlendTheme)
 
-Code compiles with Visual Studio Community
+Code compiles with Visual Studio Community 2017. For the Total commander plugins C++ workload is required, for the player c# workload is required.
 
-##Features
+## Features
 
 * Supports various audio formats: MP3, MP4, AAC, OGG, WAV, FLAC, WavPack, Apple Lossless (ALAC), WMA, AC3, CDDA, APE, MPC, MP+, MPP, SPX, TTA, DSF, OPUS
 * Support MIDI & tracker files playback: midi, mid, rmi, kar, xm, it, s3m, mod, mtm, umx, .mo3
@@ -33,15 +34,15 @@ Code compiles with Visual Studio Community
 * Notifications on track change
 
 
-##Requirements to run
+## Requirements to run
  - Windows 7/8/8.1/10
  - Total commander for the plugin install (tested with 8.51a x64)
- - .NET Framework 4.5
+ - .NET Framework 4.7 (As of version 2.1)
    http://www.microsoft.com/hu-hu/download/details.aspx?id=30653
  - For MIDI playback a soundfont is needed. For starters you could use the default soundfont provided with the Bass midi component: http://www.un4seen.com/download.php?x/ChoriumRevA
 
    
-##License
+## License
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
