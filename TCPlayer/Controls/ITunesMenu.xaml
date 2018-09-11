@@ -1,5 +1,4 @@
 ﻿<MenuItem
-    VerticalAlignment="Center"
     x:Class="TCPlayer.Controls.ITunesMenu"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -7,26 +6,32 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:p="clr-namespace:TCPlayer.Properties"
     x:Name="MenuItunes"
+    VerticalAlignment="Center"
     Header="{x:Static p:Resources.Playlist_MenuItunes}"
     mc:Ignorable="d">
     <MenuItem
         x:Name="MenuAlbums"
         Header="{x:Static p:Resources.iTunes_Albums}"
+        Icon="{StaticResource IconAlbums}"
         Tag="Albums" />
     <MenuItem
         x:Name="MenuArtists"
         Header="{x:Static p:Resources.iTunes_Artists}"
+        Icon="{StaticResource IconArtists}"
         Tag="Artists" />
     <MenuItem
         x:Name="MenuYears"
         Header="{x:Static p:Resources.iTunes_Years}"
+        Icon="{StaticResource IconYears}"
         Tag="Years" />
     <MenuItem
         x:Name="MenuGenres"
         Header="{x:Static p:Resources.iTunes_Genres}"
+        Icon="{StaticResource IconGenre}"
         Tag="Genres" />
     <MenuItem
         x:Name="MenuPlaylists"
         Header="{x:Static p:Resources.iTunes_Playlists}"
+        Icon="{StaticResource IconList}"
         Tag="Playlists" />
 </MenuItem>
