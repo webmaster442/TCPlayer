@@ -27,6 +27,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using TCPlayer.Code;
+using TCPlayer.Controls.Network;
 using TCPlayer.Controls.Notification;
 using TCPlayer.Properties;
 
@@ -46,6 +47,12 @@ namespace TCPlayer.Controls
             _player = Player.Instance;
             _player.MetaChanged += _player_MetaChanged;
             Spectrum.RegisterSoundPlayer(_player);
+        }
+
+        public NetworkMenu NetworkMenu
+        {
+            get;
+            set;
         }
 
         public static DependencyProperty CoverProperty =
@@ -171,6 +178,7 @@ namespace TCPlayer.Controls
                     SetInfoText("", fi.Name, "", Properties.Resources.SongData_Unknown, Size);
                     if (notify)
                     {
+                        SetupMenu(false);
                         SongChangeNotification.DisplaySongChangeNotification(FileName);
                         //App.NotifyIcon.ShowNotification(FileName);
                     }
@@ -198,6 +206,7 @@ namespace TCPlayer.Controls
                 var Title = tags.Tag.Title;
                 if (notify)
                 {
+                    SetupMenu(true, Artist, Title);
                     SongChangeNotification.DisplaySongChangeNotification(FileName, Artist, Title);
                     //App.NotifyIcon.ShowNotification(FileName, Artist, Title);
                 }
@@ -206,6 +215,24 @@ namespace TCPlayer.Controls
             catch (Exception)
             {
                 Reset();
+            }
+        }
+
+        private void SetupMenu(bool enabled)
+        {
+            if (NetworkMenu != null)
+            {
+                NetworkMenu.IsEnabled = enabled;
+            }
+        }
+
+        private void SetupMenu(bool enabled, string artist, string title)
+        {
+            if (NetworkMenu != null)
+            {
+                NetworkMenu.IsEnabled = enabled;
+                NetworkMenu.Artist = artist;
+                NetworkMenu.Song = $"{artist} - {title}";
             }
         }
 
@@ -226,6 +253,7 @@ namespace TCPlayer.Controls
             }
             if (notify)
             {
+                SetupMenu(true, Artist, Title);
                 SongChangeNotification.DisplaySongChangeNotification("CD Track" + track, Artist, Title);
                 //App.NotifyIcon.ShowNotification("CD Track" + track, Artist, Title);
             }
@@ -234,6 +262,7 @@ namespace TCPlayer.Controls
 
         public void Reset()
         {
+            SetupMenu(false);
             Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/unknown.png", UriKind.Relative));
             InfoText.Text = Properties.Resources.SongData_Error;
         }

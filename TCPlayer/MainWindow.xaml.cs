@@ -57,8 +57,8 @@ namespace TCPlayer
             _timer.Interval = TimeSpan.FromMilliseconds(40);
             _timer.IsEnabled = false;
             _timer.Tick += _timer_Tick;
+            SongDat.NetworkMenu = NetMenu;
             _loaded = true;
-
             BtnChapters.IsEnabled = _chapterprovider.ChaptersEnabled;
 
             if (_player.Is64Bit) Title += " (x64)";
@@ -558,11 +558,6 @@ namespace TCPlayer
         private void BtnChapters_Click(object sender, RoutedEventArgs e)
         {
             BtnChapters.ContextMenu.IsOpen = true;
-        }
-
-        private void ThumbPlay_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

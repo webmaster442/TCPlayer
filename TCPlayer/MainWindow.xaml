@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:props="clr-namespace:TCPlayer.Properties"
+    xmlns:netmenu="clr-namespace:TCPlayer.Controls.Network"
     x:Name="MainWin"
     Title="TC Player"
     Width="675"
@@ -71,27 +72,32 @@
                 <ColumnDefinition Width="32" />
                 <ColumnDefinition Width="32" />
                 <ColumnDefinition Width="32" />
+                <ColumnDefinition Width="32" />
             </Grid.ColumnDefinitions>
             <TextBlock
                 Margin="5,0"
                 Text="{Binding ElementName=MainWin, Path=Title}" />
+            <netmenu:NetworkMenu
+                IsEnabled="False"
+                x:Name="NetMenu"
+                Grid.Column="1"/>
             <Button
                 Style="{StaticResource TitleBarButton}"
                 x:Name="BtnSettings"
-                Grid.Column="1"
+                Grid.Column="2"
                 Click="BtnSettings_Click"
                 Content="{StaticResource IconSettings}"
                 ToolTip="{x:Static props:Resources.MainWin_Settings}" />
             <Button
                 Style="{StaticResource TitleBarButton}"
                 x:Name="BtnAbout"
-                Grid.Column="2"
+                Grid.Column="3"
                 Click="BtnAbout_Click"
                 Content="{StaticResource IconInformation}"
                 ToolTip="{x:Static props:Resources.MainWin_About}" />
             <ToggleButton
                 x:Name="AllWaysTop"
-                Grid.Column="3"
+                Grid.Column="4"
                 Background="Transparent"
                 BorderThickness="0"
                 BorderBrush="Transparent"
@@ -117,14 +123,14 @@
             <Button
                 Style="{StaticResource TitleBarButton}"
                 x:Name="TitlebarMinimize"
-                Grid.Column="4"
+                Grid.Column="5"
                 Click="TitlebarMinimize_Click"
                 Content="{StaticResource IconMinimize}"
                 ToolTip="{x:Static props:Resources.MainWin_Minimize}" />
             <Button
                 Style="{StaticResource TitleBarButton}"
                 x:Name="TitlebarClose"
-                Grid.Column="5"
+                Grid.Column="6"
                 Click="TitlebarClose_Click"
                 Content="{StaticResource IconClose}"
                 ToolTip="{x:Static props:Resources.MainWin_ExitApp}" />

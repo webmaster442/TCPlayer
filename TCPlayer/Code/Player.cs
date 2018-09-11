@@ -29,7 +29,7 @@ using TCPlayer.Properties;
 using WPFSoundVisualizationLib;
 namespace TCPlayer.Code
 {
-    internal class Player : IDisposable, ISpectrumPlayer
+    internal class Player : IDisposable, ISpectrumPlayer, INotifyPropertyChanged
     {
         public bool Is64Bit
         {
@@ -47,6 +47,7 @@ namespace TCPlayer.Code
         private DownloadProcedure _callback;
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         public event EventHandler<string> MetaChanged;
 
         private void NotifyPropertyChanged(string info)

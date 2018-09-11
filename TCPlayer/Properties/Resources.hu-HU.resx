@@ -393,4 +393,10 @@ A média gombok használatbavételéhez zárj be minden olyan egyéb alkalmazás
   <data name="Settings_NotificationPosition" xml:space="preserve">
     <value>Értesítési hely:</value>
   </data>
+  <data name="NetMenu_SearchArtist" xml:space="preserve">
+    <value>Keresés előadóra...</value>
+  </data>
+  <data name="NetMenu_SearchSong" xml:space="preserve">
+    <value>Keresés dalra...</value>
+  </data>
 </root>

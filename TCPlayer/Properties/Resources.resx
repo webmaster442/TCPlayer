@@ -393,4 +393,10 @@ To Use media key functions please close other apps that may use the keys, then r
   <data name="Settings_NotificationPosition" xml:space="preserve">
     <value>Notification position:</value>
   </data>
+  <data name="NetMenu_SearchArtist" xml:space="preserve">
+    <value>Search Artist...</value>
+  </data>
+  <data name="NetMenu_SearchSong" xml:space="preserve">
+    <value>Search Song...</value>
+  </data>
 </root>

@@ -61,6 +61,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -80,9 +81,12 @@
     <Compile Include="Controls\ITunesMenu.xaml.cs">
       <DependentUpon>ITunesMenu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\NetworkMenu\NetworkMenu.xaml.cs">
+    <Compile Include="Controls\Network\Constants.cs" />
+    <Compile Include="Controls\Network\NetworkMenu.xaml.cs">
       <DependentUpon>NetworkMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Network\NetworkSearchProvider.cs" />
+    <Compile Include="Controls\Network\SearchCommand.cs" />
     <Compile Include="Lib\TagLib\Aac\AudioHeader.cs" />
     <Compile Include="Lib\TagLib\Aac\BitStream.cs" />
     <Compile Include="Lib\TagLib\Aac\File.cs" />
@@ -401,7 +405,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\NetworkMenu\NetworkMenu.xaml">
+    <Page Include="Controls\Network\NetworkMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

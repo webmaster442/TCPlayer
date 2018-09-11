@@ -397,6 +397,24 @@ namespace TCPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search Artist....
+        /// </summary>
+        public static string NetMenu_SearchArtist {
+            get {
+                return ResourceManager.GetString("NetMenu_SearchArtist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search Song....
+        /// </summary>
+        public static string NetMenu_SearchSong {
+            get {
+                return ResourceManager.GetString("NetMenu_SearchSong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to TC Player is running.
         /// </summary>
         public static string Notify_Text {
