@@ -390,4 +390,7 @@ To Use media key functions please close other apps that may use the keys, then r
   <data name="Playlist_MenuItunes" xml:space="preserve">
     <value>[ iTunes ]</value>
   </data>
+  <data name="Settings_NotificationPosition" xml:space="preserve">
+    <value>Notification position:</value>
+  </data>
 </root>

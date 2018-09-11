@@ -41,7 +41,7 @@
                 <TextBlock
                     IsEnabled="{Binding ElementName=Notify, Path=IsChecked}"
                     Margin="10,2"
-                    Text="Notification position:" />
+                    Text="{x:Static props:Resources.Settings_NotificationPosition}" />
                 <notification:NotificationPlaceSelector
                     IsEnabled="{Binding ElementName=Notify, Path=IsChecked}"
                     Width="100"
@@ -70,7 +70,7 @@
                     x:Name="BtnSoundFont"
                     MinWidth="80"
                     MaxWidth="200"
-                    Margin="5,2"
+                    Margin="25,2"
                     HorizontalAlignment="Left"
                     Click="BtnSoundFont_Click"
                     Content="{Binding Source={x:Static props:Settings.Default}, Path=SoundfontPath, Mode=TwoWay, Converter={StaticResource NullorValueConv}, ConverterParameter={x:Static props:Resources.Settings_SoundfontButton}}"

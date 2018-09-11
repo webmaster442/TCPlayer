@@ -390,4 +390,7 @@ A média gombok használatbavételéhez zárj be minden olyan egyéb alkalmazás
   <data name="Playlist_MenuItunes" xml:space="preserve">
     <value>[ iTunes ]</value>
   </data>
+  <data name="Settings_NotificationPosition" xml:space="preserve">
+    <value>Értesítési hely:</value>
+  </data>
 </root>

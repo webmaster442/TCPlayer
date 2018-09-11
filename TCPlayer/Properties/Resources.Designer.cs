@@ -739,6 +739,15 @@ namespace TCPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Notification position:.
+        /// </summary>
+        public static string Settings_NotificationPosition {
+            get {
+                return ResourceManager.GetString("Settings_NotificationPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Send notifications on track change.
         /// </summary>
         public static string Settings_Notify {
