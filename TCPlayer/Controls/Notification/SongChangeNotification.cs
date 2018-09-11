@@ -9,7 +9,7 @@ namespace TCPlayer.Controls.Notification
 
         public static void DisplaySongChangeNotification(string row1)
         {
-            DisplaySongChangeNotification(row1);
+            DisplaySongChangeNotification(row1, null, null);
         }
 
         public static void DisplaySongChangeNotification(string row1, string row2, string row3 = null)
