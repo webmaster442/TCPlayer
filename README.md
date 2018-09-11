@@ -6,7 +6,6 @@ Website: https://webmaster442.github.io/TCPlayer/
 ![alt text](readme/shot01.png "TC Player")
 ![alt text](readme/shot02.png "TC Player")
 ![alt text](readme/shot03.png "TC Player")
-![alt text](readme/shot04.png "TC Player")
 
 The software uses the following components made by others:
 
