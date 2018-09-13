@@ -347,6 +347,7 @@
     </Compile>
     <Compile Include="Style\LeftMarginMultiplierConverter.cs" />
     <Compile Include="Style\NullorValueConverter.cs" />
+    <Compile Include="Style\PositionToTimeStringConverter.cs" />
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

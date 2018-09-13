@@ -15,7 +15,8 @@
                         x:Name="Thumb"
                         Width="24"
                         Height="24"
-                        Fill="White" />
+                        Fill="White"
+                        ToolTip="{TemplateBinding ToolTip}" />
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Thumb" Property="Fill" Value="Orange" />
@@ -68,10 +69,12 @@
                     Foreground="Orange"
                     Maximum="{TemplateBinding Maximum}"
                     Minimum="{TemplateBinding Minimum}"
+                    ToolTip="{TemplateBinding ToolTip}"
                     Value="{TemplateBinding Value}" />
                 <Track
                     x:Name="PART_Track"
-                    Grid.Row="1">
+                    Grid.Row="1"
+                    ToolTip="{TemplateBinding ToolTip}">
                     <Track.DecreaseRepeatButton>
                         <RepeatButton
                             Command="{x:Static Slider.DecreaseLarge}"

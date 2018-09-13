@@ -5,23 +5,24 @@
     xmlns:controls="clr-namespace:TCPlayer.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:props="clr-namespace:TCPlayer.Properties"
     xmlns:netmenu="clr-namespace:TCPlayer.Controls.Network"
+    xmlns:props="clr-namespace:TCPlayer.Properties"
+    xmlns:style="clr-namespace:TCPlayer.Style"
     x:Name="MainWin"
     Title="TC Player"
     Width="675"
-    Height="360"
+    Height="365"
     AllowDrop="True"
     Closing="MainWin_Closing"
     Drop="MainWin_Drop"
     Icon="icon.png"
     Left="{Binding Source={x:Static props:Settings.Default}, Path=Left, Mode=TwoWay}"
+    Opacity="0.9"
     PreviewKeyDown="MainWin_PreviewKeyDown"
     SourceInitialized="MainWin_SourceInitialized"
     Style="{StaticResource Window}"
     Top="{Binding Source={x:Static props:Settings.Default}, Path=Top, Mode=TwoWay}"
     Topmost="{Binding Source={x:Static props:Settings.Default}, Path=TopMost, Mode=TwoWay}"
-    Opacity="0.9"
     mc:Ignorable="d">
     <Window.TaskbarItemInfo>
         <TaskbarItemInfo
@@ -78,29 +79,29 @@
                 Margin="5,0"
                 Text="{Binding ElementName=MainWin, Path=Title}" />
             <netmenu:NetworkMenu
-                IsEnabled="False"
                 x:Name="NetMenu"
-                Grid.Column="1"/>
+                Grid.Column="1"
+                IsEnabled="False" />
             <Button
-                Style="{StaticResource TitleBarButton}"
                 x:Name="BtnSettings"
                 Grid.Column="2"
                 Click="BtnSettings_Click"
                 Content="{StaticResource IconSettings}"
+                Style="{StaticResource TitleBarButton}"
                 ToolTip="{x:Static props:Resources.MainWin_Settings}" />
             <Button
-                Style="{StaticResource TitleBarButton}"
                 x:Name="BtnAbout"
                 Grid.Column="3"
                 Click="BtnAbout_Click"
                 Content="{StaticResource IconInformation}"
+                Style="{StaticResource TitleBarButton}"
                 ToolTip="{x:Static props:Resources.MainWin_About}" />
             <ToggleButton
                 x:Name="AllWaysTop"
                 Grid.Column="4"
                 Background="Transparent"
-                BorderThickness="0"
                 BorderBrush="Transparent"
+                BorderThickness="0"
                 IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=TopMost, Mode=TwoWay}">
                 <ToggleButton.Resources>
                     <Style
@@ -121,18 +122,18 @@
                 </ToggleButton.Resources>
             </ToggleButton>
             <Button
-                Style="{StaticResource TitleBarButton}"
                 x:Name="TitlebarMinimize"
                 Grid.Column="5"
                 Click="TitlebarMinimize_Click"
                 Content="{StaticResource IconMinimize}"
+                Style="{StaticResource TitleBarButton}"
                 ToolTip="{x:Static props:Resources.MainWin_Minimize}" />
             <Button
-                Style="{StaticResource TitleBarButton}"
                 x:Name="TitlebarClose"
                 Grid.Column="6"
                 Click="TitlebarClose_Click"
                 Content="{StaticResource IconClose}"
+                Style="{StaticResource TitleBarButton}"
                 ToolTip="{x:Static props:Resources.MainWin_ExitApp}" />
         </Grid>
         <Border
@@ -198,13 +199,19 @@
                         x:Name="SeekSlider"
                         Grid.Row="2"
                         Margin="10,10"
+                        PreviewMouseDown="SeekSlider_MouseDown"
+                        Style="{StaticResource SongSlider}"
                         Thumb.DragCompleted="SeekSlider_DragCompleted"
                         Thumb.DragStarted="SeekSlider_DragStarted"
-                        ValueChanged="SeekSlider_ValueChanged"
-                        Style="{StaticResource SongSlider}"/>
+                        ValueChanged="SeekSlider_ValueChanged">
+                        <Slider.ToolTip>
+                            <ToolTip
+                                Content="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Value, Converter={style:PositionToTimeStringConverter}}" />
+                        </Slider.ToolTip>
+                    </Slider>
                     <StackPanel
                         Grid.Row="3"
-                        Margin="10,0"
+                        Margin="10,0,10,5"
                         Orientation="Horizontal">
                         <TextBlock
                             x:Name="TbFullTime"

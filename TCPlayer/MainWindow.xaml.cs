@@ -251,6 +251,7 @@ namespace TCPlayer
             Taskbar.ProgressState = TaskbarItemProgressState.Normal;
             Taskbar.ProgressValue = 0;
             TbCurrTime.Text = TimeSpan.FromSeconds(0).ToShortTime();
+            TbCurrTime.ToolTip = TimeSpan.FromSeconds(0).ToShortTime();
             TbFullTime.Text = TimeSpan.FromSeconds(0).ToShortTime();
         }
 
@@ -305,6 +306,7 @@ namespace TCPlayer
                 }
                 var pos = TimeSpan.FromSeconds(_player.Position);
                 TbCurrTime.Text = pos.ToShortTime();
+                TbCurrTime.ToolTip = TimeSpan.FromSeconds(_player.Length - _player.Position).ToShortTime();
                 if (_player.IsStream) SeekSlider.Value = 0;
                 else
                 {
@@ -558,6 +560,21 @@ namespace TCPlayer
         private void BtnChapters_Click(object sender, RoutedEventArgs e)
         {
             BtnChapters.ContextMenu.IsOpen = true;
+        }
+
+        private void SeekSlider_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                _isdrag = true;
+                var point = e.GetPosition(SeekSlider);
+                var newvalue = (_player.Length / SeekSlider.ActualWidth) * point.X;
+                if (newvalue > 0)
+                {
+                    _player.Position = newvalue;
+                }
+                _isdrag = false;
+            }
         }
     }
 }
