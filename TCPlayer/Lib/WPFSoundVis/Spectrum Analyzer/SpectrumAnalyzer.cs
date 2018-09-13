@@ -929,9 +929,19 @@ namespace WPFSoundVisualizationLib
         public void RegisterSoundPlayer(ISpectrumPlayer soundPlayer)
         {
             this.soundPlayer = soundPlayer;
-            soundPlayer.PropertyChanged += soundPlayer_PropertyChanged;
+            this.soundPlayer.PropertyChanged += soundPlayer_PropertyChanged;
             UpdateBarLayout();
             animationTimer.Start();
+        }
+
+        public void UnRegisterSoundPlayer()
+        {
+            if (this.soundPlayer != null)
+            {
+                this.soundPlayer.PropertyChanged -= soundPlayer_PropertyChanged;
+                this.soundPlayer = null;
+            }
+            animationTimer.Stop();
         }
         #endregion
 
@@ -968,6 +978,9 @@ namespace WPFSoundVisualizationLib
                 return;
 
             if (soundPlayer.IsPlaying && !soundPlayer.GetFFTData(channelData))
+                return;
+
+            if (Visibility == Visibility.Collapsed)
                 return;
 
             UpdateSpectrumShapes();
@@ -1133,6 +1146,8 @@ namespace WPFSoundVisualizationLib
                 case "IsPlaying":
                     if (soundPlayer.IsPlaying && !animationTimer.IsEnabled)
                         animationTimer.Start();
+                    else
+                        animationTimer.Stop();
                     break;
             }
         }

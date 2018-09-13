@@ -45,5 +45,13 @@ namespace WPFSoundVisualizationLib
         /// <param name="frequency">The frequency for which to obtain a buffer index</param>
         /// <returns>An index in the FFT data buffer</returns>
         int GetFFTFrequencyIndex(int frequency);
+
+        /// <summary>
+        /// Get channel data
+        /// </summary>
+        /// <param name="data">raw channel data</param>
+        /// <param name="seconds">time frame for raw channel data</param>
+        /// <returns>True if data was written to the buffer, otherwise false.</returns>
+        bool GetChannelData(out short[] data, float seconds);
     }
 }

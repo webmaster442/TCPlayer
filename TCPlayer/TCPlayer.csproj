@@ -87,6 +87,9 @@
     </Compile>
     <Compile Include="Controls\Network\NetworkSearchProvider.cs" />
     <Compile Include="Controls\Network\SearchCommand.cs" />
+    <Compile Include="Controls\WaveForm.xaml.cs">
+      <DependentUpon>WaveForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Lib\TagLib\Aac\AudioHeader.cs" />
     <Compile Include="Lib\TagLib\Aac\BitStream.cs" />
     <Compile Include="Lib\TagLib\Aac\File.cs" />
@@ -423,6 +426,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\SongData.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WaveForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

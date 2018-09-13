@@ -36,6 +36,9 @@ namespace TCPlayer
         internal static string DiscID;
         internal static HashSet<string> RecentUrls;
 
+        private static bool _active;
+        private static bool _prevactive;
+
         [STAThread]
         public static void Main()
         {
@@ -59,10 +62,30 @@ namespace TCPlayer
                 FillUrlList();
                 application.InitializeComponent();
                 application.ShutdownMode = ShutdownMode.OnMainWindowClose;
-                application.Run();
+                application.MainWindow = new MainWindow();
+                application.MainWindow.Activated += MainWindow_Activated;
+                application.MainWindow.Deactivated += MainWindow_Deactivated;
+                application.Run(application.MainWindow);
                 si.Close();
             }
             else si.SubmitParameters();
+        }
+
+        private static void MainWindow_Deactivated(object sender, EventArgs e)
+        {
+            _prevactive = _active;
+            _active = false;
+        }
+
+        private static void MainWindow_Activated(object sender, EventArgs e)
+        {
+            _prevactive = _active;
+            _active = false;
+        }
+
+        public static bool WasMainWinActive
+        {
+            get { return _prevactive == false && _active == true;  }
         }
 
         private static void FillUrlList()

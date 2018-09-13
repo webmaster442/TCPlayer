@@ -46,7 +46,7 @@ namespace TCPlayer.Controls
             if (DesignerProperties.GetIsInDesignMode(this)) return;
             _player = Player.Instance;
             _player.MetaChanged += _player_MetaChanged;
-            Spectrum.RegisterSoundPlayer(_player);
+            WaveForm.RegisterSoundPlayer(_player);
         }
 
         public NetworkMenu NetworkMenu
@@ -265,6 +265,33 @@ namespace TCPlayer.Controls
             SetupMenu(false);
             Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/unknown.png", UriKind.Relative));
             InfoText.Text = Properties.Resources.SongData_Error;
+        }
+
+        private void VisualContainer_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (!App.WasMainWinActive) return;
+
+            if (WaveForm.Visibility == Visibility.Visible)
+            {
+                WaveForm.UnRegisterSoundPlayer();
+                WaveForm.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                WaveForm.Visibility = Visibility.Visible;
+                WaveForm.RegisterSoundPlayer(_player);
+            }
+
+            if (Spectrum.Visibility == Visibility.Visible)
+            {
+                Spectrum.UnRegisterSoundPlayer();
+                Spectrum.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                Spectrum.Visibility = Visibility.Visible;
+                Spectrum.RegisterSoundPlayer(_player);
+            }
         }
     }
 }

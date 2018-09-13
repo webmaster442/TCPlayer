@@ -294,6 +294,7 @@ namespace TCPlayer.Code
             Bass.ChannelPlay(_mixer, false);
             _paused = false;
             IsPlaying = true;
+            NotifyPropertyChanged(nameof(IsPlaying));
         }
 
         public void VolumeValues(out int left, out int right)
@@ -365,7 +366,7 @@ namespace TCPlayer.Code
             {
                 if (value == _isplaying) return;
                 _isplaying = value;
-                NotifyPropertyChanged("IsPlaying");
+                NotifyPropertyChanged(nameof(IsPlaying));
             }
         }
 
@@ -497,6 +498,24 @@ namespace TCPlayer.Code
             int num = (int)Math.Round((double)length * (double)frequency / (double)Properties.Settings.Default.SampleRate);
             if (num > length / 2 - 1) num = length / 2 - 1;
             return num;
+        }
+
+        public bool GetChannelData(out short[] data, float seconds)
+        {
+            var length = (int)Bass.ChannelSeconds2Bytes(_mixer, seconds);
+            if (length > 0)
+            {
+                data = new short[length / 2];
+                length = Bass.ChannelGetData(_mixer, data, length);
+                return true;
+            }
+            data = null;
+            return false;
+        }
+
+        public void GetPlaybackStateNotification()
+        {
+            NotifyPropertyChanged(nameof(IsPlaying));
         }
     }
 }
