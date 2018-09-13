@@ -1,10 +1,13 @@
 #2.5
- * Playlist can now acces songs from iTunes (Requires iTunes to be installed)
+ * Playlist can now acces songs from iTunes (If iTunes is installed)
  * New, more flexible song notification
  * Changed player skin
  * Small internal nullreference issue fix
  * Gapeless playback improvements
  * Program now requires .net 4.7
+ * New default visualizer: WaveForm
+ * Visuals can be changed by clicking on them
+ * Network search menu for song and artist
 
 #2.1 - 2018.09.07
  * Just source code release
