@@ -50,6 +50,27 @@ namespace TCPlayer.Code
             else return File.OpenText(file);
         }
 
+        public static async Task<string[]> LoadASX(string file)
+        {
+            try
+            {
+                var content = await LoadFile(file);
+                var doc = XDocument.Load(content).Descendants("asx").Elements("entry").Elements("ref");
+                List<string> ret = new List<string>();
+                foreach (var media in doc)
+                {
+                    var src = media.Attribute("href").Value;
+                    ret.Add(src);
+                }
+                return ret.ToArray();
+            }
+            catch (Exception ex)
+            {
+                Helpers.ErrorDialog(ex, Resources.Error_FileLoad);
+                return null;
+            }
+        }
+
         public static async Task<string[]> LoadM3u(string file)
         {
             try
@@ -91,49 +112,6 @@ namespace TCPlayer.Code
             }
         }
 
-        public static async Task<string[]> LoadWPL(string file)
-        {
-            try
-            {
-                var content = await LoadFile(file);
-                var doc = XDocument.Load(content).Descendants("body").Elements("seq").Elements("media");
-                List<string> ret = new List<string>();
-                foreach (var media in doc)
-                {
-                    var src = media.Attribute("src").Value;
-                    ret.Add(src);
-                }
-                return ret.ToArray();
-            }
-            catch (Exception ex)
-            {
-                Helpers.ErrorDialog(ex, Resources.Error_FileLoad);
-                return null;
-            }
-        }
-
-        public static async Task<string[]> LoadASX(string file)
-        {
-            try
-            {
-                var content = await LoadFile(file);
-                var doc = XDocument.Load(content).Descendants("asx").Elements("entry").Elements("ref");
-                List<string> ret = new List<string>();
-                foreach (var media in doc)
-                {
-                    var src = media.Attribute("href").Value;
-                    ret.Add(src);
-                }
-                return ret.ToArray();
-            }
-            catch (Exception ex)
-            {
-                Helpers.ErrorDialog(ex, Resources.Error_FileLoad);
-                return null;
-            }
-        }
-
-
         public static async Task<string[]> LoadPls(string file)
         {
             try
@@ -169,6 +147,27 @@ namespace TCPlayer.Code
                     while (line != null);
                     return ret.ToArray();
                 }
+            }
+            catch (Exception ex)
+            {
+                Helpers.ErrorDialog(ex, Resources.Error_FileLoad);
+                return null;
+            }
+        }
+
+        public static async Task<string[]> LoadWPL(string file)
+        {
+            try
+            {
+                var content = await LoadFile(file);
+                var doc = XDocument.Load(content).Descendants("body").Elements("seq").Elements("media");
+                List<string> ret = new List<string>();
+                foreach (var media in doc)
+                {
+                    var src = media.Attribute("src").Value;
+                    ret.Add(src);
+                }
+                return ret.ToArray();
             }
             catch (Exception ex)
             {

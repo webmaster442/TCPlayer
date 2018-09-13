@@ -26,9 +26,13 @@ namespace TCPlayer.Controls
     /// </summary>
     public partial class Settings : UserControl
     {
-        public Settings()
+        private void BtnClearHistory_Click(object sender, RoutedEventArgs e)
         {
-            InitializeComponent();
+            Properties.Settings.Default.RecentURLs = "";
+            App.RecentUrls.Clear();
+            MessageBox.Show(Properties.Resources.Settings_UrlHistoryCleared,
+                            Properties.Resources.Settings_UrlHistoryClearTitle,
+                            MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void BtnSoundFont_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -43,13 +47,9 @@ namespace TCPlayer.Controls
             }
         }
 
-        private void BtnClearHistory_Click(object sender, RoutedEventArgs e)
+        public Settings()
         {
-            Properties.Settings.Default.RecentURLs = "";
-            App.RecentUrls.Clear();
-            MessageBox.Show(Properties.Resources.Settings_UrlHistoryCleared,
-                            Properties.Resources.Settings_UrlHistoryClearTitle,
-                            MessageBoxButton.OK, MessageBoxImage.Information);
+            InitializeComponent();
         }
     }
 }

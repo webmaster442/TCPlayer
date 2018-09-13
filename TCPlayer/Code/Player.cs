@@ -31,34 +31,23 @@ namespace TCPlayer.Code
 {
     internal class Player : IDisposable, ISpectrumPlayer, INotifyPropertyChanged
     {
-        public bool Is64Bit
-        {
-            get { return IntPtr.Size == 8; }
-        }
-
-        private bool _initialized;
-        private int _source, _mixer;
-        private float _lastvol;
-        private bool _paused;
-        private bool _isplaying;
-        private bool _isstream;
         private static readonly Player _instance = new Player();
+
         private readonly int _maxfft;
+
         private DownloadProcedure _callback;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        private bool _initialized;
 
-        public event EventHandler<string> MetaChanged;
+        private bool _isplaying;
 
-        private void NotifyPropertyChanged(string info)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(info));
-        }
+        private bool _isstream;
 
-        public static Player Instance
-        {
-            get { return _instance; }
-        }
+        private float _lastvol;
+
+        private bool _paused;
+
+        private int _source, _mixer;
 
         private Player()
         {
@@ -86,38 +75,6 @@ namespace TCPlayer.Code
             _maxfft = (int)(DataFlags.Available | DataFlags.FFT2048);
         }
 
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_source != 0)
-            {
-                if (_mixer != 0)
-                {
-                    Stop();
-                }
-                _mixer = 0;
-                _source = 0;
-            }
-            if (_initialized) Bass.Free();
-            BassCd.Unload();
-            BassMix.Unload();
-            Bass.PluginFree(0);
-            Bass.Free();
-            GC.SuppressFinalize(this);
-        }
-
-        public bool IsStream
-        {
-            get { return _isstream; }
-        }
-
-        /// <summary>
-        /// Free used resources
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-        }
-
         /// <summary>
         /// Display Error message
         /// </summary>
@@ -127,51 +84,6 @@ namespace TCPlayer.Code
             var error = Bass.LastError;
             string text = string.Format(Resources.Engine_Error, message, (int)error, error);
             throw new Exception(text);
-        }
-
-        /// <summary>
-        /// Gets the channel length
-        /// </summary>
-        public double Length
-        {
-            get
-            {
-                var len = Bass.ChannelGetLength(_source);
-                return Bass.ChannelBytes2Seconds(_source, len);
-            }
-        }
-
-        public double Position
-        {
-            get
-            {
-                var pos = Bass.ChannelGetPosition(_source);
-                return Bass.ChannelBytes2Seconds(_source, pos);
-            }
-            set
-            {
-                var pos = Bass.ChannelSeconds2Bytes(_source, value);
-                Bass.ChannelSetPosition(_source, pos);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the Channel volume
-        /// </summary>
-        public float Volume
-        {
-            get
-            {
-
-                float temp = 0.0f;
-                Bass.ChannelGetAttribute(_mixer, ChannelAttribute.Volume, out temp);
-                return temp;
-            }
-            set
-            {
-                Bass.ChannelSetAttribute(_mixer, ChannelAttribute.Volume, value);
-                _lastvol = value;
-            }
         }
 
         private void MyDownloadProc(IntPtr buffer, int length, IntPtr user)
@@ -193,6 +105,11 @@ namespace TCPlayer.Code
                         MetaChanged(this, PtocessTags(array, true));
                 }
             }
+        }
+
+        private void NotifyPropertyChanged(string info)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(info));
         }
 
         private string PtocessTags(string[] array, bool icecast = false)
@@ -217,6 +134,280 @@ namespace TCPlayer.Code
                 }
             }
             return ret;
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_source != 0)
+            {
+                if (_mixer != 0)
+                {
+                    Stop();
+                }
+                _mixer = 0;
+                _source = 0;
+            }
+            if (_initialized) Bass.Free();
+            BassCd.Unload();
+            BassMix.Unload();
+            Bass.PluginFree(0);
+            Bass.Free();
+            GC.SuppressFinalize(this);
+        }
+
+        public event EventHandler<string> MetaChanged;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public static Player Instance
+        {
+            get { return _instance; }
+        }
+
+        /// <summary>
+        /// Currently used device index. Used for setting saving
+        /// </summary>
+        public int CurrentDeviceID
+        {
+            get;
+            private set;
+        }
+
+        public bool Is64Bit
+        {
+            get { return IntPtr.Size == 8; }
+        }
+        /// <summary>
+        /// IsPaused state
+        /// </summary>
+        public bool IsPaused
+        {
+            get
+            {
+                return _paused || (_mixer == 0);
+            }
+        }
+
+        public bool IsPlaying
+        {
+            get { return _isplaying; }
+            set
+            {
+                if (value == _isplaying) return;
+                _isplaying = value;
+                NotifyPropertyChanged(nameof(IsPlaying));
+            }
+        }
+
+        public bool IsStream
+        {
+            get { return _isstream; }
+        }
+
+        /// <summary>
+        /// Gets the channel length
+        /// </summary>
+        public double Length
+        {
+            get
+            {
+                var len = Bass.ChannelGetLength(_source);
+                return Bass.ChannelBytes2Seconds(_source, len);
+            }
+        }
+
+        /// <summary>
+        /// Returns mixer handle
+        /// </summary>
+        public int MixerHandle
+        {
+            get { return _mixer; }
+        }
+
+        public double Position
+        {
+            get
+            {
+                var pos = Bass.ChannelGetPosition(_source);
+                return Bass.ChannelBytes2Seconds(_source, pos);
+            }
+            set
+            {
+                var pos = Bass.ChannelSeconds2Bytes(_source, value);
+                Bass.ChannelSetPosition(_source, pos);
+            }
+        }
+
+        /// <summary>
+        /// Player source handle
+        /// </summary>
+        public int SourceHandle
+        {
+            get { return _source; }
+        }
+
+        /// <summary>
+        /// Gets or sets the Channel volume
+        /// </summary>
+        public float Volume
+        {
+            get
+            {
+
+                float temp = 0.0f;
+                Bass.ChannelGetAttribute(_mixer, ChannelAttribute.Volume, out temp);
+                return temp;
+            }
+            set
+            {
+                Bass.ChannelSetAttribute(_mixer, ChannelAttribute.Volume, value);
+                _lastvol = value;
+            }
+        }
+
+        /// <summary>
+        /// List tracks on a CD drive
+        /// </summary>
+        /// <param name="drive">CD drive path</param>
+        /// <returns>An array of playlist entry's</returns>
+        public static string[] GetCdInfo(string drive)
+        {
+            var list = new List<string>();
+
+            int drivecount = BassCd.DriveCount;
+            int driveindex = 0;
+            for (int i = 0; i < drivecount; i++)
+            {
+
+                var info = BassCd.GetInfo(i);
+                if (info.DriveLetter == drive[0])
+                {
+                    driveindex = i;
+                    break;
+                }
+            }
+
+            if (BassCd.IsReady(driveindex))
+            {
+                var numtracks = BassCd.GetTracks(driveindex);
+                var discid = BassCd.GetID(0, CDID.CDDB); //cddb connect
+                if (App.DiscID != discid)
+                {
+                    var datas = BassCd.GetIDText(driveindex);
+                    App.DiscID = discid;
+                    App.CdData.Clear();
+                    foreach (var data in datas)
+                    {
+                        var item = data.Split('=');
+                        App.CdData.Add(item[0], item[1]);
+                    }
+                }
+                for (int i = 0; i < numtracks; i++)
+                {
+                    var entry = string.Format("cd://{0}/{1}", driveindex, i);
+                    list.Add(entry);
+                }
+            }
+            BassCd.Release(driveindex);
+            return list.ToArray();
+        }
+
+        /// <summary>
+        /// Change output device
+        /// </summary>
+        /// <param name="name">string device</param>
+        public void ChangeDevice(string name = null)
+        {
+            if (name == null)
+            {
+                CurrentDeviceID = -1;
+                if (Properties.Settings.Default.SaveDevice)
+                    CurrentDeviceID = Properties.Settings.Default.DeviceID;
+
+                _initialized = Bass.Init(CurrentDeviceID, 48000, DeviceInitFlags.Frequency, IntPtr.Zero);
+                if (!_initialized)
+                {
+                    Properties.Settings.Default.DeviceID = 0;
+                    Properties.Settings.Default.Save();
+                    Error(Resources.Engine_ErrorBass);
+                    return;
+                }
+                Bass.Start();
+            }
+            for (int i = 0; i < Bass.DeviceCount; i++)
+            {
+                var device = Bass.GetDeviceInfo(i);
+                if (device.Name == name)
+                {
+                    if (_initialized)
+                    {
+                        Bass.Free();
+                        _initialized = false;
+                    }
+
+                    _initialized = Bass.Init(i, Settings.Default.SampleRate, DeviceInitFlags.Frequency, IntPtr.Zero);
+                    CurrentDeviceID = i;
+                    if (!_initialized)
+                    {
+                        Error(Resources.Engine_ErrorBass);
+                        return;
+                    }
+                    Bass.Start();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Free used resources
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+        public bool GetChannelData(out short[] data, float seconds)
+        {
+            var length = (int)Bass.ChannelSeconds2Bytes(_mixer, seconds);
+            if (length > 0)
+            {
+                data = new short[length / 2];
+                length = Bass.ChannelGetData(_mixer, data, length);
+                return true;
+            }
+            data = null;
+            return false;
+        }
+
+        /// <summary>
+        /// Gets the available output devices
+        /// </summary>
+        /// <returns>device names in an array</returns>
+        public string[] GetDevices()
+        {
+            List<string> _devices = new List<string>(Bass.DeviceCount);
+            for (int i = 1; i < Bass.DeviceCount; i++)
+            {
+                var device = Bass.GetDeviceInfo(i);
+                if (device.IsEnabled) _devices.Add(device.Name);
+            }
+            return _devices.ToArray();
+        }
+
+        public bool GetFFTData(float[] fftDataBuffer)
+        {
+            return Bass.ChannelGetData(_mixer, fftDataBuffer, _maxfft) > 0;
+        }
+
+        public int GetFFTFrequencyIndex(int frequency)
+        {
+            var length = (int)FFTDataSize.FFT2048;
+            int num = (int)Math.Round((double)length * (double)frequency / (double)Properties.Settings.Default.SampleRate);
+            if (num > length / 2 - 1) num = length / 2 - 1;
+            return num;
+        }
+
+        public void GetPlaybackStateNotification()
+        {
+            NotifyPropertyChanged(nameof(IsPlaying));
         }
 
         /// <summary>
@@ -297,28 +488,6 @@ namespace TCPlayer.Code
             NotifyPropertyChanged(nameof(IsPlaying));
         }
 
-        public void VolumeValues(out int left, out int right)
-        {
-            left = Bass.ChannelGetLevelLeft(_mixer);
-            right = Bass.ChannelGetLevelRight(_mixer);
-        }
-
-        /// <summary>
-        /// Player source handle
-        /// </summary>
-        public int SourceHandle
-        {
-            get { return _source; }
-        }
-
-        /// <summary>
-        /// Returns mixer handle
-        /// </summary>
-        public int MixerHandle
-        {
-            get { return _mixer; }
-        }
-
         /// <summary>
         /// Play / Pause
         /// </summary>
@@ -348,174 +517,10 @@ namespace TCPlayer.Code
             _paused = false;
         }
 
-        /// <summary>
-        /// IsPaused state
-        /// </summary>
-        public bool IsPaused
+        public void VolumeValues(out int left, out int right)
         {
-            get
-            {
-                return _paused || (_mixer == 0);
-            }
-        }
-
-        public bool IsPlaying
-        {
-            get { return _isplaying; }
-            set
-            {
-                if (value == _isplaying) return;
-                _isplaying = value;
-                NotifyPropertyChanged(nameof(IsPlaying));
-            }
-        }
-
-        /// <summary>
-        /// Gets the available output devices
-        /// </summary>
-        /// <returns>device names in an array</returns>
-        public string[] GetDevices()
-        {
-            List<string> _devices = new List<string>(Bass.DeviceCount);
-            for (int i = 1; i < Bass.DeviceCount; i++)
-            {
-                var device = Bass.GetDeviceInfo(i);
-                if (device.IsEnabled) _devices.Add(device.Name);
-            }
-            return _devices.ToArray();
-        }
-
-        /// <summary>
-        /// Currently used device index. Used for setting saving
-        /// </summary>
-        public int CurrentDeviceID
-        {
-            get;
-            private set;
-        }
-
-
-        /// <summary>
-        /// Change output device
-        /// </summary>
-        /// <param name="name">string device</param>
-        public void ChangeDevice(string name = null)
-        {
-            if (name == null)
-            {
-                CurrentDeviceID = -1;
-                if (Properties.Settings.Default.SaveDevice)
-                    CurrentDeviceID = Properties.Settings.Default.DeviceID;
-
-                _initialized = Bass.Init(CurrentDeviceID, 48000, DeviceInitFlags.Frequency, IntPtr.Zero);
-                if (!_initialized)
-                {
-                    Properties.Settings.Default.DeviceID = 0;
-                    Properties.Settings.Default.Save();
-                    Error(Resources.Engine_ErrorBass);
-                    return;
-                }
-                Bass.Start();
-            }
-            for (int i = 0; i < Bass.DeviceCount; i++)
-            {
-                var device = Bass.GetDeviceInfo(i);
-                if (device.Name == name)
-                {
-                    if (_initialized)
-                    {
-                        Bass.Free();
-                        _initialized = false;
-                    }
-
-                    _initialized = Bass.Init(i, Settings.Default.SampleRate, DeviceInitFlags.Frequency, IntPtr.Zero);
-                    CurrentDeviceID = i;
-                    if (!_initialized)
-                    {
-                        Error(Resources.Engine_ErrorBass);
-                        return;
-                    }
-                    Bass.Start();
-                }
-            }
-        }
-
-        /// <summary>
-        /// List tracks on a CD drive
-        /// </summary>
-        /// <param name="drive">CD drive path</param>
-        /// <returns>An array of playlist entry's</returns>
-        public static string[] GetCdInfo(string drive)
-        {
-            var list = new List<string>();
-
-            int drivecount = BassCd.DriveCount;
-            int driveindex = 0;
-            for (int i = 0; i < drivecount; i++)
-            {
-
-                var info = BassCd.GetInfo(i);
-                if (info.DriveLetter == drive[0])
-                {
-                    driveindex = i;
-                    break;
-                }
-            }
-
-            if (BassCd.IsReady(driveindex))
-            {
-                var numtracks = BassCd.GetTracks(driveindex);
-                var discid = BassCd.GetID(0, CDID.CDDB); //cddb connect
-                if (App.DiscID != discid)
-                {
-                    var datas = BassCd.GetIDText(driveindex);
-                    App.DiscID = discid;
-                    App.CdData.Clear();
-                    foreach (var data in datas)
-                    {
-                        var item = data.Split('=');
-                        App.CdData.Add(item[0], item[1]);
-                    }
-                }
-                for (int i = 0; i < numtracks; i++)
-                {
-                    var entry = string.Format("cd://{0}/{1}", driveindex, i);
-                    list.Add(entry);
-                }
-            }
-            BassCd.Release(driveindex);
-            return list.ToArray();
-        }
-
-        public bool GetFFTData(float[] fftDataBuffer)
-        {
-            return Bass.ChannelGetData(_mixer, fftDataBuffer, _maxfft) > 0;
-        }
-
-        public int GetFFTFrequencyIndex(int frequency)
-        {
-            var length = (int)FFTDataSize.FFT2048;
-            int num = (int)Math.Round((double)length * (double)frequency / (double)Properties.Settings.Default.SampleRate);
-            if (num > length / 2 - 1) num = length / 2 - 1;
-            return num;
-        }
-
-        public bool GetChannelData(out short[] data, float seconds)
-        {
-            var length = (int)Bass.ChannelSeconds2Bytes(_mixer, seconds);
-            if (length > 0)
-            {
-                data = new short[length / 2];
-                length = Bass.ChannelGetData(_mixer, data, length);
-                return true;
-            }
-            data = null;
-            return false;
-        }
-
-        public void GetPlaybackStateNotification()
-        {
-            NotifyPropertyChanged(nameof(IsPlaying));
+            left = Bass.ChannelGetLevelLeft(_mixer);
+            right = Bass.ChannelGetLevelRight(_mixer);
         }
     }
 }

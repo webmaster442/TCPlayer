@@ -16,6 +16,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 using ManagedBass;
 using System;
 using System.ComponentModel;
@@ -29,7 +30,6 @@ using System.Windows.Media.Imaging;
 using TCPlayer.Code;
 using TCPlayer.Controls.Network;
 using TCPlayer.Controls.Notification;
-using TCPlayer.Properties;
 
 namespace TCPlayer.Controls
 {
@@ -38,39 +38,12 @@ namespace TCPlayer.Controls
     /// </summary>
     public partial class SongData : UserControl
     {
-        Player _player;
+        private Player _player;
 
-        public SongData()
+        private void _player_MetaChanged(object sender, string e)
         {
-            InitializeComponent();
-            if (DesignerProperties.GetIsInDesignMode(this)) return;
-            _player = Player.Instance;
-            _player.MetaChanged += _player_MetaChanged;
-            WaveForm.RegisterSoundPlayer(_player);
-        }
-
-        public NetworkMenu NetworkMenu
-        {
-            get;
-            set;
-        }
-
-        public static DependencyProperty CoverProperty =
-            DependencyProperty.Register("Cover", typeof(ImageSource), typeof(SongData), new PropertyMetadata(new BitmapImage(new Uri("pack://application:,,,/TCPlayer;component/Style/unknown.png"))));
-
-        public static DependencyProperty FileNameProperty =
-            DependencyProperty.Register("FileName", typeof(string), typeof(SongData));
-
-        public ImageSource Cover
-        {
-            get { return (ImageSource)GetValue(CoverProperty); }
-            set { SetValue(CoverProperty, value); }
-        }
-
-        public string FileName
-        {
-            get { return (string)GetValue(FileNameProperty); }
-            set { SetValue(FileNameProperty, value); }
+            if (!Dispatcher.HasShutdownStarted)
+                Dispatcher.Invoke(() => { SetInfoText(e, FileName, DateTime.Now.Year.ToString(), "stream"); });
         }
 
         private string GetFileSize(long value)
@@ -100,8 +73,6 @@ namespace TCPlayer.Controls
             return string.Format("{0:0.000} {1}", val, unit);
         }
 
-        public int Handle { get; set; }
-
         private void SetInfoText(string artist, string title, string album, string year, string size)
         {
             artist = string.IsNullOrEmpty(artist) ? Properties.Resources.SongData_UnknownArtist : artist;
@@ -127,6 +98,117 @@ namespace TCPlayer.Controls
             InfoText.Text = sb.ToString();
         }
 
+        private void SetupMenu(bool enabled)
+        {
+            if (NetworkMenu != null)
+            {
+                NetworkMenu.IsEnabled = enabled;
+            }
+        }
+
+        private void SetupMenu(bool enabled, string artist, string title)
+        {
+            if (NetworkMenu != null)
+            {
+                NetworkMenu.IsEnabled = enabled;
+                NetworkMenu.Artist = artist;
+                NetworkMenu.Song = $"{artist} - {title}";
+            }
+        }
+
+        private void UpdateCDFlags(int track, bool notify, int size)
+        {
+            FileName = string.Format("CD Track #{0}", track);
+            //GetFileSize(size);
+            Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/disk.png", UriKind.Relative));
+            var Year = "unknown";
+            var Artist = "Track";
+            var Title = string.Format("#{0}", track);
+            var Album = "Audio CD";
+            if (App.CdData.Count > 0)
+            {
+                Artist = App.CdData[string.Format("PERFORMER{0}", track)];
+                Title = App.CdData[string.Format("TITLE{0}", track)];
+                Album = App.CdData["TITLE0"];
+            }
+            if (notify)
+            {
+                SetupMenu(true, Artist, Title);
+                SongChangeNotification.DisplaySongChangeNotification("CD Track" + track, Artist, Title);
+                //App.NotifyIcon.ShowNotification("CD Track" + track, Artist, Title);
+            }
+            SetInfoText(Artist, Title, Album, Year, GetFileSize(size));
+        }
+
+        private void VisualContainer_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (!App.WasMainWinActive) return;
+
+            if (WaveForm.Visibility == Visibility.Visible)
+            {
+                WaveForm.UnRegisterSoundPlayer();
+                WaveForm.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                WaveForm.Visibility = Visibility.Visible;
+                WaveForm.RegisterSoundPlayer(_player);
+            }
+
+            if (Spectrum.Visibility == Visibility.Visible)
+            {
+                Spectrum.UnRegisterSoundPlayer();
+                Spectrum.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                Spectrum.Visibility = Visibility.Visible;
+                Spectrum.RegisterSoundPlayer(_player);
+            }
+        }
+
+        public static DependencyProperty CoverProperty =
+            DependencyProperty.Register("Cover", typeof(ImageSource), typeof(SongData), new PropertyMetadata(new BitmapImage(new Uri("pack://application:,,,/TCPlayer;component/Style/unknown.png"))));
+
+        public static DependencyProperty FileNameProperty =
+            DependencyProperty.Register("FileName", typeof(string), typeof(SongData));
+
+        public SongData()
+        {
+            InitializeComponent();
+            if (DesignerProperties.GetIsInDesignMode(this)) return;
+            _player = Player.Instance;
+            _player.MetaChanged += _player_MetaChanged;
+            WaveForm.RegisterSoundPlayer(_player);
+        }
+
+        public ImageSource Cover
+        {
+            get { return (ImageSource)GetValue(CoverProperty); }
+            set { SetValue(CoverProperty, value); }
+        }
+
+        public string FileName
+        {
+            get { return (string)GetValue(FileNameProperty); }
+            set { SetValue(FileNameProperty, value); }
+        }
+
+        public int Handle { get; set; }
+
+        public NetworkMenu NetworkMenu
+        {
+            get;
+            set;
+        }
+
+        public void Reset()
+        {
+            SetupMenu(false);
+            Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/unknown.png", UriKind.Relative));
+            InfoText.Text = Properties.Resources.SongData_Error;
+        }
+
         public void UpdateMediaInfo(string file, int handle)
         {
             FileName = file;
@@ -136,12 +218,6 @@ namespace TCPlayer.Controls
             var Artist = Marshal.PtrToStringAuto(Bass.ChannelGetTags(handle, TagType.MusicAuth));
             var Title = Marshal.PtrToStringAuto(Bass.ChannelGetTags(handle, TagType.MusicName));
             SetInfoText(Artist, Title, "", "unknown", Size);
-        }
-
-        private void _player_MetaChanged(object sender, string e)
-        {
-            if (!Dispatcher.HasShutdownStarted)
-                Dispatcher.Invoke(() => { SetInfoText(e, FileName, DateTime.Now.Year.ToString(), "stream"); });
         }
 
         public void UpdateMediaInfo(string file)
@@ -215,82 +291,6 @@ namespace TCPlayer.Controls
             catch (Exception)
             {
                 Reset();
-            }
-        }
-
-        private void SetupMenu(bool enabled)
-        {
-            if (NetworkMenu != null)
-            {
-                NetworkMenu.IsEnabled = enabled;
-            }
-        }
-
-        private void SetupMenu(bool enabled, string artist, string title)
-        {
-            if (NetworkMenu != null)
-            {
-                NetworkMenu.IsEnabled = enabled;
-                NetworkMenu.Artist = artist;
-                NetworkMenu.Song = $"{artist} - {title}";
-            }
-        }
-
-        private void UpdateCDFlags(int track, bool notify, int size)
-        {
-            FileName = string.Format("CD Track #{0}", track);
-            //GetFileSize(size);
-            Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/disk.png", UriKind.Relative));
-            var Year = "unknown";
-            var Artist = "Track";
-            var Title = string.Format("#{0}", track);
-            var Album = "Audio CD";
-            if (App.CdData.Count > 0)
-            {
-                Artist = App.CdData[string.Format("PERFORMER{0}", track)];
-                Title = App.CdData[string.Format("TITLE{0}", track)];
-                Album = App.CdData["TITLE0"];
-            }
-            if (notify)
-            {
-                SetupMenu(true, Artist, Title);
-                SongChangeNotification.DisplaySongChangeNotification("CD Track" + track, Artist, Title);
-                //App.NotifyIcon.ShowNotification("CD Track" + track, Artist, Title);
-            }
-            SetInfoText(Artist, Title, Album, Year, GetFileSize(size));
-        }
-
-        public void Reset()
-        {
-            SetupMenu(false);
-            Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/unknown.png", UriKind.Relative));
-            InfoText.Text = Properties.Resources.SongData_Error;
-        }
-
-        private void VisualContainer_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            if (!App.WasMainWinActive) return;
-
-            if (WaveForm.Visibility == Visibility.Visible)
-            {
-                WaveForm.UnRegisterSoundPlayer();
-                WaveForm.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                WaveForm.Visibility = Visibility.Visible;
-                WaveForm.RegisterSoundPlayer(_player);
-            }
-
-            if (Spectrum.Visibility == Visibility.Visible)
-            {
-                Spectrum.UnRegisterSoundPlayer();
-                Spectrum.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                Spectrum.Visibility = Visibility.Visible;
-                Spectrum.RegisterSoundPlayer(_player);
             }
         }
     }

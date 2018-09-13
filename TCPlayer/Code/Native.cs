@@ -25,29 +25,18 @@ namespace TCPlayer.Code
 {
     internal class Native
     {
-        [DllImport("dwmapi.dll", EntryPoint = "#127")]
-        internal static extern void DwmGetColorizationParameters(ref DWMCOLORIZATIONPARAMS pars);
-
-        // Registers a hot key with Windows.
-        [DllImport("user32.dll")]
-        public static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
-
-        // Unregisters the hot key with Windows.
-        [DllImport("user32.dll")]
-        public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
-		
-		[DllImport("kernel32.dll", EntryPoint = "LoadLibrary")]
-        public static extern IntPtr LoadLibrary(string DllToLoad);
-
-        [DllImport("kernel32.dll", EntryPoint = "FreeLibrary")]
-        public static extern bool FreeLibrary(IntPtr hLib);
-
         private static int IntPtrSize(IntPtr p)
         {
             int num = 0;
             while (Marshal.ReadByte(p, num) != 0) num++;
             return num;
         }
+
+        [DllImport("dwmapi.dll", EntryPoint = "#127")]
+        internal static extern void DwmGetColorizationParameters(ref DWMCOLORIZATIONPARAMS pars);
+
+        [DllImport("kernel32.dll", EntryPoint = "FreeLibrary")]
+        public static extern bool FreeLibrary(IntPtr hLib);
 
         public static string[] IntPtrToArray(IntPtr pointer)
         {
@@ -72,6 +61,17 @@ namespace TCPlayer.Code
                 return null;
             }
         }
+
+        [DllImport("kernel32.dll", EntryPoint = "LoadLibrary")]
+        public static extern IntPtr LoadLibrary(string DllToLoad);
+
+        // Registers a hot key with Windows.
+        [DllImport("user32.dll")]
+        public static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
+
+        // Unregisters the hot key with Windows.
+        [DllImport("user32.dll")]
+        public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
     }
 
 

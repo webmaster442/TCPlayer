@@ -32,14 +32,14 @@ namespace TCPlayer.Controls
             InitializeComponent();
         }
 
-        public Action OkClicked
-        {
-            get; set;
-        }
-
         public int DeviceIndex
         {
             get { return LbDevices.SelectedIndex; }
+        }
+
+        public Action OkClicked
+        {
+            get; set;
         }
 
         public int SampleRate

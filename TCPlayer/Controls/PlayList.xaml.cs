@@ -34,109 +34,39 @@ namespace TCPlayer.Controls
     /// </summary>
     public partial class PlayList : UserControl
     {
-        private ObservableCollection<string> _list;
-
-        public PlayList()
-        {
-            InitializeComponent();
-            _list = new ObservableCollection<string>();
-            _list.CollectionChanged += (s, e) => { Count = _list.Count; };
-            PlaylistView.ItemsSource = _list;
-        }
-
         private readonly static DependencyProperty CountProperty =
             DependencyProperty.Register("Count", typeof(int), typeof(PlayList), new PropertyMetadata(0));
 
         private readonly static DependencyProperty IndexProperty =
             DependencyProperty.Register("Index", typeof(int), typeof(PlayList), new PropertyMetadata(0));
 
-        public int Count
-        {
-            get { return (int)GetValue(CountProperty); }
-            set { SetValue(CountProperty, value); }
-        }
+        private ObservableCollection<string> _list;
 
-        public int Index
+        private void AddDir_Click(object sender, RoutedEventArgs e)
         {
-            get { return (int)GetValue(IndexProperty); }
-            set { SetValue(IndexProperty, value); }
-        }
-
-        public event RoutedEventHandler ItemDoubleClcik;
-
-        public string SelectedItem
-        {
-            get
+            string[] filters = App.Formats.Split(';');
+            var fbd = new System.Windows.Forms.FolderBrowserDialog();
+            fbd.Description = Properties.Resources.Playlist_AddFolderDescription;
+            if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                if (PlaylistView.SelectedIndex == -1) return null;
-                return _list[PlaylistView.SelectedIndex];
+                List<string> Files = new List<string>(30);
+                foreach (var filter in filters)
+                {
+                    Files.AddRange(Directory.GetFiles(fbd.SelectedPath, filter));
+                }
+                Files.Sort();
+                _list.AddRange(Files);
             }
         }
 
-        public bool CanDoNextTrack()
+        private void AddFiles_Click(object sender, RoutedEventArgs e)
         {
-            return (PlaylistView.SelectedIndex + 1) <= (_list.Count - 1);
-        }
-
-        public void NextTrack()
-        {
-            if (PlaylistView.SelectedIndex + 1 < _list.Count)
+            var ofd = new System.Windows.Forms.OpenFileDialog();
+            ofd.Multiselect = true;
+            ofd.Filter = "Audio Files|" + App.Formats;
+            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                PlaylistView.SelectedIndex += 1;
-                Index = PlaylistView.SelectedIndex + 1;
-            }
-        }
-
-        public void PreviousTrack()
-        {
-            Dispatcher.Invoke(() =>
-            {
-                if (PlaylistView.SelectedIndex - 1 > -1)
-                {
-                    PlaylistView.SelectedIndex -= 1;
-                    Index = PlaylistView.SelectedIndex + 1;
-                }
-            });
-        }
-
-        public async void DoLoad(IEnumerable<string> items)
-        {
-            if (items == null)
-                items = Environment.GetCommandLineArgs();
-
-            foreach (var item in items)
-            {
-                var ext = Path.GetExtension(item).ToLower();
-                if (!string.IsNullOrEmpty(ext) && App.Playlists.Contains(ext))
-                {
-                    string[] result = null;
-                    switch (ext)
-                    {
-                        case ".pls":
-                            result = await PlaylistLoaders.LoadPls(item);
-                            break;
-                        case ".m3u":
-                            result = await PlaylistLoaders.LoadM3u(item);
-                            break;
-                        case ".wpl":
-                            result = await PlaylistLoaders.LoadWPL(item);
-                            break;
-                        case ".asx":
-                            result = await PlaylistLoaders.LoadASX(item);
-                            break;
-                    }
-                    _list.AddRange(result);
-                }
-                else if (App.Formats.Contains(ext))
-                {
-                    _list.Add(item);
-                }
-                else
-                {
-                    MessageBox.Show(Properties.Resources.Playlist_UnsupportedListFormat,
-                                    Properties.Resources.Playlist_UnsupportedListFormatTitle,
-                                    MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                _list.AddRange(ofd.FileNames);
             }
         }
 
@@ -167,34 +97,6 @@ namespace TCPlayer.Controls
             }
         }
 
-        private void AddDir_Click(object sender, RoutedEventArgs e)
-        {
-            string[] filters = App.Formats.Split(';');
-            var fbd = new System.Windows.Forms.FolderBrowserDialog();
-            fbd.Description = Properties.Resources.Playlist_AddFolderDescription;
-            if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                List<string> Files = new List<string>(30);
-                foreach (var filter in filters)
-                {
-                    Files.AddRange(Directory.GetFiles(fbd.SelectedPath, filter));
-                }
-                Files.Sort();
-                _list.AddRange(Files);
-            }
-        }
-
-        private void AddFiles_Click(object sender, RoutedEventArgs e)
-        {
-            var ofd = new System.Windows.Forms.OpenFileDialog();
-            ofd.Multiselect = true;
-            ofd.Filter = "Audio Files|" + App.Formats;
-            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                _list.AddRange(ofd.FileNames);
-            }
-        }
-
         private void AddURL_Click(object sender, RoutedEventArgs e)
         {
             var urld = new AddURLDialog();
@@ -206,28 +108,46 @@ namespace TCPlayer.Controls
             MainWindow.ShowDialog(urld);
         }
 
-        private void SortAZ_Click(object sender, RoutedEventArgs e)
+        private void DiscMenu_SubmenuOpened(object sender, RoutedEventArgs e)
         {
-            var q = from i in _list orderby i ascending select i;
-            var sorted = q.ToList();
-            _list.Clear();
-            _list.AddRange(sorted);
+            DiscMenu.Items.Clear();
+            var q = from cd in DriveInfo.GetDrives()
+                    where cd.DriveType == DriveType.CDRom
+                    && cd.IsReady
+                    select cd;
+
+            var cds = from cd in q
+                      where cd.DriveFormat == "CDFS"
+                      select cd.Name;
+
+            foreach (var cd in cds)
+            {
+                MenuItem drive = new MenuItem();
+                drive.Header = cd;
+                drive.Click += Drive_Click;
+                DiscMenu.Items.Add(drive);
+            }
+            if (cds.Count() < 1)
+            {
+                MenuItem drive = new MenuItem();
+                drive.Header = Properties.Resources.Playlist_NoDiscsFound;
+                DiscMenu.Items.Add(drive);
+            }
         }
 
-        private void SortZA_Click(object sender, RoutedEventArgs e)
+        private async void Drive_Click(object sender, RoutedEventArgs e)
         {
-            var q = from i in _list orderby i descending select i;
-            var sorted = q.ToList();
-            _list.Clear();
-            _list.AddRange(sorted);
+            var drive = ((MenuItem)sender).Header.ToString();
+            var result = await Task.Run(() =>
+            {
+                return Player.GetCdInfo(drive);
+            });
+            _list.AddRange(result);
         }
 
-        private void SortRandom_Click(object sender, RoutedEventArgs e)
+        private void ITunesMenu_FilesProvidedEvent(object sender, IEnumerable<string> e)
         {
-            var q = from i in _list orderby Guid.NewGuid() select i;
-            var sorted = q.ToList();
-            _list.Clear();
-            _list.AddRange(sorted);
+            _list.AddRange(e);
         }
 
         private void ManageClear_Click(object sender, RoutedEventArgs e)
@@ -280,45 +200,124 @@ namespace TCPlayer.Controls
             }
         }
 
-        private void DiscMenu_SubmenuOpened(object sender, RoutedEventArgs e)
+        private void SortAZ_Click(object sender, RoutedEventArgs e)
         {
-            DiscMenu.Items.Clear();
-            var q = from cd in DriveInfo.GetDrives()
-                      where cd.DriveType == DriveType.CDRom 
-                      && cd.IsReady select cd;
+            var q = from i in _list orderby i ascending select i;
+            var sorted = q.ToList();
+            _list.Clear();
+            _list.AddRange(sorted);
+        }
 
-            var cds = from cd in q
-                      where cd.DriveFormat == "CDFS"
-                      select cd.Name;
+        private void SortRandom_Click(object sender, RoutedEventArgs e)
+        {
+            var q = from i in _list orderby Guid.NewGuid() select i;
+            var sorted = q.ToList();
+            _list.Clear();
+            _list.AddRange(sorted);
+        }
 
-            foreach (var cd in cds)
+        private void SortZA_Click(object sender, RoutedEventArgs e)
+        {
+            var q = from i in _list orderby i descending select i;
+            var sorted = q.ToList();
+            _list.Clear();
+            _list.AddRange(sorted);
+        }
+
+        public event RoutedEventHandler ItemDoubleClcik;
+
+        public PlayList()
+        {
+            InitializeComponent();
+            _list = new ObservableCollection<string>();
+            _list.CollectionChanged += (s, e) => { Count = _list.Count; };
+            PlaylistView.ItemsSource = _list;
+        }
+        public int Count
+        {
+            get { return (int)GetValue(CountProperty); }
+            set { SetValue(CountProperty, value); }
+        }
+
+        public int Index
+        {
+            get { return (int)GetValue(IndexProperty); }
+            set { SetValue(IndexProperty, value); }
+        }
+        public string SelectedItem
+        {
+            get
             {
-                MenuItem drive = new MenuItem();
-                drive.Header = cd;
-                drive.Click += Drive_Click;
-                DiscMenu.Items.Add(drive);
-            }
-            if (cds.Count() < 1)
-            {
-                MenuItem drive = new MenuItem();
-                drive.Header = Properties.Resources.Playlist_NoDiscsFound;
-                DiscMenu.Items.Add(drive);
+                if (PlaylistView.SelectedIndex == -1) return null;
+                return _list[PlaylistView.SelectedIndex];
             }
         }
 
-        private async void Drive_Click(object sender, RoutedEventArgs e)
+        public bool CanDoNextTrack()
         {
-            var drive = ((MenuItem)sender).Header.ToString();
-            var result = await Task.Run(() =>
+            return (PlaylistView.SelectedIndex + 1) <= (_list.Count - 1);
+        }
+
+        public async void DoLoad(IEnumerable<string> items)
+        {
+            if (items == null)
+                items = Environment.GetCommandLineArgs();
+
+            foreach (var item in items)
             {
-                return Player.GetCdInfo(drive);
+                var ext = Path.GetExtension(item).ToLower();
+                if (!string.IsNullOrEmpty(ext) && App.Playlists.Contains(ext))
+                {
+                    string[] result = null;
+                    switch (ext)
+                    {
+                        case ".pls":
+                            result = await PlaylistLoaders.LoadPls(item);
+                            break;
+                        case ".m3u":
+                            result = await PlaylistLoaders.LoadM3u(item);
+                            break;
+                        case ".wpl":
+                            result = await PlaylistLoaders.LoadWPL(item);
+                            break;
+                        case ".asx":
+                            result = await PlaylistLoaders.LoadASX(item);
+                            break;
+                    }
+                    _list.AddRange(result);
+                }
+                else if (App.Formats.Contains(ext))
+                {
+                    _list.Add(item);
+                }
+                else
+                {
+                    MessageBox.Show(Properties.Resources.Playlist_UnsupportedListFormat,
+                                    Properties.Resources.Playlist_UnsupportedListFormatTitle,
+                                    MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        public void NextTrack()
+        {
+            if (PlaylistView.SelectedIndex + 1 < _list.Count)
+            {
+                PlaylistView.SelectedIndex += 1;
+                Index = PlaylistView.SelectedIndex + 1;
+            }
+        }
+
+        public void PreviousTrack()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                if (PlaylistView.SelectedIndex - 1 > -1)
+                {
+                    PlaylistView.SelectedIndex -= 1;
+                    Index = PlaylistView.SelectedIndex + 1;
+                }
             });
-            _list.AddRange(result);
-        }
-
-        private void ITunesMenu_FilesProvidedEvent(object sender, IEnumerable<string> e)
-        {
-            _list.AddRange(e);
         }
     }
 }

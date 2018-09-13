@@ -23,17 +23,6 @@ using System.Xml.Serialization;
 namespace TCPlayer.Code
 {
     [Serializable]
-    [XmlType(TypeName = "bookmark")]
-    public class RadioStation
-    {
-        [XmlAttribute("name")]
-        public string Name { get; set; }
-
-        [XmlAttribute("url")]
-        public string Url { get; set; }
-    }
-
-    [Serializable]
     [XmlType(TypeName = "group")]
     public class RadioGroup
     {
@@ -45,5 +34,16 @@ namespace TCPlayer.Code
 
         [XmlElement("group")]
         public List<RadioGroup> SubGroups { get; set; }
+    }
+
+    [Serializable]
+    [XmlType(TypeName = "bookmark")]
+    public class RadioStation
+    {
+        [XmlAttribute("name")]
+        public string Name { get; set; }
+
+        [XmlAttribute("url")]
+        public string Url { get; set; }
     }
 }

@@ -33,13 +33,20 @@ namespace TCPlayer.Controls
     {
         private ITunesXmlDb iTunes;
 
-        public ITunesMenu()
+        private void CreateMenuItems(MenuItem menuTarget, IEnumerable<string> items)
         {
-            InitializeComponent();
-            MenuItunes_Loaded();
+            menuTarget.Items.Clear();
+            foreach (var item in items)
+            {
+                MenuItem subitem = new MenuItem
+                {
+                    Tag = string.Copy(menuTarget.Tag as string),
+                    Header = item
+                };
+                subitem.Click += Subitem_Click;
+                menuTarget.Items.Add(subitem);
+            }
         }
-
-        public event EventHandler<IEnumerable<string>> FilesProvidedEvent;
 
         private void MenuItunes_Loaded()
         {
@@ -67,21 +74,6 @@ namespace TCPlayer.Controls
                 MessageBox.Show(Properties.Resources.Error_Title, ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
                 IsEnabled = false;
                 return;
-            }
-        }
-
-        private void CreateMenuItems(MenuItem menuTarget, IEnumerable<string> items)
-        {
-            menuTarget.Items.Clear();
-            foreach (var item in items)
-            {
-                MenuItem subitem = new MenuItem
-                {
-                    Tag = string.Copy(menuTarget.Tag as string),
-                    Header = item
-                };
-                subitem.Click += Subitem_Click;
-                menuTarget.Items.Add(subitem);
             }
         }
 
@@ -122,6 +114,14 @@ namespace TCPlayer.Controls
                     }
                 }
             }
+        }
+
+        public event EventHandler<IEnumerable<string>> FilesProvidedEvent;
+
+        public ITunesMenu()
+        {
+            InitializeComponent();
+            MenuItunes_Loaded();
         }
     }
 }

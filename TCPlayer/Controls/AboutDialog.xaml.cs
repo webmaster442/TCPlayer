@@ -31,18 +31,6 @@ namespace TCPlayer.Controls
     /// </summary>
     public partial class AboutDialog : UserControl, IDialog
     {
-        public AboutDialog()
-        {
-            InitializeComponent();
-            LoadAbout();
-        }
-
-        public Action OkClicked
-        {
-            get;
-            set;
-        }
-
         private void BtnWebsite_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             Process.Start("https://webmaster442.github.io/TCPlayer/");
@@ -67,6 +55,18 @@ namespace TCPlayer.Controls
             {
                 LoadAbout("About.txt");
             }
+        }
+
+        public AboutDialog()
+        {
+            InitializeComponent();
+            LoadAbout();
+        }
+
+        public Action OkClicked
+        {
+            get;
+            set;
         }
     }
 }

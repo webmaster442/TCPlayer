@@ -29,26 +29,14 @@ namespace TCPlayer.Code
 {
     internal class ChapterProvider: INotifyPropertyChanged
     {
-        private Dictionary<double, string> _data;
-
         private const double Minute = 60.0d;
-
-        private ContextMenu _target;
-
         private bool _chaptersenabled;
-
-        public event EventHandler<double> ChapterClicked;
-        public event PropertyChangedEventHandler PropertyChanged;
+        private Dictionary<double, string> _data;
+        private ContextMenu _target;
 
         private void Change(string property)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-        }
-
-        public ChapterProvider(ContextMenu target)
-        {
-            _data = new Dictionary<double, string>();
-            _target = target;
         }
 
         private void CreateChapters(double lenght)
@@ -66,6 +54,64 @@ namespace TCPlayer.Code
                 _data.Add(position, str);
             }
             DrawToMenu();
+        }
+
+        private void DecomissionMenu()
+        {
+            foreach (MenuItem child in _target.Items)
+            {
+                child.Click -= Mnu_Click;
+            }
+        }
+
+        private void DrawToMenu()
+        {
+            DecomissionMenu();
+            _target.Items.Clear();
+            foreach (var chapter in _data)
+            {
+                MenuItem mnu = new MenuItem
+                {
+                    Header = chapter.Value,
+                    Tag = chapter.Key,
+                    Icon = Application.Current.MainWindow.FindResource("IconArrowRight")
+                };
+                mnu.Click += Mnu_Click;
+                _target.Items.Add(mnu);
+            }
+        }
+
+        private void Mnu_Click(object sender, RoutedEventArgs e)
+        {
+            var pos = Convert.ToDouble(((MenuItem)sender).Tag);
+            ChapterClicked?.Invoke(sender, pos);
+        }
+
+        public event EventHandler<double> ChapterClicked;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public ChapterProvider(ContextMenu target)
+        {
+            _data = new Dictionary<double, string>();
+            _target = target;
+        }
+
+        public bool ChaptersEnabled
+        {
+            get { return _chaptersenabled; }
+            set
+            {
+                if (value == _chaptersenabled) return;
+                _chaptersenabled = value;
+                Change("ChaptersEnabled");
+            }
+        }
+
+        public void Clear()
+        {
+            _data.Clear();
+            _target.Items.Clear();
+            ChaptersEnabled = false;
         }
 
         public void CreateChapters(string filename, double parsedlength)
@@ -103,55 +149,6 @@ namespace TCPlayer.Code
                 _data.Clear();
                 CreateChapters(parsedlength);
                 DrawToMenu();
-            }
-        }
-
-        private void DecomissionMenu()
-        {
-            foreach (MenuItem child in _target.Items)
-            {
-                child.Click -= Mnu_Click;
-            }
-        }
-
-        private void DrawToMenu()
-        {
-            DecomissionMenu();
-            _target.Items.Clear();
-            foreach (var chapter in _data)
-            {
-                MenuItem mnu = new MenuItem
-                {
-                    Header = chapter.Value,
-                    Tag = chapter.Key,
-                    Icon = Application.Current.MainWindow.FindResource("IconArrowRight")
-                };
-                mnu.Click += Mnu_Click;
-                _target.Items.Add(mnu);
-            }
-        }
-
-        private void Mnu_Click(object sender, RoutedEventArgs e)
-        {
-            var pos = Convert.ToDouble(((MenuItem)sender).Tag);
-            ChapterClicked?.Invoke(sender, pos);
-        }
-
-        public void Clear()
-        {
-            _data.Clear();
-            _target.Items.Clear();
-            ChaptersEnabled = false;
-        }
-
-        public bool ChaptersEnabled
-        {
-            get { return _chaptersenabled; }
-            set
-            {
-                if (value == _chaptersenabled) return;
-                _chaptersenabled = value;
-                Change("ChaptersEnabled");
             }
         }
     }

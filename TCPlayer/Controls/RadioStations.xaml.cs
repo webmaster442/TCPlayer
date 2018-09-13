@@ -33,13 +33,6 @@ namespace TCPlayer.Controls
     {
         private bool loaded;
 
-        public RadioStations()
-        {
-            InitializeComponent();
-            loaded = true;
-            FileSelector.SelectedIndex = 0;
-        }
-
         private void FileSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             switch (FileSelector.SelectedIndex)
@@ -71,6 +64,18 @@ namespace TCPlayer.Controls
             RadioView.ItemsSource = nodes;
         }
 
+        private void RadioView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (ItemDoubleClcik != null)
+            {
+                var item = RadioView.SelectedItem as TreeViewItem;
+                if (item == null) return;
+                SelectedUrl = item.ToolTip?.ToString();
+                if (!string.IsNullOrEmpty(SelectedUrl))
+                    ItemDoubleClcik(sender, null);
+            }
+        }
+
         private TreeViewItem RenderNodes(RadioGroup group)
         {
             TreeViewItem ret = new TreeViewItem();
@@ -95,22 +100,17 @@ namespace TCPlayer.Controls
 
         public event RoutedEventHandler ItemDoubleClcik;
 
+        public RadioStations()
+        {
+            InitializeComponent();
+            loaded = true;
+            FileSelector.SelectedIndex = 0;
+        }
+
         public string SelectedUrl
         {
             get;
             private set;
-        }
-
-        private void RadioView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (ItemDoubleClcik !=null)
-            {
-                var item = RadioView.SelectedItem as TreeViewItem;
-                if (item == null) return;
-                SelectedUrl = item.ToolTip?.ToString();
-                if (!string.IsNullOrEmpty(SelectedUrl))
-                    ItemDoubleClcik(sender, null);
-            }
         }
     }
 }

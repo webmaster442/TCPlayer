@@ -22,20 +22,31 @@ using System.Windows.Forms;
 
 namespace TCPlayer.Code
 {
+    /// <summary>
+    /// The enumeration of possible modifiers.
+    /// </summary>
+    [Flags]
+    public enum ModifierKeys : uint
+    {
+        None = 0,
+        Alt = 1,
+        Control = 2,
+        Shift = 4,
+        Win = 8
+    }
+
     public sealed class KeyboardHook : IDisposable
     {
+        private int _currentId;
+
+        private Window _window = new Window();
+
         /// <summary>
         /// Represents the window that is used internally to get the messages.
         /// </summary>
         private class Window : NativeWindow, IDisposable
         {
             private static int WM_HOTKEY = 0x0312;
-
-            public Window()
-            {
-                // create the handle for the window.
-                this.CreateHandle(new CreateParams());
-            }
 
             /// <summary>
             /// Overridden to get the notifications.
@@ -53,13 +64,17 @@ namespace TCPlayer.Code
                     ModifierKeys modifier = (ModifierKeys)((int)m.LParam & 0xFFFF);
 
                     // invoke the event to notify the parent.
-                    if (KeyPressed != null)
-                        KeyPressed(this, new KeyPressedEventArgs(modifier, key));
+                    KeyPressed?.Invoke(this, new KeyPressedEventArgs(modifier, key));
                 }
             }
 
             public event EventHandler<KeyPressedEventArgs> KeyPressed;
 
+            public Window()
+            {
+                // create the handle for the window.
+                this.CreateHandle(new CreateParams());
+            }
             #region IDisposable Members
 
             public void Dispose()
@@ -68,17 +83,17 @@ namespace TCPlayer.Code
             }
             #endregion
         }
-
-        private Window _window = new Window();
-        private int _currentId;
+        /// <summary>
+        /// A hot key has been pressed.
+        /// </summary>
+        public event EventHandler<KeyPressedEventArgs> KeyPressed;
 
         public KeyboardHook()
         {
             // register the event of the inner native window.
             _window.KeyPressed += delegate (object sender, KeyPressedEventArgs args)
             {
-                if (KeyPressed != null)
-                    KeyPressed(this, args);
+                KeyPressed?.Invoke(this, args);
             };
         }
 
@@ -96,12 +111,6 @@ namespace TCPlayer.Code
             if (!Native.RegisterHotKey(_window.Handle, _currentId, (uint)modifier, (uint)key))
                 throw new InvalidOperationException("Couldn’t register the hot key.");
         }
-
-        /// <summary>
-        /// A hot key has been pressed.
-        /// </summary>
-        public event EventHandler<KeyPressedEventArgs> KeyPressed;
-
         #region IDisposable Members
 
         public void Dispose()
@@ -123,8 +132,8 @@ namespace TCPlayer.Code
     /// </summary>
     public class KeyPressedEventArgs : EventArgs
     {
-        private ModifierKeys _modifier;
-        private Keys _key;
+        private readonly Keys _key;
+        private readonly ModifierKeys _modifier;
 
         internal KeyPressedEventArgs(ModifierKeys modifier, Keys key)
         {
@@ -132,28 +141,15 @@ namespace TCPlayer.Code
             _key = key;
         }
 
-        public ModifierKeys Modifier
-        {
-            get { return _modifier; }
-        }
-
         public Keys Key
         {
             get { return _key; }
         }
-    }
 
-    /// <summary>
-    /// The enumeration of possible modifiers.
-    /// </summary>
-    [Flags]
-    public enum ModifierKeys : uint
-    {
-        None = 0,
-        Alt = 1,
-        Control = 2,
-        Shift = 4,
-        Win = 8
+        public ModifierKeys Modifier
+        {
+            get { return _modifier; }
+        }
     }
 }
 

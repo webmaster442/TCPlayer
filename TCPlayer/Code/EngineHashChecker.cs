@@ -29,9 +29,16 @@ namespace TCPlayer.Code
     {
         private Dictionary<string, string> _storedHashes;
 
-        public EngineHashChecker()
+        private string ComputeSha256(string file)
         {
-            GetStoredHashes();
+            using (var sha = SHA256.Create())
+            {
+                using (var fs = File.OpenRead(file))
+                {
+                    var result = sha.ComputeHash(fs);
+                    return BitConverter.ToString(result).Replace("-", "").ToLowerInvariant();
+                }
+            }
         }
 
         private void GetStoredHashes()
@@ -47,23 +54,16 @@ namespace TCPlayer.Code
                     while ((line = streamreader.ReadLine()) != null)
                     {
                         string[] parts = line.Split(' ');
-                        var fullpath = Path.Combine(currentdir+@"engine\", parts[1].Replace("*", ""));
+                        var fullpath = Path.Combine(currentdir + @"engine\", parts[1].Replace("*", ""));
                         _storedHashes.Add(fullpath, parts[0]);
                     }
                 }
             }
         }
 
-        private string ComputeSha256(string file)
+        public EngineHashChecker()
         {
-            using (var sha = SHA256.Create())
-            {
-                using (var fs = File.OpenRead(file))
-                {
-                    var result = sha.ComputeHash(fs);
-                    return BitConverter.ToString(result).Replace("-", "").ToLowerInvariant();
-                }
-            }
+            GetStoredHashes();
         }
 
         public bool CheckHashes()
