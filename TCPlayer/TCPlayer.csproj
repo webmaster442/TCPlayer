@@ -80,6 +80,9 @@
     <Compile Include="Code\EngineHashChecker.cs" />
     <Compile Include="Code\EqConfig.cs" />
     <Compile Include="Code\EqConstants.cs" />
+    <Compile Include="Controls\Equalizer.xaml.cs">
+      <DependentUpon>Equalizer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ITunesMenu.xaml.cs">
       <DependentUpon>ITunesMenu.xaml</DependentUpon>
     </Compile>
@@ -404,6 +407,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\DeviceChange.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Equalizer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

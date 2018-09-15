@@ -61,6 +61,8 @@ namespace TCPlayer
                 RecentUrls = new HashSet<string>();
                 FillUrlList();
                 application.InitializeComponent();
+                _prevactive = true;
+                _active = true;
                 application.ShutdownMode = ShutdownMode.OnMainWindowClose;
                 application.MainWindow = new MainWindow();
                 application.MainWindow.Activated += MainWindow_Activated;
@@ -80,12 +82,20 @@ namespace TCPlayer
         private static void MainWindow_Activated(object sender, EventArgs e)
         {
             _prevactive = _active;
-            _active = false;
+            _active = true;
         }
 
-        public static bool WasMainWinActive
+        public static bool WasActivated
         {
-            get { return _prevactive == false && _active == true;  }
+            get
+            {
+                bool decision = _prevactive == false && _active == true;
+                if (decision)
+                {
+                    _prevactive = true;
+                }
+                return decision;
+            }
         }
 
         private static void FillUrlList()

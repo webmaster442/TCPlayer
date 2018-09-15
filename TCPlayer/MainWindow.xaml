@@ -10,7 +10,7 @@
     xmlns:style="clr-namespace:TCPlayer.Style"
     x:Name="MainWin"
     Title="TC Player"
-    Width="675"
+    Width="700"
     Height="365"
     AllowDrop="True"
     Closing="MainWin_Closing"
@@ -249,13 +249,13 @@
                             VerticalAlignment="Center">
                             <ProgressBar
                                 x:Name="VuR"
-                                Width="180"
+                                Width="200"
                                 Height="8"
                                 Margin="0,0,0,2"
                                 Maximum="32768" />
                             <ProgressBar
                                 x:Name="VuL"
-                                Width="180"
+                                Width="200"
                                 Height="8"
                                 Maximum="32768" />
                         </StackPanel>
@@ -303,16 +303,20 @@
                             Click="DoAction"
                             Content="{StaticResource IconNext}"
                             ToolTip="{x:Static props:Resources.PlayerTab_ButtonNextTrack}" />
+                        <Button
+                            x:Name="BtnEQ"
+                            Content="{StaticResource IconNote}" />
                         <ToggleButton
                             x:Name="BtnMute"
                             Click="BtnMute_Click"
+                            Margin="5,0"
                             Content="{StaticResource IconMute}"
                             ToolTip="{x:Static props:Resources.PlayerTab_ButtonMuteUnmute}" />
                         <Slider
                             x:Name="VolSlider"
                             Grid.Column="1"
-                            Width="180"
-                            Margin="15,0,0,0"
+                            Width="170"
+                            Margin="3,0,0,0"
                             VerticalAlignment="Center"
                             Maximum="1"
                             Minimum="0"

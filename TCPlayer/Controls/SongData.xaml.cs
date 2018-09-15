@@ -163,7 +163,7 @@ namespace TCPlayer.Controls
 
         private void VisualContainer_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (!App.WasMainWinActive) return;
+            if (App.WasActivated) return;
 
             if (WaveForm.Visibility == Visibility.Visible)
             {
