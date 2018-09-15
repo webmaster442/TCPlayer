@@ -25,8 +25,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Runtime.InteropServices;
 using TCPlayer.Properties;
 using WPFSoundVisualizationLib;
+
 namespace TCPlayer.Code
 {
     internal class Player : IDisposable, ISpectrumPlayer, INotifyPropertyChanged
@@ -47,7 +49,11 @@ namespace TCPlayer.Code
 
         private bool _paused;
 
-        private int _source, _mixer;
+        private int _source, _mixer, _fx;
+
+        PeakEQParameters _eq;
+        GCHandle _handle;
+        private EqConfig _eqConfig;
 
         private Player()
         {
@@ -73,6 +79,9 @@ namespace TCPlayer.Code
             Bass.PluginLoad(enginedir + "\\bassmidi.dll");
             _callback = MyDownloadProc;
             _maxfft = (int)(DataFlags.Available | DataFlags.FFT2048);
+            _eq = new PeakEQParameters();
+            _handle = GCHandle.Alloc(_eq, GCHandleType.Pinned);
+
         }
 
         /// <summary>
@@ -144,14 +153,19 @@ namespace TCPlayer.Code
                 {
                     Stop();
                 }
+                RemoveEq(ref _mixer);
+                Bass.StreamFree(_source);
+                Bass.MusicFree(_source);
+                Bass.StreamFree(_mixer);
                 _mixer = 0;
                 _source = 0;
             }
+            if (_handle.IsAllocated) _handle.Free();
             if (_initialized) Bass.Free();
             BassCd.Unload();
+            BassFx.Unload();
             BassMix.Unload();
             Bass.PluginFree(0);
-            Bass.Free();
             GC.SuppressFinalize(this);
         }
 
@@ -235,6 +249,16 @@ namespace TCPlayer.Code
             {
                 var pos = Bass.ChannelSeconds2Bytes(_source, value);
                 Bass.ChannelSetPosition(_source, pos);
+            }
+        }
+
+        public EqConfig EqConfig
+        {
+            get { return _eqConfig; }
+            set
+            {
+                _eqConfig = value;
+                UpdateFxConfiguration(_eqConfig);
             }
         }
 
@@ -364,6 +388,7 @@ namespace TCPlayer.Code
         {
             Dispose(true);
         }
+
         public bool GetChannelData(out short[] data, float seconds)
         {
             var length = (int)Bass.ChannelSeconds2Bytes(_mixer, seconds);
@@ -434,6 +459,7 @@ namespace TCPlayer.Code
             }
             if (_mixer != 0)
             {
+                RemoveEq(ref _mixer);
                 Bass.StreamFree(_mixer);
                 _mixer = 0;
                 IsPlaying = false;
@@ -482,6 +508,7 @@ namespace TCPlayer.Code
                 return;
             }
             Bass.ChannelSetAttribute(_mixer, ChannelAttribute.Volume, _lastvol);
+            InitEq(ref _mixer);
             Bass.ChannelPlay(_mixer, false);
             _paused = false;
             IsPlaying = true;
@@ -521,6 +548,52 @@ namespace TCPlayer.Code
         {
             left = Bass.ChannelGetLevelLeft(_mixer);
             right = Bass.ChannelGetLevelRight(_mixer);
+        }
+
+        private void UpdateFxConfiguration(EqConfig eqConfig)
+        {
+            for (int band = 0; band < 3; ++band)
+            {
+                _eq.lBand = band;
+                Bass.FXGetParameters(_fx, _handle.AddrOfPinnedObject());
+                _eq.fGain = eqConfig[band];
+                Bass.FXSetParameters(_fx, _handle.AddrOfPinnedObject());
+            }
+        }
+
+        private void RemoveEq(ref int chHandle)
+        {
+            Bass.ChannelRemoveFX(chHandle, _fx);
+        }
+
+        private void InitEq(ref int chHandle, float fGain = 0.0f)
+        {
+            if (_eqConfig == null) _eqConfig = new EqConfig();
+
+            // set peaking equalizer effect with no bands
+            _fx = Bass.ChannelSetFX(chHandle, EffectType.PeakEQ, 0); // BASS_ChannelSetFX(chan, BASS_FX_BFX_PEAKEQ, 0);
+
+            _eq.fGain = fGain;
+            _eq.fQ = EqConstants.fQ;
+            _eq.fBandwidth = EqConstants.fBandwidth;
+            _eq.lChannel = FXChannelFlags.All;
+
+            // create 1st band for bass
+            _eq.lBand = 0;
+            _eq.fCenter = EqConstants.fCenter_Bass;
+            Bass.FXSetParameters(_fx, _handle.AddrOfPinnedObject());
+
+            // create 2nd band for mid
+            _eq.lBand = 1;
+            _eq.fCenter = EqConstants.fCenter_Mid;
+            Bass.FXSetParameters(_fx, _handle.AddrOfPinnedObject());
+
+            // create 3rd band for treble
+            _eq.lBand = 2;
+            _eq.fCenter = EqConstants.fCenter_Treble;
+            Bass.FXSetParameters(_fx, _handle.AddrOfPinnedObject());
+
+            UpdateFxConfiguration(_eqConfig);
         }
     }
 }

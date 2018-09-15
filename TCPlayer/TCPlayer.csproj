@@ -78,6 +78,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Code\EngineHashChecker.cs" />
+    <Compile Include="Code\EqConfig.cs" />
+    <Compile Include="Code\EqConstants.cs" />
     <Compile Include="Controls\ITunesMenu.xaml.cs">
       <DependentUpon>ITunesMenu.xaml</DependentUpon>
     </Compile>
