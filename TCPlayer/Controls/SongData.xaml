@@ -6,6 +6,7 @@
     xmlns:local="clr-namespace:TCPlayer.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vis="clr-namespace:WPFSoundVisualizationLib"
+    Loaded="SongDat_Loaded"
     x:Name="SongDat"
     d:DesignHeight="190"
     d:DesignWidth="657"

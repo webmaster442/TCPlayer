@@ -46,6 +46,22 @@ namespace TCPlayer.Controls
                 Dispatcher.Invoke(() => { SetInfoText(e, FileName, DateTime.Now.Year.ToString(), "stream"); });
         }
 
+        private void DisplayVisual(int visualization)
+        {
+            if (visualization == 0)
+            {
+                WaveForm.Visibility = Visibility.Visible;
+                Spectrum.Visibility = Visibility.Collapsed;
+                Spectrum.UnRegisterSoundPlayer();
+            }
+            else
+            {
+                WaveForm.Visibility = Visibility.Collapsed;
+                Spectrum.Visibility = Visibility.Visible;
+                WaveForm.UnRegisterSoundPlayer();
+            }
+        }
+
         private string GetFileSize(long value)
         {
             double val = System.Convert.ToDouble(value);
@@ -116,6 +132,11 @@ namespace TCPlayer.Controls
             }
         }
 
+        private void SongDat_Loaded(object sender, RoutedEventArgs e)
+        {
+            DisplayVisual(Properties.Settings.Default.Visualization);
+        }
+
         private void UpdateCDFlags(int track, bool notify, int size)
         {
             FileName = string.Format("CD Track #{0}", track);
@@ -153,6 +174,7 @@ namespace TCPlayer.Controls
             {
                 WaveForm.Visibility = Visibility.Visible;
                 WaveForm.RegisterSoundPlayer(_player);
+                Properties.Settings.Default.Visualization = 0;
             }
 
             if (Spectrum.Visibility == Visibility.Visible)
@@ -164,11 +186,12 @@ namespace TCPlayer.Controls
             {
                 Spectrum.Visibility = Visibility.Visible;
                 Spectrum.RegisterSoundPlayer(_player);
+                Properties.Settings.Default.Visualization = 1;
             }
         }
 
         public static DependencyProperty CoverProperty =
-            DependencyProperty.Register("Cover", typeof(ImageSource), typeof(SongData), new PropertyMetadata(new BitmapImage(new Uri("pack://application:,,,/TCPlayer;component/Style/unknown.png"))));
+                    DependencyProperty.Register("Cover", typeof(ImageSource), typeof(SongData), new PropertyMetadata(new BitmapImage(new Uri("pack://application:,,,/TCPlayer;component/Style/unknown.png"))));
 
         public static DependencyProperty FileNameProperty =
             DependencyProperty.Register("FileName", typeof(string), typeof(SongData));
