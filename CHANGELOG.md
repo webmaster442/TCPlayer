@@ -8,6 +8,8 @@
  * New default visualizer: WaveForm
  * Visuals can be changed by clicking on them
  * Network search menu for song and artist
+ * Localization improvements
+ * 3 Band simple equalizer
 
 #2.1 - 2018.09.07
  * Just source code release
