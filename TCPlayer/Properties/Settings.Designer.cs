@@ -214,5 +214,41 @@ namespace TCPlayer.Properties {
                 this["Visualization"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double EqHigh {
+            get {
+                return ((double)(this["EqHigh"]));
+            }
+            set {
+                this["EqHigh"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double EqMid {
+            get {
+                return ((double)(this["EqMid"]));
+            }
+            set {
+                this["EqMid"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double EqBass {
+            get {
+                return ((double)(this["EqBass"]));
+            }
+            set {
+                this["EqBass"] = value;
+            }
+        }
     }
 }

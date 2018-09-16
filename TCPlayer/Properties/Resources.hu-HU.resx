@@ -399,4 +399,10 @@ A média gombok használatbavételéhez zárj be minden olyan egyéb alkalmazás
   <data name="NetMenu_SearchSong" xml:space="preserve">
     <value>Keresés dalra...</value>
   </data>
+  <data name="Equalizer_Reset" xml:space="preserve">
+    <value>Alaphelyzet</value>
+  </data>
+  <data name="PlayerTab_Equalizer" xml:space="preserve">
+    <value>Hangszínszabályzó</value>
+  </data>
 </root>

@@ -305,7 +305,9 @@
                             ToolTip="{x:Static props:Resources.PlayerTab_ButtonNextTrack}" />
                         <Button
                             x:Name="BtnEQ"
-                            Content="{StaticResource IconNote}" />
+                            Click="BtnEQ_Click"
+                            Content="{StaticResource IconNote}"
+                            ToolTip="{x:Static props:Resources.PlayerTab_Equalizer}"/>
                         <ToggleButton
                             x:Name="BtnMute"
                             Click="BtnMute_Click"

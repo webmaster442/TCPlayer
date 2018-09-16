@@ -171,6 +171,15 @@ namespace TCPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reset.
+        /// </summary>
+        public static string Equalizer_Reset {
+            get {
+                return ResourceManager.GetString("Equalizer_Reset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bass.dll components are corrupted. Please reinstall program..
         /// </summary>
         public static string Error_CorruptDll {
@@ -510,6 +519,15 @@ namespace TCPlayer.Properties {
         public static string PlayerTab_ButtonStop {
             get {
                 return ResourceManager.GetString("PlayerTab_ButtonStop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Equalizer.
+        /// </summary>
+        public static string PlayerTab_Equalizer {
+            get {
+                return ResourceManager.GetString("PlayerTab_Equalizer", resourceCulture);
             }
         }
         

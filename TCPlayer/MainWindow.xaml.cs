@@ -44,6 +44,7 @@ namespace TCPlayer
         private DispatcherTimer _timer;
         private HwndSource hsource;
         private IntPtr hwnd;
+        private Equalizer  _equalizer;
 
         private static Color GetWindowColorizationColor(bool opaque)
         {
@@ -241,6 +242,7 @@ namespace TCPlayer
         {
             Properties.Settings.Default.LastVolume = (float)VolSlider.Value;
             Properties.Settings.Default.DeviceID = _player.CurrentDeviceID;
+            _equalizer.SaveSettings();
             App.SaveRecentUrls();
             Properties.Settings.Default.Save();
         }
@@ -522,6 +524,9 @@ namespace TCPlayer
             _timer.Tick += _timer_Tick;
             SongDat.NetworkMenu = NetMenu;
             _loaded = true;
+            _equalizer = new Equalizer();
+            _equalizer.EqSliderChange += _equalizer_EqSliderChange;
+            _equalizer.LoadSettings();
             BtnChapters.IsEnabled = _chapterprovider.ChaptersEnabled;
 
             if (_player.Is64Bit) Title += " (x64)";
@@ -545,6 +550,12 @@ namespace TCPlayer
             if (Properties.Settings.Default.RegisterMultimediaKeys)
                 RegisterMultimedaKeys();
         }
+
+        private void _equalizer_EqSliderChange(object sender, RoutedEventArgs e)
+        {
+            Player.Instance.EqConfig = _equalizer.EqConfiguration;
+        }
+
         public static void ShowDialog(UserControl dialog)
         {
             var main = Application.Current.MainWindow as MainWindow;
@@ -572,6 +583,11 @@ namespace TCPlayer
                 Dispatcher.Invoke(() => { MainView.SelectedIndex = 1; });
             }
             DoBringIntoView();
+        }
+
+        private void BtnEQ_Click(object sender, RoutedEventArgs e)
+        {
+            ShowDialog(_equalizer);
         }
     }
 }

@@ -17,6 +17,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using TCPlayer.Code;
@@ -82,6 +83,20 @@ namespace TCPlayer.Controls
                     Treble = Slider0.Value
                 };
             }
+        }
+
+        internal void SaveSettings()
+        {
+            Properties.Settings.Default.EqBass = Slider2.Value;
+            Properties.Settings.Default.EqMid = Slider1.Value;
+            Properties.Settings.Default.EqHigh = Slider0.Value;
+        }
+
+        internal void LoadSettings()
+        {
+            SetSliders(Properties.Settings.Default.EqHigh, 
+                       Properties.Settings.Default.EqMid, 
+                       Properties.Settings.Default.EqBass);
         }
     }
 }
