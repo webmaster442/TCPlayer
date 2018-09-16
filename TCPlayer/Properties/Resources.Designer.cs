@@ -124,6 +124,24 @@ namespace TCPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to [ Cancel ].
+        /// </summary>
+        public static string Dialog_Cancel {
+            get {
+                return ResourceManager.GetString("Dialog_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [ Ok ].
+        /// </summary>
+        public static string Dialog_Ok {
+            get {
+                return ResourceManager.GetString("Dialog_Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0}
         ///Bass Error code: {1}
         ///Error Description: {2}.

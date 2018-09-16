@@ -399,6 +399,12 @@ To Use media key functions please close other apps that may use the keys, then r
   <data name="NetMenu_SearchSong" xml:space="preserve">
     <value>Search Song...</value>
   </data>
+  <data name="Dialog_Cancel" xml:space="preserve">
+    <value>[ Cancel ]</value>
+  </data>
+  <data name="Dialog_Ok" xml:space="preserve">
+    <value>[ Ok ]</value>
+  </data>
   <data name="Equalizer_Reset" xml:space="preserve">
     <value>Reset</value>
   </data>

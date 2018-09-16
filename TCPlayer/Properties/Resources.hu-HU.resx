@@ -399,6 +399,13 @@ A média gombok használatbavételéhez zárj be minden olyan egyéb alkalmazás
   <data name="NetMenu_SearchSong" xml:space="preserve">
     <value>Keresés dalra...</value>
   </data>
+  <data name="Dialog_Cancel" xml:space="preserve">
+    <value>[ Mégsem ]</value>
+    <comment> </comment>
+  </data>
+  <data name="Dialog_Ok" xml:space="preserve">
+    <value>[ Ok ]</value>
+  </data>
   <data name="Equalizer_Reset" xml:space="preserve">
     <value>Alaphelyzet</value>
   </data>

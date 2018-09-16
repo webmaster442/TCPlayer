@@ -160,14 +160,14 @@
                         Width="100"
                         Margin="5,0"
                         Click="OverLayOk_Click"
-                        Content="[ Ok ]"
+                        Content="{x:Static props:Resources.Dialog_Ok}"
                         Foreground="White" />
                     <Button
                         x:Name="OverLayClose"
                         Width="100"
                         Margin="5,0"
                         Click="OverLayClose_Click"
-                        Content="[ Cancel ]"
+                        Content="{x:Static props:Resources.Dialog_Cancel}"
                         Foreground="White" />
                 </StackPanel>
                 <Grid
