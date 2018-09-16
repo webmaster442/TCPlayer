@@ -1,4 +1,4 @@
-#2.5
+#2.5 beta 1 - 2018.09.16
  * Playlist can now acces songs from iTunes (If iTunes is installed)
  * New, more flexible song notification
  * Changed player skin
