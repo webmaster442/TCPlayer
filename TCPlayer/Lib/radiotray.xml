@@ -67,9 +67,9 @@
       <bookmark name="WBEZ" url="http://wbez.ic.llnwd.net/stream/wbez_91_5_fm.pls"/>
     </group>
     <group name="Hardstyle / Hardcore">
-      <bookmark name="Q-Dance Radio" url="http://stream01.platform02.true.nl:8000/qdance-hard"/>
-      <bookmark name="hardstyle.nu" url="http://listen.hardstyle.nu/listen.pls"/>
-      <bookmark name="Hardcore radio" url="http://www.hardcoreradio.nl/hr.m3u"/>
+      <bookmark name="Q-Dance Radio" url="https://19993.live.streamtheworld.com/Q_DANCEAAC.aac"/>
+      <bookmark name="Slam! Hardstyle" url="http://streaming.slam.nl/web11_aac"/>
+      <bookmark name="Real Hardstyle Radio(RHR)" url="http://stream.rhr.fm/"/>
     </group>
   </group>
 </bookmarks>

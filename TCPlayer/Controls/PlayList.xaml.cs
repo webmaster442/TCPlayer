@@ -266,6 +266,12 @@ namespace TCPlayer.Controls
             foreach (var item in items)
             {
                 var ext = Path.GetExtension(item).ToLower();
+                if (ext.Contains("?") || ext.Contains("&"))
+                {
+                    var query = new Uri(item);
+                    ext = Path.GetExtension(query.AbsolutePath).ToLower();
+                }
+
                 if (!string.IsNullOrEmpty(ext) && App.Playlists.Contains(ext))
                 {
                     string[] result = null;
