@@ -96,6 +96,7 @@
       <DependentUpon>WaveForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="Jobs\BasePlaylistLoaderJob.cs" />
+    <Compile Include="Jobs\ImportFromMassStorageJob.cs" />
     <Compile Include="Jobs\LoadASXJob.cs" />
     <Compile Include="Jobs\LoadM3UJob.cs" />
     <Compile Include="Jobs\LoadPLSJob.cs" />

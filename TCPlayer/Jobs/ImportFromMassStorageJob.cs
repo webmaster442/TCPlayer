@@ -19,48 +19,52 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 
 namespace TCPlayer.Jobs
 {
-    internal class LoadM3UJob : BasePlaylistLoaderJob
+    internal class ImportFromMassStorageJob : BasePlaylistLoaderJob
     {
+        private static List<string> Traverse(string directory, CancellationToken ct)
+        {
+            var stack = new Stack<string>();
+            List<string> result = new List<string>();
+            stack.Push(directory);
+            while (stack.Any())
+            {
+                ct.ThrowIfCancellationRequested();
+                var next = stack.Pop();
+                result.Add(next);
+                foreach (var child in Directory.GetDirectories(next))
+                {
+                    stack.Push(child);
+                    ct.ThrowIfCancellationRequested();
+                }
+            }
+            return result;
+        }
+
+
         public override IEnumerable<string> JobFunction(string inputdata, IProgress<float> progress, CancellationToken ct)
         {
-            List<string> ret = new List<string>();
-            string filedir = Path.GetDirectoryName(inputdata);
-            string line;
-            int size = 0;
+            string[] filters = App.Formats.Split(';');
+            List<string> result = new List<string>();
+            var directories = Traverse(inputdata, ct);
             float i = 0;
-            using (var content = LoadFile(inputdata, out size))
+            foreach (var directory in directories)
             {
-                do
+                ct.ThrowIfCancellationRequested();
+                foreach (var filter in filters)
                 {
                     ct.ThrowIfCancellationRequested();
-                    line = content.ReadLine();
-                    if (line == null) continue;
-                    i += line.Length;
-                    if (line.StartsWith("#")) continue;
-                    if (line.StartsWith("http://") || line.StartsWith("https://"))
-                    {
-                        ret.Add(line);
-                    }
-                    else if (line.Contains(":\\") || line.StartsWith("\\\\"))
-                    {
-                        if (!File.Exists(line)) continue;
-                        ret.Add(line);
-                    }
-                    else
-                    {
-                        string f = Path.Combine(filedir, line);
-                        if (!File.Exists(f)) continue;
-                        ret.Add(f);
-                    }
-                    progress.Report(i / size);
+                    result.AddRange(Directory.GetFiles(directory, filter));
                 }
-                while (line != null);
+                i += 1;
+                progress.Report(i / directories.Count);
             }
-            return ret;
+
+            return result;
         }
     }
 }
