@@ -2,8 +2,8 @@
 {
     public class JobResult<Toutput>
     {
-        Toutput Result { get; set; }
-        bool IsValid { get; set; }
+        public Toutput Result { get; set; }
+        public bool IsValid { get; set; }
 
         private JobResult() { }
 

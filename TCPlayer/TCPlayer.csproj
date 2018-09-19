@@ -381,7 +381,6 @@
     <Compile Include="Code\SingleInstance.cs" />
     <Compile Include="Code\Native.cs" />
     <Compile Include="Code\Player.cs" />
-    <Compile Include="Code\PlaylistLoaders.cs" />
     <Compile Include="Controls\AboutDialog.xaml.cs">
       <DependentUpon>AboutDialog.xaml</DependentUpon>
     </Compile>

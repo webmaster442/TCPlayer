@@ -6,7 +6,6 @@ namespace TaskRunner
     {
         public IJob<Tinput, Toutput> Job { get; set; }
         public Tinput JobInput { get; set; }
-        public Window Owner { get; set; }
         public bool ReportTaskBarProgress { get; set; }
         public string JobTitle { get; set; }
         public string JobDescription { get; set; }

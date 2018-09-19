@@ -26,6 +26,8 @@ using System.Windows;
 using System.Windows.Controls;
 using TCPlayer.Code;
 using TCPlayer.Properties;
+using TaskRunner;
+using TCPlayer.Jobs;
 
 namespace TCPlayer.Controls
 {
@@ -76,24 +78,39 @@ namespace TCPlayer.Controls
             ofd.Filter = "Playlists | " + App.Playlists;
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
+                var config = new JobRunnerConfiguration<string, IEnumerable<string>>
+                {
+                    JobDescription = "Reading playlist file",
+                    JobTitle = "Loading...",
+                    ReportTaskBarProgress = true,
+                    JobInput = ofd.FileName,
+                };
+
                 string ext = Path.GetExtension(ofd.FileName);
-                string[] result = null;
                 switch (ext)
                 {
                     case ".pls":
-                        result = await PlaylistLoaders.LoadPls(ofd.FileName);
+                        config.Job = new LoadPLSJob();
                         break;
                     case ".m3u":
-                        result = await PlaylistLoaders.LoadM3u(ofd.FileName);
+                        config.Job = new LoadM3UJob();
                         break;
                     case ".wpl":
-                        result = await PlaylistLoaders.LoadWPL(ofd.FileName);
+                        config.Job = new LoadWPLJob();
                         break;
                     case ".asx":
-                        result = await PlaylistLoaders.LoadASX(ofd.FileName);
+                        config.Job = new LoadASXJob();
                         break;
                 }
-                _list.AddRange(result);
+                try
+                {
+                    var result = await JobRunner.RunJob(config);
+                    _list.AddRange(result.Result);
+                }
+                catch (Exception ex)
+                {
+                    Helpers.ErrorDialog(ex, Properties.Resources.Error_Download);
+                }
             }
         }
 
