@@ -95,6 +95,11 @@
     <Compile Include="Controls\WaveForm.xaml.cs">
       <DependentUpon>WaveForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Jobs\BasePlaylistLoaderJob.cs" />
+    <Compile Include="Jobs\LoadASXJob.cs" />
+    <Compile Include="Jobs\LoadM3UJob.cs" />
+    <Compile Include="Jobs\LoadPLSJob.cs" />
+    <Compile Include="Jobs\LoadWPLJob.cs" />
     <Compile Include="Lib\JobRunner\IJob.cs" />
     <Compile Include="Lib\JobRunner\JobResult.cs" />
     <Compile Include="Lib\JobRunner\JobWindow.xaml.cs">
