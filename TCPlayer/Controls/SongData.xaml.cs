@@ -52,13 +52,12 @@ namespace TCPlayer.Controls
             {
                 WaveForm.Visibility = Visibility.Visible;
                 Spectrum.Visibility = Visibility.Collapsed;
-                Spectrum.UnRegisterSoundPlayer();
+
             }
             else
             {
                 WaveForm.Visibility = Visibility.Collapsed;
                 Spectrum.Visibility = Visibility.Visible;
-                WaveForm.UnRegisterSoundPlayer();
             }
         }
 
@@ -134,6 +133,8 @@ namespace TCPlayer.Controls
 
         private void SongDat_Loaded(object sender, RoutedEventArgs e)
         {
+            WaveForm.RegisterSoundPlayer(_player);
+            Spectrum.RegisterSoundPlayer(_player);
             DisplayVisual(Properties.Settings.Default.Visualization);
         }
 
@@ -167,25 +168,21 @@ namespace TCPlayer.Controls
 
             if (WaveForm.Visibility == Visibility.Visible)
             {
-                WaveForm.UnRegisterSoundPlayer();
                 WaveForm.Visibility = Visibility.Collapsed;
             }
             else
             {
                 WaveForm.Visibility = Visibility.Visible;
-                WaveForm.RegisterSoundPlayer(_player);
                 Properties.Settings.Default.Visualization = 0;
             }
 
             if (Spectrum.Visibility == Visibility.Visible)
             {
-                Spectrum.UnRegisterSoundPlayer();
                 Spectrum.Visibility = Visibility.Collapsed;
             }
             else
             {
                 Spectrum.Visibility = Visibility.Visible;
-                Spectrum.RegisterSoundPlayer(_player);
                 Properties.Settings.Default.Visualization = 1;
             }
         }

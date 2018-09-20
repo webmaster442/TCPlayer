@@ -912,7 +912,7 @@ namespace WPFSoundVisualizationLib
         /// </summary>
         public SpectrumAnalyzer()
         {
-            animationTimer = new DispatcherTimer(DispatcherPriority.ApplicationIdle)
+            animationTimer = new DispatcherTimer()
             {
                 Interval = TimeSpan.FromMilliseconds(defaultUpdateInterval),
             };
@@ -933,16 +933,6 @@ namespace WPFSoundVisualizationLib
             UpdateBarLayout();
             animationTimer.Start();
         }
-
-        public void UnRegisterSoundPlayer()
-        {
-            if (this.soundPlayer != null)
-            {
-                this.soundPlayer.PropertyChanged -= soundPlayer_PropertyChanged;
-                this.soundPlayer = null;
-            }
-            animationTimer.Stop();
-        }
         #endregion
 
         #region Event Overrides
@@ -957,6 +947,7 @@ namespace WPFSoundVisualizationLib
             base.OnRender(dc);
             UpdateBarLayout();
             UpdateSpectrum();
+            animationTimer.Start();
         }
 
         /// <summary>
@@ -975,13 +966,22 @@ namespace WPFSoundVisualizationLib
         private void UpdateSpectrum()
         {
             if (soundPlayer == null || spectrumCanvas == null || spectrumCanvas.RenderSize.Width < 1 || spectrumCanvas.RenderSize.Height < 1)
+            {
+                animationTimer.Stop();
                 return;
+            }
 
             if (soundPlayer.IsPlaying && !soundPlayer.GetFFTData(channelData))
+            {
+                animationTimer.Stop();
                 return;
+            }
 
             if (Visibility == Visibility.Collapsed)
+            {
+                animationTimer.Stop();
                 return;
+            }
 
             UpdateSpectrumShapes();
         }
@@ -1154,6 +1154,7 @@ namespace WPFSoundVisualizationLib
 
         private void animationTimer_Tick(object sender, EventArgs e)
         {
+            if (!Application.Current.MainWindow.IsActive) return;
             UpdateSpectrum();
         }
 

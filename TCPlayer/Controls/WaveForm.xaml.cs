@@ -21,6 +21,7 @@ using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Threading;
 using WPFSoundVisualizationLib;
 
@@ -38,14 +39,30 @@ namespace TCPlayer.Controls
 
         private void _visualTimer_Tick(object sender, EventArgs e)
         {
+            if (!Application.Current.MainWindow.IsActive) return;
+            UpdateWaveForm();
+        }
+
+        private void UpdateWaveForm()
+        {
             if (soundPlayer == null || RenderSize.Width < 1 || RenderSize.Height < 1 || !soundPlayer.IsPlaying)
+            {
+                _visualTimer.Stop();
                 return;
+            }
 
             if (soundPlayer.IsPlaying && !soundPlayer.GetChannelData(out channelData, _updatePeriod))
+            {
+                _visualTimer.Stop();
                 return;
+            }
 
             if (Visibility == Visibility.Collapsed)
+            {
+                _visualTimer.Stop();
                 return;
+            }
+
 
             PolyLine.Points.Clear();
 
@@ -94,14 +111,10 @@ namespace TCPlayer.Controls
             _visualTimer.Start();
         }
 
-        public void UnRegisterSoundPlayer()
+        protected override void OnRender(DrawingContext drawingContext)
         {
-            if (this.soundPlayer != null)
-            {
-                this.soundPlayer.PropertyChanged -= soundPlayer_PropertyChanged;
-                this.soundPlayer = null;
-            }
-            _visualTimer.Stop();
+            base.OnRender(drawingContext);
+            _visualTimer.Start();
         }
     }
 }

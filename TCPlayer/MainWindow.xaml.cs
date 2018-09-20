@@ -92,8 +92,6 @@ namespace TCPlayer
 
             if ((IsActive || Topmost) && (MainView.SelectedIndex == 0))
             {
-                if (!_player.IsPlaying) _player.IsPlaying = true;
-
                 if (_isdrag)
                 {
                     TbCurrTime.Text = TimeSpan.FromSeconds(SeekSlider.Value).ToShortTime();
@@ -123,7 +121,6 @@ namespace TCPlayer
                     SeekSlider.Value = _player.Position;
                     Taskbar.ProgressValue = SeekSlider.Value / SeekSlider.Maximum;
                 }
-                _player.IsPlaying = false;
             }
         }
 

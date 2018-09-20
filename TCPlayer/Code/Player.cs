@@ -419,11 +419,6 @@ namespace TCPlayer.Code
             return num;
         }
 
-        public void GetPlaybackStateNotification()
-        {
-            NotifyPropertyChanged(nameof(IsPlaying));
-        }
-
         /// <summary>
         /// Load a file for playback
         /// </summary>
@@ -501,7 +496,6 @@ namespace TCPlayer.Code
             Bass.ChannelPlay(_mixer, false);
             _paused = false;
             IsPlaying = true;
-            NotifyPropertyChanged(nameof(IsPlaying));
         }
 
         /// <summary>
@@ -512,8 +506,8 @@ namespace TCPlayer.Code
             if (_paused)
             {
                 Bass.ChannelPlay(_mixer, false);
-                IsPlaying = true;
                 _paused = false;
+                IsPlaying = true;
             }
             else
             {
