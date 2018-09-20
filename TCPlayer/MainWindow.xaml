@@ -266,7 +266,7 @@
                         Orientation="Horizontal">
                         <Button
                             x:Name="BtnOpen"
-                            Margin="5,0"
+                            Margin="4,0"
                             Click="DoAction"
                             Content="{StaticResource IconEject}"
                             ToolTip="{x:Static props:Resources.PlayerTab_ButtonOpen}" />
@@ -277,7 +277,7 @@
                             ToolTip="{x:Static props:Resources.PlayerTab_ButtonPlayPause}" />
                         <Button
                             x:Name="BtnStop"
-                            Margin="5,0"
+                            Margin="4,0"
                             Click="DoAction"
                             Content="{StaticResource IconStop}"
                             ToolTip="{x:Static props:Resources.PlayerTab_ButtonStop}" />
@@ -288,7 +288,7 @@
                             ToolTip="{x:Static props:Resources.PlayerTab_ButtonSeekBack}" />
                         <Button
                             x:Name="BtnSeekFwd"
-                            Margin="5,0"
+                            Margin="4,0"
                             Click="DoAction"
                             Content="{StaticResource IconSeekForward}"
                             ToolTip="{x:Static props:Resources.PlayerTab_ButtonSeekForward}" />
@@ -299,7 +299,7 @@
                             ToolTip="{x:Static props:Resources.PlayerTab_ButtonPrevousTrack}" />
                         <Button
                             x:Name="BtnNextTrack"
-                            Margin="5,0"
+                            Margin="4,0"
                             Click="DoAction"
                             Content="{StaticResource IconNext}"
                             ToolTip="{x:Static props:Resources.PlayerTab_ButtonNextTrack}" />
@@ -307,21 +307,24 @@
                             x:Name="BtnEQ"
                             Click="BtnEQ_Click"
                             Content="{StaticResource IconNote}"
-                            ToolTip="{x:Static props:Resources.PlayerTab_Equalizer}"/>
+                            ToolTip="{x:Static props:Resources.PlayerTab_Equalizer}" />
                         <ToggleButton
                             x:Name="BtnMute"
+                            Margin="4,0"
                             Click="BtnMute_Click"
-                            Margin="5,0"
                             Content="{StaticResource IconMute}"
                             ToolTip="{x:Static props:Resources.PlayerTab_ButtonMuteUnmute}" />
                         <Slider
                             x:Name="VolSlider"
                             Grid.Column="1"
-                            Width="170"
-                            Margin="3,0,0,0"
+                            Width="175"
+                            Margin="5,0,0,0"
                             VerticalAlignment="Center"
+                            LargeChange="0.1"
                             Maximum="1"
                             Minimum="0"
+                            SmallChange="0.1"
+                            Style="{StaticResource SongSlider}"
                             ValueChanged="VolSlider_ValueChanged"
                             Value="1">
                             <Slider.ToolTip>
