@@ -928,10 +928,13 @@ namespace WPFSoundVisualizationLib
         /// <param name="soundPlayer">A sound player that provides spectrum data through the ISpectrumPlayer interface methods.</param>
         public void RegisterSoundPlayer(ISpectrumPlayer soundPlayer)
         {
-            this.soundPlayer = soundPlayer;
-            this.soundPlayer.PropertyChanged += soundPlayer_PropertyChanged;
-            UpdateBarLayout();
-            animationTimer.Start();
+            if (soundPlayer != null)
+            {
+                this.soundPlayer = soundPlayer;
+                this.soundPlayer.PropertyChanged += soundPlayer_PropertyChanged;
+                UpdateBarLayout();
+                animationTimer.Start();
+            }
         }
         #endregion
 

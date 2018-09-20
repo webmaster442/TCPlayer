@@ -94,6 +94,7 @@ namespace TCPlayer.Controls
         public WaveForm()
         {
             InitializeComponent();
+            if (DesignerProperties.GetIsInDesignMode(this)) return;
             _visualTimer = new DispatcherTimer();
             _visualTimer.Interval = TimeSpan.FromMilliseconds(_updatePeriod);
             _visualTimer.Tick += _visualTimer_Tick;
@@ -106,15 +107,21 @@ namespace TCPlayer.Controls
 
         public void RegisterSoundPlayer(ISpectrumPlayer soundPlayer)
         {
-            this.soundPlayer = soundPlayer;
-            this.soundPlayer.PropertyChanged += soundPlayer_PropertyChanged;
-            _visualTimer.Start();
+            if (soundPlayer != null)
+            {
+                this.soundPlayer = soundPlayer;
+                this.soundPlayer.PropertyChanged += soundPlayer_PropertyChanged;
+                _visualTimer.Start();
+            }
         }
 
         protected override void OnRender(DrawingContext drawingContext)
         {
             base.OnRender(drawingContext);
-            _visualTimer.Start();
+            if (!DesignerProperties.GetIsInDesignMode(this))
+            {
+                _visualTimer.Start();
+            }
         }
     }
 }
