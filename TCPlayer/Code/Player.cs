@@ -326,53 +326,6 @@ namespace TCPlayer.Code
         }
 
         /// <summary>
-        /// List tracks on a CD drive
-        /// </summary>
-        /// <param name="drive">CD drive path</param>
-        /// <returns>An array of playlist entry's</returns>
-        public static string[] GetCdInfo(string drive)
-        {
-            var list = new List<string>();
-
-            int drivecount = BassCd.DriveCount;
-            int driveindex = 0;
-            for (int i = 0; i < drivecount; i++)
-            {
-
-                var info = BassCd.GetInfo(i);
-                if (info.DriveLetter == drive[0])
-                {
-                    driveindex = i;
-                    break;
-                }
-            }
-
-            if (BassCd.IsReady(driveindex))
-            {
-                var numtracks = BassCd.GetTracks(driveindex);
-                var discid = BassCd.GetID(0, CDID.CDDB); //cddb connect
-                if (App.DiscID != discid)
-                {
-                    var datas = BassCd.GetIDText(driveindex);
-                    App.DiscID = discid;
-                    App.CdData.Clear();
-                    foreach (var data in datas)
-                    {
-                        var item = data.Split('=');
-                        App.CdData.Add(item[0], item[1]);
-                    }
-                }
-                for (int i = 0; i < numtracks; i++)
-                {
-                    var entry = string.Format("cd://{0}/{1}", driveindex, i);
-                    list.Add(entry);
-                }
-            }
-            BassCd.Release(driveindex);
-            return list.ToArray();
-        }
-
-        /// <summary>
         /// Change output device
         /// </summary>
         /// <param name="name">string device</param>

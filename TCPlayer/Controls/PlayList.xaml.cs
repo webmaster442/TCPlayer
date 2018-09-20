@@ -26,6 +26,8 @@ using System.Windows;
 using System.Windows.Controls;
 using TCPlayer.Code;
 using TCPlayer.Properties;
+using TaskRunner;
+using TCPlayer.Jobs;
 
 namespace TCPlayer.Controls
 {
@@ -76,24 +78,7 @@ namespace TCPlayer.Controls
             ofd.Filter = "Playlists | " + App.Playlists;
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                string ext = Path.GetExtension(ofd.FileName);
-                string[] result = null;
-                switch (ext)
-                {
-                    case ".pls":
-                        result = await PlaylistLoaders.LoadPls(ofd.FileName);
-                        break;
-                    case ".m3u":
-                        result = await PlaylistLoaders.LoadM3u(ofd.FileName);
-                        break;
-                    case ".wpl":
-                        result = await PlaylistLoaders.LoadWPL(ofd.FileName);
-                        break;
-                    case ".asx":
-                        result = await PlaylistLoaders.LoadASX(ofd.FileName);
-                        break;
-                }
-                _list.AddRange(result);
+                await LoadPlaylist(ofd.FileName);
             }
         }
 
@@ -111,38 +96,72 @@ namespace TCPlayer.Controls
         private void DiscMenu_SubmenuOpened(object sender, RoutedEventArgs e)
         {
             DiscMenu.Items.Clear();
-            var q = from cd in DriveInfo.GetDrives()
-                    where cd.DriveType == DriveType.CDRom
-                    && cd.IsReady
-                    select cd;
+            var query = (from drive in DriveInfo.GetDrives()
+                         where 
+                            drive.DriveType == DriveType.CDRom || 
+                            drive.DriveType == DriveType.Removable
+                            && drive.IsReady
+                         select drive).ToList();
 
-            var cds = from cd in q
-                      where cd.DriveFormat == "CDFS"
-                      select cd.Name;
-
-            foreach (var cd in cds)
-            {
-                MenuItem drive = new MenuItem();
-                drive.Header = cd;
-                drive.Click += Drive_Click;
-                DiscMenu.Items.Add(drive);
-            }
-            if (cds.Count() < 1)
+            if (query.Count < 1)
             {
                 MenuItem drive = new MenuItem();
                 drive.Header = Properties.Resources.Playlist_NoDiscsFound;
                 DiscMenu.Items.Add(drive);
             }
+
+            foreach (var drive in query)
+            {
+                MenuItem device = new MenuItem
+                {
+                    Header = drive,
+                    Tag = drive.DriveType
+                };
+                device.Click += Drive_Click;
+                DiscMenu.Items.Add(device);
+            }
         }
 
         private async void Drive_Click(object sender, RoutedEventArgs e)
         {
-            var drive = ((MenuItem)sender).Header.ToString();
-            var result = await Task.Run(() =>
+            var menuitem = sender as MenuItem;
+            var drive = menuitem.Header.ToString();
+            var type = DriveType.Removable;
+
+            Enum.TryParse(menuitem.Tag.ToString(), out type);
+
+            var config = new JobRunnerConfiguration<string, IEnumerable<string>>
             {
-                return Player.GetCdInfo(drive);
-            });
-            _list.AddRange(result);
+                JobDescription = "Searching Device for playable content",
+                JobTitle = "Loading...",
+                ReportTaskBarProgress = true,
+                JobInput = drive,
+            };
+
+            try
+            {
+                JobResult<IEnumerable<string>> results;
+                if (type == DriveType.CDRom)
+                {
+                    config.Job = new CDGetInfoJob();
+                    results = await JobRunner.RunJob(config);
+                    if (results.Result.Any())
+                    {
+                        _list.AddRange(results.Result);
+                    }
+                }
+                config.Job = new ImportFromMassStorageJob();
+                results = await JobRunner.RunJob(config);
+                if (results.Result.Any())
+                {
+                    _list.AddRange(results.Result);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Helpers.ErrorDialog(ex, Properties.Resources.Error_FileLoad);
+            }
         }
 
         private void ITunesMenu_FilesProvidedEvent(object sender, IEnumerable<string> e)
@@ -150,6 +169,42 @@ namespace TCPlayer.Controls
             _list.AddRange(e);
         }
 
+        private async Task LoadPlaylist(string filename)
+        {
+            var config = new JobRunnerConfiguration<string, IEnumerable<string>>
+            {
+                JobDescription = "Reading playlist file",
+                JobTitle = "Loading...",
+                ReportTaskBarProgress = true,
+                JobInput = filename,
+            };
+
+            string ext = Path.GetExtension(filename);
+            switch (ext)
+            {
+                case ".pls":
+                    config.Job = new LoadPLSJob();
+                    break;
+                case ".m3u":
+                    config.Job = new LoadM3UJob();
+                    break;
+                case ".wpl":
+                    config.Job = new LoadWPLJob();
+                    break;
+                case ".asx":
+                    config.Job = new LoadASXJob();
+                    break;
+            }
+            try
+            {
+                var result = await JobRunner.RunJob(config);
+                _list.AddRange(result.Result);
+            }
+            catch (Exception ex)
+            {
+                Helpers.ErrorDialog(ex, Properties.Resources.Error_FileLoad);
+            }
+        }
         private void ManageClear_Click(object sender, RoutedEventArgs e)
         {
             _list.Clear();
@@ -233,6 +288,7 @@ namespace TCPlayer.Controls
             _list.CollectionChanged += (s, e) => { Count = _list.Count; };
             PlaylistView.ItemsSource = _list;
         }
+
         public int Count
         {
             get { return (int)GetValue(CountProperty); }
@@ -244,6 +300,7 @@ namespace TCPlayer.Controls
             get { return (int)GetValue(IndexProperty); }
             set { SetValue(IndexProperty, value); }
         }
+
         public string SelectedItem
         {
             get
@@ -274,23 +331,7 @@ namespace TCPlayer.Controls
 
                 if (!string.IsNullOrEmpty(ext) && App.Playlists.Contains(ext))
                 {
-                    string[] result = null;
-                    switch (ext)
-                    {
-                        case ".pls":
-                            result = await PlaylistLoaders.LoadPls(item);
-                            break;
-                        case ".m3u":
-                            result = await PlaylistLoaders.LoadM3u(item);
-                            break;
-                        case ".wpl":
-                            result = await PlaylistLoaders.LoadWPL(item);
-                            break;
-                        case ".asx":
-                            result = await PlaylistLoaders.LoadASX(item);
-                            break;
-                    }
-                    _list.AddRange(result);
+                    await LoadPlaylist(item);
                 }
                 else if (App.Formats.Contains(ext))
                 {

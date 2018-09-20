@@ -613,7 +613,7 @@ namespace TCPlayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to [ Disc ].
+        ///   Looks up a localized string similar to [ Devices ].
         /// </summary>
         public static string Playlist_MenuDisc {
             get {

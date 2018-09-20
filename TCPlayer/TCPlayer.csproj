@@ -95,6 +95,20 @@
     <Compile Include="Controls\WaveForm.xaml.cs">
       <DependentUpon>WaveForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Jobs\BasePlaylistLoaderJob.cs" />
+    <Compile Include="Jobs\CDGetInfoJob.cs" />
+    <Compile Include="Jobs\ImportFromMassStorageJob.cs" />
+    <Compile Include="Jobs\LoadASXJob.cs" />
+    <Compile Include="Jobs\LoadM3UJob.cs" />
+    <Compile Include="Jobs\LoadPLSJob.cs" />
+    <Compile Include="Jobs\LoadWPLJob.cs" />
+    <Compile Include="Lib\JobRunner\IJob.cs" />
+    <Compile Include="Lib\JobRunner\JobResult.cs" />
+    <Compile Include="Lib\JobRunner\JobWindow.xaml.cs">
+      <DependentUpon>JobWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Lib\JobRunner\TaskRunner.cs" />
+    <Compile Include="Lib\JobRunner\TaskRunnerConfiguration.cs" />
     <Compile Include="Lib\TagLib\Aac\AudioHeader.cs" />
     <Compile Include="Lib\TagLib\Aac\BitStream.cs" />
     <Compile Include="Lib\TagLib\Aac\File.cs" />
@@ -369,7 +383,6 @@
     <Compile Include="Code\SingleInstance.cs" />
     <Compile Include="Code\Native.cs" />
     <Compile Include="Code\Player.cs" />
-    <Compile Include="Code\PlaylistLoaders.cs" />
     <Compile Include="Controls\AboutDialog.xaml.cs">
       <DependentUpon>AboutDialog.xaml</DependentUpon>
     </Compile>
@@ -441,6 +454,10 @@
     <Page Include="Controls\WaveForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Lib\JobRunner\JobWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

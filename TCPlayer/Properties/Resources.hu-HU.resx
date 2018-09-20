@@ -241,7 +241,7 @@ A média gombok használatbavételéhez zárj be minden olyan egyéb alkalmazás
     <value>URL ...</value>
   </data>
   <data name="Playlist_MenuDisc" xml:space="preserve">
-    <value>[ Lemez ]</value>
+    <value>[ Eszközök ]</value>
   </data>
   <data name="Playlist_MenuDiscNotfound" xml:space="preserve">
     <value>Nem találtam lemez meghajtót</value>
@@ -401,7 +401,6 @@ A média gombok használatbavételéhez zárj be minden olyan egyéb alkalmazás
   </data>
   <data name="Dialog_Cancel" xml:space="preserve">
     <value>[ Mégsem ]</value>
-    <comment> </comment>
   </data>
   <data name="Dialog_Ok" xml:space="preserve">
     <value>[ Ok ]</value>

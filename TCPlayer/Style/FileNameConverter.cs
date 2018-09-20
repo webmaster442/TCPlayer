@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Data;
 
@@ -11,6 +12,14 @@ namespace TCPlayer.Style
     [ValueConversion(typeof(string), typeof(string))]
     public class FileNameConverter : IValueConverter
     {
+        private Dictionary<string, string> _cache;
+        private const int _limit = 300;
+
+        public FileNameConverter()
+        {
+            _cache = new Dictionary<string, string>(_limit);
+        }
+
         /// <summary>
         /// Converts a full path to a file name
         /// </summary>
@@ -31,12 +40,25 @@ namespace TCPlayer.Style
             {
                 try
                 {
-                    TagLib.File tags = TagLib.File.Create(fullpath);
-                    var artist = tags.Tag.Performers[0];
-                    var title = tags.Tag.Title;
-                    if (string.IsNullOrEmpty(artist)) artist = "Unknown artist";
-                    if (string.IsNullOrEmpty(title)) title = "Unknown song";
-                    return string.Format("{0} - {1}", artist, title);
+                    if (_cache.ContainsKey(fullpath))
+                    {
+                        return _cache[fullpath];
+                    }
+                    else
+                    {
+                        TagLib.File tags = TagLib.File.Create(fullpath);
+                        var artist = tags.Tag.Performers[0];
+                        var title = tags.Tag.Title;
+                        if (string.IsNullOrEmpty(artist)) artist = "Unknown artist";
+                        if (string.IsNullOrEmpty(title)) title = "Unknown song";
+                        
+                        if (_cache.Count + 1 > _limit)
+                        {
+                            _cache.Clear();
+                        }
+                        _cache.Add(fullpath, $"{artist} - {title}");
+                        return _cache[fullpath];
+                    }
 
                 }
                 catch (Exception)
