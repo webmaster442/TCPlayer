@@ -1,3 +1,7 @@
+#2.5
+ * Playlist loading performance improvements
+ * Radio Loading fixes & update of built in radio database
+
 #2.5 beta 1 - 2018.09.16
  * Playlist can now acces songs from iTunes (If iTunes is installed)
  * New, more flexible song notification

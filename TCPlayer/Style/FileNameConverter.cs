@@ -13,7 +13,7 @@ namespace TCPlayer.Style
     public class FileNameConverter : IValueConverter
     {
         private Dictionary<string, string> _cache;
-        private const int _limit = 120;
+        private const int _limit = 300;
 
         public FileNameConverter()
         {

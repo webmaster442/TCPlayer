@@ -241,7 +241,7 @@ To Use media key functions please close other apps that may use the keys, then r
     <value>URL ...</value>
   </data>
   <data name="Playlist_MenuDisc" xml:space="preserve">
-    <value>[ Disc ]</value>
+    <value>[ Devices ]</value>
   </data>
   <data name="Playlist_MenuDiscNotfound" xml:space="preserve">
     <value>No Drive found</value>
