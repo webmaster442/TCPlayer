@@ -91,19 +91,19 @@ namespace TCPlayer.Controls
                         switch (tag)
                         {
                             case "Albums":
-                                files = iTunes.Filter(FilterKind.Album, content).Select(t => t.FilePath);
+                                files = iTunes.Filter(FilterKind.Album, content).Select(t => t?.FilePath);
                                 break;
                             case "Artists":
-                                files = iTunes.Filter(FilterKind.Artist, content).Select(t => t.FilePath);
+                                files = iTunes.Filter(FilterKind.Artist, content).Select(t => t?.FilePath);
                                 break;
                             case "Years":
-                                files = iTunes.Filter(FilterKind.Year, content).Select(t => t.FilePath);
+                                files = iTunes.Filter(FilterKind.Year, content).Select(t => t?.FilePath);
                                 break;
                             case "Genres":
-                                files = iTunes.Filter(FilterKind.Genre, content).Select(t => t.FilePath);
+                                files = iTunes.Filter(FilterKind.Genre, content).Select(t => t?.FilePath);
                                 break;
                             case "Playlists":
-                                files = iTunes.ReadPlaylist(content).Select(t => t.FilePath);
+                                files = iTunes.ReadPlaylist(content).Select(t => t?.FilePath);
                                 break;
                         }
                         FilesProvidedEvent?.Invoke(this, files);

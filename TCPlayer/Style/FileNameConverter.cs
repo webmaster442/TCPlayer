@@ -30,7 +30,9 @@ namespace TCPlayer.Style
         /// <returns>string, filename</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string fullpath = value.ToString();
+            string fullpath = value as string;
+
+            if (string.IsNullOrEmpty(fullpath)) return Binding.DoNothing;
 
             if (fullpath.StartsWith("http") || fullpath.StartsWith("cd:"))
             {

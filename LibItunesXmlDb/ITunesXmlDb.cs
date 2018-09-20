@@ -104,7 +104,14 @@ namespace Webmaster442.LibItunesXmlDb
                 var playlistNodes = LoadPlaylists();
                 foreach (var item in playlistNodes)
                 {
-                    yield return item.ParseStringValue("Name");
+                    var parent = item.ParseStringValue("Parent Persistent ID");
+                    if (!string.IsNullOrEmpty(parent))
+                    {
+                        var parentitem = playlistNodes.Where(i => i.ParseStringValue("Playlist Persistent ID") == parent).FirstOrDefault();
+                        yield return $"{parentitem.ParseStringValue("Name")} \\ {item.ParseStringValue("Name")}";
+                    }
+                    else
+                        yield return item.ParseStringValue("Name");
                 }
             }
         }
@@ -131,6 +138,12 @@ namespace Webmaster442.LibItunesXmlDb
         /// <inheritdoc/>
         public IEnumerable<Track> ReadPlaylist(string id)
         {
+            if (id.Contains(" \\ "))
+            {
+                var parts = id.Split('\\');
+                id = parts[parts.Length - 1].Trim();
+            }
+
             var playlistNodes = LoadPlaylists();
 
             var query = from node in playlistNodes
@@ -142,7 +155,7 @@ namespace Webmaster442.LibItunesXmlDb
                 foreach (var subitem in item)
                 {
                     var trackid = Int32.Parse(subitem.ParseStringValue("Track ID"));
-                    var track = Tracks.Where(t => t.TrackId == trackid).FirstOrDefault();
+                    var track = Tracks.Where(t => t?.TrackId == trackid).FirstOrDefault();
                     yield return track;
                 }
             }
