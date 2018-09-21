@@ -27,12 +27,6 @@ namespace TCPlayer.Controls
     /// </summary>
     public partial class AddURLDialog : UserControl, IDialog
     {
-        private void LbRecent_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            if (LbRecent.SelectedItem == null) return;
-            TbUrl.Text = LbRecent.SelectedItem.ToString();
-        }
-
         public AddURLDialog()
         {
             InitializeComponent();
@@ -47,6 +41,14 @@ namespace TCPlayer.Controls
         public string Url
         {
             get { return TbUrl.Text; }
+        }
+
+        private void LbRecent_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (LbRecent.SelectedIndex > -1)
+            {
+                TbUrl.Text = LbRecent.SelectedItem as string;
+            }
         }
     }
 }

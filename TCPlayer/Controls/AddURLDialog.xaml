@@ -39,6 +39,6 @@
             x:Name="LbRecent"
             Grid.Row="2"
             Grid.ColumnSpan="2"
-            MouseDown="LbRecent_MouseDown" />
+            SelectionChanged="LbRecent_SelectionChanged"/>
     </Grid>
 </UserControl>
