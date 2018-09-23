@@ -85,8 +85,8 @@ namespace TCPlayer.Controls
                 case "IsPlaying":
                     if (soundPlayer.IsPlaying && !_visualTimer.IsEnabled)
                         _visualTimer.Start();
-                    else
-                        _visualTimer.Stop();
+                    //else
+                        //_visualTimer.Stop();
                     break;
             }
         }
