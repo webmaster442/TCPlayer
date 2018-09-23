@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace TaskRunner
 {
@@ -15,9 +16,9 @@ namespace TaskRunner
             try
             {
                 Toutput result = default(Toutput);
-                tw.Show();
+                Application.Current.Dispatcher.Invoke(() => tw.Show());
                 result = await Task.Run(() => configuration.Job.JobFunction(configuration.JobInput, tw.Reporter, tw.CancelToken));
-                tw.Close();
+                Application.Current.Dispatcher.Invoke(() => tw.Close());
                 return JobResult<Toutput>.Create(result, true);
             }
             catch (OperationCanceledException ex)

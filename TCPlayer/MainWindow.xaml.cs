@@ -529,10 +529,13 @@ namespace TCPlayer
             if (_player.Is64Bit) Title += " (x64)";
             else Title += " (x86)";
 
-            var src = Environment.GetCommandLineArgs();
-            string[] pars = new string[src.Length - 1];
-            Array.Copy(src, 1, pars, 0, src.Length - 1);
-            DoLoadAndPlay(pars);
+            Dispatcher.Invoke(() =>
+            {
+                var src = Environment.GetCommandLineArgs();
+                string[] pars = new string[src.Length - 1];
+                Array.Copy(src, 1, pars, 0, src.Length - 1);
+                DoLoadAndPlay(pars);
+            });
 
             if (Properties.Settings.Default.SaveVolume)
             {

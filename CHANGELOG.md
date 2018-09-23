@@ -5,6 +5,8 @@
  * Disc menu renamed in playlist to devives - now supports loading from mass storage media too
  * Visuals updating bug resolved
  * Volume slider fixed
+ * Fixed issue in Recent url selection
+ * Fixed Playlist loading issues
 
 #2.5 beta 1 - 2018.09.16
  * Playlist can now acces songs from iTunes (If iTunes is installed)

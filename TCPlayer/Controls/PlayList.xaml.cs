@@ -198,7 +198,10 @@ namespace TCPlayer.Controls
             try
             {
                 var result = await JobRunner.RunJob(config);
-                _list.AddRange(result.Result);
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    _list.AddRange(result.Result);
+                });
             }
             catch (Exception ex)
             {
