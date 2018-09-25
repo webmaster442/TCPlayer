@@ -1,4 +1,4 @@
-#2.5
+# 2.5
  * Playlist loading performance improvements
  * Radio Loading fixes & update of built in radio database
  * iTunes menu related fixes
@@ -8,7 +8,7 @@
  * Fixed issue in Recent url selection
  * Fixed Playlist loading issues
 
-#2.5 beta 1 - 2018.09.16
+# 2.5 beta 1 - 2018.09.16
  * Playlist can now acces songs from iTunes (If iTunes is installed)
  * New, more flexible song notification
  * Changed player skin
@@ -21,7 +21,7 @@
  * Localization improvements
  * 3 Band simple equalizer
 
-#2.1 - 2018.09.07
+# 2.1 - 2018.09.07
  * Just source code release
  * Reverted source after a failed rewrite attempt to 2.0
  * Updated internal libaries
@@ -30,7 +30,7 @@
  * Assembly is now strongly signed & checks hash code of native dll files
  * ManagedBass.Pinvoke is now compiled from code for signing
 
-#2.0 - 2017.02.17
+# 2.0 - 2017.02.17
  * Fixed Network stream playback
  * Network streams now display stram tags (Shoutcast & Icecast)
  * Redesigned Media info
@@ -47,11 +47,11 @@
 	- Displays played item index & item count in playlist
  * This is the last release that targets the .NET Framework 4.5 Future versions will require 4.6
 
-#1.07 - 2016.11.05
+# 1.07 - 2016.11.05
  * Fixed broken bassmidi.dll
  * Removed OFR support, because the current version of the bass plugin is broken, will reenable it when it's fixed
  
-#1.06 - 2016.11.04
+# 1.06 - 2016.11.04
 
  * Added options dialog, with various settings
  * Improved Lister plugin code
@@ -63,22 +63,22 @@
  * Added a packer plugin to send multiple files to the player.
  * Launched website: https://webmaster442.github.io/TCPlayer/
 
-#1.05 - 2016.10.23
+# 1.05 - 2016.10.23
 
  * Added support for: APE, MPC, MP+, MPP, OFR, OFS, SPX, TTA, DSF, OPUS
  * Updated Bass.dll components
  * Saves volume on exit
 
-#1.04 - 2016.10.03
+# 1.04 - 2016.10.03
 
  * Fixed Total commander plugin loading issue specific to x86 versions
 
-#1.03 - 2016.10.01
+# 1.03 - 2016.10.01
 
  * Fixed Total commander plugin loading in TC 9 beta & x86 versions
  * Fixed .NET Framework targeting (4.5.2 -> 4.5.0)
 
-#1.02 - 2016.09.27
+# 1.02 - 2016.09.27
 
  * MP4 handler removed from plugin, because usually it's a video
  * Added MIDI & Tracker formats playback
