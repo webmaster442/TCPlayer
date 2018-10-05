@@ -32,7 +32,8 @@ namespace TCPlayer.Controls
     /// </summary>
     public partial class WaveForm : UserControl
     {
-        private const float _updatePeriod = 0.025f;
+        private const int _updatePeriod = 20;
+        private const float _datalength = (_updatePeriod * 2) / 1000.0f;
         private DispatcherTimer _visualTimer;
         private short[] channelData;
         private ISpectrumPlayer soundPlayer;
@@ -51,7 +52,7 @@ namespace TCPlayer.Controls
                 return;
             }
 
-            if (soundPlayer.IsPlaying && !soundPlayer.GetChannelData(out channelData, _updatePeriod))
+            if (soundPlayer.IsPlaying && !soundPlayer.GetChannelData(out channelData, _datalength))
             {
                 _visualTimer.Stop();
                 return;
