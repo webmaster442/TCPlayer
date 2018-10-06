@@ -411,4 +411,7 @@ A média gombok használatbavételéhez zárj be minden olyan egyéb alkalmazás
   <data name="PlayerTab_Equalizer" xml:space="preserve">
     <value>Hangszínszabályzó</value>
   </data>
+  <data name="MainWin_MinimizeTray" xml:space="preserve">
+    <value>Minimalizálás a tálcára...</value>
+  </data>
 </root>

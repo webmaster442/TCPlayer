@@ -36,15 +36,21 @@ namespace TCPlayer
     public partial class MainWindow : Window, IDisposable
     {
         private ChapterProvider _chapterprovider;
+        private Equalizer _equalizer;
         private bool _isdrag;
         private KeyboardHook _keyboardhook;
         private bool _loaded;
         private Player _player;
         private float _prevvol;
         private DispatcherTimer _timer;
+        private TrayIcon _tray;
         private HwndSource hsource;
         private IntPtr hwnd;
-        private Equalizer  _equalizer;
+
+        ~MainWindow()
+        {
+            Dispose(false);
+        }
 
         private static Color GetWindowColorizationColor(bool opaque)
         {
@@ -63,6 +69,11 @@ namespace TCPlayer
             _isdrag = true;
             _player.Position = e;
             _isdrag = false;
+        }
+
+        private void _equalizer_EqSliderChange(object sender, RoutedEventArgs e)
+        {
+            Player.Instance.EqConfig = _equalizer.EqConfiguration;
         }
 
         private void _keyboardhook_KeyPressed(object sender, KeyPressedEventArgs e)
@@ -148,6 +159,16 @@ namespace TCPlayer
         private void BtnChapters_Click(object sender, RoutedEventArgs e)
         {
             BtnChapters.ContextMenu.IsOpen = true;
+        }
+
+        private void BtnEQ_Click(object sender, RoutedEventArgs e)
+        {
+            ShowDialog(_equalizer);
+        }
+
+        private void BtnMinimizeToTray_Click(object sender, RoutedEventArgs e)
+        {
+            _tray.MinimizeToTray();
         }
 
         private void BtnMute_Click(object sender, RoutedEventArgs e)
@@ -504,6 +525,11 @@ namespace TCPlayer
                 _keyboardhook.Dispose();
                 _keyboardhook = null;
             }
+            if (_tray != null)
+            {
+                _tray.Dispose();
+                _tray = null;
+            }
             GC.SuppressFinalize(this);
         }
 
@@ -512,6 +538,7 @@ namespace TCPlayer
             InitializeComponent();
             _player = Player.Instance;
             _player.ChangeDevice(); //init
+            _tray = new TrayIcon();
             _prevvol = 1.0f;
             _chapterprovider = new ChapterProvider(ChapterMenu);
             _chapterprovider.ChapterClicked += _chapterprovider_ChapterClicked;
@@ -550,12 +577,6 @@ namespace TCPlayer
             if (Properties.Settings.Default.RegisterMultimediaKeys)
                 RegisterMultimedaKeys();
         }
-
-        private void _equalizer_EqSliderChange(object sender, RoutedEventArgs e)
-        {
-            Player.Instance.EqConfig = _equalizer.EqConfiguration;
-        }
-
         public static void ShowDialog(UserControl dialog)
         {
             var main = Application.Current.MainWindow as MainWindow;
@@ -583,11 +604,6 @@ namespace TCPlayer
                 Dispatcher.Invoke(() => { MainView.SelectedIndex = 1; });
             }
             DoBringIntoView();
-        }
-
-        private void BtnEQ_Click(object sender, RoutedEventArgs e)
-        {
-            ShowDialog(_equalizer);
         }
     }
 }

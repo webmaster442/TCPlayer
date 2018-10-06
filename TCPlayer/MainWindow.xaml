@@ -71,6 +71,8 @@
                 <ColumnDefinition Width="32" />
                 <ColumnDefinition Width="32" />
                 <ColumnDefinition Width="32" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="32" />
                 <ColumnDefinition Width="32" />
                 <ColumnDefinition Width="32" />
                 <ColumnDefinition Width="32" />
@@ -96,9 +98,20 @@
                 Content="{StaticResource IconInformation}"
                 Style="{StaticResource TitleBarButton}"
                 ToolTip="{x:Static props:Resources.MainWin_About}" />
+            <Rectangle
+                Grid.Column="4"
+                Margin="4"
+                Fill="White" />
+            <Button
+                x:Name="BtnMinimizeToTray"
+                Click="BtnMinimizeToTray_Click"
+                Grid.Column="5"
+                Content="{StaticResource IconHide}"
+                Style="{StaticResource TitleBarButton}"
+                ToolTip="{x:Static props:Resources.MainWin_MinimizeTray}" />
             <ToggleButton
                 x:Name="AllWaysTop"
-                Grid.Column="4"
+                Grid.Column="6"
                 Background="Transparent"
                 BorderBrush="Transparent"
                 BorderThickness="0"
@@ -123,14 +136,14 @@
             </ToggleButton>
             <Button
                 x:Name="TitlebarMinimize"
-                Grid.Column="5"
+                Grid.Column="7"
                 Click="TitlebarMinimize_Click"
                 Content="{StaticResource IconMinimize}"
                 Style="{StaticResource TitleBarButton}"
                 ToolTip="{x:Static props:Resources.MainWin_Minimize}" />
             <Button
                 x:Name="TitlebarClose"
-                Grid.Column="6"
+                Grid.Column="8"
                 Click="TitlebarClose_Click"
                 Content="{StaticResource IconClose}"
                 Style="{StaticResource TitleBarButton}"

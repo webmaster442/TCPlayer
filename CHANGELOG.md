@@ -8,6 +8,7 @@
  * Fixed issue in Recent url selection
  * Fixed Playlist loading issues
  * Fixed performance problems of WaveForm visual
+ * Minimize to tray feature added
 
 # 2.5 beta 1 - 2018.09.16
  * Playlist can now acces songs from iTunes (If iTunes is installed)

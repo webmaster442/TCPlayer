@@ -379,6 +379,15 @@ namespace TCPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Minimize to tray....
+        /// </summary>
+        public static string MainWin_MinimizeTray {
+            get {
+                return ResourceManager.GetString("MainWin_MinimizeTray", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to [ Player ].
         /// </summary>
         public static string MainWin_PlayerTab {

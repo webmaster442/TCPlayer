@@ -4,8 +4,11 @@ This program is free software, distributed under the terms of GPL.
 
 The software uses the following free software libaries:
 
- - ManagedBass.PInvoke
- - Taglib#
- - WPF Sound Visualization Library
- - Mp4 Chapters
- - Material Design Icons
+* ManagedBass.PInvoke
+* WPF Sound Visualization Library
+* TagLib#
+* mp4 chapters
+* Material Design Icons
+* RadioTray's bookmarks
+* Radiotray-hu bookmarks
+* WpfExpressionBlendTheme

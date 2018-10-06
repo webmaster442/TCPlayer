@@ -411,4 +411,7 @@ To Use media key functions please close other apps that may use the keys, then r
   <data name="PlayerTab_Equalizer" xml:space="preserve">
     <value>Equalizer</value>
   </data>
+  <data name="MainWin_MinimizeTray" xml:space="preserve">
+    <value>Minimize to tray...</value>
+  </data>
 </root>

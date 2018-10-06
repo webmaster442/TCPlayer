@@ -80,6 +80,7 @@
     <Compile Include="Code\EngineHashChecker.cs" />
     <Compile Include="Code\EqConfig.cs" />
     <Compile Include="Code\EqConstants.cs" />
+    <Compile Include="Code\TrayIcon.cs" />
     <Compile Include="Controls\Equalizer.xaml.cs">
       <DependentUpon>Equalizer.xaml</DependentUpon>
     </Compile>
