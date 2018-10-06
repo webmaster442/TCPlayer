@@ -26,10 +26,6 @@
             HorizontalAlignment="Right"
             Background="Transparent"
             SelectionChanged="FileSelector_SelectionChanged">
-            <ComboBoxItem
-                Content="{x:Static p:Resources.Radio_RadioTcPlayer}" />
-            <ComboBoxItem
-                Content="{x:Static p:Resources.Radio_RadioHungarian}" />
         </ComboBox>
         <TextBlock
             Grid.Row="0"
