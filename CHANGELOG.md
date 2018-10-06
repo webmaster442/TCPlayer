@@ -9,6 +9,7 @@
  * Fixed Playlist loading issues
  * Fixed performance problems of WaveForm visual
  * Minimize to tray feature added
+ * Radio bookmarks extended for external files
 
 # 2.5 beta 1 - 2018.09.16
  * Playlist can now acces songs from iTunes (If iTunes is installed)
