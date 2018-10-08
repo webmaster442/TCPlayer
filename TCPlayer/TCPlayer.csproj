@@ -62,6 +62,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -80,6 +81,8 @@
     <Compile Include="Code\EngineHashChecker.cs" />
     <Compile Include="Code\EqConfig.cs" />
     <Compile Include="Code\EqConstants.cs" />
+    <Compile Include="Code\iTunesLookup\iTunesResponse.cs" />
+    <Compile Include="Code\iTunesLookup\iTunesLookup.cs" />
     <Compile Include="Code\TrayIcon.cs" />
     <Compile Include="Controls\Equalizer.xaml.cs">
       <DependentUpon>Equalizer.xaml</DependentUpon>

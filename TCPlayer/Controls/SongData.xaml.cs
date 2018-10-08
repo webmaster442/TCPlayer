@@ -28,6 +28,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using TCPlayer.Code;
+using TCPlayer.Code.iTunesLookup;
 using TCPlayer.Controls.Network;
 using TCPlayer.Controls.Notification;
 
@@ -88,31 +89,6 @@ namespace TCPlayer.Controls
             return string.Format("{0:0.000} {1}", val, unit);
         }
 
-        private void SetInfoText(string artist, string title, string album, string year, string size)
-        {
-            artist = string.IsNullOrEmpty(artist) ? Properties.Resources.SongData_UnknownArtist : artist;
-            title = string.IsNullOrEmpty(title) ? Properties.Resources.SongData_UnknownSong : title;
-            year = string.IsNullOrEmpty(year) ? DateTime.Now.Year.ToString() : year;
-
-            var sb = new StringBuilder();
-            sb.AppendFormat("{0} - {1}\r\n", artist, title);
-            sb.AppendFormat("{0} ({1})\r\n", album, year);
-            sb.Append(size);
-            InfoText.Text = sb.ToString();
-        }
-
-        private void SetInfoText(string artisttitle, string album, string year, string size)
-        {
-            artisttitle = string.IsNullOrEmpty(artisttitle) ? string.Format("{0} - {1}", Properties.Resources.SongData_UnknownArtist, Properties.Resources.SongData_UnknownSong) : artisttitle;
-            year = string.IsNullOrEmpty(year) ? DateTime.Now.Year.ToString() : year;
-
-            var sb = new StringBuilder();
-            sb.AppendFormat("{0}\r\n", artisttitle);
-            sb.AppendFormat("{0} ({1})\r\n", album, year);
-            sb.Append(size);
-            InfoText.Text = sb.ToString();
-        }
-
         private void SetupMenu(bool enabled)
         {
             if (NetworkMenu != null)
@@ -136,30 +112,6 @@ namespace TCPlayer.Controls
             WaveForm.RegisterSoundPlayer(_player);
             Spectrum.RegisterSoundPlayer(_player);
             DisplayVisual(Properties.Settings.Default.Visualization);
-        }
-
-        private void UpdateCDFlags(int track, bool notify, int size)
-        {
-            FileName = string.Format("CD Track #{0}", track);
-            //GetFileSize(size);
-            Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/disk.png", UriKind.Relative));
-            var Year = "unknown";
-            var Artist = "Track";
-            var Title = string.Format("#{0}", track);
-            var Album = "Audio CD";
-            if (App.CdData.Count > 0)
-            {
-                Artist = App.CdData[string.Format("PERFORMER{0}", track)];
-                Title = App.CdData[string.Format("TITLE{0}", track)];
-                Album = App.CdData["TITLE0"];
-            }
-            if (notify)
-            {
-                SetupMenu(true, Artist, Title);
-                SongChangeNotification.DisplaySongChangeNotification("CD Track" + track, Artist, Title);
-                //App.NotifyIcon.ShowNotification("CD Track" + track, Artist, Title);
-            }
-            SetInfoText(Artist, Title, Album, Year, GetFileSize(size));
         }
 
         private void VisualContainer_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -188,7 +140,7 @@ namespace TCPlayer.Controls
         }
 
         public static DependencyProperty CoverProperty =
-                    DependencyProperty.Register("Cover", typeof(ImageSource), typeof(SongData), new PropertyMetadata(new BitmapImage(new Uri("pack://application:,,,/TCPlayer;component/Style/unknown.png"))));
+            DependencyProperty.Register("Cover", typeof(ImageSource), typeof(SongData), new PropertyMetadata(new BitmapImage(new Uri("pack://application:,,,/TCPlayer;component/Style/unknown.png"))));
 
         public static DependencyProperty FileNameProperty =
             DependencyProperty.Register("FileName", typeof(string), typeof(SongData));
@@ -222,6 +174,25 @@ namespace TCPlayer.Controls
             set;
         }
 
+        private async void TryDownloadingCover(string input, Uri fallbackImg)
+        {
+            try
+            {
+                byte[] buffer = await iTunesLookup.GetCoverFor(input);
+                if (buffer != null)
+                    Cover = iTunesLookup.CreateBitmap(buffer);
+                else
+                    Cover = new BitmapImage(fallbackImg);
+            }
+            catch (Exception)
+            {
+                Cover = new BitmapImage(fallbackImg);
+            }
+        }
+
+        /// <summary>
+        /// Reset function
+        /// </summary>
         public void Reset()
         {
             SetupMenu(false);
@@ -229,6 +200,11 @@ namespace TCPlayer.Controls
             InfoText.Text = Properties.Resources.SongData_Error;
         }
 
+        /// <summary>
+        /// Media info updte for Tracker files
+        /// </summary>
+        /// <param name="file">File</param>
+        /// <param name="handle">Channel handle</param>
         public void UpdateMediaInfo(string file, int handle)
         {
             FileName = file;
@@ -240,6 +216,10 @@ namespace TCPlayer.Controls
             SetInfoText(Artist, Title, "", "unknown", Size);
         }
 
+        /// <summary>
+        /// Main entry point for media info update
+        /// </summary>
+        /// <param name="file">File</param>
         public void UpdateMediaInfo(string file)
         {
             FileName = file;
@@ -282,6 +262,13 @@ namespace TCPlayer.Controls
                 }
 
                 TagLib.File tags = TagLib.File.Create(file);
+
+                var Year = tags.Tag.Year.ToString();
+                var Artist = "";
+                if (tags.Tag.Performers != null && tags.Tag.Performers.Length != 0) Artist = tags.Tag.Performers[0];
+                var Album = tags.Tag.Album;
+                var Title = tags.Tag.Title;
+
                 if (tags.Tag.Pictures.Length > 0)
                 {
                     var picture = tags.Tag.Pictures[0].Data;
@@ -295,22 +282,102 @@ namespace TCPlayer.Controls
                     ms.Close();
                     Cover = ret;
                 }
-                var Year = tags.Tag.Year.ToString();
-                var Artist = "";
-                if (tags.Tag.Performers != null && tags.Tag.Performers.Length != 0) Artist = tags.Tag.Performers[0];
-                var Album = tags.Tag.Album;
-                var Title = tags.Tag.Title;
+                else
+                {
+                    var query = $"{Artist} - {Title}";
+                    if (!string.IsNullOrEmpty(query))
+                        TryDownloadingCover(query, new Uri("/TCPlayer;component/Style/unknown.png", UriKind.Relative));
+                }
+
+
                 if (notify)
                 {
                     SetupMenu(true, Artist, Title);
                     SongChangeNotification.DisplaySongChangeNotification(FileName, Artist, Title);
                     //App.NotifyIcon.ShowNotification(FileName, Artist, Title);
                 }
+
                 SetInfoText(Artist, Title, Album, Year, Size);
             }
             catch (Exception)
             {
                 Reset();
+            }
+        }
+
+        /// <summary>
+        /// Update function for CD
+        /// </summary>
+        /// <param name="track">Track</param>
+        /// <param name="notify">send notification or not</param>
+        /// <param name="size">File size in bytes</param>
+        private void UpdateCDFlags(int track, bool notify, int size)
+        {
+            FileName = string.Format("CD Track #{0}", track);
+            //GetFileSize(size);
+            Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/disk.png", UriKind.Relative));
+            var Year = "unknown";
+            var Artist = "Track";
+            var Title = string.Format("#{0}", track);
+            var Album = "Audio CD";
+            if (App.CdData.Count > 0)
+            {
+                Artist = App.CdData[string.Format("PERFORMER{0}", track)];
+                Title = App.CdData[string.Format("TITLE{0}", track)];
+                Album = App.CdData["TITLE0"];
+                TryDownloadingCover($"{Artist} - {Title}", new Uri("/TCPlayer;component/Style/disk.png", UriKind.Relative));
+            }
+            if (notify)
+            {
+                SetupMenu(true, Artist, Title);
+                SongChangeNotification.DisplaySongChangeNotification("CD Track" + track, Artist, Title);
+                //App.NotifyIcon.ShowNotification("CD Track" + track, Artist, Title);
+            }
+            SetInfoText(Artist, Title, Album, Year, GetFileSize(size));
+        }
+
+        /// <summary>
+        /// Updte function for informations
+        /// </summary>
+        /// <param name="artist"></param>
+        /// <param name="title"></param>
+        /// <param name="album"></param>
+        /// <param name="year"></param>
+        /// <param name="size"></param>
+        private void SetInfoText(string artist, string title, string album, string year, string size)
+        {
+            artist = string.IsNullOrEmpty(artist) ? Properties.Resources.SongData_UnknownArtist : artist;
+            title = string.IsNullOrEmpty(title) ? Properties.Resources.SongData_UnknownSong : title;
+            year = string.IsNullOrEmpty(year) ? DateTime.Now.Year.ToString() : year;
+
+            var sb = new StringBuilder();
+            sb.AppendFormat("{0} - {1}\r\n", artist, title);
+            sb.AppendFormat("{0} ({1})\r\n", album, year);
+            sb.Append(size);
+            InfoText.Text = sb.ToString();
+        }
+
+        /// <summary>
+        /// Update function for Netwok streams
+        /// </summary>
+        /// <param name="artisttitle"></param>
+        /// <param name="album"></param>
+        /// <param name="year"></param>
+        /// <param name="size"></param>
+        private void SetInfoText(string artisttitle, string album, string year, string size)
+        {
+            artisttitle = string.IsNullOrEmpty(artisttitle) ? string.Format("{0} - {1}", Properties.Resources.SongData_UnknownArtist, Properties.Resources.SongData_UnknownSong) : artisttitle;
+            year = string.IsNullOrEmpty(year) ? DateTime.Now.Year.ToString() : year;
+
+            var sb = new StringBuilder();
+            sb.AppendFormat("{0}\r\n", artisttitle);
+            sb.AppendFormat("{0} ({1})\r\n", album, year);
+            sb.Append(size);
+            InfoText.Text = sb.ToString();
+
+            if (!string.IsNullOrEmpty(artisttitle))
+            {
+                TryDownloadingCover(artisttitle, new Uri("/TCPlayer;component/Style/network.png", UriKind.Relative));
             }
         }
     }
