@@ -98,8 +98,8 @@ namespace TCPlayer.Controls
             DiscMenu.Items.Clear();
             var query = (from drive in DriveInfo.GetDrives()
                          where 
-                            drive.DriveType == DriveType.CDRom || 
-                            drive.DriveType == DriveType.Removable
+                            (drive.DriveType == DriveType.CDRom || 
+                            drive.DriveType == DriveType.Removable)
                             && drive.IsReady
                          select drive).ToList();
 
