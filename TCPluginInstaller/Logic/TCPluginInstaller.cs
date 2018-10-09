@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.IO;
 
-namespace TCPluginInstaller
+namespace TCPluginInstaller.Logic
 {
     internal static class TCPluginInstaller
     {
@@ -35,18 +35,30 @@ namespace TCPluginInstaller
 
             if (lister)
             {
-                section = Helpers.ToString(PluginType.Lister);
+                section = ToString(PluginType.Lister);
                 fullpath = Path.Combine(currentdir, WlxFile);
                 IniFile.WriteValue(iniFile, section, "512", fullpath);
             }
 
             if (packer)
             {
-                section = Helpers.ToString(PluginType.Packer);
+                section = ToString(PluginType.Packer);
                 fullpath = Path.Combine(currentdir, WcxFile);
                 IniFile.WriteValue(iniFile, section, "tcplayer", $"277,{fullpath}");
             }
+        }
 
+        private static string ToString(PluginType pluginType)
+        {
+            switch (pluginType)
+            {
+                case PluginType.Packer:
+                    return "PackerPlugins";
+                case PluginType.Lister:
+                    return "ListerPlugins";
+                default:
+                    return "";
+            }
         }
     }
 }

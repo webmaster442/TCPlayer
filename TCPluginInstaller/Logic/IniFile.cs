@@ -21,7 +21,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace TCPluginInstaller
+namespace TCPluginInstaller.Logic
 {
     /// <summary>
     /// Ini file helper class

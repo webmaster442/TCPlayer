@@ -16,22 +16,37 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+using System;
+using System.Windows.Input;
+
 namespace TCPluginInstaller
 {
-    internal static class Helpers
+    internal class ActionCommand : ICommand
     {
-        public static string ToString(PluginType pluginType)
+        private readonly Action<object> _execute;
+        private readonly Func<object, bool> _canExecute;
+
+        public ActionCommand(Action<object> execute, Func<object, bool> canExecute = null)
         {
-            switch (pluginType)
-            {
-                case PluginType.Packer:
-                    return "PackerPlugins";
-                case PluginType.Lister:
-                    return "ListerPlugins";
-                default:
-                    return "";
-            }
+            _execute = execute;
+            _canExecute = canExecute;
         }
 
+        public event EventHandler CanExecuteChanged;
+
+        public void RaiseCanExecuteChanged()
+        {
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return _canExecute == null || _canExecute(parameter);
+        }
+
+        public void Execute(object parameter)
+        {
+            _execute(parameter);
+        }
     }
 }
