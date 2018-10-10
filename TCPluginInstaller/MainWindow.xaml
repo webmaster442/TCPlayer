@@ -6,11 +6,12 @@
     xmlns:local="clr-namespace:TCPluginInstaller"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="TC Player Total Commander Plugin installer"
-    Width="471"
-    Height="240"
+    Width="480"
+    Height="280"
     ResizeMode="NoResize"
     SnapsToDevicePixels="True"
     WindowStartupLocation="CenterScreen"
+    Icon="floppy.png"
     mc:Ignorable="d">
     <Window.DataContext>
         <local:MainWindowModel />
@@ -37,6 +38,13 @@
             <Setter Property="Margin" Value="5" />
             <Setter Property="FontSize" Value="14" />
         </Style>
+        <Style
+            x:Key="InstallerButton"
+            TargetType="Button">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Margin" Value="5,0" />
+            <Setter Property="Height" Value="28" />
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -48,36 +56,36 @@
             <TextBlock
                 Style="{StaticResource Header}"
                 Text="Total Commander INI Path:" />
-            <Grid
-                Margin="10,5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <TextBox
-                    x:Name="TbIniPath"
-                    Grid.Column="0"
-                    FontSize="14"
-                    Text="{Binding IniPath}" />
+            <TextBox
+                x:Name="TbIniPath"
+                Grid.Column="0"
+                Margin="5,0"
+                FontSize="14"
+                Text="{Binding IniPath, UpdateSourceTrigger=PropertyChanged}" />
+            <StackPanel
+                Margin="0,5"
+                Orientation="Horizontal">
                 <Button
-                    x:Name="BtnBrowse"
-                    Grid.Column="1"
-                    Width="100"
-                    Height="28"
-                    Margin="5,0"
-                    Content="Browse..."
-                    FontSize="14" />
-            </Grid>
+                    Command="{Binding RegistryLocateCommand}"
+                    Content="Try finding INI Via Registry"
+                    Style="{StaticResource InstallerButton}" />
+                <Button
+                    Command="{Binding DefaultLocateCommand}"
+                    Content="Take default INI path"
+                    Style="{StaticResource InstallerButton}" />
+                <Button
+                    Command="{Binding BrowseCommand}"
+                    Content="Locate INI Manualy..."
+                    Style="{StaticResource InstallerButton}" />
+            </StackPanel>
             <TextBlock
                 Style="{StaticResource Header}"
                 Text="Install Plugins:" />
             <CheckBox
-                x:Name="CbPluginLister"
                 Content="Lister"
                 IsChecked="{Binding InstallLister}"
                 Style="{StaticResource Selection}" />
             <CheckBox
-                x:Name="CbPluginPacker"
                 Content="Packer"
                 IsChecked="{Binding InstallPacker}"
                 Style="{StaticResource Selection}" />
@@ -87,12 +95,10 @@
             HorizontalAlignment="Right"
             Orientation="Horizontal">
             <Button
-                x:Name="BtnInstall"
                 Command="{Binding InstallCommand}"
                 Content="Install"
                 Style="{StaticResource ActionButton}" />
             <Button
-                x:Name="BtnExit"
                 Command="{Binding ExitCommand}"
                 Content="Exit"
                 Style="{StaticResource ActionButton}" />

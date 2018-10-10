@@ -36,6 +36,8 @@ namespace TCPluginInstaller
         public ActionCommand InstallCommand { get; }
         public ActionCommand ExitCommand { get; }
         public ActionCommand BrowseCommand { get; }
+        public ActionCommand RegistryLocateCommand { get; }
+        public ActionCommand DefaultLocateCommand { get; }
 
         private void Notify([CallerMemberName]string propertyName = null)
         {
@@ -47,6 +49,9 @@ namespace TCPluginInstaller
             InstallCommand = new ActionCommand(Install, CanInstall);
             BrowseCommand = new ActionCommand(Browse, CanDoOtherStuff);
             ExitCommand = new ActionCommand(Exit, CanDoOtherStuff);
+            RegistryLocateCommand = new ActionCommand(LocateViaRegistry);
+            DefaultLocateCommand = new ActionCommand(LocateDefault);
+
         }
 
         public bool IsInstalling
@@ -115,7 +120,7 @@ namespace TCPluginInstaller
         private void Browse(object obj)
         {
             var openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Ini Files | *.ini";
+            openFileDialog.Filter = "Total commander configuration|wincmd.ini";
             if (openFileDialog.ShowDialog() == true)
             {
                 IniPath = openFileDialog.FileName;
@@ -135,6 +140,8 @@ namespace TCPluginInstaller
             try
             {
                 Logic.TCPluginInstaller.Install(IniPath, InstallLister, InstallPacker);
+                MessageBox.Show("Installation completed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                App.Current.MainWindow.Close();
             }
             catch (Exception ex)
             {
@@ -149,6 +156,36 @@ namespace TCPluginInstaller
         public void Exit(object parameter)
         {
             App.Current.MainWindow.Close();
+        }
+
+        public void LocateViaRegistry(object param)
+        {
+            object found = null;
+            var IniKey = Registry.CurrentUser.OpenSubKey(@"Software\Ghisler\Total Commander\");
+            found = IniKey?.GetValue("IniFileName");
+
+            if (found!= null)
+            {
+                IniPath = Convert.ToString(found);
+            }
+            else
+            {
+                IniKey = Registry.LocalMachine.OpenSubKey(@"Software\Ghisler\Total Commander\");
+                found = IniKey?.GetValue("IniFileName");
+                if (found != null)
+                {
+                    IniPath = Convert.ToString(found);
+                }
+                else
+                {
+                    MessageBox.Show("Ini Coudn't be found. Probably bad installation?", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+        }
+
+        public void LocateDefault(object param)
+        {
+            IniPath = Environment.ExpandEnvironmentVariables(@"%AppData%\Ghisler\wincmd.ini");
         }
     }
 }

@@ -57,7 +57,7 @@ namespace TCPluginInstaller.Logic
                 IntPtr returnedString = Marshal.AllocCoTaskMem(_bufferSize * sizeof(char));
                 int size = GetPrivateProfileSection(section, returnedString, _bufferSize, file);
 
-                if (_bufferSize == 0)
+                if (size == 0 || _bufferSize == 0)
                 {
                     Marshal.FreeCoTaskMem(returnedString);
                     return null;

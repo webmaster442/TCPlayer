@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 using System;
 using System.IO;
+using System.Linq;
 
 namespace TCPluginInstaller.Logic
 {
@@ -37,7 +38,14 @@ namespace TCPluginInstaller.Logic
             {
                 section = ToString(PluginType.Lister);
                 fullpath = Path.Combine(currentdir, WlxFile);
-                IniFile.WriteValue(iniFile, section, "512", fullpath);
+                var keys = IniFile.GetKeyValuePairs(iniFile, section);
+                int index = 0;
+                if (keys != null)
+                {
+                    index = keys.Keys.Select(k => Convert.ToInt32(k)).Max();
+                    index += 1;
+                }
+                IniFile.WriteValue(iniFile, section, index.ToString(), fullpath);
             }
 
             if (packer)
