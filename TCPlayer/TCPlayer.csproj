@@ -389,7 +389,7 @@
     </Compile>
     <Compile Include="Style\LeftMarginMultiplierConverter.cs" />
     <Compile Include="Style\NullorValueConverter.cs" />
-    <Compile Include="Style\PositionToTimeStringConverter.cs" />
+    <Compile Include="Converters\PositionToTimeStringConverter.cs" />
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -430,7 +430,7 @@
     <Compile Include="Lib\WPFSoundVis\Spectrum Analyzer\BarHeightScalingStyles.cs" />
     <Compile Include="Lib\WPFSoundVis\Spectrum Analyzer\ISpectrumPlayer.cs" />
     <Compile Include="Lib\WPFSoundVis\Spectrum Analyzer\SpectrumAnalyzer.cs" />
-    <Compile Include="Style\FileNameConverter.cs" />
+    <Compile Include="Converters\FileNameConverter.cs" />
     <Page Include="Controls\AboutDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -562,7 +562,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Style\unknown.png" />
+    <Resource Include="Style\Images\unknown.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icon.png" />
@@ -693,14 +693,14 @@
     <Content Include="pluginst.inf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Style\midi.png" />
-    <Resource Include="Style\music.png" />
-    <Resource Include="Style\disk.png" />
-    <Resource Include="Style\taskbar-play-pause.png" />
-    <Resource Include="Style\taskbar-skip-next.png" />
-    <Resource Include="Style\taskbar-skip-previous.png" />
-    <Resource Include="Style\taskbar-volume-off.png" />
-    <Resource Include="Style\network.png" />
+    <Resource Include="Style\Images\midi.png" />
+    <Resource Include="Style\Images\music.png" />
+    <Resource Include="Style\Images\disk.png" />
+    <Resource Include="Style\Images\taskbar-play-pause.png" />
+    <Resource Include="Style\Images\taskbar-skip-next.png" />
+    <Resource Include="Style\Images\taskbar-skip-previous.png" />
+    <Resource Include="Style\Images\taskbar-volume-off.png" />
+    <Resource Include="Style\Images\network.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LibItunesXmlDb\LibItunesXmlDb.csproj">

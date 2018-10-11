@@ -2,10 +2,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:TCPlayer.Style"
+    xmlns:converters="clr-namespace:TCPlayer.Converters"
     xmlns:soudvis="clr-namespace:WPFSoundVisualizationLib">
-
-    <local:FileNameConverter
-        x:Key="FilenameConv" />
 
     <local:NullorValueConverter
         x:Key="NullorValueConv" />
@@ -61,7 +59,7 @@
                 <DataTemplate>
                     <TextBlock
                         Foreground="White"
-                        Text="{Binding Converter={StaticResource FilenameConv}}"
+                        Text="{Binding Converter={converters:FileNameConverter}}"
                         ToolTip="{Binding}" />
                 </DataTemplate>
             </Setter.Value>

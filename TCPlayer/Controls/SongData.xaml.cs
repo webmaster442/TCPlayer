@@ -140,7 +140,7 @@ namespace TCPlayer.Controls
         }
 
         public static DependencyProperty CoverProperty =
-            DependencyProperty.Register("Cover", typeof(ImageSource), typeof(SongData), new PropertyMetadata(new BitmapImage(new Uri("pack://application:,,,/TCPlayer;component/Style/unknown.png"))));
+            DependencyProperty.Register("Cover", typeof(ImageSource), typeof(SongData), new PropertyMetadata(new BitmapImage(new Uri("pack://application:,,,/TCPlayer;component/Style/Images/unknown.png"))));
 
         public static DependencyProperty FileNameProperty =
             DependencyProperty.Register("FileName", typeof(string), typeof(SongData));
@@ -196,7 +196,7 @@ namespace TCPlayer.Controls
         public void Reset()
         {
             SetupMenu(false);
-            Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/unknown.png", UriKind.Relative));
+            Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/Images/unknown.png", UriKind.Relative));
             InfoText.Text = Properties.Resources.SongData_Error;
         }
 
@@ -209,7 +209,7 @@ namespace TCPlayer.Controls
         {
             FileName = file;
             var fi = new FileInfo(file);
-            Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/music.png", UriKind.Relative));
+            Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/Images/music.png", UriKind.Relative));
             var Size = GetFileSize(fi.Length);
             var Artist = Marshal.PtrToStringAuto(Bass.ChannelGetTags(handle, TagType.MusicAuth));
             var Title = Marshal.PtrToStringAuto(Bass.ChannelGetTags(handle, TagType.MusicName));
@@ -226,7 +226,7 @@ namespace TCPlayer.Controls
             var notify = Properties.Settings.Default.TrackChangeNotification;
             if (file.StartsWith("http://") || file.StartsWith("https://"))
             {
-                Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/network.png", UriKind.Relative));
+                Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/Images/network.png", UriKind.Relative));
                 SetInfoText(Path.GetFileName(file), "Stream", "", DateTime.Now.Year.ToString(), "stream");
                 if (notify)
                 {
@@ -250,7 +250,7 @@ namespace TCPlayer.Controls
                 var Size = GetFileSize(fi.Length);
                 if (Helpers.IsMidi(file))
                 {
-                    Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/midi.png", UriKind.Relative));
+                    Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/Images/midi.png", UriKind.Relative));
                     SetInfoText("", fi.Name, "", Properties.Resources.SongData_Unknown, Size);
                     if (notify)
                     {
@@ -286,7 +286,7 @@ namespace TCPlayer.Controls
                 {
                     var query = $"{Artist} - {Title}";
                     if (!string.IsNullOrEmpty(query))
-                        TryDownloadingCover(query, new Uri("/TCPlayer;component/Style/unknown.png", UriKind.Relative));
+                        TryDownloadingCover(query, new Uri("/TCPlayer;component/Style/Images/unknown.png", UriKind.Relative));
                 }
 
 
@@ -315,7 +315,7 @@ namespace TCPlayer.Controls
         {
             FileName = string.Format("CD Track #{0}", track);
             //GetFileSize(size);
-            Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/disk.png", UriKind.Relative));
+            Cover = new BitmapImage(new Uri("/TCPlayer;component/Style/Images/disk.png", UriKind.Relative));
             var Year = "unknown";
             var Artist = "Track";
             var Title = string.Format("#{0}", track);
@@ -325,7 +325,7 @@ namespace TCPlayer.Controls
                 Artist = App.CdData[string.Format("PERFORMER{0}", track)];
                 Title = App.CdData[string.Format("TITLE{0}", track)];
                 Album = App.CdData["TITLE0"];
-                TryDownloadingCover($"{Artist} - {Title}", new Uri("/TCPlayer;component/Style/disk.png", UriKind.Relative));
+                TryDownloadingCover($"{Artist} - {Title}", new Uri("/TCPlayer;component/Style/Images/disk.png", UriKind.Relative));
             }
             if (notify)
             {
@@ -377,7 +377,7 @@ namespace TCPlayer.Controls
 
             if (!string.IsNullOrEmpty(artisttitle))
             {
-                TryDownloadingCover(artisttitle, new Uri("/TCPlayer;component/Style/network.png", UriKind.Relative));
+                TryDownloadingCover(artisttitle, new Uri("/TCPlayer;component/Style/Images/network.png", UriKind.Relative));
             }
         }
     }

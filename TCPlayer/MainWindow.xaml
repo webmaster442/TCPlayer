@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:netmenu="clr-namespace:TCPlayer.Controls.Network"
     xmlns:props="clr-namespace:TCPlayer.Properties"
-    xmlns:style="clr-namespace:TCPlayer.Style"
+    xmlns:converters="clr-namespace:TCPlayer.Converters"
     x:Name="MainWin"
     Title="TC Player"
     Width="700"
@@ -35,22 +35,22 @@
                     Click="ThumbButtonInfo_Click"
                     CommandParameter="Play/Pause"
                     Description="{x:Static props:Resources.PlayerTab_ButtonPlayPause}"
-                    ImageSource="Style/taskbar-play-pause.png" />
+                    ImageSource="Style/Images/taskbar-play-pause.png" />
                 <ThumbButtonInfo
                     Click="ThumbButtonInfo_Click"
                     CommandParameter="Previous track"
                     Description="{x:Static props:Resources.PlayerTab_ButtonPrevousTrack}"
-                    ImageSource="Style/taskbar-skip-previous.png" />
+                    ImageSource="Style/Images/taskbar-skip-previous.png" />
                 <ThumbButtonInfo
                     Click="ThumbButtonInfo_Click"
                     CommandParameter="Next track"
                     Description="{x:Static props:Resources.PlayerTab_ButtonNextTrack}"
-                    ImageSource="Style/taskbar-skip-next.png" />
+                    ImageSource="Style/Images/taskbar-skip-next.png" />
                 <ThumbButtonInfo
                     Click="ThumbButtonInfo_Click"
                     CommandParameter="Mute/UnMute"
                     Description="{x:Static props:Resources.PlayerTab_ButtonMuteUnmute}"
-                    ImageSource="Style/taskbar-volume-off.png" />
+                    ImageSource="Style/Images/taskbar-volume-off.png" />
             </TaskbarItemInfo.ThumbButtonInfos>
         </TaskbarItemInfo>
     </Window.TaskbarItemInfo>
@@ -219,7 +219,7 @@
                         ValueChanged="SeekSlider_ValueChanged">
                         <Slider.ToolTip>
                             <ToolTip
-                                Content="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Value, Converter={style:PositionToTimeStringConverter}}" />
+                                Content="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Value, Converter={converters:PositionToTimeStringConverter}}" />
                         </Slider.ToolTip>
                     </Slider>
                     <StackPanel
