@@ -59,5 +59,8 @@
     <Setting Name="EqBass" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
+    <Setting Name="CultureOverride" Type="System.Globalization.CultureInfo" Scope="User">
+      <Value Profile="(Default)">(Default)</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

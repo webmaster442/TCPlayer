@@ -414,4 +414,7 @@ A média gombok használatbavételéhez zárj be minden olyan egyéb alkalmazás
   <data name="MainWin_MinimizeTray" xml:space="preserve">
     <value>Minimalizálás a tálcára...</value>
   </data>
+  <data name="Settings_Language" xml:space="preserve">
+    <value>Nyelv változtatása: (Program újraindítás után)</value>
+  </data>
 </root>

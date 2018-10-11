@@ -250,5 +250,17 @@ namespace TCPlayer.Properties {
                 this["EqBass"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("(Default)")]
+        public global::System.Globalization.CultureInfo CultureOverride {
+            get {
+                return ((global::System.Globalization.CultureInfo)(this["CultureOverride"]));
+            }
+            set {
+                this["CultureOverride"] = value;
+            }
+        }
     }
 }

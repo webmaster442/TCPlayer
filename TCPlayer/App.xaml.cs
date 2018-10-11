@@ -18,6 +18,8 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Resources;
 using System.Windows;
 using TCPlayer.Code;
 
@@ -55,6 +57,7 @@ namespace TCPlayer
                                     MessageBoxImage.Error);
                     return;
                 }
+                SetAppCulture();
                 var application = new App();
                 CdData = new Dictionary<string, string>();
                 DiscID = "";
@@ -71,6 +74,25 @@ namespace TCPlayer
                 si.Close();
             }
             else si.SubmitParameters();
+        }
+
+        internal static void SetAppCulture()
+        {
+            if (TCPlayer.Properties.Settings.Default.CultureOverride != null)
+            {
+                try
+                {
+                    CultureInfo @override = TCPlayer.Properties.Settings.Default.CultureOverride;
+                    if (AvailableCultures.Contains(@override))
+                        TCPlayer.Properties.Resources.Culture = @override;
+                    else
+                        TCPlayer.Properties.Settings.Default.CultureOverride = CultureInfo.InvariantCulture;
+                }
+                catch (Exception)
+                {
+                    TCPlayer.Properties.Settings.Default.CultureOverride = CultureInfo.InvariantCulture;
+                }
+            }
         }
 
         private static void MainWindow_Deactivated(object sender, EventArgs e)
@@ -125,6 +147,36 @@ namespace TCPlayer
                 var mw = App.Current.MainWindow as MainWindow;
                 mw.DoLoadAndPlay(files);
             });
+        }
+
+        public static List<CultureInfo> AvailableCultures
+        {
+            get
+            {
+                // Pass the class name of your resources as a parameter e.g. MyResources for MyResources.resx
+                ResourceManager rm = new ResourceManager(typeof(Properties.Resources));
+
+                CultureInfo[] cultures = CultureInfo.GetCultures(CultureTypes.AllCultures);
+                List<CultureInfo> ret = new List<CultureInfo>(cultures.Length);
+                foreach (CultureInfo culture in cultures)
+                {
+                    try
+                    {
+                        ResourceSet rs = rm.GetResourceSet(culture, true, false);
+                        if (rs != null)
+                        {
+                            if (string.IsNullOrEmpty(culture.Name))
+                                ret.Add(new CultureInfo("en-US"));
+                            else
+                                ret.Add(culture);
+                        }
+                    }
+                    catch (CultureNotFoundException exc)
+                    {
+                    }
+                }
+                return ret;
+            }
         }
     }
 }

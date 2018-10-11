@@ -414,4 +414,7 @@ To Use media key functions please close other apps that may use the keys, then r
   <data name="MainWin_MinimizeTray" xml:space="preserve">
     <value>Minimize to tray...</value>
   </data>
+  <data name="Settings_Language" xml:space="preserve">
+    <value>Change Language: (Requires program restart)</value>
+  </data>
 </root>
