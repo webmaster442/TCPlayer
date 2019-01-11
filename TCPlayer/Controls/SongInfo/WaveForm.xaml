@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="TCPlayer.Controls.WaveForm"
+    x:Class="TCPlayer.Controls.SongInfo.WaveForm"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,8 +9,8 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <Polyline
-            Panel.ZIndex="100"
-            x:Name="PolyLine"
-            Stroke="Orange"
-            StrokeThickness="3" />
+        x:Name="PolyLine"
+        Panel.ZIndex="100"
+        Stroke="Orange"
+        StrokeThickness="3" />
 </UserControl>

@@ -25,7 +25,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using WPFSoundVisualizationLib;
 
-namespace TCPlayer.Controls
+namespace TCPlayer.Controls.SongInfo
 {
     /// <summary>
     /// Interaction logic for WaveForm.xaml

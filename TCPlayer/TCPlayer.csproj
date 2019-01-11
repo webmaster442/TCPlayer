@@ -112,11 +112,11 @@
     </Compile>
     <Compile Include="Controls\Network\NetworkSearchProvider.cs" />
     <Compile Include="Controls\Network\SearchCommand.cs" />
-    <Compile Include="Controls\WaveForm.xaml.cs">
+    <Compile Include="Controls\SongInfo\WaveForm.xaml.cs">
       <DependentUpon>WaveForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\SelectedIndexConverter.cs" />
-    <Compile Include="FsVisual.xaml.cs">
+    <Compile Include="Controls\SongInfo\FsVisual.xaml.cs">
       <DependentUpon>FsVisual.xaml</DependentUpon>
     </Compile>
     <Compile Include="Jobs\BasePlaylistLoaderJob.cs" />
@@ -471,15 +471,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\SongData.xaml">
+    <Page Include="Controls\SongInfo\SongData.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\WaveForm.xaml">
+    <Page Include="Controls\SongInfo\WaveForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FsVisual.xaml">
+    <Page Include="Controls\SongInfo\FsVisual.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -498,7 +498,7 @@
     <Compile Include="Controls\PlayList.xaml.cs">
       <DependentUpon>PlayList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\SongData.xaml.cs">
+    <Compile Include="Controls\SongInfo\SongData.xaml.cs">
       <DependentUpon>SongData.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">

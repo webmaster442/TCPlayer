@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:netmenu="clr-namespace:TCPlayer.Controls.Network"
     xmlns:props="clr-namespace:TCPlayer.Properties"
+    xmlns:songInfo="clr-namespace:TCPlayer.Controls.SongInfo"
     x:Name="MainWin"
     Title="TC Player"
     Width="700"
@@ -206,7 +207,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <controls:SongData
+                    <songInfo:SongData
                         x:Name="SongDat"
                         Grid.Row="0"
                         Grid.RowSpan="2" />

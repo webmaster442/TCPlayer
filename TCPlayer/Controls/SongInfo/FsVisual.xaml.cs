@@ -1,10 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Threading;
 using WPFSoundVisualizationLib;
 
-namespace TCPlayer
+namespace TCPlayer.Controls.SongInfo
 {
     /// <summary>
     /// Interaction logic for FsVisual.xaml
@@ -88,6 +89,13 @@ namespace TCPlayer
                 this.soundPlayer.PropertyChanged += soundPlayer_PropertyChanged;
                 _visualTimer.Start();
             }
+        }
+
+        internal void UpdateMetaData(string text, ImageSource cover)
+        {
+            Info.Text = text;
+            Filler.Source = cover;
+            SmallCover.Source = cover;
         }
     }
 }

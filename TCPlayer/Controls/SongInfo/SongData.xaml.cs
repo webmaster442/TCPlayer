@@ -32,7 +32,7 @@ using TCPlayer.Code.iTunesLookup;
 using TCPlayer.Controls.Network;
 using TCPlayer.Controls.Notification;
 
-namespace TCPlayer.Controls
+namespace TCPlayer.Controls.SongInfo
 {
     /// <summary>
     /// Interaction logic for SongData.xaml
@@ -40,6 +40,7 @@ namespace TCPlayer.Controls
     public partial class SongData : UserControl
     {
         private Player _player;
+        private FsVisual _fullscreen;
 
         private void _player_MetaChanged(object sender, string e)
         {
@@ -148,10 +149,12 @@ namespace TCPlayer.Controls
         public SongData()
         {
             InitializeComponent();
+            _fullscreen = new FsVisual();
             if (DesignerProperties.GetIsInDesignMode(this)) return;
             _player = Player.Instance;
             _player.MetaChanged += _player_MetaChanged;
             WaveForm.RegisterSoundPlayer(_player);
+            _fullscreen.RegisterSoundPlayer(_player);
         }
 
         public ImageSource Cover
@@ -290,7 +293,7 @@ namespace TCPlayer.Controls
                 }
 
 
-                if (notify)
+                if (notify && _fullscreen.Visibility != Visibility.Visible)
                 {
                     SetupMenu(true, Artist, Title);
                     SongChangeNotification.DisplaySongChangeNotification(FileName, Artist, Title);
@@ -298,6 +301,9 @@ namespace TCPlayer.Controls
                 }
 
                 SetInfoText(Artist, Title, Album, Year, Size);
+
+                if (_fullscreen.Visibility == Visibility.Visible)
+                    _fullscreen.UpdateMetaData(InfoText.Text, Cover);
             }
             catch (Exception)
             {
@@ -379,6 +385,12 @@ namespace TCPlayer.Controls
             {
                 TryDownloadingCover(artisttitle, new Uri("/TCPlayer;component/Style/Images/network.png", UriKind.Relative));
             }
+        }
+
+        internal void GoFullScreen()
+        {
+            _fullscreen.Show();
+            _fullscreen.UpdateMetaData(InfoText.Text, Cover);
         }
     }
 }
