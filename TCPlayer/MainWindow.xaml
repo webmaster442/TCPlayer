@@ -3,11 +3,11 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:TCPlayer.Controls"
+    xmlns:converters="clr-namespace:TCPlayer.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:netmenu="clr-namespace:TCPlayer.Controls.Network"
     xmlns:props="clr-namespace:TCPlayer.Properties"
-    xmlns:converters="clr-namespace:TCPlayer.Converters"
     x:Name="MainWin"
     Title="TC Player"
     Width="700"
@@ -71,54 +71,57 @@
                 <ColumnDefinition Width="32" />
                 <ColumnDefinition Width="32" />
                 <ColumnDefinition Width="32" />
+                <ColumnDefinition Width="32" />
                 <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="32" />
                 <ColumnDefinition Width="32" />
                 <ColumnDefinition Width="32" />
                 <ColumnDefinition Width="32" />
             </Grid.ColumnDefinitions>
-            <TextBlock
-                Margin="5,0"
-                Text="{Binding ElementName=MainWin, Path=Title}" />
+            <TextBlock Margin="5,0" Text="{Binding ElementName=MainWin, Path=Title}" />
+            <Button
+                x:Name="FsVisual"
+                Grid.Column="1"
+                Click="FsVisual_Click"
+                Content="{StaticResource Fullscreen}" />
             <netmenu:NetworkMenu
                 x:Name="NetMenu"
-                Grid.Column="1"
+                Grid.Column="2"
                 IsEnabled="False" />
             <Button
                 x:Name="BtnSettings"
-                Grid.Column="2"
+                Grid.Column="3"
                 Click="BtnSettings_Click"
                 Content="{StaticResource IconSettings}"
                 Style="{StaticResource TitleBarButton}"
                 ToolTip="{x:Static props:Resources.MainWin_Settings}" />
             <Button
                 x:Name="BtnAbout"
-                Grid.Column="3"
+                Grid.Column="4"
                 Click="BtnAbout_Click"
                 Content="{StaticResource IconInformation}"
                 Style="{StaticResource TitleBarButton}"
                 ToolTip="{x:Static props:Resources.MainWin_About}" />
             <Rectangle
-                Grid.Column="4"
+                Grid.Column="5"
                 Margin="4"
                 Fill="White" />
             <Button
                 x:Name="BtnMinimizeToTray"
+                Grid.Column="6"
                 Click="BtnMinimizeToTray_Click"
-                Grid.Column="5"
                 Content="{StaticResource IconHide}"
                 Style="{StaticResource TitleBarButton}"
                 ToolTip="{x:Static props:Resources.MainWin_MinimizeTray}" />
             <ToggleButton
                 x:Name="AllWaysTop"
-                Grid.Column="6"
+                Grid.Column="7"
                 Background="Transparent"
                 BorderBrush="Transparent"
                 BorderThickness="0"
                 IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=TopMost, Mode=TwoWay}">
                 <ToggleButton.Resources>
-                    <Style
-                        TargetType="ToggleButton">
+                    <Style TargetType="ToggleButton">
                         <Style.Triggers>
                             <Trigger Property="IsChecked" Value="false">
                                 <Setter Property="Content" Value="{StaticResource IconBack}" />
@@ -136,14 +139,14 @@
             </ToggleButton>
             <Button
                 x:Name="TitlebarMinimize"
-                Grid.Column="7"
+                Grid.Column="8"
                 Click="TitlebarMinimize_Click"
                 Content="{StaticResource IconMinimize}"
                 Style="{StaticResource TitleBarButton}"
                 ToolTip="{x:Static props:Resources.MainWin_Minimize}" />
             <Button
                 x:Name="TitlebarClose"
-                Grid.Column="8"
+                Grid.Column="9"
                 Click="TitlebarClose_Click"
                 Content="{StaticResource IconClose}"
                 Style="{StaticResource TitleBarButton}"
@@ -194,8 +197,7 @@
             Grid.Row="1"
             Grid.RowSpan="2"
             TabStripPlacement="Bottom">
-            <TabItem
-                Header="{x:Static props:Resources.MainWin_PlayerTab}">
+            <TabItem Header="{x:Static props:Resources.MainWin_PlayerTab}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -218,32 +220,21 @@
                         Thumb.DragStarted="SeekSlider_DragStarted"
                         ValueChanged="SeekSlider_ValueChanged">
                         <Slider.ToolTip>
-                            <ToolTip
-                                Content="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Value, Converter={converters:PositionToTimeStringConverter}}" />
+                            <ToolTip Content="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Value, Converter={converters:PositionToTimeStringConverter}}" />
                         </Slider.ToolTip>
                     </Slider>
                     <StackPanel
                         Grid.Row="3"
                         Margin="10,0,10,5"
                         Orientation="Horizontal">
-                        <TextBlock
-                            x:Name="TbFullTime"
-                            Text="00:00:00" />
-                        <TextBlock
-                            Text=" / " />
-                        <TextBlock
-                            x:Name="TbCurrTime"
-                            Text="00:00:00" />
+                        <TextBlock x:Name="TbFullTime" Text="00:00:00" />
+                        <TextBlock Text=" / " />
+                        <TextBlock x:Name="TbCurrTime" Text="00:00:00" />
 
-                        <TextBlock
-                            Margin="40,0,0,0"
-                            Text="{x:Static props:Resources.MainWin_ListLabel}" />
-                        <TextBlock
-                            Text="{Binding ElementName=PlayList, Path=Count}" />
-                        <TextBlock
-                            Text=" / " />
-                        <TextBlock
-                            Text="{Binding ElementName=PlayList, Path=Index}" />
+                        <TextBlock Margin="40,0,0,0" Text="{x:Static props:Resources.MainWin_ListLabel}" />
+                        <TextBlock Text="{Binding ElementName=PlayList, Path=Count}" />
+                        <TextBlock Text=" / " />
+                        <TextBlock Text="{Binding ElementName=PlayList, Path=Index}" />
 
                         <Button
                             x:Name="BtnChapters"
@@ -252,14 +243,11 @@
                             Content="{x:Static props:Resources.PlayerTab_ButtonChapters}"
                             Foreground="White">
                             <Button.ContextMenu>
-                                <ContextMenu
-                                    x:Name="ChapterMenu" />
+                                <ContextMenu x:Name="ChapterMenu" />
                             </Button.ContextMenu>
                         </Button>
 
-                        <StackPanel
-                            Margin="0,0,0,0"
-                            VerticalAlignment="Center">
+                        <StackPanel Margin="0,0,0,0" VerticalAlignment="Center">
                             <ProgressBar
                                 x:Name="VuR"
                                 Width="200"
@@ -341,25 +329,17 @@
                             ValueChanged="VolSlider_ValueChanged"
                             Value="1">
                             <Slider.ToolTip>
-                                <ToolTip
-                                    Content="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Value}"
-                                    ContentStringFormat="{x:Static props:Resources.PlayerTab_VolumeSliderText}" />
+                                <ToolTip Content="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Value}" ContentStringFormat="{x:Static props:Resources.PlayerTab_VolumeSliderText}" />
                             </Slider.ToolTip>
                         </Slider>
                     </StackPanel>
                 </Grid>
             </TabItem>
-            <TabItem
-                Header="{x:Static props:Resources.MainWin_PlaylistTab}">
-                <controls:PlayList
-                    x:Name="PlayList"
-                    ItemDoubleClcik="PlayList_ItemDoubleClcik" />
+            <TabItem Header="{x:Static props:Resources.MainWin_PlaylistTab}">
+                <controls:PlayList x:Name="PlayList" ItemDoubleClcik="PlayList_ItemDoubleClcik" />
             </TabItem>
-            <TabItem
-                Header="{x:Static props:Resources.MainWin_RadioTab}">
-                <controls:RadioStations
-                    x:Name="RadioStations"
-                    ItemDoubleClcik="RadioStations_ItemDoubleClcik" />
+            <TabItem Header="{x:Static props:Resources.MainWin_RadioTab}">
+                <controls:RadioStations x:Name="RadioStations" ItemDoubleClcik="RadioStations_ItemDoubleClcik" />
             </TabItem>
         </TabControl>
         <StackPanel

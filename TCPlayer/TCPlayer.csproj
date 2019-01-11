@@ -99,6 +99,7 @@
     <Compile Include="Code\iTunesLookup\iTunesResponse.cs" />
     <Compile Include="Code\iTunesLookup\iTunesLookup.cs" />
     <Compile Include="Code\TrayIcon.cs" />
+    <Compile Include="Controls\CircleVisual.cs" />
     <Compile Include="Controls\Equalizer.xaml.cs">
       <DependentUpon>Equalizer.xaml</DependentUpon>
     </Compile>
@@ -115,6 +116,9 @@
       <DependentUpon>WaveForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\SelectedIndexConverter.cs" />
+    <Compile Include="FsVisual.xaml.cs">
+      <DependentUpon>FsVisual.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Jobs\BasePlaylistLoaderJob.cs" />
     <Compile Include="Jobs\CDGetInfoJob.cs" />
     <Compile Include="Jobs\ImportFromMassStorageJob.cs" />
@@ -472,6 +476,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\WaveForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FsVisual.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

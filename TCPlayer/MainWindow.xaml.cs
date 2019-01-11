@@ -46,6 +46,7 @@ namespace TCPlayer
         private TrayIcon _tray;
         private HwndSource hsource;
         private IntPtr hwnd;
+        private FsVisual _fullscreenVis;
 
         ~MainWindow()
         {
@@ -536,6 +537,7 @@ namespace TCPlayer
         public MainWindow()
         {
             InitializeComponent();
+            _fullscreenVis = new FsVisual();
             _player = Player.Instance;
             _player.ChangeDevice(); //init
             _tray = new TrayIcon();
@@ -552,6 +554,7 @@ namespace TCPlayer
             _equalizer.EqSliderChange += _equalizer_EqSliderChange;
             _equalizer.LoadSettings();
             BtnChapters.IsEnabled = _chapterprovider.ChaptersEnabled;
+            _fullscreenVis.RegisterSoundPlayer(_player);
 
             if (_player.Is64Bit) Title += " (x64)";
             else Title += " (x86)";
@@ -577,6 +580,7 @@ namespace TCPlayer
             if (Properties.Settings.Default.RegisterMultimediaKeys)
                 RegisterMultimedaKeys();
         }
+
         public static void ShowDialog(UserControl dialog)
         {
             var main = Application.Current.MainWindow as MainWindow;
@@ -584,6 +588,7 @@ namespace TCPlayer
             main.OverLayContent.Children.Add(dialog);
             main.OverLay.Visibility = Visibility.Visible;
         }
+
         public void Dispose()
         {
             Dispose(true);
@@ -604,6 +609,11 @@ namespace TCPlayer
                 Dispatcher.Invoke(() => { MainView.SelectedIndex = 1; });
             }
             DoBringIntoView();
+        }
+
+        private void FsVisual_Click(object sender, RoutedEventArgs e)
+        {
+            _fullscreenVis.Show();
         }
     }
 }
