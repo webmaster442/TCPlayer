@@ -9,12 +9,72 @@
     Width="800"
     Height="450"
     Background="Black"
+    Closing="Window_Closing"
+    IsVisibleChanged="Window_IsVisibleChanged"
+    PreviewKeyDown="Window_PreviewKeyDown"
     SizeChanged="Window_SizeChanged"
     WindowState="Maximized"
     WindowStyle="None"
     mc:Ignorable="d">
+    <Window.Resources>
+        <Storyboard x:Key="Anim">
+            <DoubleAnimationUsingKeyFrames
+                RepeatBehavior="Forever"
+                Storyboard.TargetName="CircleVis"
+                Storyboard.TargetProperty="(controls:CircleVisual.RotationAngle)">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:3" Value="36" />
+                <EasingDoubleKeyFrame KeyTime="0:0:6" Value="72" />
+                <EasingDoubleKeyFrame KeyTime="0:0:9" Value="108" />
+                <EasingDoubleKeyFrame KeyTime="0:0:12" Value="144" />
+                <EasingDoubleKeyFrame KeyTime="0:0:15" Value="180" />
+                <EasingDoubleKeyFrame KeyTime="0:0:18" Value="216" />
+                <EasingDoubleKeyFrame KeyTime="0:0:21" Value="252" />
+                <EasingDoubleKeyFrame KeyTime="0:0:24" Value="288" />
+                <EasingDoubleKeyFrame KeyTime="0:0:27" Value="324" />
+                <EasingDoubleKeyFrame KeyTime="0:0:30" Value="360" />
+            </DoubleAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames
+                RepeatBehavior="Forever"
+                Storyboard.TargetName="CircleVis"
+                Storyboard.TargetProperty="(Shape.Stroke).(SolidColorBrush.Color)">
+                <EasingColorKeyFrame KeyTime="0" Value="White" />
+                <EasingColorKeyFrame KeyTime="0:0:3" Value="Red" />
+                <EasingColorKeyFrame KeyTime="0:0:6" Value="sc#1, 1, 0.7011019, 0.111932427" />
+                <EasingColorKeyFrame KeyTime="0:0:9" Value="sc#1, 1, 0.222222224, 0.222222224" />
+                <EasingColorKeyFrame KeyTime="0:0:12" Value="sc#1, 0.456411034, 0.913098633, 0.001821162" />
+                <EasingColorKeyFrame KeyTime="0:0:15" Value="sc#1, 0, 0.7454042, 0.194617838" />
+                <EasingColorKeyFrame KeyTime="0:0:18" Value="sc#1, 0.006048833, 0.434153646, 0.730460763" />
+                <EasingColorKeyFrame KeyTime="0:0:21" Value="sc#1, 0.5394795, 0.0331047662, 0.838799" />
+                <EasingColorKeyFrame KeyTime="0:0:24" Value="sc#1, 1, 0.00303527, 0.730460763" />
+                <EasingColorKeyFrame KeyTime="0:0:27" Value="sc#1, 0.2663556, 0.1651322, 0.25015828" />
+                <EasingColorKeyFrame KeyTime="0:0:30" Value="White" />
+            </ColorAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="CircleVis" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+                <EasingDoubleKeyFrame KeyTime="0:0:3" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:5" Value="1.1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:6" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:12" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:15" Value="0.9" />
+                <EasingDoubleKeyFrame KeyTime="0:0:18" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:24" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:25" Value="1.1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:27" Value="1" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="CircleVis" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+                <EasingDoubleKeyFrame KeyTime="0:0:3" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:5" Value="1.1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:6" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:12" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:15" Value="0.9" />
+                <EasingDoubleKeyFrame KeyTime="0:0:18" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:24" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:25" Value="1.1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:27" Value="1" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </Window.Resources>
     <Grid>
-
         <Image
             x:Name="Filler"
             Panel.ZIndex="0"
@@ -33,9 +93,19 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Panel.ZIndex="1"
+            RenderTransformOrigin="0.5,0.5"
             RotationAngle="0"
             Stroke="White"
-            StrokeThickness="4" />
+            StrokeThickness="6">
+            <controls:CircleVisual.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform />
+                    <SkewTransform />
+                    <RotateTransform />
+                    <TranslateTransform />
+                </TransformGroup>
+            </controls:CircleVisual.RenderTransform>
+        </controls:CircleVisual>
 
         <Grid
             Margin="15"
@@ -60,7 +130,5 @@
                 Foreground="White"
                 Text="" />
         </Grid>
-
-
     </Grid>
 </Window>

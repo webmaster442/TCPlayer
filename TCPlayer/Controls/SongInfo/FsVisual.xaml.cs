@@ -1,7 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using WPFSoundVisualizationLib;
 
@@ -96,6 +98,30 @@ namespace TCPlayer.Controls.SongInfo
             Info.Text = text;
             Filler.Source = cover;
             SmallCover.Source = cover;
+        }
+
+        private void Window_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            var board = FindResource("Anim") as Storyboard;
+            if (IsVisible && board != null) board.Begin();
+            else if (board != null) board.Stop();
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            Visibility = Visibility.Collapsed;
+            e.Cancel = true; 
+        }
+
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Escape:
+                    Close();
+                    e.Handled = true;
+                    break;
+            }
         }
     }
 }
