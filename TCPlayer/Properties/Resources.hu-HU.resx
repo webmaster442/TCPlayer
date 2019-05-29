@@ -417,4 +417,16 @@ A média gombok használatbavételéhez zárj be minden olyan egyéb alkalmazás
   <data name="Settings_Language" xml:space="preserve">
     <value>Nyelv változtatása: (Program újraindítás után)</value>
   </data>
+  <data name="UpdateCheck_Error" xml:space="preserve">
+    <value>Nem lehetséges frissítések keresése. Ellenőrizd a hálózati beállításokat</value>
+  </data>
+  <data name="UpdateCheck_Header" xml:space="preserve">
+    <value>Új Verzió: {0}</value>
+  </data>
+  <data name="UpdateCheck_Text" xml:space="preserve">
+    <value>Egy új verzió lett kiadva. A frissítés ajánlott. A legújabb verzió a program weboldaláról letölthető:</value>
+  </data>
+  <data name="UpdateCheck_Title" xml:space="preserve">
+    <value>Frissítések</value>
+  </data>
 </root>

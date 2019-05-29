@@ -115,6 +115,9 @@
     <Compile Include="Controls\SongInfo\WaveForm.xaml.cs">
       <DependentUpon>WaveForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\UpdateCheck.xaml.cs">
+      <DependentUpon>UpdateCheck.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\SelectedIndexConverter.cs" />
     <Compile Include="Controls\SongInfo\FsVisual.xaml.cs">
       <DependentUpon>FsVisual.xaml</DependentUpon>
@@ -480,6 +483,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\SongInfo\FsVisual.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\UpdateCheck.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -417,4 +417,16 @@ To Use media key functions please close other apps that may use the keys, then r
   <data name="Settings_Language" xml:space="preserve">
     <value>Change Language: (Requires program restart)</value>
   </data>
+  <data name="UpdateCheck_Error" xml:space="preserve">
+    <value>Unable to check for updates. Please check network connection.</value>
+  </data>
+  <data name="UpdateCheck_Header" xml:space="preserve">
+    <value>New Version: {0}</value>
+  </data>
+  <data name="UpdateCheck_Text" xml:space="preserve">
+    <value>A new version has been released. It's recomended to update. Please download the latest version from the programs website:</value>
+  </data>
+  <data name="UpdateCheck_Title" xml:space="preserve">
+    <value>Updates</value>
+  </data>
 </root>

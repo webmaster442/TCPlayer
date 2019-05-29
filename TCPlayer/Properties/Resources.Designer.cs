@@ -19,7 +19,7 @@ namespace TCPlayer.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -951,6 +951,42 @@ namespace TCPlayer.Properties {
         public static string SongData_UnknownSong {
             get {
                 return ResourceManager.GetString("SongData_UnknownSong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to check for updates. Please check network connection..
+        /// </summary>
+        public static string UpdateCheck_Error {
+            get {
+                return ResourceManager.GetString("UpdateCheck_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Version: {0}.
+        /// </summary>
+        public static string UpdateCheck_Header {
+            get {
+                return ResourceManager.GetString("UpdateCheck_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A new version has been released. It&apos;s recomended to update. Please download the latest version from the programs website:.
+        /// </summary>
+        public static string UpdateCheck_Text {
+            get {
+                return ResourceManager.GetString("UpdateCheck_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updates.
+        /// </summary>
+        public static string UpdateCheck_Title {
+            get {
+                return ResourceManager.GetString("UpdateCheck_Title", resourceCulture);
             }
         }
     }
