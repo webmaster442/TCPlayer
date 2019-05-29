@@ -612,5 +612,21 @@ namespace TCPlayer
         {
             SongDat.GoFullScreen();
         }
+
+        private async void MainWin_Loaded(object sender, RoutedEventArgs e)
+        {
+            var result = await UpdateCheck.CheckForUpdate();
+            if (result.Succes)
+            {
+                ShowDialog(new UpdateCheck(result.Latest));
+            }
+            else if (result.Error)
+            {
+                MessageBox.Show(Properties.Resources.UpdateCheck_Error,
+                                Properties.Resources.Error_Title,
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Error);
+            }
+        }
     }
 }

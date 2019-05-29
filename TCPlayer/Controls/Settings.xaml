@@ -24,6 +24,10 @@
             <StackPanel>
                 <CheckBox
                     Margin="2"
+                    Content="{x:Static props:Resources.Settings_CheckUpdates}"
+                    IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=CheckForUpdates, Mode=TwoWay}" />
+                <CheckBox
+                    Margin="2"
                     Content="{x:Static props:Resources.Settings_SaveVolume}"
                     IsChecked="{Binding Source={x:Static props:Settings.Default}, Path=SaveVolume, Mode=TwoWay}" />
                 <CheckBox

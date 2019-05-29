@@ -426,7 +426,7 @@ A média gombok használatbavételéhez zárj be minden olyan egyéb alkalmazás
   <data name="UpdateCheck_Text" xml:space="preserve">
     <value>Egy új verzió lett kiadva. A frissítés ajánlott. A legújabb verzió a program weboldaláról letölthető:</value>
   </data>
-  <data name="UpdateCheck_Title" xml:space="preserve">
-    <value>Frissítések</value>
+  <data name="Settings_CheckUpdates" xml:space="preserve">
+    <value>Frissítések keresése indításkor</value>
   </data>
 </root>

@@ -426,7 +426,7 @@ To Use media key functions please close other apps that may use the keys, then r
   <data name="UpdateCheck_Text" xml:space="preserve">
     <value>A new version has been released. It's recomended to update. Please download the latest version from the programs website:</value>
   </data>
-  <data name="UpdateCheck_Title" xml:space="preserve">
-    <value>Updates</value>
+  <data name="Settings_CheckUpdates" xml:space="preserve">
+    <value>Check for updates on start</value>
   </data>
 </root>

@@ -18,6 +18,7 @@
     Drop="MainWin_Drop"
     Icon="icon.png"
     Left="{Binding Source={x:Static props:Settings.Default}, Path=Left, Mode=TwoWay}"
+    Loaded="MainWin_Loaded"
     Opacity="0.9"
     PreviewKeyDown="MainWin_PreviewKeyDown"
     SourceInitialized="MainWin_SourceInitialized"
@@ -79,7 +80,9 @@
                 <ColumnDefinition Width="32" />
                 <ColumnDefinition Width="32" />
             </Grid.ColumnDefinitions>
-            <TextBlock Margin="5,0" Text="{Binding ElementName=MainWin, Path=Title}" />
+            <TextBlock
+                Margin="5,0"
+                Text="{Binding ElementName=MainWin, Path=Title}" />
             <Button
                 x:Name="FsVisual"
                 Grid.Column="1"
@@ -228,11 +231,17 @@
                         Grid.Row="3"
                         Margin="10,0,10,5"
                         Orientation="Horizontal">
-                        <TextBlock x:Name="TbFullTime" Text="00:00:00" />
+                        <TextBlock
+                            x:Name="TbFullTime"
+                            Text="00:00:00" />
                         <TextBlock Text=" / " />
-                        <TextBlock x:Name="TbCurrTime" Text="00:00:00" />
+                        <TextBlock
+                            x:Name="TbCurrTime"
+                            Text="00:00:00" />
 
-                        <TextBlock Margin="40,0,0,0" Text="{x:Static props:Resources.MainWin_ListLabel}" />
+                        <TextBlock
+                            Margin="40,0,0,0"
+                            Text="{x:Static props:Resources.MainWin_ListLabel}" />
                         <TextBlock Text="{Binding ElementName=PlayList, Path=Count}" />
                         <TextBlock Text=" / " />
                         <TextBlock Text="{Binding ElementName=PlayList, Path=Index}" />
@@ -248,7 +257,9 @@
                             </Button.ContextMenu>
                         </Button>
 
-                        <StackPanel Margin="0,0,0,0" VerticalAlignment="Center">
+                        <StackPanel
+                            Margin="0,0,0,0"
+                            VerticalAlignment="Center">
                             <ProgressBar
                                 x:Name="VuR"
                                 Width="200"
@@ -330,17 +341,23 @@
                             ValueChanged="VolSlider_ValueChanged"
                             Value="1">
                             <Slider.ToolTip>
-                                <ToolTip Content="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Value}" ContentStringFormat="{x:Static props:Resources.PlayerTab_VolumeSliderText}" />
+                                <ToolTip
+                                    Content="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Value}"
+                                    ContentStringFormat="{x:Static props:Resources.PlayerTab_VolumeSliderText}" />
                             </Slider.ToolTip>
                         </Slider>
                     </StackPanel>
                 </Grid>
             </TabItem>
             <TabItem Header="{x:Static props:Resources.MainWin_PlaylistTab}">
-                <controls:PlayList x:Name="PlayList" ItemDoubleClcik="PlayList_ItemDoubleClcik" />
+                <controls:PlayList
+                    x:Name="PlayList"
+                    ItemDoubleClcik="PlayList_ItemDoubleClcik" />
             </TabItem>
             <TabItem Header="{x:Static props:Resources.MainWin_RadioTab}">
-                <controls:RadioStations x:Name="RadioStations" ItemDoubleClcik="RadioStations_ItemDoubleClcik" />
+                <controls:RadioStations
+                    x:Name="RadioStations"
+                    ItemDoubleClcik="RadioStations_ItemDoubleClcik" />
             </TabItem>
         </TabControl>
         <StackPanel

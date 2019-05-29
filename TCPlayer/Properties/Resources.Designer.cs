@@ -775,6 +775,15 @@ namespace TCPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Check for updates on start.
+        /// </summary>
+        public static string Settings_CheckUpdates {
+            get {
+                return ResourceManager.GetString("Settings_CheckUpdates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clear Url history ....
         /// </summary>
         public static string Settings_ClearUrlHistory {
@@ -978,15 +987,6 @@ namespace TCPlayer.Properties {
         public static string UpdateCheck_Text {
             get {
                 return ResourceManager.GetString("UpdateCheck_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Updates.
-        /// </summary>
-        public static string UpdateCheck_Title {
-            get {
-                return ResourceManager.GetString("UpdateCheck_Title", resourceCulture);
             }
         }
     }
