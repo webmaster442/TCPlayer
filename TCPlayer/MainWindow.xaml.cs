@@ -628,5 +628,16 @@ namespace TCPlayer
                                 MessageBoxImage.Error);
             }
         }
+
+        private void BtnRepeat_Click(object sender, RoutedEventArgs e)
+        {
+            if (BtnRepeat.Tag is string mode)
+            {
+                int imode = Convert.ToInt32(mode);
+                ++imode;
+                if (imode > 2) imode = 0;
+                BtnRepeat.Tag = imode.ToString();
+            }
+        }
     }
 }

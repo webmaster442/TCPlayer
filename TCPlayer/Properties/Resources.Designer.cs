@@ -415,6 +415,33 @@ namespace TCPlayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Repeat: playlist.
+        /// </summary>
+        public static string MainWin_RepeatList {
+            get {
+                return ResourceManager.GetString("MainWin_RepeatList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Repeat: off.
+        /// </summary>
+        public static string MainWin_RepeatOff {
+            get {
+                return ResourceManager.GetString("MainWin_RepeatOff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Repeat: song.
+        /// </summary>
+        public static string MainWin_RepeatSong {
+            get {
+                return ResourceManager.GetString("MainWin_RepeatSong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings ....
         /// </summary>
         public static string MainWin_Settings {

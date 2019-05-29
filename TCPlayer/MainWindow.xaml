@@ -214,19 +214,54 @@
                         x:Name="SongDat"
                         Grid.Row="0"
                         Grid.RowSpan="2" />
-                    <Slider
-                        x:Name="SeekSlider"
-                        Grid.Row="2"
-                        Margin="10,10"
-                        PreviewMouseDown="SeekSlider_MouseDown"
-                        Style="{StaticResource SongSlider}"
-                        Thumb.DragCompleted="SeekSlider_DragCompleted"
-                        Thumb.DragStarted="SeekSlider_DragStarted"
-                        ValueChanged="SeekSlider_ValueChanged">
-                        <Slider.ToolTip>
-                            <ToolTip Content="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Value, Converter={converters:PositionToTimeStringConverter}}" />
-                        </Slider.ToolTip>
-                    </Slider>
+                    <Grid
+                        Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Slider
+                            Margin="5,10"
+                            x:Name="SeekSlider"
+                            PreviewMouseDown="SeekSlider_MouseDown"
+                            Style="{StaticResource SongSlider}"
+                            Thumb.DragCompleted="SeekSlider_DragCompleted"
+                            Thumb.DragStarted="SeekSlider_DragStarted"
+                            ValueChanged="SeekSlider_ValueChanged">
+                            <Slider.ToolTip>
+                                <ToolTip Content="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Value, Converter={converters:PositionToTimeStringConverter}}" />
+                            </Slider.ToolTip>
+                        </Slider>
+                        <Button
+                            x:Name="BtnRepeat"
+                            Margin="5,10"
+                            Width="30"
+                            Grid.Column="1"
+                            Height="30"
+                            Click="BtnRepeat_Click"
+                            Tag="0">
+                            <Button.Resources>
+                                <Style
+                                    BasedOn="{StaticResource {x:Type Button}}"
+                                    TargetType="Button">
+                                    <Style.Triggers>
+                                        <Trigger Property="Tag" Value="0">
+                                            <Setter Property="Content" Value="{StaticResource RepeatOff}" />
+                                            <Setter Property="ToolTip" Value="{x:Static props:Resources.MainWin_RepeatOff}"/>
+                                        </Trigger>
+                                        <Trigger Property="Tag" Value="1">
+                                            <Setter Property="Content" Value="{StaticResource RepeatPlaylist}" />
+                                            <Setter Property="ToolTip" Value="{x:Static props:Resources.MainWin_RepeatList}"/>
+                                        </Trigger>
+                                        <Trigger Property="Tag" Value="2">
+                                            <Setter Property="Content" Value="{StaticResource RepeatOnce}" />
+                                            <Setter Property="ToolTip" Value="{x:Static props:Resources.MainWin_RepeatSong}"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                    </Grid>
                     <StackPanel
                         Grid.Row="3"
                         Margin="10,0,10,5"

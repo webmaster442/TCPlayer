@@ -429,4 +429,13 @@ A média gombok használatbavételéhez zárj be minden olyan egyéb alkalmazás
   <data name="Settings_CheckUpdates" xml:space="preserve">
     <value>Frissítések keresése indításkor</value>
   </data>
+  <data name="MainWin_RepeatList" xml:space="preserve">
+    <value>Ismétlés: lista</value>
+  </data>
+  <data name="MainWin_RepeatOff" xml:space="preserve">
+    <value>Ismétlés: kikapcsolva</value>
+  </data>
+  <data name="MainWin_RepeatSong" xml:space="preserve">
+    <value>Ismétlés: dal</value>
+  </data>
 </root>

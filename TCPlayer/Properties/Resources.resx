@@ -429,4 +429,13 @@ To Use media key functions please close other apps that may use the keys, then r
   <data name="Settings_CheckUpdates" xml:space="preserve">
     <value>Check for updates on start</value>
   </data>
+  <data name="MainWin_RepeatList" xml:space="preserve">
+    <value>Repeat: playlist</value>
+  </data>
+  <data name="MainWin_RepeatOff" xml:space="preserve">
+    <value>Repeat: off</value>
+  </data>
+  <data name="MainWin_RepeatSong" xml:space="preserve">
+    <value>Repeat: song</value>
+  </data>
 </root>
