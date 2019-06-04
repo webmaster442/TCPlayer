@@ -247,12 +247,14 @@ namespace TCPlayer
 
         private void DoOpen()
         {
-            var ofd = new System.Windows.Forms.OpenFileDialog();
-            ofd.Multiselect = true;
-            ofd.Filter = string.Format("Auduio Files|{0}|Playlists|{1}", App.Formats, App.Playlists);
-            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            using (var ofd = new System.Windows.Forms.OpenFileDialog())
             {
-                DoLoadAndPlay(ofd.FileNames);
+                ofd.Multiselect = true;
+                ofd.Filter = string.Format("Auduio Files|{0}|Playlists|{1}", App.Formats, App.Playlists);
+                if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    DoLoadAndPlay(ofd.FileNames);
+                }
             }
         }
 

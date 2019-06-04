@@ -47,38 +47,44 @@ namespace TCPlayer.Controls
         private void AddDir_Click(object sender, RoutedEventArgs e)
         {
             string[] filters = App.Formats.Split(';');
-            var fbd = new System.Windows.Forms.FolderBrowserDialog();
-            fbd.Description = Properties.Resources.Playlist_AddFolderDescription;
-            if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            using (var fbd = new System.Windows.Forms.FolderBrowserDialog())
             {
-                List<string> Files = new List<string>(30);
-                foreach (var filter in filters)
+                fbd.Description = Properties.Resources.Playlist_AddFolderDescription;
+                if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    Files.AddRange(Directory.GetFiles(fbd.SelectedPath, filter));
+                    List<string> Files = new List<string>(30);
+                    foreach (var filter in filters)
+                    {
+                        Files.AddRange(Directory.GetFiles(fbd.SelectedPath, filter));
+                    }
+                    Files.Sort();
+                    _list.AddRange(Files);
                 }
-                Files.Sort();
-                _list.AddRange(Files);
             }
         }
 
         private void AddFiles_Click(object sender, RoutedEventArgs e)
         {
-            var ofd = new System.Windows.Forms.OpenFileDialog();
-            ofd.Multiselect = true;
-            ofd.Filter = "Audio Files|" + App.Formats;
-            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            using (var ofd = new System.Windows.Forms.OpenFileDialog())
             {
-                _list.AddRange(ofd.FileNames);
+                ofd.Multiselect = true;
+                ofd.Filter = "Audio Files|" + App.Formats;
+                if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    _list.AddRange(ofd.FileNames);
+                }
             }
         }
 
         private async void AddPlaylist_Click(object sender, RoutedEventArgs e)
         {
-            var ofd = new System.Windows.Forms.OpenFileDialog();
-            ofd.Filter = "Playlists | " + App.Playlists;
-            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            using (var ofd = new System.Windows.Forms.OpenFileDialog())
             {
-                await LoadPlaylist(ofd.FileName);
+                ofd.Filter = "Playlists | " + App.Playlists;
+                if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    await LoadPlaylist(ofd.FileName);
+                }
             }
         }
 
@@ -224,24 +230,26 @@ namespace TCPlayer.Controls
 
         private void ManageSave_Click(object sender, RoutedEventArgs e)
         {
-            var sfd = new System.Windows.Forms.SaveFileDialog();
-            sfd.Filter = "M3U list | *.m3u";
-            sfd.FilterIndex = 0;
-            sfd.AddExtension = true;
-            if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            using (var sfd = new System.Windows.Forms.SaveFileDialog())
             {
-                var targetdir = Path.GetDirectoryName(sfd.FileName);
-                using (var contents = File.CreateText(sfd.FileName))
+                sfd.Filter = "M3U list | *.m3u";
+                sfd.FilterIndex = 0;
+                sfd.AddExtension = true;
+                if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    foreach (var entry in _list)
+                    var targetdir = Path.GetDirectoryName(sfd.FileName);
+                    using (var contents = File.CreateText(sfd.FileName))
                     {
-                        var edir = Path.GetDirectoryName(entry);
-                        if (edir.StartsWith(targetdir))
+                        foreach (var entry in _list)
                         {
-                            var line = entry.Replace(targetdir + "\\", "");
-                            contents.WriteLine(line);
+                            var edir = Path.GetDirectoryName(entry);
+                            if (edir.StartsWith(targetdir))
+                            {
+                                var line = entry.Replace(targetdir + "\\", "");
+                                contents.WriteLine(line);
+                            }
+                            else contents.WriteLine(entry);
                         }
-                        else contents.WriteLine(entry);
                     }
                 }
             }
