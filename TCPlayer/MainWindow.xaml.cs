@@ -35,14 +35,15 @@ namespace TCPlayer
     /// </summary>
     public partial class MainWindow : Window, IDisposable
     {
-        private ChapterProvider _chapterprovider;
-        private Equalizer _equalizer;
+        private readonly ChapterProvider _chapterprovider;
+        private readonly Equalizer _equalizer;
+        private readonly DispatcherTimer _timer;
+        private RepeatMode _repeatMode;
         private bool _isdrag;
         private KeyboardHook _keyboardhook;
         private bool _loaded;
         private Player _player;
         private float _prevvol;
-        private DispatcherTimer _timer;
         private TrayIcon _tray;
         private HwndSource hsource;
         private IntPtr hwnd;
@@ -394,15 +395,27 @@ namespace TCPlayer
             if (_isdrag) return;
             if (SeekSlider.Maximum - SeekSlider.Value < 0.1d)
             {
-                if (PlayList.CanDoNextTrack())
+                switch (_repeatMode)
                 {
-                    PlayList.NextTrack();
-                    StartPlay();
-                }
-                else
-                {
-                    _player.Stop();
-                    Reset();
+                    case RepeatMode.None:
+                        if (PlayList.CanDoNextTrack())
+                        {
+                            PlayList.NextTrack();
+                            StartPlay();
+                        }
+                        else
+                        {
+                            _player.Stop();
+                            Reset();
+                        }
+                        break;
+                    case RepeatMode.Single:
+                        StartPlay();
+                        break;
+                    case RepeatMode.List:
+                        PlayList.NextTrack(true);
+                        StartPlay();
+                        break;
                 }
             }
         }
@@ -558,6 +571,8 @@ namespace TCPlayer
             if (_player.Is64Bit) Title += " (x64)";
             else Title += " (x86)";
 
+            _repeatMode = RepeatMode.None;
+
             Dispatcher.Invoke(() =>
             {
                 var src = Environment.GetCommandLineArgs();
@@ -638,6 +653,9 @@ namespace TCPlayer
                 int imode = Convert.ToInt32(mode);
                 ++imode;
                 if (imode > 2) imode = 0;
+
+                _repeatMode = (RepeatMode)imode;
+
                 BtnRepeat.Tag = imode.ToString();
             }
         }

@@ -354,9 +354,18 @@ namespace TCPlayer.Controls
             }
         }
 
-        public void NextTrack()
+        public void NextTrack(bool loop = false)
         {
-            if (PlaylistView.SelectedIndex + 1 < _list.Count)
+            if (loop)
+            {
+                int next = PlaylistView.SelectedIndex + 1;
+                if (next > _list.Count -1)
+                {
+                    PlaylistView.SelectedIndex = 0;
+                    Index = PlaylistView.SelectedIndex + 1;
+                }
+            }
+            else if (PlaylistView.SelectedIndex + 1 < _list.Count)
             {
                 PlaylistView.SelectedIndex += 1;
                 Index = PlaylistView.SelectedIndex + 1;
