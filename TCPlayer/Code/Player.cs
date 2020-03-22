@@ -26,17 +26,18 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Text;
 using TCPlayer.Properties;
 using WPFSoundVisualizationLib;
 
 namespace TCPlayer.Code
 {
-    internal class Player : IDisposable, ISpectrumPlayer, INotifyPropertyChanged
+    internal sealed class Player : IDisposable, ISpectrumPlayer
     {
         private static readonly Player _instance = new Player();
         private readonly int _maxfft;
-        private DownloadProcedure _callback;
-        private PeakEQParameters _eq;
+        private readonly DownloadProcedure _callback;
+        private readonly PeakEQParameters _eq;
         private EqConfig _eqConfig;
         private GCHandle _handle;
         private bool _initialized;
@@ -144,14 +145,13 @@ namespace TCPlayer.Code
 
         private string PtocessTags(string[] array, bool icecast = false)
         {
-            string ret = "";
+            StringBuilder ret = new StringBuilder();
             if (icecast)
             {
                 foreach (var item in array)
                 {
-                    if (item.StartsWith("ARTIST")) ret += item.Replace("ARTIST=", "");
-                    else if (item.StartsWith("TITLE")) ret += item.Replace("TITLE=", " - ");
-                    else continue;
+                    if (item.StartsWith("ARTIST")) ret.Append(item.Replace("ARTIST=", ""));
+                    else if (item.StartsWith("TITLE")) ret.Append(item.Replace("TITLE=", " - "));
                 }
             }
             else
@@ -159,11 +159,10 @@ namespace TCPlayer.Code
                 var contents = array[0].Split(';');
                 foreach (var item in contents)
                 {
-                    if (item.StartsWith("StreamTitle='")) ret += item.Replace("StreamTitle='", "").Replace("'", "");
-                    else continue;
+                    if (item.StartsWith("StreamTitle='")) ret.Append(item.Replace("StreamTitle='", "").Replace("'", ""));
                 }
             }
-            return ret;
+            return ret.ToString();
         }
 
         private void RemoveEq(ref int chHandle)
@@ -180,30 +179,6 @@ namespace TCPlayer.Code
                 _eq.fGain = eqConfig[band];
                 Bass.FXSetParameters(_fx, _handle.AddrOfPinnedObject());
             }
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_source != 0)
-            {
-                if (_mixer != 0)
-                {
-                    Stop();
-                }
-                RemoveEq(ref _mixer);
-                Bass.StreamFree(_source);
-                Bass.MusicFree(_source);
-                Bass.StreamFree(_mixer);
-                _mixer = 0;
-                _source = 0;
-            }
-            if (_handle.IsAllocated) _handle.Free();
-            if (_initialized) Bass.Free();
-            BassCd.Unload();
-            BassFx.Unload();
-            BassMix.Unload();
-            Bass.PluginFree(0);
-            GC.SuppressFinalize(this);
         }
 
         public event EventHandler<string> MetaChanged;
@@ -375,7 +350,25 @@ namespace TCPlayer.Code
         /// </summary>
         public void Dispose()
         {
-            Dispose(true);
+            if (_source != 0)
+            {
+                if (_mixer != 0)
+                {
+                    Stop();
+                }
+                RemoveEq(ref _mixer);
+                Bass.StreamFree(_source);
+                Bass.MusicFree(_source);
+                Bass.StreamFree(_mixer);
+                _mixer = 0;
+                _source = 0;
+            }
+            if (_handle.IsAllocated) _handle.Free();
+            if (_initialized) Bass.Free();
+            BassCd.Unload();
+            BassFx.Unload();
+            BassMix.Unload();
+            Bass.PluginFree(0);
         }
 
         public bool GetChannelData(out short[] data, float seconds)
@@ -448,8 +441,8 @@ namespace TCPlayer.Code
                 _mixer = 0;
                 IsPlaying = false;
             }
-            var sourceflags = BassFlags.Decode | BassFlags.Loop | BassFlags.Float | BassFlags.Prescan;
-            var mixerflags = BassFlags.MixerDownMix | BassFlags.MixerPositionEx | BassFlags.AutoFree;
+            const BassFlags sourceflags = BassFlags.Decode | BassFlags.Loop | BassFlags.Float | BassFlags.Prescan;
+            const BassFlags mixerflags = BassFlags.MixerDownMix | BassFlags.MixerPositionEx | BassFlags.AutoFree;
 
             if (file.StartsWith("http://") || file.StartsWith("https://"))
             {

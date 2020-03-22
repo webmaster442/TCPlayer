@@ -50,7 +50,7 @@ namespace TCPlayer.Code
         /// <returns>true, if midi, false if not</returns>
         public static bool IsMidi(string file)
         {
-            var ext = System.IO.Path.GetExtension(file);
+            var ext = System.IO.Path.GetExtension(file).ToLower();
             switch (ext)
             {
                 case ".midi":
@@ -70,7 +70,7 @@ namespace TCPlayer.Code
         /// <returns>true, if tracker, false if not</returns>
         public static bool IsTracker(string file)
         {
-            var ext = System.IO.Path.GetExtension(file);
+            var ext = System.IO.Path.GetExtension(file).ToLower();
             switch (ext)
             {
                 case ".xm":

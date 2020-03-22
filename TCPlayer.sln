@@ -20,6 +20,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared", "ManagedBass\Share
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibItunesXmlDb", "LibItunesXmlDb\LibItunesXmlDb.csproj", "{4F887EA6-858F-4968-8907-BC413794560C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TCPlayer.Engine", "TCPlayer.Engine\TCPlayer.Engine.csproj", "{C9337416-9924-4413-AD01-F35202D2A2BB}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		ManagedBass\Shared\PInvoke.projitems*{57c787d9-351e-4c61-9abb-619f6f6aa03a}*SharedItemsImports = 4
@@ -70,6 +72,18 @@ Global
 		{4F887EA6-858F-4968-8907-BC413794560C}.Release|x64.Build.0 = Release|Any CPU
 		{4F887EA6-858F-4968-8907-BC413794560C}.Release|x86.ActiveCfg = Release|Any CPU
 		{4F887EA6-858F-4968-8907-BC413794560C}.Release|x86.Build.0 = Release|Any CPU
+		{C9337416-9924-4413-AD01-F35202D2A2BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9337416-9924-4413-AD01-F35202D2A2BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9337416-9924-4413-AD01-F35202D2A2BB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C9337416-9924-4413-AD01-F35202D2A2BB}.Debug|x64.Build.0 = Debug|Any CPU
+		{C9337416-9924-4413-AD01-F35202D2A2BB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C9337416-9924-4413-AD01-F35202D2A2BB}.Debug|x86.Build.0 = Debug|Any CPU
+		{C9337416-9924-4413-AD01-F35202D2A2BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9337416-9924-4413-AD01-F35202D2A2BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9337416-9924-4413-AD01-F35202D2A2BB}.Release|x64.ActiveCfg = Release|Any CPU
+		{C9337416-9924-4413-AD01-F35202D2A2BB}.Release|x64.Build.0 = Release|Any CPU
+		{C9337416-9924-4413-AD01-F35202D2A2BB}.Release|x86.ActiveCfg = Release|Any CPU
+		{C9337416-9924-4413-AD01-F35202D2A2BB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,3 +1,15 @@
+# 2.6
+* Fixes MIDI playback bug
+* Requires .NET 4.7.2
+* Repeat mode
+* Fixes some memory leaks
+* Auto check for updates
+* Full screen visual
+* Language switcher
+* Total Commander Plugin install tool
+* Download cover from iTunes if, song has no cover
+* Fixes issue in playlist that resulted in ugly error message
+
 # 2.5
  * Playlist loading performance improvements
  * Radio Loading fixes & update of built in radio database

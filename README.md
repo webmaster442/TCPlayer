@@ -33,13 +33,12 @@ Code compiles with Visual Studio Community 2017. For the Total commander plugins
 * Supports MP4 chapters
 * Notifications on track change
 
-
 ## Requirements to run
  - Windows 7/8/8.1/10
  - Total commander for the plugin install (tested with 8.51a x64)
- - .NET Framework 4.7 (As of version 2.1)
+ - .NET Framework 4.7.2 (As of version 2.6)
    http://www.microsoft.com/hu-hu/download/details.aspx?id=30653
- - For MIDI playback a soundfont is needed. For starters you could use the default soundfont provided with the Bass midi component: http://www.un4seen.com/download.php?x/ChoriumRevA
+ - **For MIDI playback a soundfont is needed.** For starters you could use the default soundfont provided with the Bass midi component: http://www.un4seen.com/download.php?x/ChoriumRevA
 
    
 ## License
