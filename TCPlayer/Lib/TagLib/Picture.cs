@@ -287,6 +287,7 @@ namespace TagLib {
 			"mid", "audio/midi", // Musical Instrument Digital Interface (MIDI)
 			"midi", "audio/midi", // Musical Instrument Digital Interface (MIDI)
 			"mp3", "audio/mpeg",
+			"mp3pro", "audio/mpeg",
 			"mp1", "audio/mpeg",
 			"mp2", "audio/mpeg",
 			"mpg", "video/mpeg",

@@ -31,7 +31,7 @@ namespace TCPlayer
     public partial class App : Application
     {
         private const string AppName = "TCPlayer";
-        internal const string Formats = "*.mp1;*.mp2;*.mp3;*.mp4;*.m4a;*.m4b;*.aac;*.flac;*.ac3;*.wv;*.wav;*.wma;*.asf;*.ogg;*.midi;*.mid;*.rmi;*.kar;*.xm;*.it;*.s3m;*.mod;*.mtm;*.umx;*.mo3;*.ape;*.mpc;*.mp+;*.mpp;*.ofr;*.ofs;*.spx;*.tta;*.dsf;*.dsdiff;*.opus";
+        internal const string Formats = "*.mp1;*.mp2;*.mp3;*.mp3pro;*.mp4;*.m4a;*.m4b;*.aac;*.flac;*.ac3;*.wv;*.wav;*.wma;*.asf;*.ogg;*.midi;*.mid;*.rmi;*.kar;*.xm;*.it;*.s3m;*.mod;*.mtm;*.umx;*.mo3;*.ape;*.mpc;*.mp+;*.mpp;*.ofr;*.ofs;*.spx;*.tta;*.dsf;*.dsdiff;*.opus";
         internal const string Playlists = "*.pls;*.m3u;*.wpl;*.asx";
 
         internal static Dictionary<string, string> CdData;
