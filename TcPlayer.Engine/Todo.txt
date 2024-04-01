@@ -1,13 +1,10 @@
-- Load-hoz saját EngineFile Típus
-    - Típus: File, Url, Cd, youtube
-    - Data mint string
-    - Csak factory metódusokkal hozható létre
-    - Extension metósusokkal meg kibontható belõle az adat.
-        pl TryGetFileName(out string fileName)
-           TryGetCdTrack(out (int drive, int track))
-           TryGetUrl(out string url)
-           TryGetYoutubeVideoId(string id);
-- Ui program architektúra
-    - MVVM
-    - Controls
-    - Converters
+- UI mockup
+- Base styling
+    - Egyéni Border a window-ra - control fejlesztés
+- Playlist mockup
+- Playlist loader
+    - Async
+    - M3u
+        minden # sorral kezdõdõt ki kell hagyni
+    - pls
+        minden FileN=sor érdekel bennünket a FileN kivételével

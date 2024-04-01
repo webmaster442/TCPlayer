@@ -4,7 +4,232 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:TcPlayer.Controls"
     Title="TC Player 3.0"
-    Width="1280"
-    Height="720"
-    mc:Ignorable="d" />
+    WindowStyle="None"
+    MinWidth="1280"
+    MinHeight="720"
+    x:Name="WindowMain"
+    Background="{StaticResource Background}"
+    mc:Ignorable="d">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="2*" />
+        </Grid.RowDefinitions>
+
+        <controls:WindowControls
+            ControlledWindow="{Binding ElementName=WindowMain}"
+            Grid.Row="0"/>
+
+        <TabControl
+            Background="Transparent"
+            Grid.Row="1"
+            BorderThickness="0"
+            TabStripPlacement="Right">
+            <TabItem Header="Now playing">
+                <Grid ShowGridLines="True">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Rectangle
+                        Grid.Column="0"
+                        Width="400"
+                        Height="400"
+                        Margin="10"
+                        Fill="AliceBlue" />
+                    <TextBlock Margin="5,0" FontSize="40" Grid.Column="1" Text="Line1"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Playlist" />
+        </TabControl>
+        <Border Grid.Row="2">
+            <Grid ShowGridLines="True">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60" />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="60" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="5,0"
+                    Text="00:00:00"
+                    TextAlignment="Center" />
+                <Slider
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="3" />
+                <TextBlock
+                    Grid.Column="4"
+                    Margin="5,0"
+                    Text="00:00:00"
+                    TextAlignment="Center" />
+                <Grid
+                    x:Name="PlayerControls"
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    HorizontalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        Grid.Column="0"
+                        Background="Transparent"
+                        BorderThickness="0">
+                        <Viewbox Width="80">
+                            <Canvas
+                                Width="24"
+                                Height="24">
+                                <Path
+                                    Data="M6,18V6H8V18H6M9.5,12L18,6V18L9.5,12Z"
+                                    Fill="{StaticResource ButtonColor}" />
+                            </Canvas>
+                        </Viewbox>
+                    </Button>
+                    <ToggleButton
+                        Grid.Column="1"
+                        Background="Transparent"
+                        BorderThickness="0">
+                        <ToggleButton.Style>
+                            <Style TargetType="ToggleButton">
+                                <Style.Triggers>
+                                    <Trigger Property="IsChecked" Value="false">
+                                        <Setter Property="Content">
+                                            <Setter.Value>
+                                                <Viewbox>
+                                                    <Canvas
+                                                        Width="24"
+                                                        Height="24">
+                                                        <Path
+                                                            Data="M8,5.14V19.14L19,12.14L8,5.14Z"
+                                                            Fill="{StaticResource ButtonColor}" />
+                                                    </Canvas>
+                                                </Viewbox>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                    <Trigger Property="IsChecked" Value="True">
+                                        <Setter Property="Content">
+                                            <Setter.Value>
+                                                <Viewbox>
+                                                    <Canvas
+                                                        Width="24"
+                                                        Height="24">
+                                                        <Path
+                                                            Data="M14,19H18V5H14M6,19H10V5H6V19Z"
+                                                            Fill="{StaticResource ButtonColor}" />
+                                                    </Canvas>
+                                                </Viewbox>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ToggleButton.Style>
+                    </ToggleButton>
+                    <Button
+                        Grid.Column="2"
+                        Background="Transparent"
+                        BorderThickness="0">
+                        <Viewbox Width="80">
+                            <Canvas
+                                Width="24"
+                                Height="24">
+                                <Path
+                                    Data="M16,18H18V6H16M6,18L14.5,12L6,6V18Z"
+                                    Fill="{StaticResource ButtonColor}" />
+                            </Canvas>
+                        </Viewbox>
+                    </Button>
+                </Grid>
+
+                <StackPanel
+                    Grid.Row="1"
+                    Grid.Column="3"
+                    Grid.ColumnSpan="2"
+                    Margin="0,0,5,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+                    <ToggleButton
+                        Width="50"
+                        Margin="5,0"
+                        Background="Transparent"
+                        BorderThickness="0">
+                        <ToggleButton.Style>
+                            <Style TargetType="ToggleButton">
+                                <Style.Triggers>
+                                    <Trigger Property="IsChecked" Value="True">
+                                        <Setter Property="Content">
+                                            <Setter.Value>
+                                                <Viewbox>
+                                                    <Canvas
+                                                        Width="24"
+                                                        Height="24">
+                                                        <Path
+                                                            Data="M12,4L9.91,6.09L12,8.18M4.27,3L3,4.27L7.73,9H3V15H7L12,20V13.27L16.25,17.53C15.58,18.04 14.83,18.46 14,18.7V20.77C15.38,20.45 16.63,19.82 17.68,18.96L19.73,21L21,19.73L12,10.73M19,12C19,12.94 18.8,13.82 18.46,14.64L19.97,16.15C20.62,14.91 21,13.5 21,12C21,7.72 18,4.14 14,3.23V5.29C16.89,6.15 19,8.83 19,12M16.5,12C16.5,10.23 15.5,8.71 14,7.97V10.18L16.45,12.63C16.5,12.43 16.5,12.21 16.5,12Z"
+                                                            Fill="{StaticResource ButtonColor}" />
+                                                    </Canvas>
+                                                </Viewbox>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                    <Trigger Property="IsChecked" Value="False">
+                                        <Setter Property="Content">
+                                            <Setter.Value>
+                                                <Viewbox>
+                                                    <Canvas
+                                                        Width="24"
+                                                        Height="24">
+                                                        <Path
+                                                            Data="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.84 14,18.7V20.77C18,19.86 21,16.28 21,12C21,7.72 18,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V16C15.5,15.29 16.5,13.76 16.5,12M3,9V15H7L12,20V4L7,9H3Z"
+                                                            Fill="{StaticResource ButtonColor}" />
+                                                    </Canvas>
+                                                </Viewbox>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ToggleButton.Style>
+                    </ToggleButton>
+                    <Slider
+                        Width="300"
+                        VerticalAlignment="Center" />
+                </StackPanel>
+
+                <StackPanel
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    HorizontalAlignment="Left"
+                    Orientation="Horizontal">
+                    <Canvas
+                        Width="24"
+                        Height="24"
+                        Margin="5,0">
+                        <Path
+                            Data="M14,10A3,3 0 0,0 11,13A3,3 0 0,0 14,16A3,3 0 0,0 17,13A3,3 0 0,0 14,10M14,18A5,5 0 0,1 9,13A5,5 0 0,1 14,8A5,5 0 0,1 19,13A5,5 0 0,1 14,18M14,2A2,2 0 0,1 16,4A2,2 0 0,1 14,6A2,2 0 0,1 12,4A2,2 0 0,1 14,2M19,0H9A2,2 0 0,0 7,2V18A2,2 0 0,0 9,20H19A2,2 0 0,0 21,18V2A2,2 0 0,0 19,0M5,22H17V24H5A2,2 0 0,1 3,22V4H5"
+                            Fill="{StaticResource ButtonColor}" />
+                    </Canvas>
+                    <ComboBox
+                        Width="300"
+                        VerticalAlignment="Center" />
+                </StackPanel>
+
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
