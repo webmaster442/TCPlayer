@@ -1,21 +1,7 @@
-﻿/*
-TC Plyer
-Total Commander Audio Player plugin & standalone player written in C#, based on bass.dll components
-Copyright (C) 2016 Webmaster442 aka. Ruzsinszki Gábor
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+﻿// --------------------------------------------------------------------------------------------
+// Copyright (c) 2024 Ruzsinszki Gábor
+// This software is licensed under the MIT license. See LICENSE file for details.
+// --------------------------------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -49,9 +35,9 @@ namespace TCPluginInstaller.Logic
         /// <param name="file">Ini file path</param>
         /// <param name="section">Section to read</param>
         /// <returns>KeyvaluePairs as dictionary</returns>
-        public static Dictionary<string, string> GetKeyValuePairs(string file, string section)
+        public static IDictionary<string, string> GetKeyValuePairs(string file, string section)
         {
-            Dictionary<string, string> ret = null;
+            Dictionary<string, string> ret = new Dictionary<string, string>();
             while (true)
             {
                 IntPtr returnedString = Marshal.AllocCoTaskMem(_bufferSize * sizeof(char));
@@ -60,7 +46,7 @@ namespace TCPluginInstaller.Logic
                 if (size == 0 || _bufferSize == 0)
                 {
                     Marshal.FreeCoTaskMem(returnedString);
-                    return null;
+                    return ret;
                 }
                 if (size < _bufferSize - 2)
                 {
@@ -70,7 +56,6 @@ namespace TCPluginInstaller.Logic
 
                     if (lines.Length > 0)
                     {
-                        ret = new Dictionary<string, string>();
                         foreach (var line in lines)
                         {
                             var pair = line.Split('=');
@@ -82,7 +67,7 @@ namespace TCPluginInstaller.Logic
                 }
 
                 Marshal.FreeCoTaskMem(returnedString);
-                _bufferSize = _bufferSize * 2;
+                _bufferSize *= 2;
             }
         }
 
@@ -96,8 +81,7 @@ namespace TCPluginInstaller.Logic
         /// <returns>true if succesfull, otherwise false</returns>
         public static bool WriteValue(string file, string section, string key, string value)
         {
-            bool result = WritePrivateProfileString(section, key, value, file);
-            return result;
+            return WritePrivateProfileString(section, key, value, file);
         }
 
         /// <summary>
@@ -124,8 +108,7 @@ namespace TCPluginInstaller.Logic
         /// <returns>true if succesfull, otherwise false</returns>
         public static bool DeleteKey(string file, string section, string key)
         {
-            bool result = WritePrivateProfileString(section, key, null, file);
-            return result;
+            return WritePrivateProfileString(section, key, null, file);
         }
 
     }

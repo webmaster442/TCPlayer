@@ -1,4 +1,8 @@
-﻿using System.Windows;
+﻿// --------------------------------------------------------------------------------------------
+// Copyright (c) 2024 Ruzsinszki Gábor
+// This software is licensed under the MIT license. See LICENSE file for details.
+// --------------------------------------------------------------------------------------------
+using System.Windows;
 
 namespace TCPluginInstaller
 {

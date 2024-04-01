@@ -1,0 +1,6 @@
+﻿extensions: designer.cs generated.cs
+extensions: .cs .cpp .h
+// --------------------------------------------------------------------------------------------
+// Copyright (c) 2024 Ruzsinszki Gábor
+// This software is licensed under the MIT license. See LICENSE file for details.
+// --------------------------------------------------------------------------------------------
