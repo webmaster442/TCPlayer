@@ -5,6 +5,20 @@ VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCPluginInstaller", "TCPluginInstaller\TCPluginInstaller.csproj", "{F2A05A4E-6658-45DA-B6CA-62E37E150309}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{6E970ED0-56F2-4B3C-BAA6-4C1DFC4E9474}"
+	ProjectSection(SolutionItems) = preProject
+		Docs\bass.chm = Docs\bass.chm
+		Docs\basswasapi.chm = Docs\basswasapi.chm
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TcPlayer", "TcPlayer\TcPlayer.csproj", "{651CC917-B101-492F-82F9-823404281009}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TcPlayer.Native", "TcPlayer.Native\TcPlayer.Native.csproj", "{F0FBEF1F-814E-4F60-A087-331C27A1BF7A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TcPlayer.Tests", "TcPlayer.Tests\TcPlayer.Tests.csproj", "{31D34F14-2889-402B-B3B7-CBDDAEE2770B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TcPlayer.Engine", "TcPlayer.Engine\TcPlayer.Engine.csproj", "{0B03924D-E7ED-4B42-854B-2640D1B8B558}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +29,22 @@ Global
 		{F2A05A4E-6658-45DA-B6CA-62E37E150309}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2A05A4E-6658-45DA-B6CA-62E37E150309}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2A05A4E-6658-45DA-B6CA-62E37E150309}.Release|Any CPU.Build.0 = Release|Any CPU
+		{651CC917-B101-492F-82F9-823404281009}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{651CC917-B101-492F-82F9-823404281009}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{651CC917-B101-492F-82F9-823404281009}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{651CC917-B101-492F-82F9-823404281009}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0FBEF1F-814E-4F60-A087-331C27A1BF7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0FBEF1F-814E-4F60-A087-331C27A1BF7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0FBEF1F-814E-4F60-A087-331C27A1BF7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0FBEF1F-814E-4F60-A087-331C27A1BF7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31D34F14-2889-402B-B3B7-CBDDAEE2770B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31D34F14-2889-402B-B3B7-CBDDAEE2770B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31D34F14-2889-402B-B3B7-CBDDAEE2770B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31D34F14-2889-402B-B3B7-CBDDAEE2770B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B03924D-E7ED-4B42-854B-2640D1B8B558}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B03924D-E7ED-4B42-854B-2640D1B8B558}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B03924D-E7ED-4B42-854B-2640D1B8B558}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B03924D-E7ED-4B42-854B-2640D1B8B558}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
