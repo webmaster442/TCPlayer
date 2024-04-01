@@ -1,5 +1,0 @@
-EXPORTS
-  ListLoad
-  ListLoadW
-  ListGetDetectString
-  ListCloseWindow

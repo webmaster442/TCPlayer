@@ -1,0 +1,15 @@
+e:\GIT\TCPlayer\bin\Release\TCPluginInstaller.exe.config
+e:\GIT\TCPlayer\bin\Release\TCPluginInstaller.exe
+e:\GIT\TCPlayer\bin\Release\TCPluginInstaller.pdb
+e:\GIT\TCPlayer\TCPluginInstaller\obj\Release\TCPluginInstaller.csprojAssemblyReference.cache
+e:\GIT\TCPlayer\TCPluginInstaller\obj\Release\MainWindow.g.cs
+e:\GIT\TCPlayer\TCPluginInstaller\obj\Release\App.g.cs
+e:\GIT\TCPlayer\TCPluginInstaller\obj\Release\GeneratedInternalTypeHelper.g.cs
+e:\GIT\TCPlayer\TCPluginInstaller\obj\Release\TCPluginInstaller_MarkupCompile.cache
+e:\GIT\TCPlayer\TCPluginInstaller\obj\Release\TCPluginInstaller_MarkupCompile.lref
+e:\GIT\TCPlayer\TCPluginInstaller\obj\Release\MainWindow.baml
+e:\GIT\TCPlayer\TCPluginInstaller\obj\Release\TCPluginInstaller.g.resources
+e:\GIT\TCPlayer\TCPluginInstaller\obj\Release\TCPluginInstaller.Properties.Resources.resources
+e:\GIT\TCPlayer\TCPluginInstaller\obj\Release\TCPluginInstaller.csproj.GenerateResource.cache
+e:\GIT\TCPlayer\TCPluginInstaller\obj\Release\TCPluginInstaller.exe
+e:\GIT\TCPlayer\TCPluginInstaller\obj\Release\TCPluginInstaller.pdb
