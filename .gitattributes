@@ -1,0 +1,4 @@
+*.chm filter=lfs diff=lfs merge=lfs -text
+TcPlayer.Native/bass.dll filter=lfs diff=lfs merge=lfs -text
+TcPlayer.Native/bassmix.dll filter=lfs diff=lfs merge=lfs -text
+TcPlayer.Native/basswasapi.dll filter=lfs diff=lfs merge=lfs -text
