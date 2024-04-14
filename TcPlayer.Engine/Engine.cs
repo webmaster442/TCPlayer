@@ -129,7 +129,6 @@ public sealed class Engine : EngineBase, IEngine
         {
             Length = this.Length,
             Position = this.Position,
-            MetaData = this.MetaData,
             EngineState = this.State,
             Volume = this.Volume,
         });
@@ -171,6 +170,10 @@ public sealed class Engine : EngineBase, IEngine
                                                BassFlags.Decode | BassFlags.Float);
             SetupMixer();
             SetupInitialLengthAndPosition();
+            _mediator.Notify(new EngineLoadNotification
+            {
+                MetaData = MetaData
+            });
         }
         else
         {

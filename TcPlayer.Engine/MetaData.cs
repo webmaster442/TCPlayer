@@ -2,29 +2,36 @@
 
 namespace TcPlayer.Engine
 {
-    public class MetaData : IEquatable<MetaData>, IEnumerable<string>
+    public sealed class MetaData : IEquatable<MetaData>
     {
-        private readonly List<string> _data;
+        public IList<string> Data { get; init; }
+        
+        public byte[] Cover { get; init; }
+
+        public string CoverMime { get; init; }
 
         public MetaData()
         {
-            _data = new List<string>();
+            CoverMime = string.Empty;
+            Cover = Array.Empty<byte>();
+            Data = new List<string>();
         }
 
-        public MetaData Add(params string[] data)
-        {
-            _data.AddRange(data);
-            return this;
-        }
 
         public bool Equals(MetaData? other)
         {
-            if (other?._data.Count != _data.Count)
+            if (Cover.Length != other?.Cover.Length)
                 return false;
 
-            for (int i=0; i<_data.Count; i++)
+            if (CoverMime != other?.CoverMime)
+                return false;
+
+            if (other?.Data.Count != Data.Count)
+                return false;
+
+            for (int i=0; i< Data.Count; i++)
             {
-                if (_data[i] != other._data[i])
+                if (Data[i] != other.Data[i])
                 {
                     return false;
                 }
@@ -41,21 +48,14 @@ namespace TcPlayer.Engine
         public override int GetHashCode() 
         {
             HashCode hash = new();
-            foreach (var item in _data) 
+            hash.Add(Cover.Length);
+            hash.Add(CoverMime);
+            foreach (var item in Data)
             {
                 hash.Add(item);
             }
+            
             return hash.ToHashCode();
-        }
-
-        public IEnumerator<string> GetEnumerator()
-        {
-            return _data.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return _data.GetEnumerator();
         }
     }
 }

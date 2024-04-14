@@ -1,4 +1,5 @@
-﻿namespace TcPlayer.Engine
+﻿
+namespace TcPlayer.Engine
 {
     internal static class MetaDataFactory
     {
@@ -6,16 +7,37 @@
         {
             var file = TagLib.File.Create(filename);
 
+            TryGetCover(file, out byte[] data, out string mime);
+
             return new()
             {
+                Cover = data,
+                CoverMime = mime,
+                Data = new List<string>
                 {
                     file.Tag.FirstPerformer,
                     file.Tag.Title,
                     file.Tag.Album,
                     file.Tag.Year.ToString()
-                },
-                
+                }
             };
+        }
+
+        private static bool TryGetCover(TagLib.File file, out byte[] data, out string mime)
+        {
+            if (file.Tag.Pictures.Length == 0)
+            {
+                data = Array.Empty<byte>();
+                mime = string.Empty;
+                return false;
+            }
+
+            var picture = file.Tag.Pictures
+                .FirstOrDefault(p => p.Type == TagLib.PictureType.FrontCover, file.Tag.Pictures[0]);
+
+            data = picture.Data.Data;
+            mime = picture.MimeType;
+            return true;
         }
 
         internal static MetaData CreateEmpty()
