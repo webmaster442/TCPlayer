@@ -1,17 +1,17 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace TcPlayer.Controls
+namespace TcPlayer.Controls;
+
+/// <summary>
+/// Control extended with usefull methods
+/// </summary>
+internal abstract class ExtendedControl: Control
 {
-    internal class ExtendedControl: Control
+    protected T GetTemplateChild<T>(string name) where T : DependencyObject
     {
-        protected T GetTemplateChild<T>(string name) where T : DependencyObject
-        {
-            if (GetTemplateChild(name) is T casted)
-            {
-                return casted;
-            }
-            throw new InvalidOperationException($"{name} not found or type mismatch");
-        }
+        return GetTemplateChild(name) is T casted
+            ? casted
+            : throw new InvalidOperationException($"{name} not found or type mismatch");
     }
 }

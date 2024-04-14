@@ -16,5 +16,8 @@
     <SolidColorBrush
         x:Key="WindowControl"
         Color="#F7A072" />
+    <SolidColorBrush
+        x:Key="Red"
+        Color="#FF0000" />
 
 </ResourceDictionary>

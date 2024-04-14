@@ -6,8 +6,12 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <!-- App colors -->
                 <ResourceDictionary Source="Styles/Colors.xaml"/>
-                <ResourceDictionary Source="Styles/ControlStyles.xaml"/>
+                <!-- Base control styles -->
+                <ResourceDictionary Source="Styles/BaseControlStyles.xaml"/>
+                <!-- Custom control styles -->
+                <ResourceDictionary Source="Styles/WindowControls.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
