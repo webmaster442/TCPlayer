@@ -15,10 +15,15 @@ public abstract class EngineBase : IDisposable
     {
         _counter = 0;
         _mediator = mediator;
-        //_timer = new System.Timers.Timer(TimeSpan.FromMilliseconds(200));
-        //_timer.Elapsed += OnTimerElapsed;
-        //_timer.Start();
+        _timer = new System.Timers.Timer(TimeSpan.FromMilliseconds(100));
+        _timer.Elapsed += OnTimerElapsed;
     }
+
+    protected void TimerStart() 
+        => _timer.Start();
+
+    protected void TimerStop()
+        => _timer.Stop();
 
     protected virtual void Dispose(bool disposing)
     {
@@ -38,27 +43,26 @@ public abstract class EngineBase : IDisposable
         GC.SuppressFinalize(this);
     }
 
-    private const int _200Miliseconds = 200;
-    private const int _5Seconds = 5000;
-    private const int _1Seconds = 1000;
-
     private void OnTimerElapsed(object? sender, ElapsedEventArgs e)
     {
-        _counter += _200Miliseconds;
-        if (_counter >= _5Seconds)
+        _counter++;
+        OnEvery100ms();
+        if (_counter > 9)
         {
-            if (!OnEvery5000Ms()) return;
+            OnEvery1000ms();
+            _counter = 0;
         }
-        if (_counter >= _1Seconds)
-        {
-            if (!OnEvery1000Ms()) return;
-        }
-        OnEvery200Ms();
     }
 
-    protected virtual bool OnEvery200Ms() => false;
-    protected virtual bool OnEvery1000Ms() => false;
-    protected virtual bool OnEvery5000Ms() => false;
+    protected virtual void OnEvery1000ms()
+    {
+        //empty in base class
+    }
+
+    protected virtual void OnEvery100ms()
+    {
+        //empty in base class
+    }
 
     public IEnumerable<DeviceInfo> GetDevices()
     {

@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{6E970ED0-56F2-4B3C-BAA6-4C1DFC4E9474}"
 	ProjectSection(SolutionItems) = preProject
 		Docs\bass.chm = Docs\bass.chm
+		Docs\bassmix.chm = Docs\bassmix.chm
 		Docs\basswasapi.chm = Docs\basswasapi.chm
 	EndProjectSection
 EndProject

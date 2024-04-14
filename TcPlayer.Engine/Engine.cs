@@ -9,9 +9,9 @@ namespace TcPlayer.Engine;
 public sealed class Engine : EngineBase, IEngine
 {
     private DeviceInfo? _info;
-    private float _volume;
     private int _decodeChannel;
     private int _mixerChanel;
+    private bool _notificationBlock;
     private readonly WasapiProcedure _onWasapiUpdateDelegate;
     private readonly string[] _plugins;
     private readonly int[] _loadedPluginHandles;
@@ -20,6 +20,7 @@ public sealed class Engine : EngineBase, IEngine
 
     public Engine(IMediator mediator) : base(mediator)
     {
+        _notificationBlock = false;
         _plugins =
             [
                 Path.Combine(AppContext.BaseDirectory, "bass_aac.dll"),
@@ -34,7 +35,7 @@ public sealed class Engine : EngineBase, IEngine
         MetaData = MetaDataFactory.CreateEmpty();
         _onWasapiUpdateDelegate = new WasapiProcedure(OnWasapiUpdate);
         _loadedPluginHandles = new int[_plugins.Length];
-        for (int i=0; i< _plugins.Length; i++)
+        for (int i = 0; i < _plugins.Length; i++)
         {
             _loadedPluginHandles[i] = Bass.PluginLoad(_plugins[i]);
             if (_loadedPluginHandles[i] == 0)
@@ -57,6 +58,15 @@ public sealed class Engine : EngineBase, IEngine
         base.Dispose(disposing);
     }
 
+    protected override void OnEvery100ms()
+    {
+        if (_notificationBlock)
+            return;
+
+        UpdatePosition();
+        SendNotification();
+    }
+
     private void DisposeDevice()
     {
         if (_info != null)
@@ -70,6 +80,59 @@ public sealed class Engine : EngineBase, IEngine
     private int OnWasapiUpdate(nint Buffer, int Length, nint User)
     {
         return Bass.ChannelGetData(_mixerChanel, Buffer, Length);
+    }
+
+    private void SetupMixer()
+    {
+        if (_info == null)
+            throw new EngineException("No output device has been initialized");
+
+        if (_decodeChannel == 0)
+            throw new EngineException($"Decode channel create failed: {Bass.LastError}");
+
+        if (_mixerChanel == 0)
+        {
+            _mixerChanel = BassMix.CreateMixerStream(_info.Frequency,
+                                                     _info.Channels,
+                                                     BassFlags.Float | BassFlags.Decode | BassFlags.MixerPositionEx);
+
+            if (_mixerChanel == 0)
+                throw new EngineException($"Mixer channel create failed: {Bass.LastError}");
+        }
+
+        if (!BassMix.MixerAddChannel(_mixerChanel, _decodeChannel, BassFlags.MixerChanDownMix))
+        {
+            throw new EngineException($"Mixer setup failed");
+        }
+    }
+
+    private void SetupInitialLengthAndPosition()
+    {
+        long len = Bass.ChannelGetLength(_decodeChannel, PositionFlags.Bytes);
+        if (len < 0)
+            Length = double.PositiveInfinity;
+        else
+            Length = Bass.ChannelBytes2Seconds(_decodeChannel, len);
+
+        UpdatePosition();
+    }
+
+    private void UpdatePosition()
+    {
+        long pos = BassMix.ChannelGetPosition(_decodeChannel, PositionFlags.Bytes);
+        Position = Bass.ChannelBytes2Seconds(_decodeChannel, pos);
+    }
+
+    private void SendNotification()
+    {
+        _mediator.Notify(new EngineNotification
+        {
+            Length = this.Length,
+            Position = this.Position,
+            MetaData = this.MetaData,
+            EngineState = this.State,
+            Volume = this.Volume,
+        });
     }
 
     public void Init(DeviceInfo info)
@@ -86,7 +149,7 @@ public sealed class Engine : EngineBase, IEngine
             && BassWasapi.Start())
         {
             _info = info;
-            _volume = BassWasapi.GetVolume(WasapiVolumeTypes.Session | WasapiVolumeTypes.WindowsHybridCurve);
+            Volume = BassWasapi.GetVolume(WasapiVolumeTypes.Session | WasapiVolumeTypes.WindowsHybridCurve);
         }
         else
         {
@@ -107,6 +170,7 @@ public sealed class Engine : EngineBase, IEngine
                                                Length: 0,
                                                BassFlags.Decode | BassFlags.Float);
             SetupMixer();
+            SetupInitialLengthAndPosition();
         }
         else
         {
@@ -114,37 +178,64 @@ public sealed class Engine : EngineBase, IEngine
         }
     }
 
-    private void SetupMixer()
+    public void Pause()
     {
-        if (_info == null)
-            throw new EngineException("No output device has been initialized");
-
-        if (_decodeChannel == 0)
-            throw new EngineException($"Decode channel create failed: {Bass.LastError}");
-
-        _mixerChanel = BassMix.CreateMixerStream(_info.Frequency,
-                                                 _info.Channels,
-                                                 BassFlags.Float | BassFlags.Decode | BassFlags.MixerPositionEx);
-
-        if (_mixerChanel == 0)
-            throw new EngineException($"Mixer channel create failed: {Bass.LastError}");
-
-        if (!BassMix.MixerAddChannel(_mixerChanel, _decodeChannel, BassFlags.MixerChanDownMix))
-        {
-            throw new EngineException($"Mixer setup failed");
-        }
+        Bass.ChannelPause(_mixerChanel);
+        State = EngineState.Pause;
+        SendNotification();
+        TimerStop();
     }
 
     public void Play()
     {
         Bass.ChannelPlay(_mixerChanel);
+        State = EngineState.Play;
+        SendNotification();
+        TimerStop();
     }
 
     public void Stop()
     {
         Bass.ChannelStop(_mixerChanel);
         Bass.ChannelStop(_decodeChannel);
-        _mixerChanel = 0;
+        BassMix.MixerRemoveChannel(_decodeChannel);
+        Bass.StreamFree(_decodeChannel);
         _decodeChannel = 0;
+        State = EngineState.Stop;
+        SendNotification();
+        TimerStop();
     }
+
+    public void SetVolume(float volume)
+    {
+        _notificationBlock = true;
+        if (_info == null)
+            throw new EngineException("Engine is not initialized");
+        float value = volume > 1.0f ? 1.0f : volume;
+        value = value < 0.0f ? 0.0f : value;
+        BassWasapi.SetVolume(WasapiVolumeTypes.Session | WasapiVolumeTypes.WindowsHybridCurve, value);
+        _notificationBlock = false;
+    }
+
+    public void SetPosition(double position)
+    {
+        _notificationBlock = true;
+        if (_info == null)
+            throw new EngineException("Engine is not initialized");
+
+        if (double.IsInfinity(Length))
+            return;
+
+        var bytes = Bass.ChannelSeconds2Bytes(_decodeChannel, position);
+        Bass.ChannelSetPosition(_decodeChannel, bytes);
+        _notificationBlock = false;
+    }
+
+    public double Position { get; private set; }
+
+    public double Length { get; private set; }
+
+    public EngineState State { get; private set; }
+
+    public float Volume { get; private set; }
 }

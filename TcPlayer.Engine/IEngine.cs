@@ -1,15 +1,13 @@
-﻿namespace TcPlayer.Engine;
-
-public interface IEngine : IDisposable
+﻿namespace TcPlayer.Engine
 {
-    void Init(DeviceInfo info);
-    public IEnumerable<DeviceInfo> GetDevices();
-    void Load(EngineFile file);
-    void Stop();
-    MetaData MetaData { get; }
-    //void Play();
-    //void Pause();
-    //float Volume { get; set; }
-    //double Position { get; set; }
-    //double Duration { get; }
+    public interface IEngine
+    {
+        void Init(DeviceInfo info);
+        void Load(EngineFile file);
+        void Pause();
+        void Play();
+        void SetPosition(double position);
+        void SetVolume(float volume);
+        void Stop();
+    }
 }
