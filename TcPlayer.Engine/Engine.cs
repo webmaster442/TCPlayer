@@ -20,7 +20,17 @@ public sealed class Engine : EngineBase, IEngine
 
     public Engine(IMediator mediator) : base(mediator)
     {
-        _plugins = Array.Empty<string>();
+        _plugins =
+            [
+                Path.Combine(AppContext.BaseDirectory, "bass_aac.dll"),
+                Path.Combine(AppContext.BaseDirectory, "bass_ac3.dll"),
+                Path.Combine(AppContext.BaseDirectory, "bassalac.dll"),
+                Path.Combine(AppContext.BaseDirectory, "bassape.dll"),
+                Path.Combine(AppContext.BaseDirectory, "bassflac.dll"),
+                Path.Combine(AppContext.BaseDirectory, "basswma.dll"),
+                Path.Combine(AppContext.BaseDirectory, "basswv.dll"),
+
+            ];
         MetaData = MetaDataFactory.CreateEmpty();
         _onWasapiUpdateDelegate = new WasapiProcedure(OnWasapiUpdate);
         _loadedPluginHandles = new int[_plugins.Length];

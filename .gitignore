@@ -482,3 +482,4 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+/.vs/TCPlayer/DesignTimeBuild/.dtbcache.v2

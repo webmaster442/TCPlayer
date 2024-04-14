@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+namespace TcPlayer.ViewModels;
 
-namespace TcPlayer.ViewModels
+internal partial class MainViewModel : ObservableObject
 {
-    internal partial class MainViewModel : ObservableObject
+    public PlayerControlsViewModel Player { get; }
+
+    public MainViewModel()
     {
+        Player = new PlayerControlsViewModel();
     }
 }

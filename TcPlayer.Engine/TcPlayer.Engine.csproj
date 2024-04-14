@@ -21,4 +21,8 @@
     <ProjectReference Include="..\TcPlayer.Native\TcPlayer.Native.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Internals\" />
+  </ItemGroup>
+
 </Project>
