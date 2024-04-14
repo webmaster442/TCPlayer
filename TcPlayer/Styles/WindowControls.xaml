@@ -23,6 +23,7 @@
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 FontWeight="Bold"
+                                FontFamily="{StaticResource TileFont}"
                                 Text="{Binding Path=ControlledWindow.Title, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type controls:WindowControls}}}" />
                             <ToggleButton
                                 x:Name="PART_Pin"

@@ -20,4 +20,10 @@
         x:Key="Red"
         Color="#FF0000" />
 
+    <!-- Titles -->
+    <FontFamily x:Key="TileFont">pack://application:,,,/Fonts/#Merriweather Sans</FontFamily>
+
+    <!-- Normal text -->
+    <FontFamily x:Key="TextFont">pack://application:,,,/Fonts/#Noto Sans ExtraLight</FontFamily>
+   
 </ResourceDictionary>

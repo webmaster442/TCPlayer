@@ -9,6 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Fonts\MerriweatherSans-VariableFont_wght.ttf" />
+    <None Remove="Fonts\NotoSans-VariableFont_wdth,wght.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
   </ItemGroup>
@@ -20,6 +25,11 @@
   <ItemGroup>
     <Folder Include="Converters\" />
     <Folder Include="Views\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Fonts\MerriweatherSans-VariableFont_wght.ttf" />
+    <Resource Include="Fonts\NotoSans-VariableFont_wdth,wght.ttf" />
   </ItemGroup>
 
 </Project>

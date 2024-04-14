@@ -7,6 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Name="WindowMain"
     Title="TC Player 3.0"
+    SnapsToDevicePixels="True"
+    UseLayoutRounding="True"
     MinWidth="1280"
     MinHeight="720"
     Background="{StaticResource Background}"
@@ -27,6 +29,8 @@
 
         <TabControl
             Grid.Row="1"
+            Background="Transparent"
+            BorderThickness="0"
             TabStripPlacement="Right">
             <TabItem
                 Header="Now playing"
@@ -46,6 +50,7 @@
                         Grid.Column="1"
                         Margin="5,0"
                         FontSize="40"
+                        FontFamily="{StaticResource TextFont}"
                         Text="Line1" />
                 </Grid>
             </TabItem>
@@ -63,7 +68,6 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition />
                     <ColumnDefinition />
-                    s
                     <ColumnDefinition />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
@@ -72,8 +76,8 @@
                     Grid.Row="0"
                     Grid.Column="0"
                     Margin="5,0"
-                    FontSize="14"
                     Text="00:00:00"
+                    Style="{StaticResource TextStyle}"
                     TextAlignment="Center" />
                 <Slider
                     Grid.Row="0"
@@ -82,8 +86,8 @@
                 <TextBlock
                     Grid.Column="4"
                     Margin="5,0"
-                    FontSize="14"
                     Text="00:00:00"
+                    Style="{StaticResource TextStyle}"
                     TextAlignment="Center" />
                 <Grid
                     x:Name="PlayerControls"

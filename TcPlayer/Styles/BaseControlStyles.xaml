@@ -12,13 +12,16 @@
         TargetType="TabItem">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="HeaderTemplate">
             <Setter.Value>
                 <DataTemplate>
                     <TextBlock
                         Margin="0,5"
-                        FontSize="14"
-                        Text="{Binding}">
+                        FontFamily="{StaticResource TileFont}"
+                        SnapsToDevicePixels="True"
+                        Text="{Binding}"
+                        UseLayoutRounding="True">
                         <TextBlock.LayoutTransform>
                             <RotateTransform Angle="-90" />
                         </TextBlock.LayoutTransform>
@@ -26,6 +29,14 @@
                 </DataTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style
+        x:Key="TextStyle"
+        TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource TextFont}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Foreground" Value="{StaticResource Color1}" />
     </Style>
 
 </ResourceDictionary>
