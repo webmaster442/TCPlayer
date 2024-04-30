@@ -14,13 +14,16 @@
                 CoverMime = mime,
                 Data = new List<string>
                 {
-                    file.Tag.FirstPerformer,
-                    file.Tag.Title,
-                    file.Tag.Album,
+                    GetOrDefault(file.Tag.FirstPerformer, "Unknown Artist"),
+                    GetOrDefault(file.Tag.Title, "Unknown song"),
+                    GetOrDefault(file.Tag.Album, "Unknown album"),
                     file.Tag.Year.ToString()
                 }
             };
         }
+
+        private static string GetOrDefault(string value, string defaultValue) 
+            => string.IsNullOrEmpty(value) ? defaultValue : value;
 
         private static bool TryGetCover(TagLib.File file, out byte[] data, out string mime)
         {

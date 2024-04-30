@@ -1,18 +1,10 @@
-﻿using System.Printing;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
-using Microsoft.Win32;
+using Microsoft.Extensions.DependencyInjection;
 
 using TcPlayer.Engine;
+using TcPlayer.Services;
+using TcPlayer.ViewModels;
 
 namespace TcPlayer
 {
@@ -21,5 +13,18 @@ namespace TcPlayer
     /// </summary>
     public partial class MainWindow : Window
     {
+        private static T Resolve<T>() where T : notnull
+        {
+            return ((App)App.Current).Services.GetRequiredService<T>();
+        }
+
+        public MainWindow()
+        {
+            InitializeComponent();
+            DataContext = new MainViewModel(
+                Resolve<IEngine>(),
+                Resolve<IDialogService>(),
+                Resolve<IMediator>());
+        }
     }
 }

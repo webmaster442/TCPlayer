@@ -82,6 +82,10 @@ public sealed class Engine : EngineBase, IEngine
 
     private int OnWasapiUpdate(nint Buffer, int Length, nint User)
     {
+        //TODO: Ugly workaround, fix later
+        if (State == EngineState.Pause || State == EngineState.Stop)
+            return 0;
+
         return Bass.ChannelGetData(_mixerChanel, Buffer, Length);
     }
 
@@ -128,10 +132,10 @@ public sealed class Engine : EngineBase, IEngine
 
     private void SendNotification()
     {
-        _mediator.Notify(new EngineNotification
+        _mediator.Notify(new EngineStateChangeNotification
         {
-            Length = this.Length,
-            Position = this.Position,
+            LengthSeconds = this.Length,
+            PositionSeconds = this.Position,
             EngineState = this.State,
             Volume = this.Volume,
         });
@@ -194,7 +198,7 @@ public sealed class Engine : EngineBase, IEngine
 
     public void Play()
     {
-        Bass.ChannelPlay(_mixerChanel);
+        Bass.ChannelPause(_mixerChanel);
         State = EngineState.Play;
         SendNotification();
         TimerStop();

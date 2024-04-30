@@ -1,3 +1,4 @@
+- Main viewmodel
 - Playlist mockup
 - Playlist loader
     - Async

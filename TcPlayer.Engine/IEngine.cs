@@ -9,5 +9,6 @@
         void SetPosition(double position);
         void SetVolume(float volume);
         void Stop();
+        IEnumerable<DeviceInfo> GetDevices();
     }
 }
