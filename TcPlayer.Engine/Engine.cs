@@ -4,6 +4,9 @@ using ManagedBass;
 using ManagedBass.Mix;
 using ManagedBass.Wasapi;
 
+using TcPlayer.Engine.Internals;
+using TcPlayer.Engine.Notifications;
+
 namespace TcPlayer.Engine;
 
 public sealed class Engine : EngineBase, IEngine

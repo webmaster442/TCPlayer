@@ -1,5 +1,4 @@
-﻿
-namespace TcPlayer.Engine
+﻿namespace TcPlayer.Engine.Internals
 {
     internal static class MetaDataFactory
     {

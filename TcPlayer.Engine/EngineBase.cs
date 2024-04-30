@@ -27,7 +27,7 @@ public abstract class EngineBase : IDisposable
 
     protected virtual void Dispose(bool disposing)
     {
-        if (_disposed) 
+        if (_disposed)
             return;
 
         if (disposing)

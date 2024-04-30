@@ -1,4 +1,4 @@
-﻿namespace TcPlayer.Engine;
+﻿namespace TcPlayer.Engine.Notifications;
 
 internal sealed record class EngineLoadNotification
 {
