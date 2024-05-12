@@ -116,7 +116,10 @@
                             </Canvas>
                         </Viewbox>
                     </Button>
-                    <ToggleButton Grid.Column="1">
+                    <ToggleButton 
+                        Grid.Column="1"
+                        Command="{Binding Player.PlayPauseCommand}"
+                        IsChecked="{Binding Player.IsPaused, Mode=OneWayToSource}">
                         <ToggleButton.Style>
                             <Style
                                 BasedOn="{StaticResource Transparent}"

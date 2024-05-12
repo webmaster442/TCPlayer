@@ -27,6 +27,9 @@ internal partial class PlayerControlsViewModel :
     [ObservableProperty]
     private double _volume;
 
+    [ObservableProperty]
+    private bool _isPaused;
+
     public double Remaining => TotalTime - CurrentPosition;
 
     [ObservableProperty]
@@ -51,11 +54,12 @@ internal partial class PlayerControlsViewModel :
             _dialogService.ErrorMessage("No sound card", "No sound output detected, Program will exit");
             Environment.Exit(-1);
         }
-        SelectedDevice = Devices[0];
+        SelectedDevice = Devices[1];
 
         //TODO: remove when app finished
         {
-            _engine.Load(EngineFile.FromFileName(@"d:\Lazy Laura - Quincas Moreira.mp3"));
+            _engine.Load(EngineFile.FromFileName("d:\\MainFrame - Borderlands - The Pre-Sequel's Claptastic Voyage [QHnJ9NmK3Pc].m4a"));
+            //_engine.Load(EngineFile.FromFileName(@"d:\Lazy Laura - Quincas Moreira.mp3"));
             _engine.Pause();
         }
     }
@@ -63,7 +67,10 @@ internal partial class PlayerControlsViewModel :
     [RelayCommand]
     public void PlayPause()
     {
-
+        if (IsPaused)
+            _engine.Play();
+        else
+            _engine.Pause();
     }
 
     void IMessageClient<EngineLoadNotification>.OnNotify(EngineLoadNotification message)
