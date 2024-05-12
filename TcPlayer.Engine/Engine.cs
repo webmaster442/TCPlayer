@@ -80,14 +80,8 @@ public sealed class Engine : EngineBase, IEngine
         }
     }
 
-    private int OnWasapiUpdate(nint Buffer, int Length, nint User)
-    {
-        //TODO: Ugly workaround, fix later
-        if (State == EngineState.Pause || State == EngineState.Stop)
-            return 0;
-
-        return Bass.ChannelGetData(_mixerChanel, Buffer, Length);
-    }
+    private int OnWasapiUpdate(nint buffer, int length, nint user) 
+        => Bass.ChannelGetData(_mixerChanel, buffer, length);
 
     private void SetupMixer()
     {
@@ -128,6 +122,7 @@ public sealed class Engine : EngineBase, IEngine
     {
         long pos = BassMix.ChannelGetPosition(_decodeChannel, PositionFlags.Bytes);
         Position = Bass.ChannelBytes2Seconds(_decodeChannel, pos);
+        SendNotification();
     }
 
     private void SendNotification()
@@ -190,7 +185,7 @@ public sealed class Engine : EngineBase, IEngine
 
     public void Pause()
     {
-        Bass.ChannelPause(_mixerChanel);
+        Bass.ChannelStop(_mixerChanel);
         State = EngineState.Pause;
         SendNotification();
         TimerStop();
@@ -198,7 +193,7 @@ public sealed class Engine : EngineBase, IEngine
 
     public void Play()
     {
-        Bass.ChannelPause(_mixerChanel);
+        Bass.ChannelSetPosition(_mixerChanel, 0, PositionFlags.Bytes);
         State = EngineState.Play;
         SendNotification();
         TimerStop();
