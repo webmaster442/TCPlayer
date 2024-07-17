@@ -27,14 +27,70 @@ internal partial class PlaylistViewModel : ObservableObject, IPlaylist, IMenuCom
         {
             new MenuCommand
             {
-                Name = "Shuffle",
-                Command = ShuffleCommand,
+                Name = "Add",
+                Childs = new[]
+                {
+                    new MenuCommand
+                    {
+                        Name = "Add files...",
+                        Command = AddFilesCommand,
+                    },
+                    new MenuCommand
+                    {
+                        Name = "Add folder...",
+                        Command = AddFolderCommand,
+                    },
+                    new MenuCommand
+                    {
+                        Name = "Add URL...",
+                        Command = AddUrlCommand,
+                    },
+                }
             },
             new MenuCommand
-                        {
-                Name = "Clear",
-                Command = ClearCommand,
+            {
+                Name = "Remove",
+                Childs = new[]
+                {
+                    new MenuCommand
+                    {
+                        Name = "Remove selected",
+                        Command = RemoveSelectedCommand,
+                    },
+                    new MenuCommand
+                    {
+                        Name = "Remove all",
+                        Command = RemoveAllCommand,
+                    },
+                    new MenuCommand
+                    {
+                        Name = "Remove all except selected",
+                        Command = RemoveAllExceptSelectedCommand,
+                    },
+                },
             },
+            new MenuCommand
+            {
+                Name = "Sort",
+                Childs = new[]
+                {
+                    new MenuCommand
+                    {
+                        Name = "Sort A -> Z",
+                        Command = SortByAzCommand,
+                    },
+                    new MenuCommand
+                    {
+                        Name = "Sort Z -> A",
+                        Command = SortByZaCommand,
+                    },
+                    new MenuCommand
+                    {
+                        Name = "Shuffle",
+                        Command = ShuffleCommand,
+                    },
+                }
+            }
         };
     }
 
@@ -48,8 +104,60 @@ internal partial class PlaylistViewModel : ObservableObject, IPlaylist, IMenuCom
     }
 
     [RelayCommand]
-    public void Shuffle() => Contents.Shuffle();
+    public void AddFiles()
+    {
+        var result = _dialogService.OpenFilesDialog(new OpenFileDialogSettings
+        {
+            Title = "Add files...",
+            Filter = FileExtensions.CreateFilterString(),
+        });
+        if (result != null)
+        {
+            foreach (var file in result)
+            {
+                Contents.Add(EngineFile.FromFileName(file));
+            }
+        }
+    }
 
     [RelayCommand]
-    public void Clear() => Contents.Clear();
+    public void AddFolder()
+    {
+
+    }
+
+    [RelayCommand]
+    public void AddUrl()
+    {
+
+    }
+
+    [RelayCommand]
+    public void RemoveSelected()
+    {
+    }
+
+    [RelayCommand]
+    public void RemoveAll() => Contents.Clear();
+
+    [RelayCommand]
+    public void RemoveAllExceptSelected()
+    {
+
+    }
+
+    [RelayCommand]
+    public void SortByAz()
+    {
+
+    }
+
+    [RelayCommand]
+    public void SortByZa()
+    {
+
+    }
+
+    [RelayCommand]
+    public void Shuffle() => Contents.Shuffle();
 }

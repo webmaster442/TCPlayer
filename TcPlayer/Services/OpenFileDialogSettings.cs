@@ -1,4 +1,6 @@
-﻿namespace TcPlayer.Services;
+﻿using TcPlayer.Engine;
+
+namespace TcPlayer.Services;
 
 internal sealed class OpenFileDialogSettings
 {

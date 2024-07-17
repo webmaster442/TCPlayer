@@ -25,23 +25,25 @@ internal class TabMenuControl : Menu
     {
         if (d is TabMenuControl control)
         {
-            control.RefreshMenu();
+            control.Items.Clear();
+            if (control.MenuCommands != null)
+            {
+                Fill(control.Items, control.MenuCommands);
+            }
         }
     }
 
-    private void RefreshMenu()
+    private static void Fill(ItemCollection items, MenuCommand[] childs)
     {
-        Items.Clear();
-        if (MenuCommands != null)
+        foreach (var command in childs)
         {
-            foreach (var command in MenuCommands)
+            var item = new MenuItem
             {
-                Items.Add(new MenuItem
-                {
-                    Header = command.Name,
-                    Command = command.Command,
-                });
-            }
+                Header = command.Name,
+                Command = command.Command,
+            };
+            Fill(item.Items, command.Childs);
+            items.Add(item);
         }
     }
 }

@@ -2,9 +2,9 @@
 
 namespace TcPlayer.Engine;
 
-public sealed class FileExtensions
+public static class FileExtensions
 {
-    private readonly Dictionary<string, string> _fileExtensions = new()
+    private static readonly Dictionary<string, string> _fileExtensions = new()
     {
         { "Mp* files", "*.mp3;*.mp2;*.mp1" },
         { "Ogg files", "*.ogg" },
@@ -16,11 +16,18 @@ public sealed class FileExtensions
         { "Wavpack files", "*.wv" },
     };
 
-    public string CreateFilterString()
+    public static string CreateFilterString()
     {
         StringBuilder sb = new StringBuilder();
         sb.Append("Supported files|");
         sb.Append(string.Join(';', _fileExtensions.Select(x => x.Value)));
+        foreach (var (key, value) in _fileExtensions)
+        {
+            sb.Append('|');
+            sb.Append(key);
+            sb.Append('|');
+            sb.Append(value);
+        }
         return sb.ToString();
     }
 
