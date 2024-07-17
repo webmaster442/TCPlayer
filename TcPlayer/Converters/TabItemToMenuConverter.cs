@@ -5,7 +5,7 @@ using System.Windows.Markup;
 
 using TcPlayer.ViewModels.Menu;
 
-namespace TcPlayer.Controls;
+namespace TcPlayer.Converters;
 
 internal class TabItemToMenuCommands : MarkupExtension, IValueConverter
 {

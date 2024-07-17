@@ -52,7 +52,7 @@
             Grid.Row="1"
             Margin="145,0,0,10"
             VerticalAlignment="Bottom"
-            MenuCommands="{Binding ElementName=MainTabs, Path=SelectedItem, Converter={controls:TabItemToMenuCommands}}" />
+            MenuCommands="{Binding ElementName=MainTabs, Path=SelectedItem, Converter={converters:TabItemToMenuCommands}}" />
         <Border Grid.Row="2">
             <Grid ShowGridLines="True">
                 <Grid.RowDefinitions>
