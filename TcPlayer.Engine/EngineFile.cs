@@ -13,6 +13,12 @@ public sealed class EngineFile
 
     public static EngineFile FromFileName(string fileName)
     {
+        if (fileName.Contains('%'))
+        {
+            var expanded = Environment.ExpandEnvironmentVariables(fileName);
+            return new($"file://{expanded}", EngineFileType.File);
+        }
+
         return new($"file://{fileName}", EngineFileType.File);
     }
 }

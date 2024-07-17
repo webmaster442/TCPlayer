@@ -18,10 +18,11 @@ public sealed class Engine : EngineBase, IEngine
     private readonly WasapiProcedure _onWasapiUpdateDelegate;
     private readonly string[] _plugins;
     private readonly int[] _loadedPluginHandles;
+    private readonly IPlaylist _playlist;
 
     public MetaData MetaData { get; private set; }
 
-    public Engine(IMediator mediator) : base(mediator)
+    public Engine(IMediator mediator, IPlaylist playlist) : base(mediator)
     {
         _notificationBlock = false;
         _plugins =
@@ -44,6 +45,7 @@ public sealed class Engine : EngineBase, IEngine
             if (_loadedPluginHandles[i] == 0)
                 throw new EngineException($"Plugin load failed: {Bass.LastError}");
         }
+        _playlist = playlist;
     }
 
     ~Engine()
@@ -67,7 +69,14 @@ public sealed class Engine : EngineBase, IEngine
             return;
 
         UpdatePosition();
-        SendNotification();
+
+        if (Length > 0
+            && (Length - Position) < 0.2
+            && _playlist.CurrentIndex + 1 < _playlist.Count)
+        {
+            _playlist.CurrentIndex += 1;
+            Load(_playlist[_playlist.CurrentIndex]);
+        }
     }
 
     private void DisposeDevice()
@@ -196,7 +205,7 @@ public sealed class Engine : EngineBase, IEngine
         Bass.ChannelSetPosition(_mixerChanel, 0, PositionFlags.Bytes);
         State = EngineState.Play;
         SendNotification();
-        TimerStop();
+        TimerStart();
     }
 
     public void Stop()

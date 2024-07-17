@@ -85,21 +85,18 @@ internal static class TestData
 
     public const string PlsWithLocalFiles = """
         [playlist]
-        File1=https://e20.yesstreaming.net:8279/
-        Length1=-1
+        File1=example2.mp3
+        Title1=Just some local audio that is 2mins long
+        Length1=120
 
-        File2=example2.mp3
-        Title2=Just some local audio that is 2mins long
-        Length2=120
+        File2=F:\Music\whatever.m4a
+        Title2=absolute path on Windows
 
-        File3=F:\Music\whatever.m4a
-        Title3=absolute path on Windows
+        File3=%test%\Music\short.ogg
+        Title3=example for an Environment variable
+        Length3=5
 
-        File4=%UserProfile%\Music\short.ogg
-        Title4=example for an Environment variable
-        Length4=5
-
-        NumberOfEntries=4
+        NumberOfEntries=3
         Version=2
         """;
 
@@ -111,5 +108,9 @@ internal static class TestData
 
         #EXTINF:321,Example Artist - Example title
         C:\Documents and Settings\I\My Music\Greatest Hits\Example.ogg
+
+        %test%\Music\short.ogg
+
+        example2.mp3
         """;
 }
