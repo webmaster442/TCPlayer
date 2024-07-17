@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.IO;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -16,6 +17,15 @@ internal partial class PlaylistViewModel : ObservableObject, IPlaylist, IMenuCom
 
     [ObservableProperty]
     private int _currentIndex;
+
+    [ObservableProperty]
+    public int _selectedIndex;
+
+    partial void OnSelectedIndexChanged(int value)
+    {
+        if (value != CurrentIndex)
+            CurrentIndex = value;
+    }
 
     public BindingList<EngineFile> Contents { get; }
 
@@ -98,10 +108,7 @@ internal partial class PlaylistViewModel : ObservableObject, IPlaylist, IMenuCom
 
     public int Count => Contents.Count;
 
-    public MenuCommand[] Commands
-    {
-        get;
-    }
+    public MenuCommand[] Commands { get; }
 
     [RelayCommand]
     public void AddFiles()
@@ -123,7 +130,15 @@ internal partial class PlaylistViewModel : ObservableObject, IPlaylist, IMenuCom
     [RelayCommand]
     public void AddFolder()
     {
-
+        var result = _dialogService.SelectFolderDialog("Add folder...");
+        if (result != null)
+        {
+            var files = Directory.GetFiles(result);
+            foreach (var file in FileExtensions.FilterSupportedItems(files))
+            {
+                Contents.Add(EngineFile.FromFileName(file));
+            }
+        }
     }
 
     [RelayCommand]
@@ -135,6 +150,9 @@ internal partial class PlaylistViewModel : ObservableObject, IPlaylist, IMenuCom
     [RelayCommand]
     public void RemoveSelected()
     {
+        int wasSelected = SelectedIndex;
+        Contents.RemoveAt(SelectedIndex);
+        SelectedIndex = wasSelected;
     }
 
     [RelayCommand]
@@ -143,19 +161,25 @@ internal partial class PlaylistViewModel : ObservableObject, IPlaylist, IMenuCom
     [RelayCommand]
     public void RemoveAllExceptSelected()
     {
-
+        var item = Contents[SelectedIndex];
+        Contents.Clear();
+        Contents.Add(item);
     }
 
     [RelayCommand]
     public void SortByAz()
     {
-
+        var sorted = Contents.OrderBy(x => x.Uri);
+        Contents.Clear();
+        Contents.AddRange(sorted);
     }
 
     [RelayCommand]
     public void SortByZa()
     {
-
+        var sorted = Contents.OrderByDescending(x => x.Uri);
+        Contents.Clear();
+        Contents.AddRange(sorted);
     }
 
     [RelayCommand]

@@ -1,5 +1,7 @@
 ﻿using System.Windows;
 
+using Microsoft.Win32;
+
 namespace TcPlayer.Services;
 
 internal class DialogService : IDialogService
@@ -11,7 +13,7 @@ internal class DialogService : IDialogService
 
     public string? OpenFileDialog(OpenFileDialogSettings settings)
     {
-        var dialog = new Microsoft.Win32.OpenFileDialog
+        var dialog = new OpenFileDialog
         {
             Title = settings.Title,
             Filter = settings.Filter,
@@ -29,7 +31,7 @@ internal class DialogService : IDialogService
 
     public string[]? OpenFilesDialog(OpenFileDialogSettings settings)
     {
-        var dialog = new Microsoft.Win32.OpenFileDialog
+        var dialog = new OpenFileDialog
         {
             Title = settings.Title,
             Filter = settings.Filter,
@@ -41,6 +43,20 @@ internal class DialogService : IDialogService
         if (dialog.ShowDialog() == true)
         {
             return dialog.FileNames;
+        }
+        return null;
+    }
+
+    public string? SelectFolderDialog(string title)
+    {
+        var dialog = new OpenFolderDialog
+        {
+            Title = title,
+            Multiselect = false
+        };
+        if (dialog.ShowDialog() == true)
+        {
+            return dialog.FolderName;
         }
         return null;
     }

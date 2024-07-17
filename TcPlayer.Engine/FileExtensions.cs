@@ -20,7 +20,7 @@ public static class FileExtensions
     {
         StringBuilder sb = new StringBuilder();
         sb.Append("Supported files|");
-        sb.Append(string.Join(';', _fileExtensions.Select(x => x.Value)));
+        sb.AppendJoin(';', _fileExtensions.Select(x => x.Value));
         foreach (var (key, value) in _fileExtensions)
         {
             sb.Append('|');
@@ -31,4 +31,15 @@ public static class FileExtensions
         return sb.ToString();
     }
 
+    public static IEnumerable<string> FilterSupportedItems(string[] files)
+    {
+        var extensions = _fileExtensions.SelectMany(x => x.Value.Split(';')).ToHashSet();
+        foreach(var file in files)
+        {
+            if (extensions.Contains(Path.GetExtension(file)))
+            {
+                yield return file;
+            }
+        }
+    }
 }

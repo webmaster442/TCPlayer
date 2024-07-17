@@ -40,7 +40,7 @@
             <TabItem
                 Header="Now playing"
                 Style="{StaticResource MainTab}">
-                <local:NowPlaying/>
+                <local:NowPlaying />
             </TabItem>
             <TabItem
                 Header="Playlist"
