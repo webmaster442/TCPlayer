@@ -8,15 +8,7 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <Menu Grid.Row="0">
-            <MenuItem Header="File" />
-        </Menu>
-        <ListBox Grid.Row="1" />
-    </Grid>
-
+    <ListBox
+        Background="Transparent"
+        ItemsSource="{Binding Contents}" />
 </UserControl>

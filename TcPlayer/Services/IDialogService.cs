@@ -2,6 +2,7 @@
 
 internal interface IDialogService
 {
-    string[] OpenFiles();
     void ErrorMessage(string title, string message);
+    string? OpenFileDialog(OpenFileDialogSettings settings);
+    string[]? OpenFilesDialog(OpenFileDialogSettings settings);
 }

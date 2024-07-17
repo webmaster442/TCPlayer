@@ -32,6 +32,7 @@
             ControlledWindow="{Binding ElementName=WindowMain}" />
 
         <TabControl
+            x:Name="MainTabs"
             Grid.Row="1"
             Background="Transparent"
             BorderThickness="0"
@@ -39,24 +40,7 @@
             <TabItem
                 Header="Now playing"
                 Style="{StaticResource MainTab}">
-                <Grid ShowGridLines="True">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Rectangle
-                        Grid.Column="0"
-                        Width="400"
-                        Height="400"
-                        Margin="10"
-                        Fill="AliceBlue" />
-                    <TextBlock
-                        Grid.Column="1"
-                        Margin="5,0"
-                        FontFamily="{StaticResource TextFont}"
-                        FontSize="40"
-                        Text="Line1" />
-                </Grid>
+                <local:NowPlaying/>
             </TabItem>
             <TabItem
                 Header="Playlist"
@@ -64,6 +48,11 @@
                 <local:Playlist DataContext="{Binding PlaylistViewModel}" />
             </TabItem>
         </TabControl>
+        <controls:TabMenuControl
+            Grid.Row="1"
+            Margin="145,0,0,10"
+            VerticalAlignment="Bottom"
+            MenuCommands="{Binding ElementName=MainTabs, Path=SelectedItem, Converter={controls:TabItemToMenuCommands}}" />
         <Border Grid.Row="2">
             <Grid ShowGridLines="True">
                 <Grid.RowDefinitions>

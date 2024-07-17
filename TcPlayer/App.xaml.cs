@@ -19,14 +19,15 @@ public partial class App : Application
 
     public App()
     {
-        var playlist = new PlaylistViewModel();
+        var dialogs = new DialogService();
+        var playlist = new PlaylistViewModel(dialogs);
 
         IServiceCollection services = new ServiceCollection();
+        services.AddSingleton<IDialogService>(dialogs);
         services.AddSingleton<IEngine, Engine.Engine>();
         services.AddSingleton<IMediator, Mediator>();
         services.AddSingleton<IPlaylist>(playlist);
         services.AddSingleton<PlaylistViewModel>(playlist);
-        services.AddSingleton<IDialogService, DialogService>();
 
         Services = services.BuildServiceProvider();
     }
