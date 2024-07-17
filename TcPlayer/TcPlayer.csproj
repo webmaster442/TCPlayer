@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\**" />
+    <EmbeddedResource Remove="Views\**" />
+    <None Remove="Views\**" />
+    <Page Remove="Views\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Fonts\MerriweatherSans-VariableFont_wght.ttf" />
     <None Remove="Fonts\NotoSans-VariableFont_wdth,wght.ttf" />
   </ItemGroup>
@@ -20,10 +27,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TcPlayer.Engine\TcPlayer.Engine.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\" />
   </ItemGroup>
 
   <ItemGroup>

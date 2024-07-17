@@ -10,7 +10,7 @@ using TcPlayer.Services;
 
 namespace TcPlayer.ViewModels;
 
-internal partial class PlayerControlsViewModel : 
+internal partial class PlayerControlsViewModel :
     ObservableObject, 
     IMessageClient<EngineLoadNotification>,
     IMessageClient<EngineStateChangeNotification>
@@ -58,8 +58,7 @@ internal partial class PlayerControlsViewModel :
 
         //TODO: remove when app finished
         {
-            _engine.Load(EngineFile.FromFileName("d:\\MainFrame - Borderlands - The Pre-Sequel's Claptastic Voyage [QHnJ9NmK3Pc].m4a"));
-            //_engine.Load(EngineFile.FromFileName(@"d:\Lazy Laura - Quincas Moreira.mp3"));
+            _engine.Load(EngineFile.FromFileName(@"d:\Lazy Laura - Quincas Moreira.mp3"));
             _engine.Pause();
         }
     }

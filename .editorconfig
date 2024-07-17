@@ -3,6 +3,7 @@ root = true
 # All files
 [*]
 indent_style = space
+dotnet_diagnostic.CA1047.severity = error
 
 # Xml files
 [*.xml]
@@ -58,7 +59,7 @@ dotnet_style_operator_placement_when_wrapping = beginning_of_line
 dotnet_style_prefer_auto_properties = true:suggestion
 dotnet_style_prefer_compound_assignment = true:suggestion
 dotnet_style_prefer_conditional_expression_over_assignment = true:suggestion
-dotnet_style_prefer_conditional_expression_over_return = true:suggestion
+dotnet_style_prefer_conditional_expression_over_return = false:suggestion
 dotnet_style_prefer_inferred_anonymous_type_member_names = true:suggestion
 dotnet_style_prefer_inferred_tuple_names = true:suggestion
 dotnet_style_prefer_is_null_check_over_reference_equality_method = true:suggestion
@@ -86,7 +87,7 @@ csharp_style_var_when_type_is_apparent = false:silent
 csharp_style_expression_bodied_accessors = true:silent
 csharp_style_expression_bodied_constructors = false:silent
 csharp_style_expression_bodied_indexers = true:silent
-csharp_style_expression_bodied_lambdas = true:suggestion
+csharp_style_expression_bodied_lambdas = when_on_single_line:error
 csharp_style_expression_bodied_local_functions = false:silent
 csharp_style_expression_bodied_methods = false:silent
 csharp_style_expression_bodied_operators = false:silent
@@ -170,6 +171,24 @@ csharp_space_between_square_brackets = false
 # Wrapping preferences
 csharp_preserve_single_line_blocks = true
 csharp_preserve_single_line_statements = true
+csharp_style_namespace_declarations = file_scoped:error
+csharp_style_prefer_method_group_conversion = true:silent
+csharp_style_prefer_top_level_statements = true:silent
+csharp_style_prefer_primary_constructors = false:suggestion
+csharp_style_prefer_null_check_over_type_check = true:suggestion
+csharp_style_prefer_local_over_anonymous_function = true:suggestion
+csharp_style_implicit_object_creation_when_type_is_apparent = true:suggestion
+csharp_style_prefer_tuple_swap = true:suggestion
+csharp_style_prefer_utf8_string_literals = true:suggestion
+csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental = true:silent
+csharp_style_prefer_readonly_struct = true:suggestion
+csharp_style_prefer_readonly_struct_member = true:suggestion
+dotnet_diagnostic.CA1070.severity = error
+dotnet_diagnostic.CA1032.severity = error
+dotnet_diagnostic.CA1865.severity = error
+dotnet_diagnostic.CA1866.severity = error
+dotnet_diagnostic.CA1867.severity = error
+dotnet_diagnostic.CA2014.severity = error
 
 #### Naming styles ####
 [*.{cs,vb}]
@@ -361,4 +380,29 @@ dotnet_naming_style.s_camelcase.required_prefix = s_
 dotnet_naming_style.s_camelcase.required_suffix = 
 dotnet_naming_style.s_camelcase.word_separator = 
 dotnet_naming_style.s_camelcase.capitalization = camel_case
+dotnet_style_prefer_collection_expression = true:suggestion
+dotnet_style_namespace_match_folder = true:error
+tab_width = 4
+indent_size = 4
+end_of_line = crlf
+dotnet_diagnostic.CA1000.severity = error
+dotnet_diagnostic.CA1001.severity = warning
+dotnet_diagnostic.CA1002.severity = error
+dotnet_diagnostic.CA1008.severity = error
+dotnet_diagnostic.CA1061.severity = error
+dotnet_diagnostic.CA1063.severity = error
+dotnet_diagnostic.CA2000.severity = error
+dotnet_diagnostic.CA1816.severity = error
+dotnet_diagnostic.CA2213.severity = error
+dotnet_diagnostic.CA2215.severity = error
+dotnet_diagnostic.CA1064.severity = error
+dotnet_diagnostic.CA1069.severity = error
+dotnet_diagnostic.CA1401.severity = error
+dotnet_diagnostic.CA1501.severity = error
+dotnet_diagnostic.CA1700.severity = error
+dotnet_diagnostic.CA1821.severity = error
+dotnet_diagnostic.CA1836.severity = error
+dotnet_diagnostic.CA1843.severity = error
+dotnet_diagnostic.CA1842.severity = error
+dotnet_diagnostic.CA2011.severity = error
 
