@@ -6,24 +6,28 @@ using Microsoft.Extensions.DependencyInjection;
 
 using TcPlayer.Engine;
 using TcPlayer.Services;
+using TcPlayer.ViewModels;
 
-namespace TcPlayer
+namespace TcPlayer;
+
+/// <summary>
+/// Interaction logic for App.xaml
+/// </summary>
+public partial class App : Application
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
-    public partial class App : Application
+    public IServiceProvider Services { get; }
+
+    public App()
     {
-        public IServiceProvider Services { get; }
+        var playlist = new PlaylistViewModel();
 
-        public App()
-        {
-            IServiceCollection services = new ServiceCollection();
-            services.AddSingleton<IEngine, Engine.Engine>();
-            services.AddSingleton<IMediator, Mediator>();
-            services.AddSingleton<IDialogService, DialogService>();
+        IServiceCollection services = new ServiceCollection();
+        services.AddSingleton<IEngine, Engine.Engine>();
+        services.AddSingleton<IMediator, Mediator>();
+        services.AddSingleton<IPlaylist>(playlist);
+        services.AddSingleton<PlaylistViewModel>(playlist);
+        services.AddSingleton<IDialogService, DialogService>();
 
-            Services = services.BuildServiceProvider();
-        }
+        Services = services.BuildServiceProvider();
     }
 }

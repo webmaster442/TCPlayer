@@ -22,9 +22,6 @@
                         SnapsToDevicePixels="True"
                         Text="{Binding}"
                         UseLayoutRounding="True">
-                        <TextBlock.LayoutTransform>
-                            <RotateTransform Angle="-90" />
-                        </TextBlock.LayoutTransform>
                     </TextBlock>
                 </DataTemplate>
             </Setter.Value>

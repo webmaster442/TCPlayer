@@ -5,14 +5,17 @@
     xmlns:controls="clr-namespace:TcPlayer.Controls"
     xmlns:converters="clr-namespace:TcPlayer.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:TcPlayer"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Name="WindowMain"
     Title="TC Player 3.0"
-    SnapsToDevicePixels="True"
-    UseLayoutRounding="True"
+    Width="1280"
+    Height="720"
     MinWidth="1280"
     MinHeight="720"
     Background="{StaticResource Background}"
+    SnapsToDevicePixels="True"
+    UseLayoutRounding="True"
     WindowStyle="None"
     mc:Ignorable="d">
     <Grid>
@@ -32,7 +35,7 @@
             Grid.Row="1"
             Background="Transparent"
             BorderThickness="0"
-            TabStripPlacement="Right">
+            TabStripPlacement="Bottom">
             <TabItem
                 Header="Now playing"
                 Style="{StaticResource MainTab}">
@@ -50,14 +53,16 @@
                     <TextBlock
                         Grid.Column="1"
                         Margin="5,0"
-                        FontSize="40"
                         FontFamily="{StaticResource TextFont}"
+                        FontSize="40"
                         Text="Line1" />
                 </Grid>
             </TabItem>
             <TabItem
                 Header="Playlist"
-                Style="{StaticResource MainTab}" />
+                Style="{StaticResource MainTab}">
+                <local:Playlist DataContext="{Binding PlaylistViewModel}" />
+            </TabItem>
         </TabControl>
         <Border Grid.Row="2">
             <Grid ShowGridLines="True">
@@ -77,21 +82,21 @@
                     Grid.Row="0"
                     Grid.Column="0"
                     Margin="5,0"
-                    Text="{Binding Player.CurrentPosition, Converter={converters:TimeConverter}}"
                     Style="{StaticResource TextStyle}"
+                    Text="{Binding Player.CurrentPosition, Converter={converters:TimeConverter}}"
                     TextAlignment="Center" />
                 <Slider
                     Grid.Row="0"
                     Grid.Column="1"
-                    Minimum="0"
+                    Grid.ColumnSpan="3"
                     Maximum="{Binding Player.TotalTime}"
-                    Value="{Binding Player.CurrentPosition}"
-                    Grid.ColumnSpan="3" />
+                    Minimum="0"
+                    Value="{Binding Player.CurrentPosition}" />
                 <TextBlock
                     Grid.Column="4"
                     Margin="5,0"
-                    Text="{Binding Player.Remaining, Converter={converters:TimeConverter}}"
                     Style="{StaticResource TextStyle}"
+                    Text="{Binding Player.Remaining, Converter={converters:TimeConverter}}"
                     TextAlignment="Center" />
                 <Grid
                     x:Name="PlayerControls"
@@ -116,7 +121,7 @@
                             </Canvas>
                         </Viewbox>
                     </Button>
-                    <ToggleButton 
+                    <ToggleButton
                         Grid.Column="1"
                         Command="{Binding Player.PlayPauseCommand}"
                         IsChecked="{Binding Player.IsPaused, Mode=OneWayToSource}">
@@ -226,10 +231,10 @@
                     </ToggleButton>
                     <Slider
                         Width="300"
-                        Minimum="0"
-                        Value="{Binding Player.Volume}"
+                        VerticalAlignment="Center"
                         Maximum="1"
-                        VerticalAlignment="Center" />
+                        Minimum="0"
+                        Value="{Binding Player.Volume}" />
                 </StackPanel>
 
                 <StackPanel
@@ -248,12 +253,12 @@
                     </Canvas>
                     <ComboBox
                         Width="300"
+                        VerticalAlignment="Center"
                         ItemsSource="{Binding Player.Devices}"
-                        SelectedItem="{Binding Player.SelectedDevice}"
-                        VerticalAlignment="Center">
+                        SelectedItem="{Binding Player.SelectedDevice}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Converter={converters:SelectedDeviceNameConverter}}"/>
+                                <TextBlock Text="{Binding Converter={converters:SelectedDeviceNameConverter}}" />
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>

@@ -55,12 +55,6 @@ internal partial class PlayerControlsViewModel :
             Environment.Exit(-1);
         }
         SelectedDevice = Devices[1];
-
-        //TODO: remove when app finished
-        {
-            _engine.Load(EngineFile.FromFileName(@"d:\Lazy Laura - Quincas Moreira.mp3"));
-            _engine.Pause();
-        }
     }
 
     [RelayCommand]

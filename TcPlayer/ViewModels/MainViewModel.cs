@@ -8,11 +8,14 @@ namespace TcPlayer.ViewModels;
 internal partial class MainViewModel : ObservableObject
 {
     public PlayerControlsViewModel Player { get; }
+    public PlaylistViewModel PlaylistViewModel { get; }
 
     public MainViewModel(IEngine engine,
                          IDialogService dialogService,
-                         IMediator mediator)
+                         IMediator mediator,
+                         PlaylistViewModel playlistViewModel)
     {
         Player = new PlayerControlsViewModel(engine, dialogService, mediator);
+        PlaylistViewModel = playlistViewModel;
     }
 }
