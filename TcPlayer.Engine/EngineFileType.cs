@@ -1,10 +1,8 @@
-﻿namespace TcPlayer.Engine
+﻿namespace TcPlayer.Engine;
+
+public enum EngineFileType
 {
-    public enum EngineFileType
-    {
-        File = 0,
-        Cd = 1,
-        Network = 2,
-        Youtube = 3,
-    }
+    File = 0,
+    Cd = 1,
+    Network = 2,
 }

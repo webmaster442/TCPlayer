@@ -21,4 +21,9 @@ public sealed class EngineFile
 
         return new($"file://{fileName}", EngineFileType.File);
     }
+
+    public static EngineFile FromUrl(string url)
+    {
+       return new(url, EngineFileType.Network);
+    }
 }

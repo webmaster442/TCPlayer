@@ -2,6 +2,9 @@
 
 public static class Playlists
 {
+    private const string Http = "http://";
+    private const string Https = "https://";
+
     public static async Task<Result<IList<EngineFile>>> LoadM3U(TextReader reader, string filePath)
     {
         List<EngineFile> results = new();
@@ -54,7 +57,12 @@ public static class Playlists
 
     private static void AddWithAbsolutePath(List<EngineFile> results, string basePath, string candidate)
     {
-        if (candidate.Contains('%'))
+        if (candidate.StartsWith(Http) 
+            || candidate.StartsWith(Https))
+        {
+            results.Add(EngineFile.FromUrl(candidate));
+        }
+        else if (candidate.Contains('%'))
         {
             results.Add(EngineFile.FromFileName(candidate));
         }
