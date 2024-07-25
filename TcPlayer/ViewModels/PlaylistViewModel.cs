@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 using TcPlayer.Engine;
+using TcPlayer.Engine.Formats;
 using TcPlayer.Services;
 using TcPlayer.ViewModels.Menu;
 
@@ -27,11 +28,11 @@ internal partial class PlaylistViewModel : ObservableObject, IPlaylist, IMenuCom
             CurrentIndex = value;
     }
 
-    public BindingList<EngineFile> Contents { get; }
+    public BindingList<PlaylistItem> Contents { get; }
 
     public PlaylistViewModel(IDialogService dialogService)
     {
-        Contents = new BindingList<EngineFile>();
+        Contents = new BindingList<PlaylistItem>();
         _dialogService = dialogService;
         Commands = new MenuCommand[]
         {
@@ -104,7 +105,7 @@ internal partial class PlaylistViewModel : ObservableObject, IPlaylist, IMenuCom
         };
     }
 
-    public EngineFile this[int index] => Contents[index];
+    public EngineFile this[int index] => EngineFile.FromPlaylistItem(Contents[index]);
 
     public int Count => Contents.Count;
 
@@ -122,7 +123,7 @@ internal partial class PlaylistViewModel : ObservableObject, IPlaylist, IMenuCom
         {
             foreach (var file in result)
             {
-                Contents.Add(EngineFile.FromFileName(file));
+                Contents.Add(Playlists.FromFile(file, file));
             }
         }
     }
@@ -136,7 +137,7 @@ internal partial class PlaylistViewModel : ObservableObject, IPlaylist, IMenuCom
             var files = Directory.GetFiles(result);
             foreach (var file in FileExtensions.FilterSupportedItems(files))
             {
-                Contents.Add(EngineFile.FromFileName(file));
+                Contents.Add(Playlists.FromFile(file, file));
             }
         }
     }
@@ -169,7 +170,7 @@ internal partial class PlaylistViewModel : ObservableObject, IPlaylist, IMenuCom
     [RelayCommand]
     public void SortByAz()
     {
-        var sorted = Contents.OrderBy(x => x.Uri);
+        var sorted = Contents.OrderBy(x => x.Path);
         Contents.Clear();
         Contents.AddRange(sorted);
     }
@@ -177,7 +178,7 @@ internal partial class PlaylistViewModel : ObservableObject, IPlaylist, IMenuCom
     [RelayCommand]
     public void SortByZa()
     {
-        var sorted = Contents.OrderByDescending(x => x.Uri);
+        var sorted = Contents.OrderByDescending(x => x.Path);
         Contents.Clear();
         Contents.AddRange(sorted);
     }

@@ -64,6 +64,27 @@ public static class Playlists
         }
     }
 
+    public static PlaylistItem FromFile(string basePath, string candidate)
+    {
+        if (candidate.Contains('%'))
+        {
+            if (candidate.Contains('%'))
+            {
+                var expanded = Environment.ExpandEnvironmentVariables(candidate);
+                return new PlaylistItem(expanded, EngineFileType.File, GetMetaData(expanded));
+            }
+            else
+            {
+               return new PlaylistItem(candidate, EngineFileType.File, GetMetaData(candidate));
+            }
+        }
+        else
+        {
+            string fileName = Path.GetFullPath(candidate, basePath);
+            return new PlaylistItem(fileName, EngineFileType.File, GetMetaData(fileName));
+        }
+    }
+
     private static void AddWithAbsolutePath(List<PlaylistItem> results, string basePath, string candidate)
     {
         if (candidate.StartsWith(Http)
@@ -71,22 +92,9 @@ public static class Playlists
         {
             results.Add(new PlaylistItem(candidate, EngineFileType.Network, candidate));
         }
-        else if (candidate.Contains('%'))
-        {
-            if (candidate.Contains('%'))
-            {
-                var expanded = Environment.ExpandEnvironmentVariables(candidate);
-                results.Add(new PlaylistItem(expanded, EngineFileType.File, GetMetaData(expanded)));
-            }
-            else
-            {
-                results.Add(new PlaylistItem(candidate, EngineFileType.File, GetMetaData(candidate)));
-            }
-        }
         else
         {
-            string fileName = Path.GetFullPath(candidate, basePath);
-            results.Add(new PlaylistItem(fileName, EngineFileType.File, GetMetaData(fileName)));
+            results.Add(FromFile(basePath, candidate));
         }
     }
 
