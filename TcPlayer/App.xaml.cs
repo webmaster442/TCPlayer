@@ -13,7 +13,7 @@ namespace TcPlayer;
 /// <summary>
 /// Interaction logic for App.xaml
 /// </summary>
-public partial class App : Application
+public partial class App : SingleInstanceApp
 {
     public IServiceProvider Services { get; }
 
@@ -30,5 +30,14 @@ public partial class App : Application
         services.AddSingleton<PlaylistViewModel>(playlist);
 
         Services = services.BuildServiceProvider();
+    }
+
+    public override void HandleArguments(string[] args)
+    {
+        if (args.Length > 0)
+        {
+            Services.GetRequiredService<IMediator>()
+                .Notify(new OpenFileMessage(args));
+        }
     }
 }
