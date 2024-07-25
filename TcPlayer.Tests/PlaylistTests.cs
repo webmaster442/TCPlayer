@@ -27,9 +27,9 @@ internal class PlaylistTests
             Assert.Multiple(() =>
             {
                 Assert.That(list.Count, Is.EqualTo(4));
-                Assert.That(list[0].Uri, Is.EqualTo("file://C:\\Documents and Settings\\I\\My Music\\Sample.mp3"));
-                Assert.That(list[2].Uri, Is.EqualTo("file://c:\\testdir\\Music\\short.ogg"));
-                Assert.That(list[3].Uri, Is.EqualTo("file://c:\\example2.mp3"));
+                Assert.That(list[0].Path, Is.EqualTo("C:\\Documents and Settings\\I\\My Music\\Sample.mp3"));
+                Assert.That(list[2].Path, Is.EqualTo("c:\\testdir\\Music\\short.ogg"));
+                Assert.That(list[3].Path, Is.EqualTo("c:\\example2.mp3"));
 
             });
         },
@@ -46,9 +46,9 @@ internal class PlaylistTests
             Assert.Multiple(() =>
             {
                 Assert.That(list.Count, Is.EqualTo(3));
-                Assert.That(list[0].Uri, Is.EqualTo("file://c:\\example2.mp3"));
-                Assert.That(list[1].Uri, Is.EqualTo("file://F:\\Music\\whatever.m4a"));
-                Assert.That(list[2].Uri, Is.EqualTo("file://c:\\testdir\\Music\\short.ogg"));
+                Assert.That(list[0].Path, Is.EqualTo("c:\\example2.mp3"));
+                Assert.That(list[1].Path, Is.EqualTo("F:\\Music\\whatever.m4a"));
+                Assert.That(list[2].Path, Is.EqualTo("c:\\testdir\\Music\\short.ogg"));
             });
         },
         (e) => Assert.Fail(e.Message));

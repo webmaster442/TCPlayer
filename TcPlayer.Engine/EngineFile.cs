@@ -1,4 +1,6 @@
-﻿namespace TcPlayer.Engine;
+﻿using TcPlayer.Engine.Formats;
+
+namespace TcPlayer.Engine;
 
 public sealed class EngineFile
 {
@@ -11,19 +13,22 @@ public sealed class EngineFile
     public string Uri { get; }
     public EngineFileType FileType { get; }
 
+    public static EngineFile FromPlaylistItem(PlaylistItem item)
+    {
+        if (item.FileType == EngineFileType.File)
+        {
+            return FromFileName(item.Path);
+        }
+        return new(item.Path, item.FileType);
+    }
+
     public static EngineFile FromFileName(string fileName)
     {
-        if (fileName.Contains('%'))
-        {
-            var expanded = Environment.ExpandEnvironmentVariables(fileName);
-            return new($"file://{expanded}", EngineFileType.File);
-        }
-
         return new($"file://{fileName}", EngineFileType.File);
     }
 
     public static EngineFile FromUrl(string url)
     {
-       return new(url, EngineFileType.Network);
+        return new(url, EngineFileType.Network);
     }
 }
