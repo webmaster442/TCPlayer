@@ -1,6 +1,8 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:TcPlayer.Converters"
+    xmlns:engineFormat="clr-namespace:TcPlayer.Engine.Formats;assembly=TcPlayer.Engine"
     xmlns:viewmodels="clr-namespace:TcPlayer.ViewModels">
 
     <DataTemplate DataType="{x:Type viewmodels:AddUrlViewModel}">
@@ -11,5 +13,27 @@
             FontSize="22"
             Text="{Binding Url}" />
     </DataTemplate>
+
+    <DataTemplate DataType="{x:Type engineFormat:PlaylistItem}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="38" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Viewbox
+                Grid.Column="0"
+                Margin="5,0">
+                <ContentPresenter Content="{Binding Converter={converters:PlaylistItemToIconConverter}}" />
+            </Viewbox>
+            <TextBlock
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                FontSize="18"
+                Text="{Binding Metadata}"
+                ToolTip="{Binding Path}" />
+        </Grid>
+    </DataTemplate>
+
+
 
 </ResourceDictionary>
