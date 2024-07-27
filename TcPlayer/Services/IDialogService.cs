@@ -6,4 +6,5 @@ internal interface IDialogService
     string? OpenFileDialog(OpenFileDialogSettings settings);
     string[]? OpenFilesDialog(OpenFileDialogSettings settings);
     string? SelectFolderDialog(string title);
+    void BusyIndicator(bool isBusy, string message);
 }

@@ -31,6 +31,13 @@
             Grid.Row="0"
             ControlledWindow="{Binding ElementName=WindowMain}" />
 
+        <controls:BusyIndicator
+            x:Name="BusyIndicator"
+            Panel.ZIndex="99"
+            Grid.Row="1"
+            Grid.RowSpan="2"
+            Message="Loading..."/>
+
         <TabControl
             x:Name="MainTabs"
             Grid.Row="1"

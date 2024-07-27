@@ -11,7 +11,6 @@ using TcPlayer.ViewModels.Menu;
 
 namespace TcPlayer.ViewModels;
 
-
 internal partial class PlaylistViewModel : ObservableObject, IPlaylist, IMenuCommands
 {
     private readonly IDialogService _dialogService;

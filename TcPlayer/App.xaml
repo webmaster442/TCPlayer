@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:TcPlayer"
+    AppId="A5FC27CF-EB3F-4CC7-8886-A2F549B46F3A-TcPlayer3"
     StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
@@ -13,6 +14,7 @@
                 <ResourceDictionary Source="Styles/BaseControlStyles.xaml" />
                 <!--  Custom control styles  -->
                 <ResourceDictionary Source="Styles/WindowControls.xaml" />
+                <ResourceDictionary Source="Styles/BusyIndicator.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

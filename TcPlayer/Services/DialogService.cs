@@ -4,8 +4,17 @@ using Microsoft.Win32;
 
 namespace TcPlayer.Services;
 
-internal class DialogService : IDialogService
+internal sealed class DialogService : IDialogService
 {
+    public void BusyIndicator(bool isBusy, string message)
+    {
+        if (Application.Current.MainWindow is MainWindow mainWindow)
+        {
+            mainWindow.BusyIndicator.Visibility = isBusy ? Visibility.Visible : Visibility.Collapsed;
+            mainWindow.BusyIndicator.Message = message;
+        }
+    }
+
     public void ErrorMessage(string title, string message)
     {
         MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Error);
