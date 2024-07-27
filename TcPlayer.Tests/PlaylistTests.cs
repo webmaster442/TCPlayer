@@ -40,7 +40,7 @@ internal class PlaylistTests
     public async Task Test_LoadPls_ReturnsCorrect()
     {
         using var data = new StringReader(TestData.PlsWithLocalFiles);
-        var result = await Playlists.LoadPls(data, "c:\\test.pls");
+        var result = await Playlists.LoadPLS(data, "c:\\test.pls");
         result.Handle((list) =>
         {
             Assert.Multiple(() =>

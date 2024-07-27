@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections;
+using System.ComponentModel;
 using System.IO;
 
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -138,6 +139,37 @@ internal partial class PlaylistViewModel : ObservableObject, IPlaylist, IMenuCom
             {
                 Contents.Add(Playlists.FromFile(file, file));
             }
+        }
+    }
+
+    public static async Task<Result<IList<PlaylistItem>>> Load(string file)
+    {
+        if (string.IsNullOrEmpty(file)
+            || !File.Exists(file))
+        {
+            return new Result<IList<PlaylistItem>>(new FileNotFoundException($"{file} not found"));
+        }
+
+        switch (Path.GetExtension(file).ToLower())
+        {
+            case ".m3u":
+            case ".m3u8":
+                {
+                    using var rader = File.OpenText(file);
+                    return await Playlists.LoadM3U(rader, file);
+                }
+            case ".pls":
+                {
+                    using var reader = File.OpenText(file);
+                    return await Playlists.LoadPLS(reader, file);
+                }
+            case ".json":
+                {
+                    using var stream = File.OpenRead(file);
+                    return await Playlists.LoadJson(stream, file);
+                }
+            default:
+                return new Result<IList<PlaylistItem>>(new NotSupportedException($"Unsupported playlist format: {file}"));
         }
     }
 

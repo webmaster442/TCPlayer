@@ -31,7 +31,7 @@ public static class Playlists
         }
     }
 
-    public static async Task<Result<IList<PlaylistItem>>> LoadPls(TextReader reader, string filePath)
+    public static async Task<Result<IList<PlaylistItem>>> LoadPLS(TextReader reader, string filePath)
     {
         string? line;
         int counter = 1;
@@ -49,6 +49,29 @@ public static class Playlists
                     ++counter;
                 }
             }
+            return new Result<IList<PlaylistItem>>(results);
+        }
+        catch (Exception e)
+        {
+            return new Result<IList<PlaylistItem>>(e);
+        }
+    }
+
+    public static async Task<Result<IList<PlaylistItem>>> LoadJson(Stream source, string filePath)
+    {
+        try
+        {
+            var loaded =  await JsonSerializer.DeserializeAsync<List<PlaylistItem>>(source, JsonOptions.ForDiskStorage) 
+                ?? throw new InvalidDataException("Invalid JSON data");
+
+            List<PlaylistItem> results = new(loaded.Count);
+
+            foreach (var item in loaded)
+            {
+                var path = Path.GetFullPath(item.Path, Path.GetDirectoryName(filePath) ?? string.Empty);
+                results.Add(new PlaylistItem(path, item.FileType, item.Metadata));
+            }
+
             return new Result<IList<PlaylistItem>>(results);
         }
         catch (Exception e)
