@@ -14,10 +14,10 @@ internal class TabItemToMenuCommands : MarkupExtension, IValueConverter
         if (value is TabItem tabItem)
         {
             if (tabItem.Content is Control control
-                && control.DataContext is IMenuCommands menuCommands
-                && menuCommands.Commands.Length > 0)
+                && control.DataContext is ObservableObjectWithMenu modelWithMenu
+                && modelWithMenu.Commands.Length > 0)
             {
-                return menuCommands.Commands;
+                return modelWithMenu.Commands;
             }
             else
             {

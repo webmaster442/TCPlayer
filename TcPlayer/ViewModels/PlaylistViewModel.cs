@@ -11,7 +11,7 @@ using TcPlayer.ViewModels.Menu;
 
 namespace TcPlayer.ViewModels;
 
-internal partial class PlaylistViewModel : ObservableObject, IPlaylist, IMenuCommands
+internal partial class PlaylistViewModel : ObservableObjectWithMenu, IPlaylist
 {
     private readonly IDialogService _dialogService;
 
@@ -45,6 +45,7 @@ internal partial class PlaylistViewModel : ObservableObject, IPlaylist, IMenuCom
                         Name = "Load list...",
                         Command = LoadListCommand,
                     },
+                    MenuCommand.Seperator,
                     new MenuCommand()
                     {
                         Name = "Append list...",
@@ -67,6 +68,7 @@ internal partial class PlaylistViewModel : ObservableObject, IPlaylist, IMenuCom
                         Name = "Add folder...",
                         Command = AddFolderCommand,
                     },
+                    MenuCommand.Seperator,
                     new MenuCommand
                     {
                         Name = "Add URL...",
@@ -125,8 +127,6 @@ internal partial class PlaylistViewModel : ObservableObject, IPlaylist, IMenuCom
 
     public int Count => Contents.Count;
 
-    public MenuCommand[] Commands { get; }
-
     [RelayCommand]
     public void AddFiles()
     {
@@ -156,6 +156,7 @@ internal partial class PlaylistViewModel : ObservableObject, IPlaylist, IMenuCom
                 Contents.Add(Playlists.FromFile(file, file));
             }
         }
+        
     }
 
     public static async Task<Result<IList<PlaylistItem>>> Load(string file)

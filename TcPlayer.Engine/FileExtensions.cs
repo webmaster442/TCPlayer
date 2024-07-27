@@ -32,7 +32,7 @@ public static class FileExtensions
     {
         StringBuilder sb = new StringBuilder();
         sb.Append("Supported files|");
-        sb.AppendJoin(';', _fileExtensions.Select(x => x.Value));
+        sb.AppendJoin(';', items.Select(x => x.Value));
         foreach (var (key, value) in items)
         {
             sb.Append('|');

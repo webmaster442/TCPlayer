@@ -35,14 +35,20 @@ internal class TabMenuControl : Menu
 
     private static void Fill(ItemCollection items, MenuCommand[] childs)
     {
-        foreach (var command in childs)
+        foreach (var child in childs)
         {
+            if (child == MenuCommand.Seperator)
+            {
+                items.Add(new Separator());
+                continue;
+            }
+
             var item = new MenuItem
             {
-                Header = command.Name,
-                Command = command.Command,
+                Header = child.Name,
+                Command = child.Command,
             };
-            Fill(item.Items, command.Childs);
+            Fill(item.Items, child.Childs);
             items.Add(item);
         }
     }
