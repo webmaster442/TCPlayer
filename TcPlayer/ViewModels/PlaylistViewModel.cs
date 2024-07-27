@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.ComponentModel;
 using System.IO;
+using System.Net.Http.Headers;
+using System.Windows.Controls.Primitives;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -34,13 +36,30 @@ internal partial class PlaylistViewModel : ObservableObject, IPlaylist, IMenuCom
     {
         Contents = new BindingList<PlaylistItem>();
         _dialogService = dialogService;
-        Commands = new MenuCommand[]
-        {
+        Commands =
+        [
+            new MenuCommand
+            {
+                Name = "File",
+                Childs =
+                [
+                    new MenuCommand()
+                    {
+                        Name = "Load list...",
+                        Command = LoadListCommand,
+                    },
+                    new MenuCommand()
+                    {
+                        Name = "Append list...",
+                        Command = AppendListCommand,
+                    },
+                ]
+            },
             new MenuCommand
             {
                 Name = "Add",
-                Childs = new[]
-                {
+                Childs =
+                [
                     new MenuCommand
                     {
                         Name = "Add files...",
@@ -56,13 +75,13 @@ internal partial class PlaylistViewModel : ObservableObject, IPlaylist, IMenuCom
                         Name = "Add URL...",
                         Command = AddUrlCommand,
                     },
-                }
+                ]
             },
             new MenuCommand
             {
                 Name = "Remove",
-                Childs = new[]
-                {
+                Childs =
+                [
                     new MenuCommand
                     {
                         Name = "Remove selected",
@@ -78,13 +97,13 @@ internal partial class PlaylistViewModel : ObservableObject, IPlaylist, IMenuCom
                         Name = "Remove all except selected",
                         Command = RemoveAllExceptSelectedCommand,
                     },
-                },
+                ],
             },
             new MenuCommand
             {
                 Name = "Sort",
-                Childs = new[]
-                {
+                Childs =
+                [
                     new MenuCommand
                     {
                         Name = "Sort A -> Z",
@@ -100,9 +119,9 @@ internal partial class PlaylistViewModel : ObservableObject, IPlaylist, IMenuCom
                         Name = "Shuffle",
                         Command = ShuffleCommand,
                     },
-                }
+                ]
             }
-        };
+        ];
     }
 
     public EngineFile this[int index] => EngineFile.FromPlaylistItem(Contents[index]);
@@ -117,7 +136,7 @@ internal partial class PlaylistViewModel : ObservableObject, IPlaylist, IMenuCom
         var result = _dialogService.OpenFilesDialog(new OpenFileDialogSettings
         {
             Title = "Add files...",
-            Filter = FileExtensions.CreateFilterString(),
+            Filter = FileExtensions.SupportedFilesFilter,
         });
         if (result != null)
         {
@@ -163,7 +182,7 @@ internal partial class PlaylistViewModel : ObservableObject, IPlaylist, IMenuCom
                     using var reader = File.OpenText(file);
                     return await Playlists.LoadPLS(reader, file);
                 }
-            case ".json":
+            case ".tcpls":
                 {
                     using var stream = File.OpenRead(file);
                     return await Playlists.LoadJson(stream, file);
@@ -177,6 +196,34 @@ internal partial class PlaylistViewModel : ObservableObject, IPlaylist, IMenuCom
     public void AddUrl()
     {
 
+    }
+
+
+    [RelayCommand]
+    public async Task AppendList()
+    {
+        var selectedFile = _dialogService.OpenFileDialog(new OpenFileDialogSettings
+        { 
+            Filter = FileExtensions.PlaylistFilesFilter,
+            Title = "Append playlist..." 
+        });
+
+        if (selectedFile == null)
+            return;
+
+        _dialogService.BusyIndicator(true, "Appending playlist...");
+        var result = await Load(selectedFile);
+        _dialogService.BusyIndicator(false, string.Empty);
+
+        result.Handle(items => Contents.AddRange(items),
+        ex => _dialogService.ErrorMessage("Error", ex.Message));
+    }
+
+    [RelayCommand]
+    public async Task LoadList()
+    {
+        Contents.Clear();
+        await AppendList();
     }
 
     [RelayCommand]

@@ -16,12 +16,24 @@ public static class FileExtensions
         { "Wavpack files", "*.wv" },
     };
 
-    public static string CreateFilterString()
+    private static readonly Dictionary<string, string> _playlistExtensions = new()
+    {
+        { "M3u files", "*.m3u" },
+        { "M3u8 files", "*.m3u8" },
+        { "Pls files", "*.pls" },
+        { "TcPlayer lists", "*.tcpls" }
+    };
+
+    public static string SupportedFilesFilter = CreateFilterString(_fileExtensions);
+
+    public static string PlaylistFilesFilter = CreateFilterString(_playlistExtensions);
+
+    private static string CreateFilterString(Dictionary<string, string> items)
     {
         StringBuilder sb = new StringBuilder();
         sb.Append("Supported files|");
         sb.AppendJoin(';', _fileExtensions.Select(x => x.Value));
-        foreach (var (key, value) in _fileExtensions)
+        foreach (var (key, value) in items)
         {
             sb.Append('|');
             sb.Append(key);
