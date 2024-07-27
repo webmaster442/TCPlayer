@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.IO;
-using System.Net.Http.Headers;
-using System.Windows.Controls.Primitives;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -195,7 +192,16 @@ internal partial class PlaylistViewModel : ObservableObject, IPlaylist, IMenuCom
     [RelayCommand]
     public void AddUrl()
     {
-
+        var model = new AddUrlViewModel();
+        if (_dialogService.CustomDialog(model, "Add url..."))
+        {
+            if (!model.IsValid)
+            {
+                _dialogService.ErrorMessage("Error", "Not a valid url");
+                return;
+            }
+            Contents.Add(model.GetPlaylistItem());
+        }
     }
 
 

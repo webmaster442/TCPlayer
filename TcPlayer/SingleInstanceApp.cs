@@ -95,6 +95,7 @@ public abstract class SingleInstanceApp : Application, IDisposable
             {
                 client.Connect();
             }
+            Thread.Sleep(100);
         }
         _namedPipeServerStream?.Dispose();
         _appLockMutex?.Dispose();

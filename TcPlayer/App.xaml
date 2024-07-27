@@ -12,9 +12,11 @@
                 <ResourceDictionary Source="Styles/ColorsAndFonts.xaml" />
                 <!--  Base control styles  -->
                 <ResourceDictionary Source="Styles/BaseControlStyles.xaml" />
+                <!--  Data templates  -->
+                <ResourceDictionary Source="Styles/DataTemplates.xaml" />
                 <!--  Custom control styles  -->
                 <ResourceDictionary Source="Styles/WindowControls.xaml" />
-                <ResourceDictionary Source="Styles/BusyIndicator.xaml"/>
+                <ResourceDictionary Source="Styles/BusyIndicator.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
