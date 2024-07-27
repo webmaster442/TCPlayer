@@ -1,4 +1,6 @@
-﻿namespace TcPlayer.Services;
+﻿using System.ComponentModel;
+
+namespace TcPlayer.Services;
 
 internal interface IDialogService
 {
@@ -7,4 +9,5 @@ internal interface IDialogService
     string[]? OpenFilesDialog(OpenFileDialogSettings settings);
     string? SelectFolderDialog(string title);
     void BusyIndicator(bool isBusy, string message);
+    bool CustomDialog(INotifyPropertyChanged content, string title);
 }

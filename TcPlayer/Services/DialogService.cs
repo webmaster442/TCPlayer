@@ -1,6 +1,9 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 
 using Microsoft.Win32;
+
+using TcPlayer.Controls;
 
 namespace TcPlayer.Services;
 
@@ -13,6 +16,19 @@ internal sealed class DialogService : IDialogService
             mainWindow.BusyIndicator.Visibility = isBusy ? Visibility.Visible : Visibility.Collapsed;
             mainWindow.BusyIndicator.Message = message;
         }
+    }
+
+    public bool CustomDialog(INotifyPropertyChanged content, string title)
+    {
+        var dialog = new DialogWindow
+        {
+            Owner = Application.Current.MainWindow,
+            Title = title,
+            MaxWidth = Application.Current.MainWindow.Width * 0.8,
+            MaxHeight = Application.Current.MainWindow.Height * 0.8,
+        };
+        dialog.MainContent.Content = content;
+        return dialog.ShowDialog() == true;
     }
 
     public void ErrorMessage(string title, string message)
