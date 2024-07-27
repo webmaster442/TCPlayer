@@ -1,4 +1,6 @@
-﻿namespace TcPlayer.Engine.Formats;
+﻿using System.Text.Json;
+
+namespace TcPlayer.Engine.Formats;
 
 public static class Playlists
 {
@@ -64,6 +66,17 @@ public static class Playlists
         }
     }
 
+    public static async Task WriteJson(Stream target, IList<PlaylistItem> items, string basePath)
+    {
+        List<PlaylistItem> results = new(items.Count);
+        foreach (var item in items)
+        {
+            var relativePath = GetRelativePath(basePath, item.Path);
+            results.Add(new PlaylistItem(relativePath, item.FileType, item.Metadata));
+        }
+        await JsonSerializer.SerializeAsync(target, results, JsonOptions.ForDiskStorage);
+    }
+
     public static PlaylistItem FromFile(string basePath, string candidate)
     {
         if (candidate.Contains('%'))
@@ -83,6 +96,26 @@ public static class Playlists
             string fileName = Path.GetFullPath(candidate, basePath);
             return new PlaylistItem(fileName, EngineFileType.File, GetMetaData(fileName));
         }
+    }
+
+    public static string GetRelativePath(string basePath, string targetPath)
+    {
+        static string AppendDirectorySeparatorChar(string path)
+        {
+            if (!Path.EndsInDirectorySeparator(path))
+            {
+                path += Path.DirectorySeparatorChar;
+            }
+            return path;
+        }
+
+        Uri baseUri = new(AppendDirectorySeparatorChar(basePath));
+        Uri targetUri = new(targetPath);
+
+        Uri relativeUri = baseUri.MakeRelativeUri(targetUri);
+        string relativePath = Uri.UnescapeDataString(relativeUri.ToString());
+
+        return relativePath.Replace('/', Path.DirectorySeparatorChar);
     }
 
     private static void AddWithAbsolutePath(List<PlaylistItem> results, string basePath, string candidate)
@@ -114,25 +147,5 @@ public static class Playlists
         }
         return $"{file.Tag.FirstPerformer} - {file.Tag.Title}";
 
-    }
-
-    public static string GetRelativePath(string basePath, string targetPath)
-    {
-        static string AppendDirectorySeparatorChar(string path)
-        {
-            if (!Path.EndsInDirectorySeparator(path))
-            {
-                path += Path.DirectorySeparatorChar;
-            }
-            return path;
-        }
-
-        Uri baseUri = new(AppendDirectorySeparatorChar(basePath));
-        Uri targetUri = new(targetPath);
-
-        Uri relativeUri = baseUri.MakeRelativeUri(targetUri);
-        string relativePath = Uri.UnescapeDataString(relativeUri.ToString());
-
-        return relativePath.Replace('/', Path.DirectorySeparatorChar);
     }
 }
