@@ -2,8 +2,6 @@
 
 using Microsoft.Extensions.DependencyInjection;
 
-using TcPlayer.Engine;
-using TcPlayer.Services;
 using TcPlayer.ViewModels;
 
 namespace TcPlayer;
@@ -22,9 +20,7 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         DataContext = new MainViewModel(
-            Resolve<IEngine>(),
-            Resolve<IDialogService>(),
-            Resolve<IMediator>(),
+            Resolve<PlayerControlsViewModel>(),
             Resolve<PlaylistViewModel>());
     }
 }

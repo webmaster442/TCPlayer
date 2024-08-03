@@ -10,12 +10,10 @@ internal partial class MainViewModel : ObservableObject
     public PlayerControlsViewModel Player { get; }
     public PlaylistViewModel PlaylistViewModel { get; }
 
-    public MainViewModel(IEngine engine,
-                         IDialogService dialogService,
-                         IMediator mediator,
+    public MainViewModel(PlayerControlsViewModel playerControlsViewModel, 
                          PlaylistViewModel playlistViewModel)
     {
-        Player = new PlayerControlsViewModel(engine, dialogService, mediator);
+        Player = playerControlsViewModel;
         PlaylistViewModel = playlistViewModel;
     }
 }

@@ -19,10 +19,12 @@ public partial class App : SingleInstanceApp
         var playlist = new PlaylistViewModel(dialogs);
 
         IServiceCollection services = new ServiceCollection();
+        services.AddSingleton<ISettingsService, SettingsService>();
         services.AddSingleton<IDialogService>(dialogs);
         services.AddSingleton<IEngine, Engine.Engine>();
         services.AddSingleton<IMediator, Mediator>();
         services.AddSingleton<IPlaylist>(playlist);
+        services.AddSingleton<PlayerControlsViewModel>();
         services.AddSingleton<PlaylistViewModel>(playlist);
 
         Services = services.BuildServiceProvider();

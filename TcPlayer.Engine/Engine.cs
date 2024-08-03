@@ -147,6 +147,7 @@ public sealed class Engine : EngineBase, IEngine
 
     public void Init(DeviceInfo info)
     {
+        Stop();
         DisposeDevice();
         if (Bass.Init(0, info.Frequency, DeviceInitFlags.Default)
             && BassWasapi.Init(info.Index,

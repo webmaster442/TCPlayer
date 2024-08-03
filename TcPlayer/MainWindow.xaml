@@ -231,6 +231,8 @@
                         VerticalAlignment="Center"
                         Maximum="1"
                         Minimum="0"
+                        SmallChange="0.05"
+                        LargeChange="0.2"
                         Value="{Binding Player.Volume}" />
                 </StackPanel>
 
