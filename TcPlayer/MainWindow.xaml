@@ -82,12 +82,13 @@
                     Style="{StaticResource TextStyle}"
                     Text="{Binding Player.CurrentPosition, Converter={converters:TimeConverter}}"
                     TextAlignment="Center" />
-                <Slider Style="{DynamicResource SliderStyle}"
+                <Slider
                     Grid.Row="0"
                     Grid.Column="1"
                     Grid.ColumnSpan="3"
                     Maximum="{Binding Player.TotalTime}"
                     Minimum="0"
+                    Style="{DynamicResource SliderStyle}"
                     Value="{Binding Player.CurrentPosition}" />
                 <TextBlock
                     Grid.Column="4"
@@ -229,10 +230,11 @@
                     <Slider
                         Width="300"
                         VerticalAlignment="Center"
+                        LargeChange="0.2"
                         Maximum="1"
                         Minimum="0"
                         SmallChange="0.05"
-                        LargeChange="0.2"
+                        Style="{DynamicResource SliderStyle}"
                         Value="{Binding Player.Volume}" />
                 </StackPanel>
 
