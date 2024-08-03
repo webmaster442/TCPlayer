@@ -3,6 +3,8 @@ using System.IO;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 
 using TcPlayer.Engine;
 using TcPlayer.Engine.Formats;
@@ -188,6 +190,12 @@ internal partial class PlaylistViewModel : ObservableObjectWithMenu, IPlaylist
             default:
                 return new Result<IList<PlaylistItem>>(new NotSupportedException($"Unsupported playlist format: {file}"));
         }
+    }
+
+    [RelayCommand]
+    public void ItemDoubleClick(PlaylistItem item)
+    {
+        WeakReferenceMessenger.Default.Send(new ValueChangedMessage<PlaylistItem>(item));
     }
 
     [RelayCommand]

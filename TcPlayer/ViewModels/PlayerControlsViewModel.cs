@@ -2,8 +2,11 @@
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 
 using TcPlayer.Engine;
+using TcPlayer.Engine.Formats;
 using TcPlayer.Engine.Notifications;
 using TcPlayer.Services;
 
@@ -67,6 +70,14 @@ internal partial class PlayerControlsViewModel :
         _selectedDevice = Devices[_settingsService.SelectedAudioOutput];
         _engine.Init(_selectedDevice);
         _volume = _settingsService.VolumeLevel;
+
+        WeakReferenceMessenger.Default.Register<ValueChangedMessage<PlaylistItem>>(this, OnPlaylistItemLoad);
+    }
+
+    private void OnPlaylistItemLoad(object recipient, ValueChangedMessage<PlaylistItem> message)
+    {
+        _engine.Load(EngineFile.FromPlaylistItem(message.Value));
+        _engine.Play();
     }
 
     [RelayCommand]
