@@ -8,18 +8,18 @@ internal static class MetaDataFactory
 
         TryGetCover(file, out byte[] data, out string mime);
 
-        return new()
+        var result = new MetaData()
         {
             Cover = data,
             CoverMime = mime,
-            Data = new List<string>
-            {
-                GetOrDefault(file.Tag.FirstPerformer, "Unknown Artist"),
-                GetOrDefault(file.Tag.Title, "Unknown song"),
-                GetOrDefault(file.Tag.Album, "Unknown album"),
-                file.Tag.Year.ToString()
-            }
         };
+
+        result.DataDictionary.Add(MetaData.KeyArtist, GetOrDefault(file.Tag.FirstPerformer, "Unknown Artist"));
+        result.DataDictionary.Add(MetaData.KeyTitle, GetOrDefault(file.Tag.Title, "Unknown song"));
+        result.DataDictionary.Add(MetaData.KeyAlbum, GetOrDefault(file.Tag.Album, "Unknown album"));
+        result.DataDictionary.Add(MetaData.KeyYear, file.Tag.Year.ToString());
+
+        return result;
     }
 
     private static string GetOrDefault(string value, string defaultValue) 
