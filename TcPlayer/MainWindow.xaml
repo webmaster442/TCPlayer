@@ -82,7 +82,7 @@
                     Style="{StaticResource TextStyle}"
                     Text="{Binding Player.CurrentPosition, Converter={converters:TimeConverter}}"
                     TextAlignment="Center" />
-                <Slider
+                <Slider Style="{DynamicResource SliderStyle}"
                     Grid.Row="0"
                     Grid.Column="1"
                     Grid.ColumnSpan="3"

@@ -12,6 +12,7 @@
                 <ResourceDictionary Source="Styles/ColorsAndFonts.xaml" />
                 <!--  Base control styles  -->
                 <ResourceDictionary Source="Styles/BaseControlStyles.xaml" />
+                <ResourceDictionary Source="Styles/SliderStyles.xaml"/>
                 <!--  Data templates  -->
                 <ResourceDictionary Source="Styles/DataTemplates.xaml" />
                 <!--  Custom control styles  -->

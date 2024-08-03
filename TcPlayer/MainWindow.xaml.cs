@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,11 +17,19 @@ public partial class MainWindow : Window
         return ((App)App.Current).Services.GetRequiredService<T>();
     }
 
+    private bool InDesignMode()
+    {
+        return DesignerProperties.GetIsInDesignMode(this);
+    }
+
     public MainWindow()
     {
         InitializeComponent();
-        DataContext = new MainViewModel(
-            Resolve<PlayerControlsViewModel>(),
-            Resolve<PlaylistViewModel>());
+        if (!InDesignMode())
+        {
+            DataContext = new MainViewModel(
+                Resolve<PlayerControlsViewModel>(),
+                Resolve<PlaylistViewModel>());
+        }
     }
 }
